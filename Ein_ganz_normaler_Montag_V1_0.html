@@ -1,0 +1,1324 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ein ganz normaler Montag – V1.0</title>
+<!--
+  „Ein ganz normaler Montag“ – Erklärvideo (Motion Graphics) für die Verwaltungsführung der Stadt Herne
+  Vertraulich – nur zur internen Verwendung
+  Eine Datei: Illustrationen (SVG im Code), Zeitleiste, render(t), Untertitel, Vorschau.
+  render(t) ist eine reine Funktion der Zeit t in Sekunden – keine Echtzeit, kein Zufall ohne festen Startwert.
+  Vorschau: Datei im Browser öffnen. Export: siehe export/render.mjs (ruft window.renderFrame(t) Bild für Bild auf).
+-->
+<style>
+  :root {
+    --gruen: #007D30; --zyan: #00A5D7; --hellgruen: #CAF278;
+    --flaeche: #F5F7F7; --flaeche2: #EAF5EE; --text: #1F292D; --text2: #5B666B;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #151c1f; color: #F5F7F7; font-family: Arial, "Liberation Sans", Helvetica, sans-serif; }
+  #app { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 16px; }
+  #viewport { position: relative; width: 100%; max-width: 1600px; aspect-ratio: 16 / 9; overflow: hidden; background: #000; }
+  #stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; overflow: hidden; background: #fff; }
+  .slot { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; isolation: isolate; }
+  .layer { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; display: block; }
+  .tint { mix-blend-mode: multiply; pointer-events: none; }
+  svg text, .t { font-family: Arial, "Liberation Sans", Helvetica, sans-serif; }
+  /* Bedienleiste der Vorschau */
+  #controls { width: 100%; max-width: 1600px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; font-size: 14px; }
+  #controls button { background: #26343a; color: #F5F7F7; border: 1px solid #3a4b52; border-radius: 6px; padding: 6px 10px; font: inherit; cursor: pointer; }
+  #controls button:hover { background: #31444c; }
+  #controls button.on { background: #007D30; border-color: #0a9a42; }
+  #scrub { flex: 1 1 420px; accent-color: #00A5D7; }
+  #tc { font-variant-numeric: tabular-nums; min-width: 150px; }
+  #sceneBtns { display: flex; flex-wrap: wrap; gap: 6px; width: 100%; }
+  #sceneName { color: #CAF278; }
+  /* Export-Modus: Bühne 1:1, keine Bedienelemente */
+  body.export { background: #000; overflow: hidden; }
+  body.export #app { padding: 0; display: block; }
+  body.export #viewport { max-width: none; width: 1920px; height: 1080px; aspect-ratio: auto; }
+  body.export #controls { display: none; }
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="viewport"><div id="stage"></div></div>
+  <div id="controls">
+    <button id="bStart" title="Zum Anfang (Pos1)">⏮</button>
+    <button id="bPlay" title="Abspielen / Pause (Leertaste)">▶ Abspielen</button>
+    <button id="bBackS" title="1 Sekunde zurück (Umschalt + ←)">−1 s</button>
+    <button id="bBackF" title="1 Bild zurück (←)">−1 Bild</button>
+    <button id="bNextF" title="1 Bild vor (→)">+1 Bild</button>
+    <button id="bNextS" title="1 Sekunde vor (Umschalt + →)">+1 s</button>
+    <input id="scrub" type="range" min="0" max="258" step="0.0333333" value="0" aria-label="Zeitleiste">
+    <span id="tc">00:00:00</span>
+    <span id="sceneName"></span>
+    <div id="sceneBtns"></div>
+  </div>
+</div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs id="defs"></defs></svg>
+
+<script>
+'use strict';
+/* =====================================================================
+   1  GRUNDLAGEN: Format, Zeitleiste, Sprechertext
+   ===================================================================== */
+const W = 1920, H = 1080, FPS = 30;
+
+// Szenenzeiten laut Drehbuch V1.1; Szene 7 auf Wunsch um 8 s verlängert (Gesamt 4:18)
+const SCENES = [
+  { n: 0, title: 'Titel',                        start: 0,   end: 12 },
+  { n: 1, title: 'Eine Stadt, die funktioniert', start: 12,  end: 32 },
+  { n: 2, title: 'Die Tür',                      start: 32,  end: 56 },
+  { n: 3, title: 'Der Generalschlüssel',         start: 56,  end: 88 },
+  { n: 4, title: 'Unbemerkt',                    start: 88,  end: 112 },
+  { n: 5, title: 'Offene Türen im Haus',         start: 112, end: 138 },
+  { n: 6, title: 'Tag X',                        start: 138, end: 170 },
+  { n: 7, title: 'Die Folgen',                   start: 170, end: 224 },
+  { n: 8, title: 'Was jetzt zählt',              start: 224, end: 258 },
+];
+const TOTAL = 258;          // Sekunden
+const XFADE = 1.0;          // weiche Überblendung zwischen Szenen (Sekunden)
+
+// Sprechertext wörtlich aus dem Drehbuch (Quelle für Untertitel, SRT und Prüfung)
+const SPRECHERTEXT = {
+  1: 'Jeden Tag verlassen sich zehntausende Menschen auf die Stadtverwaltung. Ein neuer Ausweis, eine Geburtsurkunde, das Wohngeld, der Kitaplatz, das Gehalt der Beschäftigten. Hinter all dem steht IT – unsichtbar, solange sie läuft.',
+  2: 'Es beginnt harmlos. Eine E-Mail, die echt aussieht. Ein Klick – so etwas passiert jeden Tag, überall. Das ist kein Versagen einzelner Menschen. Entscheidend ist, was danach geschieht.',
+  3: 'Wer einmal drin ist, sucht den Generalschlüssel. Bei uns kann die IT von zu vielen Stellen aus verwaltet werden, und intern genügt dafür bis heute ein Passwort. Zugleich haben zu viele Konten Zugriff auf alles. Für einen Angreifer heißt das: Er muss nicht einbrechen. Er kann aufschließen.',
+  4: 'Und niemand merkt es. Weil verdächtige Vorgänge nicht zentral erfasst und ausgewertet werden, kann ein Angreifer wochenlang bleiben. In einem echten Fall in Sachsen-Anhalt blieb ein Angreifer rund fünf Wochen unentdeckt.',
+  5: 'Einige Systeme an unserer Grenze zum Internet bekommen keine Sicherheitsupdates mehr – eine alte Tür, deren Schloss sich nicht mehr erneuern lässt. Viele Server laufen ohne die Schutzeinstellungen, die der Hersteller empfiehlt – Türen, in die nie ein Schloss eingebaut wurde. Und im Inneren fehlen teilweise die Trennwände, die einen Brand eindämmen würden.',
+  6: 'Dann schlägt der Angreifer zu. Montag, halb acht: Die Bildschirme gehen aus. Daten sind verschlüsselt, Kopien gestohlen, eine Forderung liegt vor. Und die Rückfallebene? Eine Datensicherung ohne zweites System. Für Teile der IT gibt es keine Notfallpläne – und manche Unterlagen liegen auf den gesperrten Systemen selbst.',
+  7: 'Die Folgen treffen alle. Der Wiederaufbau dauert Monate und kostet Millionen. Gestohlene Daten tauchen im Netz auf. Und vor allem trifft es die Menschen in unserer Stadt: die Familie, die auf die Geburtsurkunde wartet, die Rentnerin, deren Wohngeld nicht ankommt, den Handwerker, der sein Gewerbe nicht anmelden kann. Das ist keine Theorie – anderen Kommunen ist genau das passiert.',
+  8: 'Die gute Nachricht: Die Lücken sind bekannt, die Maßnahmen sind geplant. Ein gesicherter Weg in die IT mit einem zweiten Schloss. Rechte nur für die Aufgaben, die jemand wirklich hat. Die Server einheitlich absichern. Veraltete Systeme ersetzen. Angriffe früh erkennen. Und den Notfall üben, bevor er eintritt. Was dafür fehlt, sind Entscheidungen – und die liegen bei uns.',
+};
+
+// Untertitel-Cues: Zeiten absolut (s), Zeilen wortgleich aus SPRECHERTEXT (max. 2 Zeilen)
+const CUES = [
+  // Szene 3 – Der Generalschlüssel (0:56–1:28)
+  { scene: 3, start: 57.0, end: 60.4, lines: ['Wer einmal drin ist, sucht den Generalschlüssel.'] },
+  { scene: 3, start: 61.0, end: 65.2, lines: ['Bei uns kann die IT von zu vielen Stellen', 'aus verwaltet werden,'] },
+  { scene: 3, start: 65.4, end: 68.8, lines: ['und intern genügt dafür bis heute ein Passwort.'] },
+  { scene: 3, start: 69.8, end: 73.4, lines: ['Zugleich haben zu viele Konten Zugriff auf alles.'] },
+  { scene: 3, start: 74.4, end: 78.8, lines: ['Für einen Angreifer heißt das:', 'Er muss nicht einbrechen.'] },
+  { scene: 3, start: 82.0, end: 85.0, lines: ['Er kann aufschließen.'] },
+];
+
+/* =====================================================================
+   2  HILFSFUNKTIONEN: Mathematik, Easing, Seed-Zufall, Farben, SVG-Bausteine
+   ===================================================================== */
+const DEG = Math.PI / 180;
+const clamp = (x, a = 0, b = 1) => (x < a ? a : x > b ? b : x);
+const lerp = (a, b, u) => a + (b - a) * u;
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+const EASE = {
+  lin: u => u,
+  inOut: u => (u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2),
+  sine: u => 0.5 - 0.5 * Math.cos(Math.PI * u),
+  out: u => 1 - Math.pow(1 - u, 3),
+  in: u => u * u * u,
+  outBack: u => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(u - 1, 3) + c1 * Math.pow(u - 1, 2); },
+};
+const ez = (t, a, b, fn = EASE.inOut) => fn(seg(t, a, b));
+const fadeIO = (t, a, b, c, d) => Math.min(ez(t, a, b), 1 - ez(t, c, d));   // 0→1 (a..b), 1→0 (c..d)
+const bump = (t, c, w) => { const u = (t - c) / w; return Math.abs(u) >= 1 ? 0 : 0.5 + 0.5 * Math.cos(Math.PI * u); };
+// Seed-Zufall (mulberry32): gleiche Eingabe → gleiche Folge
+function mulberry32(a) { return function () { a |= 0; a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+const rng = seed => mulberry32(seed >>> 0);
+// weiche, deterministische Schwankung (Summe zweier Sinuswellen)
+const wob = (t, seed, f = 1) => Math.sin(t * f * 1.3 + seed * 1.7) * 0.6 + Math.sin(t * f * 2.1 + seed * 3.1) * 0.4;
+
+// Farben
+function hex2rgb(h) { const n = parseInt(h.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; }
+function rgb2hex(r, g, b) { return '#' + [r, g, b].map(v => Math.round(clamp(v, 0, 255)).toString(16).padStart(2, '0')).join(''); }
+function mix(a, b, u) { const x = hex2rgb(a), y = hex2rgb(b); return rgb2hex(lerp(x[0], y[0], u), lerp(x[1], y[1], u), lerp(x[2], y[2], u)); }
+const shade = (c, k) => { const [r, g, b] = hex2rgb(c); return rgb2hex(r * k, g * k, b * k); };
+
+// SVG-Zeichenketten
+const N = v => Math.round(v * 100) / 100;
+function A(o) {
+  let s = '';
+  for (const k in o) {
+    const v = o[k];
+    if (v === undefined || v === null || v === false) continue;
+    s += ` ${k}="${typeof v === 'number' ? N(v) : v}"`;
+  }
+  return s;
+}
+const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const G = (o, inner) => `<g${A(o)}>${inner}</g>`;
+const Circ = (cx, cy, r, fill, o = {}) => `<circle${A({ cx, cy, r: Math.max(0, r), fill, ...o })}/>`;
+const Ell = (cx, cy, rx, ry, fill, o = {}) => `<ellipse${A({ cx, cy, rx: Math.max(0, rx), ry: Math.max(0, ry), fill, ...o })}/>`;
+const Rect = (x, y, w, h, fill, o = {}) => `<rect${A({ x, y, width: Math.max(0, w), height: Math.max(0, h), fill, ...o })}/>`;
+const Path = (d, fill, o = {}) => `<path${A({ d, fill, ...o })}/>`;
+const Line = (x1, y1, x2, y2, stroke, sw, o = {}) => `<line${A({ x1, y1, x2, y2, stroke, 'stroke-width': sw, 'stroke-linecap': 'round', ...o })}/>`;
+const Poly = (pts, stroke, sw, o = {}) => `<polyline${A({ points: pts.map(p => N(p[0]) + ',' + N(p[1])).join(' '), fill: 'none', stroke, 'stroke-width': sw, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', ...o })}/>`;
+const Use = (id, o = {}) => `<use${A({ href: '#' + id, ...o })}/>`;
+const TR = (x, y, s = 1, r = 0, sx) => `translate(${N(x)} ${N(y)})` + (r ? ` rotate(${N(r)})` : '') + (sx !== undefined ? ` scale(${N(sx)} ${N(s)})` : s !== 1 ? ` scale(${N(s)})` : '');
+const P = pts => 'M' + pts.map(p => N(p[0]) + ',' + N(p[1])).join(' L') + ' Z';
+const OL = (sw = 3, color) => ({ stroke: color || C.line, 'stroke-width': sw, 'stroke-linejoin': 'round' });
+// Kontur-Glied: dicke Linie mit dunklem Rand (Arme, Beine, Äste)
+const Limb = (pts, color, w, sw = 3) => Poly(pts, C.line, w + 2 * sw) + Poly(pts, color, w);
+
+// Schrift und Textmessung (Arial; auf Linux die maßgleiche Liberation Sans)
+const FONT = 'Arial, "Liberation Sans", Helvetica, sans-serif';
+const _mctx = document.createElement('canvas').getContext('2d');
+function measure(str, size, weight = 400) { _mctx.font = `${weight} ${size}px ${FONT}`; return _mctx.measureText(str).width; }
+function Txt(x, y, str, o = {}) {
+  const { size = 40, weight = 400, fill = C.text, anchor = 'start', opacity, ls, italic } = o;
+  return `<text class="t"${A({ x, y, 'font-size': size, 'font-weight': weight, fill, 'text-anchor': anchor, opacity, 'letter-spacing': ls, 'font-style': italic ? 'italic' : undefined })}>${esc(str)}</text>`;
+}
+
+/* =====================================================================
+   3  FARBEN
+   Marken-/Oberflächenfarben laut Auftrag; Illustrationsfarben nach Stilreferenz.
+   ===================================================================== */
+const C = {
+  // Auftrag
+  gruen: '#007D30', zyan: '#00A5D7', hellgruen: '#CAF278', flaeche: '#F5F7F7', flaeche2: '#EAF5EE',
+  text: '#1F292D', text2: '#5B666B', warn: '#C0392B',
+  // Illustration (Stilreferenz)
+  line: '#2A2B2B',
+  skyTop: '#79C0F4', skyBot: '#C3E6FB', cloudLine: '#BFD3E0',
+  leafLight: '#B8D86E', leafMid: '#9BC456', leafDark: '#6E9C3B', trunk: '#5A4131',
+  bushMid: '#8DBA4C', bushDark: '#5F8E33', bushLight: '#A9D062',
+  pave: '#E7DAC9', paveSeam: '#D4C4B0', paveDark: '#D8C9B6',
+  facade: '#ECE3D7', facadeShade: '#D5C9BA', facadeDark: '#C3B6A6', slogan: '#51575A',
+  glass: '#6FA8C6', glassLight: '#A9D3E6', glassDark: '#467C99', mullion: '#3B4A51',
+  roofRed: '#DB7852', roofSlate: '#5E6B74',
+  house1: '#F2E7D4', house2: '#E9D4B6', house3: '#F4EBDF', house4: '#EAD9C2', winGlass: '#7197AE',
+  sand: '#DDBF95', sandShade: '#C4A57B', spire: '#6EA29E',
+  stone: '#BDBEBA', stoneLight: '#D6D7D3', stoneDark: '#9C9D98',
+  wood: '#DCA86B', woodDark: '#B6834A',
+  water: '#A6D5F0', waterLight: '#E3F4FC', waterDeep: '#7DBBE0',
+  metal: '#5D666A', metalLight: '#8C969B', pole: '#3F4549',
+  flagGreen: '#4A9650', flagYellow: '#F7C544', flagBlue: '#2F6DA5',
+  tramWhite: '#F1F3F2', tramGreen: '#4E8E86', tramGlass: '#3E5F66',
+  // Figuren
+  skin1: '#F6C6A2', skin2: '#E3A882', skin3: '#BF835D', skin4: '#8C5B3D',
+  hairBrown: '#3E281A', hairDark: '#221B17', hairAuburn: '#7B4126', hairBlond: '#CFA05A', hairGrey: '#BDBDB8',
+  jeans: '#2F67A0', jeansDark: '#27507C', black: '#2B2F33',
+  // Szene 3 (Flur)
+  wall: '#DCE2E4', wallLow: '#D1D8DB', ceiling: '#EBEEEF', floor: '#A3AEB3', floorLight: '#B9C3C7', skirting: '#8A969B',
+  frame: '#7D8990', deskTop: '#CBD1D4', deskSide: '#AEB6BA', screen: '#B7CDD9', screenLight: '#DCE8EE', monitor: '#343D42',
+  gold: '#E2B43C', goldDark: '#B8871F', goldLight: '#F6DC86',
+  doorWood: '#B9A386', doorGrey: '#8E9CA3', plate: '#F5F7F7',
+  shadow: '#151D21',
+};
+
+/* =====================================================================
+   4  GRUNDFORMEN: Blattwerk, Bäume, Büsche, Wolken
+   ===================================================================== */
+// Blob aus Kreisen: Kontur, dunkle Basis, hellere Fläche (versetzt), optionale Glanzpunkte
+function Blob(lobes, pal, sw) {
+  let o = '', d = '', m = '', l = '';
+  for (const [x, y, r] of lobes) { o += Circ(x, y, r + sw, C.line); d += Circ(x, y, r, pal.dark); }
+  for (const [x, y, r] of lobes) m += Circ(x - r * 0.09, y - r * 0.13, r * 0.86, pal.mid);
+  if (pal.light) for (const [x, y, r, hl] of lobes) if (hl) l += Circ(x - r * 0.28, y - r * 0.34, r * 0.34, pal.light);
+  return o + d + m + l;
+}
+const LEAF = { dark: C.leafDark, mid: C.leafMid, light: C.leafLight };
+const BUSH = { dark: C.bushDark, mid: C.bushMid, light: C.bushLight };
+
+// Laubbaum: x,y = Stammfuß; s = Maßstab (1 ≈ 470 px hoch)
+function Tree(x, y, s, seed, o = {}) {
+  const r = rng(seed);
+  const trunkH = (o.trunkH || 190) * s;
+  const cw = (o.cw || 150) * s, ch = (o.ch || 125) * s;
+  const cx = x + (o.lean || 0) * s, cy = y - trunkH - ch * 0.45;
+  const tw = (o.tw || 13) * s, sw = (o.sw || 3) * Math.max(0.6, Math.min(1.2, s));
+  let t = Path(`M${N(x - tw)},${N(y)} C${N(x - tw * 0.8)},${N(y - trunkH * 0.5)} ${N(cx - tw * 0.7)},${N(y - trunkH * 0.9)} ${N(cx - tw * 0.55)},${N(cy + ch * 0.2)} L${N(cx + tw * 0.55)},${N(cy + ch * 0.2)} C${N(cx + tw * 0.7)},${N(y - trunkH * 0.9)} ${N(x + tw * 0.8)},${N(y - trunkH * 0.5)} ${N(x + tw)},${N(y)} Z`, C.trunk, OL(sw));
+  const by = y - trunkH * 0.72;
+  t += Limb([[x, by], [cx - cw * 0.42, cy + ch * 0.2]], C.trunk, tw * 0.7, sw);
+  t += Limb([[x + tw * 0.2, by - 20 * s], [cx + cw * 0.38, cy + ch * 0.05]], C.trunk, tw * 0.6, sw);
+  const lobes = [];
+  const n = o.n || 12;
+  for (let i = 0; i < n; i++) {
+    const a = (i / n) * Math.PI * 2 + r() * 0.45;
+    const rr = 0.62 + r() * 0.3;
+    const lr = (0.34 + r() * 0.14) * Math.min(cw, ch) * 1.15;
+    const lx = cx + Math.cos(a) * cw * rr * 0.78, ly = cy + Math.sin(a) * ch * rr * 0.72;
+    lobes.push([lx, ly, lr, ly < cy + ch * 0.1]);
+  }
+  lobes.push([cx, cy, Math.min(cw, ch) * 0.78, true]);
+  lobes.push([cx - cw * 0.3, cy - ch * 0.25, Math.min(cw, ch) * 0.5, true]);
+  return t + Blob(lobes, o.pal || LEAF, sw);
+}
+
+// Busch mit flacher Unterkante: x = Mitte, y = Boden
+function Bush(x, y, w, h, seed, o = {}) {
+  const r = rng(seed);
+  const sw = o.sw || 3;
+  const lobes = [];
+  const n = Math.max(3, Math.round(w / (h * 0.55)));
+  for (let i = 0; i < n; i++) {
+    const u = n === 1 ? 0.5 : i / (n - 1);
+    const lx = x - w / 2 + h * 0.42 + u * (w - h * 0.84);
+    const lr = h * (0.36 + r() * 0.16);
+    lobes.push([lx, y - lr * 0.95 - r() * h * 0.18, lr, true]);
+  }
+  lobes.push([x, y - h * 0.5, h * 0.48, true]);
+  const pal = o.pal || BUSH;
+  let s = Blob(lobes, pal, sw);
+  // flache Unterkante
+  s += Rect(x - w / 2 - 2, y - 4, w + 4, 10, pal.dark, OL(sw));
+  return G({ 'clip-path': o.clip ? `url(#${o.clip})` : undefined }, s);
+}
+
+// Wolke mit flacher Unterseite
+function Cloud(x, y, s) {
+  const lobes = [[-70, -16, 28], [-30, -40, 38], [20, -50, 45], [64, -30, 32], [96, -14, 20]].map(([a, b, r]) => [x + a * s, y + b * s, r * s]);
+  const bx = x - 96 * s, by = y - 26 * s, bw = 212 * s, bh = 26 * s;
+  let o = '', f = '';
+  for (const [cx, cy, r] of lobes) { o += Circ(cx, cy, r + 2.5, C.cloudLine); f += Circ(cx, cy, r, '#FFFFFF'); }
+  o += Rect(bx - 2.5, by - 2.5, bw + 5, bh + 5, C.cloudLine, { rx: 13 * s + 2.5 });
+  f += Rect(bx, by, bw, bh, '#FFFFFF', { rx: 13 * s });
+  f += Rect(bx + 16 * s, by + 14 * s, bw - 40 * s, 6 * s, '#E4EEF4', { rx: 3 * s });
+  return o + f;
+}
+
+/* =====================================================================
+   5  FIGUREN-BAUKASTEN
+   Ursprung = Fußmitte am Boden, Blick nach rechts (dir = -1 spiegelt).
+   Maße bei s = 1: Erwachsene ca. 290 px hoch. Winkel in Grad: 0 = senkrecht
+   nach unten, positiv = in Blickrichtung.
+   ===================================================================== */
+const pt = (x, y, ang, len) => [x + Math.sin(ang * DEG) * len, y + Math.cos(ang * DEG) * len];
+const angOf = (dx, dy) => Math.atan2(dx, dy) / DEG;
+// Zwei-Glieder-IK: liefert beide möglichen Mittelgelenke
+function ik2(ax, ay, bx, by, l1, l2) {
+  const dx = bx - ax, dy = by - ay;
+  const d = Math.max(1e-3, Math.min(Math.hypot(dx, dy), (l1 + l2) * 0.999));
+  const base = Math.atan2(dy, dx);
+  const a = Math.acos(clamp((l1 * l1 + d * d - l2 * l2) / (2 * l1 * d), -1, 1));
+  return [[ax + l1 * Math.cos(base + a), ay + l1 * Math.sin(base + a)], [ax + l1 * Math.cos(base - a), ay + l1 * Math.sin(base - a)]];
+}
+
+// Frisuren (Kopfmitte 0,0; r = Kopfradius). back = hinter Kopf, front = über Kopf
+function hairShapes(style, r) {
+  const k = v => N(v * r);
+  const shortFront = `M${k(0.86)},${k(-0.36)} C${k(0.92)},${k(-1.12)} ${k(-0.18)},${k(-1.34)} ${k(-0.7)},${k(-1.05)} C${k(-1.12)},${k(-0.8)} ${k(-1.14)},${k(-0.1)} ${k(-0.92)},${k(0.36)} L${k(-0.6)},${k(0.3)} C${k(-0.7)},${k(-0.16)} ${k(-0.46)},${k(-0.56)} ${k(-0.08)},${k(-0.62)} C${k(0.32)},${k(-0.7)} ${k(0.62)},${k(-0.56)} ${k(0.86)},${k(-0.36)} Z`;
+  const longBack = `M${k(0.55)},${k(-0.92)} C${k(-0.25)},${k(-1.32)} ${k(-1.28)},${k(-0.92)} ${k(-1.18)},${k(0.2)} C${k(-1.12)},${k(0.95)} ${k(-1.05)},${k(1.45)} ${k(-0.72)},${k(1.82)} L${k(0.28)},${k(1.82)} C${k(0.08)},${k(1.2)} ${k(-0.22)},${k(0.72)} ${k(-0.2)},${k(0.3)} Z`;
+  const fringe = `M${k(0.9)},${k(-0.2)} C${k(1.0)},${k(-1.12)} ${k(-0.2)},${k(-1.36)} ${k(-0.74)},${k(-1.02)} C${k(-1.14)},${k(-0.76)} ${k(-1.16)},${k(-0.05)} ${k(-0.96)},${k(0.5)} L${k(-0.58)},${k(0.36)} C${k(-0.66)},${k(-0.12)} ${k(-0.4)},${k(-0.5)} ${k(0.02)},${k(-0.58)} C${k(0.44)},${k(-0.64)} ${k(0.74)},${k(-0.44)} ${k(0.9)},${k(-0.2)} Z`;
+  switch (style) {
+    case 'long': return { back: longBack, front: fringe };
+    case 'ponytail': return { back: `M${k(-0.78)},${k(-0.62)} C${k(-1.5)},${k(-0.7)} ${k(-1.62)},${k(0.2)} ${k(-1.42)},${k(0.86)} C${k(-1.3)},${k(0.5)} ${k(-1.12)},${k(0.1)} ${k(-0.86)},${k(-0.12)} Z`, front: shortFront, tie: [-0.9, -0.42] };
+    case 'bun': return { back: `M${k(-0.3)},${k(-1.02)} m${k(-0.42)},0 a${k(0.42)},${k(0.42)} 0 1,0 ${k(0.84)},0 a${k(0.42)},${k(0.42)} 0 1,0 ${k(-0.84)},0 Z`, front: shortFront };
+    case 'bald': return { back: '', front: `M${k(-0.98)},${k(0.3)} C${k(-1.08)},${k(-0.2)} ${k(-0.9)},${k(-0.5)} ${k(-0.62)},${k(-0.58)} L${k(-0.5)},${k(-0.2)} C${k(-0.62)},${k(0)} ${k(-0.66)},${k(0.14)} ${k(-0.62)},${k(0.3)} Z` };
+    default: return { back: '', front: shortFront };
+  }
+}
+
+/*
+  Person(o): Figur im Flat-Vector-Stil.
+  o: x, y, s, dir, kid, walk (0..1), phase, stride, lean, skin, hair, hairStyle, top, jacket, coat,
+     pants, shoes, backpack, bag, cap, hood, mood ('smile' | 'neutral' | 'concern'),
+     legs {f,b:{hip,knee}}, arms {f,b:{sh,el}}, hipY, seated, before, afterFarLeg, after, out
+*/
+function Person(o) {
+  const s = o.s ?? 1, dir = o.dir ?? 1, kid = !!o.kid;
+  const walk = o.walk ?? 0, ph = o.phase ?? 0;
+  const skin = o.skin || C.skin1;
+  const topC = o.top || '#FFFFFF';
+  const sleeve = o.sleeve || o.coat || o.jacket || topC;
+  const pants = o.pants || C.jeans, shoes = o.shoes || '#FFFFFF';
+  const L1 = kid ? 46 : 68, L2 = kid ? 44 : 64, ANK = kid ? 8 : 10;
+  const TOR = kid ? 62 : 84, HR = kid ? 26 : 24;
+  const UA = kid ? 34 : 52, FA = kid ? 32 : 48;
+  const LW = kid ? 19 : 23, AW = kid ? 14 : 16.5, SW = 3;
+  const amp = (o.stride ?? 18) * walk;
+  const legAt = psi => ({ hip: amp * Math.sin(psi), knee: 4 + 38 * walk * Math.pow(Math.max(0, Math.cos(psi)), 2) });
+  let lf = walk ? legAt(ph) : { hip: 3, knee: 3 };
+  let lb = walk ? legAt(ph + Math.PI) : { hip: -3, knee: 3 };
+  if (o.seated) { lf = { hip: 86, knee: 86 }; lb = { hip: 80, knee: 82 }; }
+  if (o.legs) { lf = o.legs.f || lf; lb = o.legs.b || lb; }
+  const armAmp = 15 * walk;
+  let af = { sh: -armAmp * Math.sin(ph) + 3, el: 12 + 12 * walk * Math.max(0, -Math.sin(ph)) };
+  let ab = { sh: armAmp * Math.sin(ph) - 3, el: 12 + 12 * walk * Math.max(0, Math.sin(ph)) };
+  if (o.arms) { af = o.arms.f || af; ab = o.arms.b || ab; }
+  const bob = o.seated ? 0 : walk * 6 * Math.pow(Math.sin(ph), 2);
+  const hipY = o.hipY ?? (o.seated ? -(L2 + ANK) : -(L1 + L2 + ANK) + bob);
+  const lean = (o.lean ?? walk * 3) + (o.senior ? 4 : 0);
+  const shY = hipY - TOR;
+  const hs = kid ? 20 : 26;                 // halbe Schulterbreite
+  const headC = [3, shY - 9 - HR];
+  const legPts = (hx, l) => { const k = pt(hx, hipY, l.hip, L1); const a = pt(k[0], k[1], l.hip - l.knee, L2); return [[hx, hipY], k, a]; };
+  const shoulderF = [hs - 5, shY + 9], shoulderB = [-hs + 6, shY + 9];
+  // Arm-IK auf Weltziel (optional)
+  const toLocal = (wx, wy) => {
+    let lx = (wx - (o.x || 0)) / (s * dir), ly = (wy - (o.y || 0)) / s;
+    const c = Math.cos(-lean * DEG), sn = Math.sin(-lean * DEG);
+    const dx = lx, dy = ly - hipY;
+    return [dx * c - dy * sn, hipY + dx * sn + dy * c];
+  };
+  const armIK = (sh, target, lowElbow = true) => {
+    const [tx, ty] = toLocal(target[0], target[1]);
+    const [e1, e2] = ik2(sh[0], sh[1], tx, ty, UA, FA);
+    const e = (lowElbow ? (e1[1] > e2[1]) : (e1[1] < e2[1])) ? e1 : e2;
+    const a1 = angOf(e[0] - sh[0], e[1] - sh[1]);
+    const a2 = angOf(tx - e[0], ty - e[1]);
+    return { sh: a1, el: a2 - a1 };
+  };
+  if (o.reachF) af = armIK(shoulderF, o.reachF, o.reachFLow ?? true);
+  if (o.reachB) ab = armIK(shoulderB, o.reachB, o.reachBLow ?? true);
+  const armPts = (sp, a) => { const e = pt(sp[0], sp[1], a.sh, UA); const w = pt(e[0], e[1], a.sh + a.el, FA); return [sp, e, w]; };
+  const shoe = (p, shin) => {
+    const ang = Math.max(0, -shin) * 0.55;
+    return Path('M-9,-7 L4,-9 Q19,-8 23,1 L23,7 L-10,7 Z', shoes, { ...OL(SW), transform: `translate(${N(p[0])} ${N(p[1] + ANK - 7)}) rotate(${N(ang)})` });
+  };
+  const legSVG = (hx, l, col) => { const p = legPts(hx, l); return Limb(p, col, LW, SW) + shoe(p[2], l.hip - l.knee); };
+  const armSVG = (sp, a, col, handSkin = skin) => {
+    const p = armPts(sp, a);
+    let svg = Limb(p, col, AW, SW);
+    if (o.shortSleeves) svg = Limb([p[0], p[1]], col, AW, SW) + Limb([p[1], p[2]], handSkin, AW - 3, SW) + Limb([p[0], pt(p[0][0], p[0][1], a.sh, UA * 0.55)], col, AW + 2, SW);
+    return svg + Circ(p[2][0], p[2][1], kid ? 7 : 8.5, handSkin, OL(SW));
+  };
+
+  let body = o.before || '';
+  // Rucksack hinten (dreht mit dem Oberkörper)
+  const pack = o.backpack ? Path(`M${-hs - 12},${shY + 12} Q${-hs - 14},${shY + 2} ${-hs},${shY + 4} L${-hs + 8},${shY + 6} L${-hs + 8},${hipY - 8} L${-hs - 10},${hipY - 12} Q${-hs - 16},${hipY - 20} ${-hs - 14},${hipY - 34} Z`, o.backpack, OL(SW)) : '';
+  // hinteres Haar (lang/Zopf)
+  const hair = hairShapes(o.hairStyle || 'short', HR);
+  const hairC = o.hair || C.hairBrown;
+  const headT = `translate(${N(headC[0])} ${N(headC[1])})`;
+  let upperBack = '';
+  if (o.hood) upperBack += Path(`M${-hs + 2},${shY + 4} Q${-hs - 6},${shY - 26} ${-4},${shY - 22} L${6},${shY + 2} Z`, o.hood, OL(SW));
+  if (hair.back) upperBack += Path(hair.back, hairC, { ...OL(SW), transform: headT });
+  // hinterer Arm
+  upperBack = armSVG(shoulderB, ab, shade(sleeve, 0.86)) + upperBack;
+  // Beine
+  let legs = legSVG(-8, lb, shade(pants, 0.86)) + (o.afterFarLeg || '') + legSVG(8, lf, pants);
+  // Rumpf
+  const torsoD = `M${-hs},${shY + 8} Q${-hs + 1},${shY - 2} ${-hs + 12},${shY - 3} L${hs - 12},${shY - 3} Q${hs - 1},${shY - 2} ${hs},${shY + 8} L${hs - 3},${hipY + 4} Q0,${hipY + 9} ${-hs + 3},${hipY + 4} Z`;
+  let torso = Rect(-6, shY - 14, 12, 18, skin, OL(SW));   // Hals
+  if (o.coat) {
+    torso += Path(`M${-hs},${shY + 8} Q${-hs + 1},${shY - 2} ${-hs + 12},${shY - 3} L${hs - 12},${shY - 3} Q${hs - 1},${shY - 2} ${hs},${shY + 8} L${hs + 6},${hipY + 62} Q0,${hipY + 67} ${-hs - 6},${hipY + 62} Z`, o.coat, OL(SW));
+    torso += Path(`M3,${shY - 2} L15,${shY - 2} L12,${hipY + 8} L5,${hipY + 8} Z`, topC, OL(2));
+    torso += Line(8, hipY + 12, 10, hipY + 60, C.line, 2);
+  } else if (o.jacket) {
+    torso += Path(torsoD, o.jacket, OL(SW));
+    torso += Path(`M2,${shY - 2} L15,${shY - 2} L13,${hipY + 5} L4,${hipY + 5} Z`, topC, OL(2));
+    torso += Path(`M2,${shY - 2} L-3,${shY + 18} L4,${shY + 30}`, 'none', { stroke: C.line, 'stroke-width': 2, 'stroke-linejoin': 'round' });
+  } else {
+    torso += Path(torsoD, topC, OL(SW));
+    torso += Path(`M-6,${shY - 3} Q3,${shY + 7} 12,${shY - 3}`, 'none', { stroke: C.line, 'stroke-width': 2 });
+  }
+  if (o.backpack) torso += Line(-hs + 9, shY + 2, -hs + 11, hipY - 8, shade(o.backpack, 0.8), 5) + Line(hs - 8, shY + 2, hs - 10, shY + 44, shade(o.backpack, 0.8), 5);
+  // Kopf
+  let head = '';
+  head += Ell(-0.5 * HR, 0.08 * HR, 0.17 * HR, 0.23 * HR, skin, OL(2.5));  // Ohr
+  head += Circ(0, 0, HR, skin, OL(SW));
+  if (!o.faceless) {
+    const eye = C.line;
+    head += Ell(0.2 * HR, -0.04 * HR, 0.1 * HR, 0.13 * HR, eye) + Ell(0.62 * HR, -0.04 * HR, 0.09 * HR, 0.12 * HR, eye);
+    head += Path(`M${N(0.08 * HR)},${N(-0.28 * HR)} Q${N(0.2 * HR)},${N(-0.36 * HR)} ${N(0.32 * HR)},${N(-0.3 * HR)} M${N(0.52 * HR)},${N(-0.3 * HR)} Q${N(0.64 * HR)},${N(-0.36 * HR)} ${N(0.74 * HR)},${N(-0.28 * HR)}`, 'none', { stroke: shade(o.hair || C.hairBrown, 0.9), 'stroke-width': 2.2, 'stroke-linecap': 'round' });
+    head += Path(`M${N(0.86 * HR)},${N(0.0 * HR)} Q${N(1.0 * HR)},${N(0.2 * HR)} ${N(0.8 * HR)},${N(0.24 * HR)}`, 'none', { stroke: shade(skin, 0.72), 'stroke-width': 2, 'stroke-linecap': 'round' });
+    const mood = o.mood || 'smile';
+    const mouth = mood === 'smile' ? `M${N(0.3 * HR)},${N(0.44 * HR)} Q${N(0.52 * HR)},${N(0.62 * HR)} ${N(0.72 * HR)},${N(0.42 * HR)}`
+      : mood === 'concern' ? `M${N(0.34 * HR)},${N(0.54 * HR)} Q${N(0.52 * HR)},${N(0.44 * HR)} ${N(0.7 * HR)},${N(0.54 * HR)}`
+      : `M${N(0.34 * HR)},${N(0.5 * HR)} L${N(0.7 * HR)},${N(0.5 * HR)}`;
+    head += Path(mouth, 'none', { stroke: C.line, 'stroke-width': 2.2, 'stroke-linecap': 'round' });
+  }
+  head += Path(hair.front, hairC, OL(SW));
+  if (hair.tie) head += Circ(hair.tie[0] * HR, hair.tie[1] * HR, 3.5, shade(hairC, 0.6));
+  if (o.cap) head += Path(`M${-HR * 0.95},${-HR * 0.25} C${-HR * 0.95},${-HR * 1.3} ${HR * 0.95},${-HR * 1.3} ${HR * 0.98},${-HR * 0.28} Z`, o.cap, OL(SW)) + Path(`M${HR * 0.7},${-HR * 0.32} L${HR * 1.55},${-HR * 0.22} Q${HR * 1.62},${-HR * 0.06} ${HR * 1.4},${-HR * 0.04} L${HR * 0.62},${-HR * 0.1} Z`, shade(o.cap, 0.9), OL(SW));
+  head = G({ transform: headT }, head);
+  // Tasche
+  let bag = '';
+  if (o.bag) bag = Line(hs - 6, shY + 2, -hs + 2, hipY + 2, shade(o.bag, 0.75), 4) + Rect(-hs - 14, hipY - 8, 30, 30, o.bag, { ...OL(SW), rx: 5 });
+  // vorderer Arm
+  const armFront = armSVG(shoulderF, af, sleeve);
+
+  const upper = G({ transform: lean ? `rotate(${N(lean)} 0 ${N(hipY)})` : undefined }, pack + upperBack + torso + head + bag + armFront);
+  body += legs + upper;
+  // Gelenkpositionen nach außen (Welt)
+  if (o.out) {
+    const toWorld = ([lx, ly]) => {
+      const c = Math.cos(lean * DEG), sn = Math.sin(lean * DEG);
+      const dx = lx, dy = ly - hipY;
+      const rx = dx * c - dy * sn, ry = hipY + dx * sn + dy * c;
+      return [(o.x || 0) + rx * s * dir, (o.y || 0) + ry * s];
+    };
+    o.out.handF = toWorld(armPts(shoulderF, af)[2]);
+    o.out.handB = toWorld(armPts(shoulderB, ab)[2]);
+    o.out.shF = toWorld(shoulderF);
+    o.out.shB = toWorld(shoulderB);
+    o.out.head = toWorld(headC);
+  }
+  return G({ transform: `translate(${N(o.x || 0)} ${N(o.y || 0)}) scale(${N(s * dir)} ${N(s)})` }, body + (o.after || ''));
+}
+
+// Gangphase aus zurückgelegter Strecke (verhindert „Gleiten“ der Füße)
+const stepPhase = (dist, s, stride = 18) => Math.PI * dist / (2 * 132 * Math.sin(stride * DEG) * s);
+
+// Radfahrerin/Radfahrer: Rad mit Kurbel-IK
+function Cyclist(o) {
+  const s = o.s ?? 1, dir = o.dir ?? 1;
+  const crank = o.crank ?? 0, wheelRot = o.wheel ?? 0;
+  const frame = o.frameColor || '#3F8C4B';
+  const RW = [-94, -60], FW = [96, -60], BB = [0, -50], R = 57;
+  const wheel = (c) => {
+    let w = Circ(c[0], c[1], R + 3, C.line) + Circ(c[0], c[1], R - 3, '#FFFFFF', { opacity: 0.001 });
+    w += Circ(c[0], c[1], R, 'none', { stroke: C.line, 'stroke-width': 9 }) + Circ(c[0], c[1], R - 7, 'none', { stroke: '#9AA2A6', 'stroke-width': 3 });
+    for (let i = 0; i < 8; i++) { const a = wheelRot + i * Math.PI / 4; w += Line(c[0], c[1], c[0] + Math.cos(a) * (R - 8), c[1] + Math.sin(a) * (R - 8), '#9AA2A6', 1.6); }
+    return w + Circ(c[0], c[1], 5, '#9AA2A6', OL(2));
+  };
+  const seat = [-30, -144], head = [66, -134], bar = [72, -160];
+  const fr = (a, b, w = 7) => Line(a[0], a[1], b[0], b[1], C.line, w + 5) + Line(a[0], a[1], b[0], b[1], frame, w);
+  const pedal = a => [BB[0] + Math.cos(a) * 18, BB[1] + Math.sin(a) * 18];
+  const pF = pedal(crank), pB = pedal(crank + Math.PI);
+  const frameSVG = fr(RW, BB) + fr(RW, [seat[0] + 6, seat[1] + 14]) + fr(BB, [seat[0] + 4, seat[1] + 12]) + fr([seat[0] + 5, seat[1] + 18], head) + fr(BB, head) + fr(head, FW, 6)
+    + Path(`M${seat[0] - 18},${seat[1] - 4} Q${seat[0]},${seat[1] - 12} ${seat[0] + 16},${seat[1] - 5} L${seat[0] + 14},${seat[1] + 2} L${seat[0] - 16},${seat[1] + 2} Z`, C.black, OL(2.5))
+    + fr(head, bar, 5) + Line(bar[0] - 10, bar[1], bar[0] + 12, bar[1] + 2, C.line, 7);
+  // Beine via IK (Hüfte am Sattel, Fuß auf Pedal)
+  const hip = [seat[0] + 2, seat[1] - 12];
+  const legAng = (foot) => {
+    const [k1, k2] = ik2(hip[0], hip[1], foot[0], foot[1] - 10, 68, 64);
+    const k = k1[0] > k2[0] ? k1 : k2;       // Knie nach vorn
+    const h = angOf(k[0] - hip[0], k[1] - hip[1]);
+    const sh = angOf(foot[0] - k[0], foot[1] - 10 - k[1]);
+    return { hip: h, knee: h - sh };
+  };
+  const crankSVG = (p) => Line(BB[0], BB[1], p[0], p[1], C.line, 7) + Line(BB[0], BB[1], p[0], p[1], '#7A8387', 3.5) + Rect(p[0] - 8, p[1] - 3, 16, 6, C.black, { rx: 2 });
+  const person = Person({
+    ...o.person, x: 0, y: 0, s: 1, dir: 1, walk: 0,
+    hipY: hip[1], lean: 24,
+    legs: { f: legAng(pF), b: legAng(pB) },
+    reachF: [bar[0] + 6, bar[1] + 2], reachB: [bar[0] - 4, bar[1] + 2],
+    before: wheel(RW) + wheel(FW) + crankSVG(pB),
+    afterFarLeg: frameSVG + Circ(BB[0], BB[1], 10, '#7A8387', OL(2.5)),
+    after: crankSVG(pF),
+  });
+  return G({ transform: `translate(${N(o.x)} ${N(o.y)}) scale(${N(s * dir)} ${N(s)})` }, person);
+}
+
+// Der Schatten: gesichtslose, halbtransparente Silhouette – ohne Kapuze, ohne Gesicht
+function Shade(o) {
+  const s = o.s ?? 1, dir = o.dir ?? 1;
+  const walk = o.walk ?? 0, ph = o.phase ?? 0;
+  const L1 = 70, L2 = 66, ANK = 10, TOR = 88;
+  const amp = 17 * walk;
+  const legAt = psi => ({ hip: amp * Math.sin(psi), knee: 4 + 34 * walk * Math.pow(Math.max(0, Math.cos(psi)), 2) });
+  const lf = walk ? legAt(ph) : { hip: 4, knee: 3 }, lb = walk ? legAt(ph + Math.PI) : { hip: -4, knee: 3 };
+  const bob = walk * 6 * Math.pow(Math.sin(ph), 2);
+  const hipY = -(L1 + L2 + ANK) + bob;
+  const shY = hipY - TOR;
+  const lean = o.lean ?? walk * 3;
+  let af = { sh: -13 * walk * Math.sin(ph) + 4, el: 12 }, ab = { sh: 13 * walk * Math.sin(ph) - 4, el: 12 };
+  if (o.arms) { af = o.arms.f || af; ab = o.arms.b || ab; }
+  const shF = [20, shY + 10], shB = [-18, shY + 10];
+  const toLocal = (wx, wy) => {
+    const lx = (wx - o.x) / (s * dir), ly = (wy - o.y) / s;
+    const c = Math.cos(-lean * DEG), sn = Math.sin(-lean * DEG), dx = lx, dy = ly - hipY;
+    return [dx * c - dy * sn, hipY + dx * sn + dy * c];
+  };
+  if (o.reachF) {
+    const [tx, ty] = toLocal(o.reachF[0], o.reachF[1]);
+    const [e1, e2] = ik2(shF[0], shF[1], tx, ty, 56, 52);
+    const e = e1[1] > e2[1] ? e1 : e2;
+    const a1 = angOf(e[0] - shF[0], e[1] - shF[1]), a2 = angOf(tx - e[0], ty - e[1]);
+    af = { sh: a1, el: a2 - a1 };
+  }
+  const legP = (hx, l) => { const k = pt(hx, hipY, l.hip, L1); const a = pt(k[0], k[1], l.hip - l.knee, L2); return [[hx, hipY], k, [a[0], a[1] + 4]]; };
+  const armP = (sp, a) => { const e = pt(sp[0], sp[1], a.sh, 56); const w = pt(e[0], e[1], a.sh + a.el, 52); return [sp, e, w]; };
+  const col = C.shadow;
+  const limb = (p, w) => Poly(p, col, w);
+  const pa = armP(shF, af), pb = armP(shB, ab);
+  let upper = limb(pb, 19) + Circ(pb[2][0], pb[2][1], 10, col)
+    + Path(`M-27,${shY + 10} Q-26,${shY - 4} -12,${shY - 5} L14,${shY - 5} Q28,${shY - 4} 29,${shY + 10} L24,${hipY + 6} Q0,${hipY + 12} -22,${hipY + 6} Z`, col)
+    + Rect(-8, shY - 16, 16, 20, col)
+    + Ell(2, shY - 34, 22, 27, col)
+    + limb(pa, 19) + Circ(pa[2][0], pa[2][1], 10, col);
+  const body = limb(legP(-9, lb), 26) + limb(legP(9, lf), 26) + G({ transform: lean ? `rotate(${N(lean)} 0 ${N(hipY)})` : undefined }, upper);
+  if (o.out) {
+    const c = Math.cos(lean * DEG), sn = Math.sin(lean * DEG);
+    const w = ([lx, ly]) => { const dx = lx, dy = ly - hipY; return [o.x + (dx * c - dy * sn) * s * dir, o.y + (hipY + dx * sn + dy * c) * s]; };
+    o.out.handF = w(pa[2]); o.out.handB = w(pb[2]); o.out.head = w([2, shY - 34]);
+  }
+  const op = o.opacity ?? 0.92;
+  // weicher Bodenschatten, dunkler Halo, leicht weichgezeichneter Kern
+  const ground = Ell(0, 2, 62, 11, C.shadow, { opacity: 0.22, filter: 'url(#fShadeSoft)' });
+  return G({ transform: `translate(${N(o.x)} ${N(o.y)}) scale(${N(s * dir)} ${N(s)})`, opacity: op },
+    ground + G({ filter: 'url(#fShadeHalo)', opacity: 0.32 }, body) + G({ filter: 'url(#fShadeSoft)', 'stroke-linecap': 'round' }, body));
+}
+
+/* =====================================================================
+   6  SYMBOLE: Schlüssel, Schlüsselbund, Glanz
+   ===================================================================== */
+// Schlüssel hängend: Ursprung = Ringmitte oben; Bart unten
+function Key(x, y, s = 1, rot = 0, o = {}) {
+  const gold = o.gold || C.gold;
+  let k = '';
+  if (!o.noRing) k += Circ(0, 0, 8, 'none', { stroke: C.line, 'stroke-width': 5.5 }) + Circ(0, 0, 8, 'none', { stroke: '#C8CED1', 'stroke-width': 2.5 });
+  k += Path('M-15,24 a15,15 0 1,0 30,0 a15,15 0 1,0 -30,0 Z M-5.5,24 a5.5,5.5 0 1,1 11,0 a5.5,5.5 0 1,1 -11,0 Z', gold, { ...OL(3), 'fill-rule': 'evenodd' });
+  k += Path('M-4.5,38 L4.5,38 L4.5,88 L-4.5,88 Z', gold, OL(3));
+  k += Path('M4,66 L15,66 L15,71 L11,71 L11,75 L15,75 L15,84 L4,84 Z', gold, OL(3));
+  k += Path('M-10,17 Q-6,11 0,10', 'none', { stroke: C.goldLight, 'stroke-width': 3, 'stroke-linecap': 'round' });
+  return G({ transform: TR(x, y, s, rot) }, k);
+}
+// Schlüsselbund: n Schlüssel fächern sich am Ring auf (spread 0..1)
+function KeyRing(x, y, s = 1, spread = 1, rot = 0, skipMain = false) {
+  const angs = [0, -30, 30, -52, 52];
+  const golds = [C.gold, '#D9A92F', '#E8C052', '#CF9E2A', '#EDC968'];
+  let k = '';
+  for (let i = angs.length - 1; i >= (skipMain ? 1 : 0); i--) {
+    const a = i === 0 ? 0 : angs[i] * spread;
+    const op = i === 0 ? 1 : clamp(spread * 1.6 - 0.1 * i);
+    if (op <= 0.01) continue;
+    k += G({ opacity: op }, Key(0, 0, i === 0 ? 1 : 0.92, a, { gold: golds[i], noRing: true }));
+  }
+  k += Circ(0, 0, 11, 'none', { stroke: C.line, 'stroke-width': 6 }) + Circ(0, 0, 11, 'none', { stroke: '#C8CED1', 'stroke-width': 3 });
+  return G({ transform: TR(x, y, s, rot) }, k);
+}
+// Glanz (vierzackiger Stern)
+const Glint = (x, y, k) => k <= 0.01 ? '' : G({ transform: TR(x, y, k), opacity: clamp(k * 1.4) }, Path('M0,-16 L3.5,-3.5 L16,0 L3.5,3.5 L0,16 L-3.5,3.5 L-16,0 L-3.5,-3.5 Z', '#FFFFFF', { stroke: C.goldLight, 'stroke-width': 1.5 }));
+
+/* =====================================================================
+   7  OBERFLÄCHE: Karten, Hinweise, Vertraulich-Vermerk, Untertitel
+   ===================================================================== */
+function Card(x, y, w, h, o = {}) {
+  const accent = o.accent || C.gruen;
+  return G({ opacity: o.opacity ?? 1, transform: o.dy ? `translate(0 ${N(o.dy)})` : undefined, filter: 'url(#fCardShadow)' },
+    Rect(x, y, w, h, o.fill || '#FFFFFF', { rx: 18, opacity: o.fillOpacity ?? 0.94 }) +
+    Rect(x, y + 22, 9, h - 44, accent, { rx: 4.5 }) + (o.inner || ''));
+}
+function Confidential(op = 1) {
+  const label = 'Vertraulich – nur zur internen Verwendung';
+  const w = measure(label, 22) + 32;
+  return G({ opacity: op }, Rect(36, H - 36 - 40, w, 40, '#FFFFFF', { rx: 8, opacity: 0.86 }) + Txt(52, H - 36 - 13, label, { size: 22, fill: C.text2 }));
+}
+// Untertitel unten mittig auf halbtransparentem Band
+const SUB = { size: 44, lh: 56, padX: 30, padY: 15, bottom: 50, bandOpacity: 0.78 };
+function cueAt(t) { for (const c of CUES) if (t >= c.start && t < c.end) return c; return null; }
+function SubtitleSVG(t) {
+  const c = cueAt(t);
+  if (!c) return '';
+  const a = fadeIO(t, c.start, c.start + 0.12, c.end - 0.12, c.end);
+  const widths = c.lines.map(l => measure(l, SUB.size));
+  const bw = Math.max(...widths) + SUB.padX * 2;
+  const bh = c.lines.length * SUB.lh + SUB.padY * 2 - (SUB.lh - SUB.size) + 4;
+  const by = H - SUB.bottom - bh, bx = (W - bw) / 2;
+  let s = Rect(bx, by, bw, bh, C.text, { rx: 10, opacity: SUB.bandOpacity });
+  c.lines.forEach((l, i) => { s += Txt(W / 2, by + SUB.padY + SUB.size * 0.8 + i * SUB.lh + 2, l, { size: SUB.size, fill: '#FFFFFF', anchor: 'middle' }); });
+  return G({ opacity: a }, s);
+}
+
+/* =====================================================================
+   8  FARBSTIMMUNG (je Szene): Sättigung, Helligkeit, Kontrast, kühle Tönung
+   ===================================================================== */
+const GRADE = {
+  day: { sat: 1.0,  bri: 1.0,  con: 1.0,  tint: '#FFFFFF', ta: 0 },
+  s3:  { sat: 0.72, bri: 0.98, con: 1.03, tint: '#C3D2DE', ta: 0.5 },
+};
+
+/* =====================================================================
+   9  SZENE 0 – TITEL (0:00–0:12)
+   Innenstadt wie Stilreferenz, langsamer Kamera-Drift nach rechts.
+   ===================================================================== */
+function TownHouse(x, base, w, h, o) {
+  const sw = 2.5;
+  let s = '';
+  const top = base - h;
+  if (o.roof === 'mansard') {
+    s += Path(P([[x - 6, top + 2], [x + 18, top - 58], [x + w - 18, top - 58], [x + w + 6, top + 2]]), C.roofSlate, OL(sw));
+    for (let i = 0; i < o.cols; i++) { const dx = x + 26 + i * (w - 52) / Math.max(1, o.cols - 1) - 12; s += Rect(dx, top - 44, 24, 30, C.winGlass, OL(2)) + Path(P([[dx - 4, top - 44], [dx + 12, top - 58], [dx + 28, top - 44]]), C.roofSlate, OL(2)); }
+  } else {
+    s += Path(P([[x - 12, top + 2], [x + w / 2, top - w * 0.3], [x + w + 12, top + 2]]), o.roofColor || C.roofRed, OL(sw));
+  }
+  s += Rect(x, top, w, h, o.facade, OL(sw));
+  s += Rect(x - 4, top - 4, w + 8, 10, shade(o.facade, 0.9), OL(sw));
+  const rows = o.rows, cols = o.cols;
+  const gx = (w - 30) / cols, gy = (h - 60) / rows;
+  for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+    const wx = x + 15 + c * gx + gx * 0.22, wy = top + 22 + r * gy;
+    s += Rect(wx, wy, gx * 0.56, gy * 0.62, '#FFFFFF', OL(2)) + Rect(wx + 3, wy + 3, gx * 0.56 - 6, gy * 0.62 - 6, C.winGlass);
+    s += Line(wx + gx * 0.28, wy + 3, wx + gx * 0.28, wy + gy * 0.62 - 3, '#FFFFFF', 2);
+  }
+  return s;
+}
+function Church(x, base) {
+  const w = 74, bodyTop = base - 330;
+  let s = Rect(x, bodyTop, w, 330, C.sand, OL(2.5));
+  s += Rect(x + w - 16, bodyTop, 16, 330, C.sandShade);
+  s += Rect(x, bodyTop, w, 330, 'none', OL(2.5));
+  s += Rect(x - 5, bodyTop - 6, w + 10, 10, C.sandShade, OL(2.5));
+  s += Circ(x + w / 2, bodyTop + 40, 16, '#FFFFFF', OL(2.5)) + Line(x + w / 2, bodyTop + 40, x + w / 2, bodyTop + 30, C.line, 2.5) + Line(x + w / 2, bodyTop + 40, x + w / 2 + 8, bodyTop + 44, C.line, 2.5);
+  s += Rect(x + 22, bodyTop + 80, 12, 34, C.line, { rx: 6 }) + Rect(x + 40, bodyTop + 80, 12, 34, C.line, { rx: 6 });
+  s += Rect(x + 28, bodyTop + 170, 18, 40, C.winGlass, { ...OL(2), rx: 9 });
+  s += Path(P([[x - 4, bodyTop - 6], [x + w / 2, bodyTop - 170], [x + w + 4, bodyTop - 6]]), C.spire, OL(2.5));
+  s += Path(P([[x + w / 2, bodyTop - 170], [x + w + 4, bodyTop - 6], [x + w / 2 + 8, bodyTop - 6]]), shade(C.spire, 0.85));
+  s += Path(P([[x - 4, bodyTop - 6], [x + w / 2, bodyTop - 170], [x + w + 4, bodyTop - 6]]), 'none', OL(2.5));
+  s += Circ(x + w / 2, bodyTop - 176, 6, C.sand, OL(2));
+  return s;
+}
+function Rathaus() {
+  const b = 612;
+  let s = '';
+  // zurückgesetzter rechter Flügel
+  s += Rect(1780, 150, 360, b - 150, '#D9CEBF', OL(2.5));
+  for (let r = 0; r < 5; r++) for (let c = 0; c < 4; c++) s += Rect(1810 + c * 80, 178 + r * 80, 50, 54, C.glass, OL(2)) + Path(P([[1814 + c * 80, 182 + r * 80], [1828 + c * 80, 182 + r * 80], [1814 + c * 80, 200 + r * 80]]), C.glassLight, { opacity: 0.8 });
+  // linker Flügel
+  const Lx = 740, Ly = 222, Lw = 380;
+  s += Rect(Lx, Ly, Lw, b - Ly, C.facade, OL(3));
+  s += Rect(Lx - 6, Ly - 14, Lw + 12, 18, C.facadeShade, OL(3));
+  for (let i = 0; i < 5; i++) {
+    const gx = Lx + 24 + i * 71;
+    s += Rect(gx, Ly + 28, 46, b - Ly - 44, C.glass, OL(2.5));
+    s += Path(P([[gx + 5, Ly + 34], [gx + 22, Ly + 34], [gx + 5, Ly + 118]]), C.glassLight, { opacity: 0.75 });
+    for (let k = 1; k < 5; k++) s += Line(gx, Ly + 28 + k * (b - Ly - 44) / 5, gx + 46, Ly + 28 + k * (b - Ly - 44) / 5, C.mullion, 2);
+  }
+  // Hauptbau
+  const Mx = 1100, My = 92, Mw = 700;
+  s += Rect(Mx, My, Mw, b - My, C.facade, OL(3));
+  s += Rect(Mx + Mw - 60, My, 60, b - My, C.facadeShade);
+  s += Rect(Mx, My, Mw, b - My, 'none', OL(3));
+  s += Rect(Mx - 8, My - 16, Mw + 16, 20, C.facadeShade, OL(3));
+  // Glasfassade links im Hauptbau
+  const gx0 = Mx + 24, gw = 270, gy0 = My + 32, gh = 340;
+  s += Rect(gx0, gy0, gw, gh, C.glass, OL(2.5));
+  s += Path(P([[gx0 + 4, gy0 + 4], [gx0 + 120, gy0 + 4], [gx0 + 4, gy0 + 150]]), C.glassLight, { opacity: 0.55 });
+  s += Path(P([[gx0 + 150, gy0 + gh - 4], [gx0 + gw - 4, gy0 + 120], [gx0 + gw - 4, gy0 + 200], [gx0 + 210, gy0 + gh - 4]]), C.glassLight, { opacity: 0.4 });
+  for (let i = 1; i < 5; i++) s += Line(gx0 + i * gw / 5, gy0, gx0 + i * gw / 5, gy0 + gh, C.mullion, 3);
+  for (let k = 1; k < 3; k++) s += Line(gx0, gy0 + k * gh / 3, gx0 + gw, gy0 + k * gh / 3, C.mullion, 2);
+  // Spruch an der Fassade (laut Auftrag erlaubt); Schriftgröße so, dass er in die Wandfläche passt
+  const px = gx0 + gw + 34, room = Mx + Mw - 70 - px;
+  let fs = 30; while (measure('FÜR EIN LEBENSWERTES', fs) + 19 > room) fs -= 1;
+  s += Txt(px, My + 100, 'GEMEINSAM', { size: fs, fill: C.slogan, ls: 1 });
+  s += Txt(px, My + 100 + fs * 1.4, 'FÜR EIN LEBENSWERTES', { size: fs, fill: C.slogan, ls: 1 });
+  s += Txt(px, My + 100 + fs * 1.4 + fs * 1.75, 'HERNE', { size: Math.round(fs * 1.3), fill: C.slogan, ls: 2 });
+  // Erdgeschoss mit Eingang
+  s += Rect(Mx + 10, b - 132, Mw - 20, 132, C.facadeDark, OL(2.5));
+  for (let i = 0; i < 8; i++) s += Rect(Mx + 26 + i * 82, b - 118, 62, 118, C.glassDark, OL(2)) + Line(Mx + 57 + i * 82, b - 118, Mx + 57 + i * 82, b, C.mullion, 2);
+  s += Rect(Mx - 6, b - 142, Mw + 12, 14, C.facade, OL(2.5));
+  // Treppe
+  for (let k = 0; k < 4; k++) s += Rect(Mx + 60 - k * 16, b + k * 8, 440 + k * 32, 9, k % 2 ? '#D8D2C8' : '#E5E0D7', OL(2));
+  return s;
+}
+function Lamp(x, base, h, s = 1) {
+  return Rect(x - 4 * s, base - h, 8 * s, h, C.pole, OL(2)) + Rect(x - 10 * s, base - 8 * s, 20 * s, 8 * s, C.pole, OL(2))
+    + Ell(x, base - h - 4 * s, 26 * s, 8 * s, C.pole, OL(2)) + Ell(x, base - h, 18 * s, 4 * s, '#F3F0D8');
+}
+function Bench(x, y, w, s = 1) {
+  return Rect(x, y - 44 * s, w, 44 * s, C.stone, OL(2.5)) + Rect(x, y - 44 * s, w, 10 * s, C.stoneLight, OL(2)) + Rect(x - 4 * s, y - 56 * s, w + 8 * s, 14 * s, C.wood, OL(2.5)) + Rect(x - 4 * s, y - 45 * s, w + 8 * s, 4 * s, C.woodDark);
+}
+function Stele(x, base) {
+  const w = 190, h = 360, top = base - h;
+  return Rect(x + 10, top + 10, w, h, '#CFC5B8', OL(3)) + Rect(x, top, w, h, '#F1EAE0', OL(3))
+    + Txt(x + 30, top + 92, 'Stadt', { size: 34, fill: C.text2 }) + Txt(x + 30, top + 136, 'Herne', { size: 34, fill: C.text2 })
+    + Rect(x + 30, top + 162, 34, 5, C.text2);
+}
+function BusStopBack() {
+  // Rückwand, hintere Pfosten, Dach
+  let s = Rect(1618, 430, 12, 480, C.metal, OL(2.5));
+  s += Path(P([[1560, 402], [2080, 360], [2080, 392], [1570, 432]]), '#6E777C', OL(3));
+  s += Path(P([[1570, 432], [2080, 392], [2080, 404], [1575, 444]]), '#A7B0B5', OL(2));
+  return s;
+}
+function BusStopFront() {
+  let s = Rect(1590, 444, 12, 470, C.metal, OL(2.5));
+  // Glaswand mit Haltestellenzeichen
+  s += Rect(1606, 470, 150, 300, '#DDEBF0', { ...OL(2.5), opacity: 0.55 });
+  s += Rect(1606, 470, 150, 300, 'none', OL(2.5));
+  s += Circ(1650, 520, 30, '#F6C63A', OL(3)) + Circ(1650, 520, 24, 'none', { stroke: '#2E8B3E', 'stroke-width': 4 }) + Txt(1650, 534, 'H', { size: 36, weight: 700, fill: '#2E8B3E', anchor: 'middle' });
+  s += Rect(1590, 770, 190, 18, '#B9C2C6', OL(2.5));
+  return s;
+}
+function Tram() {
+  let s = Path('M1770,470 Q1780,440 1830,436 L2300,436 L2300,900 L1770,900 Z', C.tramWhite, OL(3));
+  s += Rect(1770, 760, 530, 60, C.tramGreen, OL(2.5));
+  for (let i = 0; i < 4; i++) s += Rect(1800 + i * 130, 480, 108, 180, C.tramGlass, { ...OL(2.5), rx: 8 });
+  s += Rect(1790, 666, 510, 10, '#D5DCDB');
+  return s;
+}
+function Flag(x, base, h, color, lt, seed) {
+  let s = Rect(x - 3, base - h, 6, h, '#E9ECEC', OL(2));
+  const fw = 44, fh = 150, top = base - h + 14;
+  const w1 = Math.sin(lt * 2.2 + seed) * 5, w2 = Math.sin(lt * 2.2 + seed + 1.4) * 6;
+  s += Path(`M${x + 3},${top} L${x + 3 + fw},${top + w1 * 0.2} Q${x + 3 + fw + w1},${top + fh * 0.5} ${x + 3 + fw + w2 * 0.6},${top + fh} L${x + 3},${top + fh + 4} Z`, color, OL(2.5));
+  s += Path(`M${x + 3 + fw * 0.6},${top + 6} Q${x + 3 + fw * 0.6 + w1 * 0.6},${top + fh * 0.5} ${x + 3 + fw * 0.6 + w2 * 0.4},${top + fh - 4}`, 'none', { stroke: shade(color, 0.82), 'stroke-width': 8, opacity: 0.6 });
+  return s;
+}
+function FountainBasin(cx, base) {
+  return Rect(cx - 190, base - 46, 380, 46, C.stone, OL(3)) + Rect(cx - 190, base - 46, 380, 12, C.stoneLight, OL(2.5))
+    + Rect(cx - 176, base - 40, 352, 12, C.water) + Rect(cx - 176, base - 40, 352, 12, 'none', { stroke: C.stoneDark, 'stroke-width': 2 });
+}
+function FountainWater(cx, base, lt) {
+  let s = '';
+  const jets = [[-40, 120, 0], [30, 150, 1.3]];
+  for (const [dx, h, ph] of jets) {
+    const hh = h + Math.sin(lt * 5 + ph) * 6 + Math.sin(lt * 11 + ph) * 3;
+    const x = cx + dx, y0 = base - 40;
+    s += Path(`M${x - 9},${y0} Q${x - 6},${y0 - hh * 0.6} ${x - 3},${y0 - hh} Q${x},${y0 - hh - 10} ${x + 3},${y0 - hh} Q${x + 6},${y0 - hh * 0.6} ${x + 9},${y0} Z`, C.water, { stroke: C.waterDeep, 'stroke-width': 2 });
+    s += Path(`M${x - 2},${y0 - 4} Q${x - 1},${y0 - hh * 0.6} ${x},${y0 - hh + 6}`, 'none', { stroke: '#FFFFFF', 'stroke-width': 3, 'stroke-linecap': 'round', opacity: 0.9 });
+    for (let k = 0; k < 3; k++) { const u = ((lt * 1.6 + k / 3 + ph) % 1); s += Circ(x + (k - 1) * 12 * u, y0 - 6 - u * 10, 3 * (1 - u) + 0.5, '#FFFFFF', { opacity: 1 - u }); }
+  }
+  s += Ell(cx - 5, base - 36, 120, 4, C.waterLight, { opacity: 0.8 });
+  return s;
+}
+// Bodenbelag mit Fluchtlinien
+function Plaza() {
+  let s = Rect(-400, 606, 2900, 480, C.pave);
+  const vpX = 960, vpY = 240;
+  for (let k = 1; k < 24; k++) { const y = 612 + Math.pow(k, 1.62) * 5.2; if (y > 1080) break; s += Line(-400, y, 2500, y, C.paveSeam, 2, { opacity: 0.7 }); }
+  for (let x = -1400; x <= 3400; x += 70) {
+    const xb = vpX + (x - vpX) * ((1080 - vpY) / (612 - vpY));
+    s += Line(x, 612, xb, 1080, C.paveSeam, 1.6, { opacity: 0.55 });
+  }
+  s += Rect(-400, 604, 2900, 10, C.paveDark);
+  return s;
+}
+
+const S0 = {
+  n: 0,
+  defs() {
+    let d = '';
+    d += `<linearGradient id="gSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${C.skyTop}"/><stop offset="1" stop-color="${C.skyBot}"/></linearGradient>`;
+    d += `<g id="s0-sky">${Rect(0, 0, W, H, 'url(#gSky)')}</g>`;
+    // ferne Ebene: Altbauten, Kirche
+    let far = '';
+    far += TownHouse(-60, 612, 230, 300, { facade: C.house1, rows: 4, cols: 3, roofColor: C.roofRed });
+    far += TownHouse(160, 612, 250, 262, { facade: C.house2, rows: 3, cols: 4, roof: 'mansard' });
+    far += TownHouse(400, 612, 170, 236, { facade: C.house3, rows: 3, cols: 2, roofColor: '#E0875F' });
+    far += Church(560, 612);
+    far += TownHouse(628, 612, 200, 250, { facade: C.house4, rows: 3, cols: 3, roofColor: C.roofRed });
+    far += Tree(470, 640, 0.62, 11) + Tree(700, 640, 0.58, 12);
+    d += `<g id="s0-far">${far}</g>`;
+    // mittlere Ebene: Rathaus, Bäume vor dem Bau
+    let mid = Rathaus();
+    mid += Tree(2230, 640, 0.95, 21, { cw: 170 });
+    mid += Tree(985, 650, 0.72, 22) + Tree(1660, 648, 0.6, 23);
+    mid += Bush(1520, 630, 170, 70, 24) + Bush(1080, 632, 150, 60, 25);
+    d += `<g id="s0-mid">${mid}</g>`;
+    // Platz: einzelne Elemente, damit Figuren nach Tiefe dazwischen stehen können
+    d += `<g id="s0-pave">${Plaza()}</g>`;
+    d += `<g id="s0-treeA">${Tree(800, 690, 0.78, 32)}</g>`;
+    d += `<g id="s0-treeB">${Tree(420, 700, 0.86, 31, { cw: 140 })}</g>`;
+    d += `<g id="s0-lampA">${Lamp(640, 722, 420, 1)}</g>`;
+    d += `<g id="s0-lampB">${Lamp(1440, 692, 360, 0.9)}</g>`;
+    d += `<g id="s0-bench">${Bench(560, 700, 150, 0.8)}</g>`;
+    d += `<g id="s0-basin">${FountainBasin(1240, 720)}</g>`;
+    d += `<g id="s0-bushA">${Bush(1540, 738, 200, 80, 33)}</g>`;
+    d += `<g id="s0-stele">${Stele(196, 800)}</g>`;
+    d += `<g id="s0-bushStele">${Bush(210, 814, 360, 110, 42)}</g>`;
+    d += `<g id="s0-busback">${BusStopBack() + Tram()}</g>`;
+    d += `<g id="s0-busfront">${BusStopFront()}</g>`;
+    d += `<g id="s0-bushR">${Bush(1905, 992, 250, 105, 44)}</g>`;
+    // Vordergrund: großer Baum links, Bank, Busch unten
+    let fr = '';
+    fr += Tree(40, 1070, 1.9, 41, { cw: 190, ch: 110, trunkH: 408, tw: 16, n: 14 });
+    fr += Bench(-70, 1092, 330, 1.25);
+    fr += Bush(1000, 1122, 520, 150, 43);
+    d += `<g id="s0-front">${fr}</g>`;
+    return d;
+  },
+  // Bewegungsplan der Figuren (Welt-x in Abhängigkeit von lt)
+  people: {
+    cyclist: lt => 110 + 56 * lt,
+    man: lt => 700 + 42 * lt,
+    mom: lt => 1250 + 30 * lt,
+  },
+  draw(lt) {
+    const cam = lerp(0, 110, EASE.sine(seg(lt, -0.6, 12.6)));
+    const pl = (p, inner) => G({ transform: `translate(${N(-cam * p)} 0)` }, inner);
+    let w = Use('s0-sky');
+    // Wolken (leichte Eigenbewegung)
+    let cl = '';
+    for (const [x, y, s, v] of [[250, 140, 1.05, 7], [900, 105, 0.85, 5], [1480, 170, 0.72, 6], [2050, 115, 0.95, 5]]) cl += Cloud(x + lt * v, y, s);
+    w += pl(0.15, cl);
+    w += pl(0.4, Use('s0-far'));
+    let mid = Use('s0-mid');
+    mid += Flag(1800, 612, 450, C.flagGreen, lt, 0) + Flag(1862, 612, 470, C.flagYellow, lt, 1.1) + Flag(1924, 612, 450, C.flagBlue, lt, 2.2);
+    w += pl(0.62, mid);
+
+    // Platz: Elemente und Figuren nach Tiefe (Fußpunkt y) sortiert
+    const items = [];
+    const add = (y, svg) => items.push([y, svg]);
+    add(-1, Use('s0-pave'));
+    add(690, Use('s0-treeA')); add(700, Use('s0-treeB'));
+    add(722, Use('s0-lampA')); add(692, Use('s0-lampB'));
+    add(700, Use('s0-bench'));
+    add(701, Person({ x: 575, y: 690, s: 0.34, seated: true, top: '#6D8FB0', pants: C.black, hair: C.hairDark, skin: C.skin2 })
+      + Person({ x: 640, y: 690, s: 0.34, seated: true, top: '#D8D2C4', pants: C.jeans, hair: C.hairGrey, hairStyle: 'bun', skin: C.skin1 }));
+    add(720, Use('s0-basin') + FountainWater(1240, 720, lt));
+    add(738, Use('s0-bushA'));
+    add(800, Use('s0-stele')); add(814, Use('s0-bushStele'));
+    add(898, Use('s0-busback'));
+    add(906, Use('s0-busfront'));
+    add(992, Use('s0-bushR'));
+    // Hintergrundfiguren (klein)
+    const bg = [[1230, 640, 0.3, 1, 18, '#2B3A45'], [1300, 636, 0.3, -1, 14, '#5B6770'], [1380, 642, 0.31, 1, 16, '#3A4B40'], [900, 700, 0.42, -1, 22, '#7A5C8E']];
+    bg.forEach(([x0, y0, s, dir, v, col], i) => {
+      add(y0, Person({ x: x0 + dir * v * lt, y: y0, s, dir, walk: 1, phase: stepPhase(v * lt, s) + i, top: col, pants: C.black, hair: i % 2 ? C.hairBrown : C.hairDark, skin: [C.skin1, C.skin3, C.skin2, C.skin4][i] }));
+    });
+    // ältere Person an der Haltestelle (vor der Bahn)
+    add(904, Person({ x: 1812, y: 905, s: 0.98, dir: 1, top: '#3D4E6B', jacket: '#3D4E6B', pants: C.black, shoes: '#5A4636', hair: C.hairGrey, hairStyle: 'bald', skin: C.skin2, backpack: '#2F3A40', senior: true, lean: 2 + Math.sin(lt * 0.8) * 0.8, mood: 'neutral' }));
+    // Mann mit grüner Jacke (geht nach rechts)
+    const mx = this.people.man(lt);
+    add(905, Person({ x: mx, y: 905, s: 0.98, dir: 1, walk: 1, phase: stepPhase(42 * lt, 0.98), top: '#FFFFFF', jacket: '#4F6B33', pants: C.jeans, hair: C.hairBrown, skin: C.skin1, backpack: '#2A3338' }));
+    // Mutter mit Kind (gehen nach links, Hand in Hand)
+    const fx = this.people.mom(lt);
+    const momO = { x: fx, y: 950, s: 1.02, dir: 1, walk: 1, phase: stepPhase(30 * lt, 1.02), coat: '#C9A27E', top: '#FFFFFF', pants: C.jeans, hair: C.hairBrown, hairStyle: 'long', skin: C.skin1, bag: '#8C5A36' };
+    const kidO = { x: fx + 64, y: 962, s: 0.75, dir: 1, kid: true, walk: 1, phase: stepPhase(30 * lt, 0.75, 22) + 1, stride: 22, top: '#4E82C0', hood: '#4E82C0', pants: C.jeansDark, cap: '#F7913A', hair: C.hairBrown, skin: C.skin1, backpack: '#2F5E8E' };
+    // Schulterpunkte bestimmen, gemeinsamen Handpunkt berechnen, beide Arme per IK dorthin führen
+    const mo = {}, ko = {};
+    Person({ ...momO, out: mo }); Person({ ...kidO, out: ko });
+    const kr = (34 + 32) * kidO.s * 0.93, dx = mo.shF[0] - ko.shB[0];
+    const hx = ko.shB[0] + dx * 0.25;
+    const hy = ko.shB[1] - Math.sqrt(Math.max(0, kr * kr - (dx * 0.25) ** 2));
+    add(950, Person({ ...momO, reachF: [hx, hy] }));
+    add(962, Person({ ...kidO, reachB: [hx, hy], reachBLow: false }));
+    // Radfahrerin (fährt nach rechts)
+    const cx = this.people.cyclist(lt);
+    add(1000, Cyclist({ x: cx, y: 1000, s: 1.0, dir: 1, crank: lt * 3.0, wheel: 56 * lt / 57, person: { top: '#F4B844', pants: C.jeans, hair: C.hairBrown, hairStyle: 'ponytail', skin: C.skin1, backpack: '#2D3E57' } }));
+    items.sort((a, b) => a[0] - b[0]);
+    w += pl(1.0, items.map(i => i[1]).join(''));
+    w += pl(1.12, Use('s0-front'));
+
+    // Oberfläche: Titelkarte, Hinweis, Vertraulich-Vermerk
+    let ui = '';
+    const tIn = ez(lt, 0.6, 1.5, EASE.out), tOut = ez(lt, 6.9, 7.5);
+    const top = 96, left = 96;
+    if (lt < 7.6) {
+      const t1 = 'Ein ganz normaler Montag', t2 = 'Was ein Cyberangriff für Herne bedeuten würde';
+      const w1 = measure(t1, 70, 700), w2 = measure(t2, 36);
+      const cw = Math.max(w1, w2) + 120, ch = 200;
+      const sub = ez(lt, 1.3, 2.1, EASE.out);
+      const inner = Txt(left + 60, top + 102, t1, { size: 70, weight: 700, fill: C.text })
+        + G({ opacity: sub }, Txt(left + 60, top + 156, t2, { size: 36, fill: C.text2 }));
+      ui += Card(left, top, cw, ch, { opacity: tIn * (1 - tOut), dy: (1 - tIn) * 18, inner });
+    }
+    if (lt > 7.4) {
+      const h1 = 'Das folgende Szenario ist fiktiv.', h2 = 'Es enthält keine technischen Einzelheiten.';
+      const cw = Math.max(measure(h1, 44), measure(h2, 44)) + 120, ch = 190;
+      const a = fadeIO(lt, 7.5, 8.0, 11.0, 11.5);
+      const inner = Txt(left + 60, top + 84, h1, { size: 44, fill: C.text }) + Txt(left + 60, top + 142, h2, { size: 44, fill: C.text });
+      ui += Card(left, top, cw, ch, { opacity: a, dy: (1 - ez(lt, 7.5, 8.1, EASE.out)) * 14, inner, accent: C.zyan });
+    }
+    ui += Confidential(ez(lt, 0.3, 1.1));
+    return { world: w, warn: '', ui, grade: GRADE.day };
+  },
+};
+
+/* =====================================================================
+   10  SZENE 3 – DER GENERALSCHLÜSSEL (0:56–1:28) · L1, L2
+   Flur mit Schreibtischen; an jedem hängt ein goldener Schlüssel.
+   Der Schatten nimmt einen (wird zum Schlüsselbund) und schließt
+   Archiv, Kasse und Serverraum auf – je ein Schloss, keine Rückfrage.
+   ===================================================================== */
+const S3L = {
+  floorY: 800, lane: 874, sh: 1.16,
+  desks: [420, 820, 1220, 1620],
+  doors: [
+    { x: 2210, label: 'Archiv', leaf: C.doorWood, kind: 'archiv', unlock: 19.0, open: 19.9 },
+    { x: 2610, label: 'Kasse', leaf: C.doorWood, kind: 'kasse', unlock: 22.8, open: 23.7 },
+    { x: 3010, label: 'Serverraum', leaf: C.doorGrey, kind: 'server', unlock: 26.2, open: 27.1 },
+  ],
+  doorW: 180, doorH: 370,
+};
+const deskHook = i => [S3L.desks[i] + 130 + 92, 546];
+function Desk(x, lt, i, keyOn, glow) {
+  const fy = 815, top = 664;
+  let s = '';
+  // Rollcontainer, Tischplatte, Wangen
+  s += Rect(x + 186, top + 16, 84, fy - top - 22, '#BCC3C7', OL(2.5)) + Line(x + 196, top + 60, x + 260, top + 60, C.line, 2) + Line(x + 196, top + 104, x + 260, top + 104, C.line, 2);
+  s += Rect(x + 12, top + 12, 16, fy - top - 12, C.deskSide, OL(2.5)) + Rect(x + 272, top + 12, 16, fy - top - 12, C.deskSide, OL(2.5));
+  s += Rect(x, top, 300, 16, C.deskTop, OL(3));
+  // Monitor (neutral, ohne Inhalt)
+  const mx = x + 130;
+  s += Rect(mx - 12, top - 22, 24, 22, C.monitor, OL(2)) + Rect(mx - 38, top - 6, 76, 8, C.monitor, { ...OL(2), rx: 3 });
+  s += Rect(mx - 88, top - 132, 176, 112, C.monitor, { ...OL(3), rx: 6 });
+  s += Rect(mx - 80, top - 124, 160, 96, C.screen, { rx: 3 });
+  s += Path(P([[mx - 80, top - 60], [mx - 30, top - 86], [mx + 20, top - 66], [mx + 80, top - 92], [mx + 80, top - 28], [mx - 80, top - 28]]), C.screenLight, { opacity: 0.8 });
+  // Tastatur, Tasse, Pflanze/Ordner
+  s += Rect(mx - 50, top - 8, 100, 8, '#E6EAEC', { ...OL(2), rx: 2 });
+  if (i % 2 === 0) s += Rect(x + 232, top - 34, 22, 34, '#FFFFFF', { ...OL(2.5), rx: 3 }) + Path(`M${x + 254},${top - 26} q10,2 0,14`, 'none', { stroke: C.line, 'stroke-width': 2.5 });
+  else s += Rect(x + 226, top - 58, 16, 58, '#6D8FB0', OL(2)) + Rect(x + 244, top - 54, 16, 54, '#9DB86B', OL(2));
+  // Haken und Schlüssel
+  const [hx, hy] = deskHook(i);
+  s += Path(`M${mx + 88},${hy - 10} L${hx},${hy - 10} L${hx},${hy}`, 'none', { stroke: C.line, 'stroke-width': 4, 'stroke-linecap': 'round' });
+  if (glow > 0.01) s += Circ(hx, hy + 44, 46, C.goldLight, { opacity: 0.45 * glow, filter: 'url(#fGlow)' });
+  if (keyOn) s += Key(hx, hy + 6, 0.8, Math.sin(lt * 1.4 + i * 1.7) * 5);
+  // Bürostuhl
+  const cx = x + 120;
+  s += Rect(cx - 6, 742, 12, 50, '#4C565B', OL(2)) + Path(`M${cx - 44},${800} L${cx + 44},${800}`, 'none', { stroke: C.line, 'stroke-width': 7, 'stroke-linecap': 'round' });
+  s += Circ(cx - 42, 806, 6, C.line) + Circ(cx + 42, 806, 6, C.line) + Circ(cx, 806, 6, C.line);
+  s += Rect(cx - 56, 724, 112, 22, '#56626A', { ...OL(2.5), rx: 8 }) + Rect(cx - 52, 640, 20, 92, '#56626A', { ...OL(2.5), rx: 8 });
+  return s;
+}
+function BackOffice() {
+  // Blick durch die Glaswand in ein weiteres Büro (kleiner, mehr Arbeitsplätze)
+  let s = Rect(330, 180, 1680, 300, '#E3E9EB');
+  s += Rect(330, 420, 1680, 60, '#CDD5D8');
+  for (let k = 0; k < 8; k++) {
+    const x = 400 + k * 200;
+    s += Rect(x, 404, 150, 9, '#BFC6CA', OL(2)) + Rect(x + 10, 413, 8, 50, '#A9B1B5') + Rect(x + 132, 413, 8, 50, '#A9B1B5');
+    s += Rect(x + 34, 336, 84, 56, C.monitor, { ...OL(2), rx: 3 }) + Rect(x + 39, 341, 74, 46, C.screen) + Rect(x + 70, 392, 12, 12, C.monitor);
+    s += Path(`M${x + 118},${344} L${x + 128},${344} L${x + 128},${350}`, 'none', { stroke: C.line, 'stroke-width': 2.5 });
+  }
+  return s;
+}
+function BackOfficeKeys(lt, glow) {
+  let s = '';
+  for (let k = 0; k < 8; k++) {
+    const x = 400 + k * 200 + 128, y = 352;
+    if (glow > 0.01) s += Circ(x, y + 28, 28, C.goldLight, { opacity: 0.4 * glow, filter: 'url(#fGlow)' });
+    s += Key(x, y, 0.36, Math.sin(lt * 1.2 + k) * 4);
+  }
+  return s;
+}
+function GlassPane() {
+  let s = Rect(330, 180, 1680, 300, '#CFE0E8', { opacity: 0.35 });
+  s += Path(P([[470, 180], [630, 180], [460, 480], [330, 480]]), '#FFFFFF', { opacity: 0.22 });
+  s += Path(P([[1230, 180], [1310, 180], [1140, 480], [1060, 480]]), '#FFFFFF', { opacity: 0.18 });
+  s += Rect(330, 180, 1680, 300, 'none', { stroke: C.frame, 'stroke-width': 10 });
+  for (let k = 1; k < 4; k++) s += Line(330 + k * 420, 180, 330 + k * 420, 480, C.frame, 8);
+  return s;
+}
+function Interior(kind, x, top, w, h, lt) {
+  let s = '';
+  if (kind === 'archiv') {
+    s += Rect(x, top, w, h, '#CFC8BB');
+    for (let r = 0; r < 4; r++) {
+      const y = top + 40 + r * 82;
+      s += Rect(x + 8, y + 60, w - 16, 8, '#8E7B63', OL(2));
+      for (let k = 0; k < 9; k++) { const cols = ['#5E7FA3', '#8DAF5E', '#C9A04A', '#9A9EA3', '#6C8C8A']; s += Rect(x + 14 + k * 18, y + 10 + (k % 3) * 3, 15, 50 - (k % 3) * 3, cols[(k + r) % 5], OL(1.5)); }
+    }
+  } else if (kind === 'kasse') {
+    s += Rect(x, top, w, h, '#D6D0C4');
+    s += Rect(x + 20, top + 200, w - 40, 90, '#A99A84', OL(2.5));
+    s += Rect(x + 50, top + 120, 80, 80, '#7F8A90', OL(2.5)) + Circ(x + 90, top + 160, 18, '#B7C0C4', OL(2)) + Line(x + 90, top + 160, x + 100, top + 150, C.line, 3);
+    s += Rect(x + 20, top + 290, w - 40, 80, '#968770', OL(2.5));
+  } else {
+    s += Rect(x, top, w, h, '#28343C');
+    for (let k = 0; k < 2; k++) {
+      const rx = x + 18 + k * 80;
+      s += Rect(rx, top + 50, 64, h - 50, '#1C252B', OL(2.5));
+      for (let r = 0; r < 12; r++) {
+        const y = top + 64 + r * 24;
+        s += Rect(rx + 6, y, 52, 18, '#2E3A42', OL(1.5));
+        const on = (Math.sin(lt * 3 + r * 1.7 + k * 2.3) > 0.2) ? 1 : 0.35;
+        s += Circ(rx + 50, y + 9, 3, r % 3 ? '#7FD6A0' : '#7FC6E8', { opacity: on });
+      }
+    }
+    s += Rect(x, top, w, h, '#4FA3D9', { opacity: 0.12 });
+  }
+  return s;
+}
+function Door(d, lt, i) {
+  const { doorW: w, doorH: h, floorY: base } = S3L;
+  const x = d.x, top = base - h;
+  const open = ez(lt, d.open, d.open + 1.1, EASE.inOut);
+  let s = '';
+  // Zarge und Öffnung
+  s += Rect(x - 12, top - 12, w + 24, h + 12, C.frame, OL(3));
+  s += Rect(x, top, w, h, '#2B3439', OL(2));
+  if (open > 0.001) s += G({ 'clip-path': `url(#s3-door${i})` }, Interior(d.kind, x, top, w, h, lt));
+  // Lichtschein auf dem Boden
+  if (open > 0.01) s += Path(P([[x, base], [x + w, base], [x + w + 70, base + 150], [x - 50, base + 150]]), d.kind === 'server' ? '#9FD2F2' : '#FFF4D6', { opacity: 0.35 * open });
+  // Türblatt (öffnet nach innen)
+  const a = open * 76 * DEG;
+  const pw = w * Math.cos(a), sh = h * 0.08 * Math.sin(a);
+  s += Path(P([[x, top], [x + pw, top + sh], [x + pw, base - sh * 0.5], [x, base]]), mix(d.leaf, '#1F272B', open * 0.4), OL(3));
+  // Schloss und Griff (nur ein Schloss)
+  const lx = x + pw * 0.83, lockY = 612;
+  if (pw > 20) {
+    s += Rect(lx - 9, lockY - 44, 18, 70, '#B8C0C4', { ...OL(2.5), rx: 5 });
+    s += Path(`M${lx},${lockY - 30} L${lx - 26 * Math.cos(a)},${lockY - 30}`, 'none', { stroke: C.line, 'stroke-width': 9, 'stroke-linecap': 'round' }) + Path(`M${lx},${lockY - 30} L${lx - 26 * Math.cos(a)},${lockY - 30}`, 'none', { stroke: '#D5DBDE', 'stroke-width': 4.5, 'stroke-linecap': 'round' });
+    s += Circ(lx, lockY + 2, 4.5, C.line) + Path(P([[lx - 3, lockY + 4], [lx + 3, lockY + 4], [lx + 2, lockY + 13], [lx - 2, lockY + 13]]), C.line);
+  }
+  // Türschild
+  const tw = measure(d.label, 28, 700) + 36;
+  s += Rect(x + w / 2 - tw / 2, top - 70, tw, 44, C.plate, { ...OL(2.5), rx: 6 }) + Txt(x + w / 2, top - 38, d.label, { size: 28, weight: 700, fill: C.text, anchor: 'middle' });
+  return s;
+}
+function CeilingLights() {
+  let s = '';
+  for (let k = 0; k < 11; k++) {
+    const x = 120 + k * 400;
+    s += Path(P([[x + 10, 96], [x + 210, 96], [x + 300, 800], [x - 80, 800]]), '#FFFFFF', { opacity: 0.12 });
+    s += Rect(x, 84, 220, 12, '#FFFFFF', { ...OL(2.5), rx: 4 });
+  }
+  return s;
+}
+
+const S3 = {
+  n: 3,
+  defs() {
+    let d = '';
+    let room = '';
+    room += Rect(-100, 0, 4300, 84, C.ceiling) + Line(-100, 84, 4200, 84, C.line, 2.5);
+    room += Rect(-100, 84, 4300, 716, C.wall);
+    room += Rect(-100, 560, 4300, 240, C.wallLow) + Rect(-100, 556, 4300, 10, '#C3CCD0', OL(2));
+    room += Rect(-100, 786, 4300, 14, C.skirting, OL(2));
+    room += Rect(-100, 800, 4300, 280, C.floor);
+    for (let k = 0; k < 6; k++) room += Line(-100, 820 + k * k * 9, 4200, 820 + k * k * 9, '#96A2A7', 2, { opacity: 0.6 });
+    room += BackOffice();
+    d += `<g id="s3-room">${room}</g>`;
+    d += `<g id="s3-glass">${GlassPane()}</g>`;
+    d += `<g id="s3-lights">${CeilingLights()}</g>`;
+    // Säule, Pflanze, Pinnwand, Fenster
+    let props = Rect(2060, 84, 60, 716, '#CBD3D6', OL(2.5));
+    props += Rect(1970, 740, 60, 60, '#B98D62', OL(2.5)) + Bush(2000, 744, 90, 150, 51, { sw: 2.5 });
+    props += Rect(3310, 450, 220, 150, '#C9A77A', OL(3)) + Rect(3330, 470, 60, 44, '#FFFFFF', OL(2)) + Rect(3400, 466, 50, 60, '#EAF5EE', OL(2)) + Rect(3460, 480, 54, 40, '#FFFFFF', OL(2)) + Rect(3350, 530, 70, 50, '#F5F7F7', OL(2));
+    props += Rect(3580, 200, 260, 330, '#8FB0C8', OL(3)) + Line(3710, 200, 3710, 530, C.frame, 8) + Rect(3580, 200, 260, 330, 'none', { stroke: C.frame, 'stroke-width': 10 });
+    d += `<g id="s3-props">${props}</g>`;
+    S3L.doors.forEach((dd, i) => { d += `<clipPath id="s3-door${i}"><rect x="${dd.x}" y="${S3L.floorY - S3L.doorH}" width="${S3L.doorW}" height="${S3L.doorH}"/></clipPath>`; });
+    return d;
+  },
+  // Weg des Schattens (Welt-x) als Funktion der Zeit
+  path(lt) {
+    const k = [[4.6, 200], [12.9, 1702], [16.4, 1702], [19.0, 2244], [21.0, 2244], [22.8, 2644], [24.7, 2644], [26.2, 3044], [28.5, 3044], [31.0, 3112]];
+    if (lt <= k[0][0]) return k[0][1];
+    for (let i = 0; i < k.length - 1; i++) {
+      const [t0, x0] = k[i], [t1, x1] = k[i + 1];
+      if (lt <= t1) return lerp(x0, x1, x0 === x1 ? 0 : EASE.inOut(seg(lt, t0, t1)));
+    }
+    return k[k.length - 1][1];
+  },
+  draw(lt) {
+    const L = S3L;
+    // Kamera
+    let cam = 0;
+    cam = lerp(0, 1060, ez(lt, 4.6, 13.4));
+    cam = lerp(cam, 1810, ez(lt, 16.4, 28.4));
+    const zoom = 1 + 0.045 * ez(lt, 14.0, 15.6) * (1 - ez(lt, 16.4, 17.6)) + 0.06 * ez(lt, 28.4, 32.5, EASE.sine);
+    const zc = lt < 20 ? [1840 - cam, 560] : [3100 - cam, 600];
+    // Schatten: Position, Gang, Arme
+    const x = this.path(lt);
+    const dt = 1 / 60;
+    const v = Math.abs(this.path(lt + dt) - this.path(lt - dt)) / (2 * dt);
+    const walk = clamp(v / 120);
+    // Gangphase über zurückgelegte Strecke (Integral in festen Schritten → deterministisch)
+    let dist = 0; for (let u = 0; u < lt; u += 0.05) dist += Math.abs(this.path(Math.min(lt, u + 0.05)) - this.path(u));
+    const emerge = ez(lt, 0.3, 1.9, EASE.out);
+    const enter = ez(lt, 28.6, 31.0, EASE.inOut);
+    const sy = lerp(lerp(L.floorY + 6, L.lane, emerge), L.floorY + 8, enter);
+    const ss = lerp(lerp(0.96, L.sh, emerge), 1.0, enter);
+    let op = 0.92 * emerge * (1 - ez(lt, 29.4, 31.0));
+    const shO = { x, y: sy, s: ss, dir: 1, walk, phase: stepPhase(dist, ss, 17), opacity: op, out: {} };
+    // Blick umher (Stand)
+    if (lt > 1.8 && lt < 4.6) shO.lean = Math.sin((lt - 1.8) * 2.2) * 2;
+    // Greifen nach Schlüssel (Tisch 3)
+    const hook = deskHook(3);
+    const reach = bump(lt, 13.9, 0.9);
+    let holdKey = lt >= 13.9;
+    // Hand-Ziel je Phase
+    let target = null;
+    if (lt > 12.9 && lt < 14.4) target = [lerp(x + 70, hook[0], ez(lt, 12.9, 13.8)), lerp(700, hook[1] + 16, ez(lt, 12.9, 13.8))];
+    if (lt >= 14.4) target = [x + 92, 690 - 14 * ez(lt, 14.4, 15.2)];
+    // Aufschließen je Tür
+    let unlocking = -1, turn = 0;
+    L.doors.forEach((d, i) => {
+      const lockX = d.x + L.doorW * 0.83, lockY = 614;
+      const a = ez(lt, d.unlock - 0.6, d.unlock, EASE.out) * (1 - ez(lt, d.open + 0.2, d.open + 0.8));
+      if (a > 0.001) { target = [lerp(target ? target[0] : x + 92, lockX + 12 - 88 * 0.8 + 4, a), lerp(target ? target[1] : 690, lockY + 2, a)]; if (a > 0.9) unlocking = i; turn = Math.max(turn, ez(lt, d.unlock, d.unlock + 0.45)); if (a > 0.5 && lt > d.unlock + 0.45) turn = 1 - ez(lt, d.open + 0.3, d.open + 0.6); }
+    });
+    if (target && lt < 29.2) shO.reachF = target;
+    if (lt >= 29.0) shO.arms = { f: { sh: 8, el: 10 } };
+    const shadowSVG = Shade(shO);
+    const hand = shO.out.handF;
+
+    // Welt zusammensetzen
+    const glowAll = bump(lt, 15.4, 1.6) * (lt > 14 ? 1 : 0);
+    let w = Use('s3-room');
+    // Durchtritt durch die Wand: weicher dunkler Fleck, der sich auflöst
+    const wallU = seg(lt, 0.1, 2.2);
+    if (wallU > 0 && wallU < 1) w += Ell(200, 640, 50 + 70 * wallU, 190 + 30 * wallU, C.shadow, { opacity: N(0.28 * Math.sin(Math.PI * wallU)), filter: 'url(#fShadeHalo)' });
+    w += BackOfficeKeys(lt, glowAll);
+    w += Use('s3-glass');
+    w += Use('s3-props');
+    L.desks.forEach((dx, i) => {
+      const hk = deskHook(i);
+      const passGlint = bump(hk[0] - cam, 960, 520) * (lt > 4 && lt < 13 ? 1 : 0);
+      w += Desk(dx, lt, i, !(i === 3 && holdKey), glowAll);
+      if (!(i === 3 && holdKey)) w += Glint(hk[0] + 14, hk[1] + 52, 0.9 * bump(Math.sin(lt * 1.7 + i * 2.1), 1, 0.35) * passGlint + 0.9 * bump(lt, 5.2 + i * 1.6, 0.5));
+    });
+    L.doors.forEach((d, i) => { w += Door(d, lt, i); });
+    w += Use('s3-lights');
+    w += shadowSVG;
+    // Schlüssel bzw. Schlüsselbund in der Hand
+    if (holdKey && op > 0.02 && hand) {
+      const spread = ez(lt, 14.6, 16.2, EASE.outBack);
+      if (unlocking >= 0) {
+        // Schlüssel waagerecht im Schloss, Drehung um die Schaftachse
+        const d = L.doors[unlocking];
+        const lockX = d.x + L.doorW * 0.83, lockY = 614;
+        // eingesteckter Schlüssel (waagerecht), Bund hängt am Griff
+        // halbe Umdrehung um die Schaftachse: Bart klappt einmal um (gut lesbar als „Schlüssel dreht“)
+        const flip = Math.cos(turn * Math.PI);
+        const fs = Math.sign(flip || 1) * Math.max(0.12, Math.abs(flip));
+        w += G({ transform: `translate(${N(lockX + 12)} ${N(lockY + 2)}) rotate(-90) scale(${N(fs)} 1)` }, Key(0, -88, 0.8, 0, { noRing: true }));
+        w += G({ opacity: N(op / 0.92) }, KeyRing(lockX + 12 - 88 * 0.8 + 6, lockY + 4, 0.66, 0.8, 0, true));
+        if (turn > 0.05 && turn < 1) w += Path(`M${lockX - 70},${lockY - 34} a26,26 0 0,1 26,-12`, 'none', { stroke: C.goldLight, 'stroke-width': 4, 'stroke-linecap': 'round', opacity: bump(turn, 0.6, 0.5) });
+      } else {
+        w += G({ opacity: N(op / 0.92) }, KeyRing(hand[0], hand[1] - 6, 0.78, spread, 0));
+        if (spread > 0.1 && lt < 17.5) w += Glint(hand[0] + 18, hand[1] + 44, 1.1 * bump(lt, 16.0, 0.6));
+      }
+    }
+    // Kamera anwenden (Schwenk + leichter Zoom)
+    const world = G({ transform: `translate(${N(zc[0])} ${N(zc[1])}) scale(${N(zoom)}) translate(${N(-zc[0])} ${N(-zc[1])}) translate(${N(-cam)} 0)` }, w) + Use('vignette');
+    return { world, warn: '', ui: '', grade: GRADE.s3 };
+  },
+};
+
+/* =====================================================================
+   11  PLATZHALTER für noch nicht umgesetzte Szenen (nur Vorschau)
+   ===================================================================== */
+function Placeholder(sc) {
+  return {
+    n: sc.n,
+    defs() { return ''; },
+    draw(lt) {
+      const ui = Rect(0, 0, W, H, '#2C3A40') + Txt(W / 2, H / 2 - 10, `Szene ${sc.n} – ${sc.title}`, { size: 56, weight: 700, fill: '#F5F7F7', anchor: 'middle' })
+        + Txt(W / 2, H / 2 + 50, 'in Arbeit', { size: 32, fill: '#CAF278', anchor: 'middle' });
+      return { world: '', warn: '', ui, grade: GRADE.day };
+    },
+  };
+}
+const IMPL = { 0: S0, 3: S3 };
+const SCENE_OBJ = SCENES.map(sc => IMPL[sc.n] || Placeholder(sc));
+
+/* =====================================================================
+   12  RENDER-KERN: Szenenwahl, Überblendung, Ebenen, Farbstimmung
+   ===================================================================== */
+const stage = document.getElementById('stage');
+const defsEl = document.getElementById('defs');
+function makeSlot() {
+  const root = document.createElement('div'); root.className = 'slot';
+  const mk = cls => { const e = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); e.setAttribute('class', 'layer ' + cls); e.setAttribute('viewBox', `0 0 ${W} ${H}`); e.setAttribute('width', W); e.setAttribute('height', H); root.appendChild(e); return e; };
+  const world = mk('world');
+  const tint = document.createElement('div'); tint.className = 'layer tint'; root.appendChild(tint);
+  const warn = mk('warn'), ui = mk('ui');
+  stage.appendChild(root);
+  return { root, world, tint, warn, ui, cache: {} };
+}
+const SLOTS = [makeSlot(), makeSlot()];
+const subLayer = (() => { const e = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); e.setAttribute('class', 'layer sub'); e.setAttribute('viewBox', `0 0 ${W} ${H}`); e.setAttribute('width', W); e.setAttribute('height', H); stage.appendChild(e); return e; })();
+const subCache = { v: null };
+function setHTML(el, cache, key, html) { if (cache[key] !== html) { el.innerHTML = html; cache[key] = html; } }
+function setStyle(el, cache, key, prop, val) { if (cache[key] !== val) { el.style[prop] = val; cache[key] = val; } }
+
+// Aktive Szenen zum Zeitpunkt t (max. zwei während einer Überblendung)
+function activeScenes(t) {
+  const res = [];
+  for (let i = 0; i < SCENES.length; i++) {
+    const sc = SCENES[i];
+    const a = i === 0 ? -1 : sc.start - XFADE / 2;
+    const b = i === SCENES.length - 1 ? TOTAL + 1 : sc.end + XFADE / 2;
+    if (t >= a && t < b) res.push(i);
+  }
+  return res;
+}
+function render(t) {
+  t = clamp(t, 0, TOTAL - 1e-6);
+  const act = activeScenes(t);
+  SLOTS.forEach((slot, k) => {
+    const idx = act[k];
+    if (idx === undefined) { setStyle(slot.root, slot.cache, 'disp', 'display', 'none'); return; }
+    const sc = SCENES[idx];
+    const lt = t - sc.start;
+    const out = SCENE_OBJ[idx].draw(lt, sc.end - sc.start);
+    // Überblendung: die spätere Szene blendet über die frühere
+    let alpha = 1;
+    if (k === 1) alpha = EASE.inOut(seg(t, sc.start - XFADE / 2, sc.start + XFADE / 2));
+    setStyle(slot.root, slot.cache, 'disp', 'display', 'block');
+    setStyle(slot.root, slot.cache, 'op', 'opacity', String(N(alpha)));
+    setHTML(slot.world, slot.cache, 'w', out.world || '');
+    setHTML(slot.warn, slot.cache, 'x', out.warn || '');
+    setHTML(slot.ui, slot.cache, 'u', out.ui || '');
+    const g = out.grade || GRADE.day;
+    setStyle(slot.world, slot.cache, 'f', 'filter', `saturate(${g.sat}) brightness(${g.bri}) contrast(${g.con})`);
+    setStyle(slot.tint, slot.cache, 'tb', 'background', g.tint);
+    setStyle(slot.tint, slot.cache, 'to', 'opacity', String(g.ta));
+  });
+  setHTML(subLayer, subCache, 'v', SubtitleSVG(t));
+  return t;
+}
+
+/* =====================================================================
+   13  INITIALISIERUNG, VORSCHAU, EXPORT-SCHNITTSTELLE
+   ===================================================================== */
+function globalDefs() {
+  return `<filter id="fShadeHalo" x="-60%" y="-30%" width="220%" height="160%"><feGaussianBlur stdDeviation="6"/></filter>`
+    + `<filter id="fShadeSoft" x="-20%" y="-10%" width="140%" height="120%"><feGaussianBlur stdDeviation="1.1"/></filter>`
+    + `<filter id="fGlow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="10"/></filter>`
+    + `<filter id="fCardShadow" x="-10%" y="-20%" width="120%" height="150%"><feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#1F292D" flood-opacity="0.18"/></filter>`
+    + `<radialGradient id="gVig" cx="0.5" cy="0.5" r="0.72"><stop offset="0.55" stop-color="#0E1418" stop-opacity="0"/><stop offset="1" stop-color="#0E1418" stop-opacity="0.34"/></radialGradient>`
+    + `<g id="vignette"><rect x="0" y="0" width="${W}" height="${H}" fill="url(#gVig)"/></g>`;
+}
+const EXPORT = new URLSearchParams(location.search).has('export');
+if (EXPORT) document.body.classList.add('export');
+
+function init() {
+  defsEl.innerHTML = globalDefs() + SCENE_OBJ.map(s => s.defs()).join('');
+  render(0);
+}
+
+// Vorschau-Player (nur hier wird Echtzeit genutzt, um t fortzuschreiben)
+const player = { t: 0, playing: false, last: 0 };
+const $ = id => document.getElementById(id);
+function fmtTC(t) { const f = Math.round(t * FPS); const m = Math.floor(f / (60 * FPS)), s = Math.floor(f / FPS) % 60, fr = f % FPS; return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}:${String(fr).padStart(2, '0')}`; }
+function seek(t) {
+  player.t = clamp(Math.round(t * FPS) / FPS, 0, TOTAL - 1 / FPS);
+  render(player.t);
+  $('scrub').value = player.t;
+  $('tc').textContent = `${fmtTC(player.t)} / ${fmtTC(TOTAL)}`;
+  const sc = SCENES.find(s => player.t >= s.start && player.t < s.end) || SCENES[SCENES.length - 1];
+  $('sceneName').textContent = `Szene ${sc.n} – ${sc.title}`;
+  document.querySelectorAll('#sceneBtns button').forEach(b => b.classList.toggle('on', +b.dataset.n === sc.n));
+}
+function loop(now) {
+  if (!player.playing) return;
+  const dt = Math.min(0.1, (now - player.last) / 1000); player.last = now;
+  let t = player.t + dt;
+  if (t >= TOTAL) { t = TOTAL - 1 / FPS; player.playing = false; $('bPlay').textContent = '▶ Abspielen'; }
+  player.t = t; render(t);
+  $('scrub').value = t; $('tc').textContent = `${fmtTC(t)} / ${fmtTC(TOTAL)}`;
+  const sc = SCENES.find(s => t >= s.start && t < s.end) || SCENES[SCENES.length - 1];
+  $('sceneName').textContent = `Szene ${sc.n} – ${sc.title}`;
+  requestAnimationFrame(loop);
+}
+function togglePlay() {
+  player.playing = !player.playing;
+  $('bPlay').textContent = player.playing ? '⏸ Pause' : '▶ Abspielen';
+  if (player.playing) { player.last = performance.now(); requestAnimationFrame(loop); }
+}
+function fit() {
+  if (EXPORT) { stage.style.transform = 'none'; return; }
+  const vp = $('viewport');
+  stage.style.transform = `scale(${vp.clientWidth / W})`;
+}
+function setupPlayer() {
+  $('scrub').max = TOTAL;
+  $('bPlay').onclick = togglePlay;
+  $('bStart').onclick = () => seek(0);
+  $('bBackS').onclick = () => seek(player.t - 1);
+  $('bNextS').onclick = () => seek(player.t + 1);
+  $('bBackF').onclick = () => seek(player.t - 1 / FPS);
+  $('bNextF').onclick = () => seek(player.t + 1 / FPS);
+  $('scrub').oninput = e => seek(+e.target.value);
+  const sb = $('sceneBtns');
+  SCENES.forEach(sc => { const b = document.createElement('button'); b.textContent = `${sc.n} · ${sc.title}`; b.dataset.n = sc.n; b.title = `${fmtTC(sc.start)}–${fmtTC(sc.end)}`; b.onclick = () => seek(sc.start); sb.appendChild(b); });
+  window.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT' && e.key !== ' ') return;
+    if (e.key === ' ') { e.preventDefault(); togglePlay(); }
+    else if (e.key === 'ArrowRight') seek(player.t + (e.shiftKey ? 1 : 1 / FPS));
+    else if (e.key === 'ArrowLeft') seek(player.t - (e.shiftKey ? 1 : 1 / FPS));
+    else if (e.key === 'Home') seek(0);
+    else if (/^[0-8]$/.test(e.key)) seek(SCENES[+e.key].start);
+  });
+  window.addEventListener('resize', fit);
+  fit(); seek(0);
+}
+
+// Export-Schnittstelle
+window.VIDEO = { W, H, FPS, TOTAL, SCENES, CUES, SPRECHERTEXT, frames: Math.round(TOTAL * FPS) };
+window.renderFrame = t => render(t);
+(document.fonts ? document.fonts.ready : Promise.resolve()).then(() => {
+  init();
+  if (!EXPORT) setupPlayer();
+  window.__ready = true;
+});
+</script>
+</body>
+</html>
