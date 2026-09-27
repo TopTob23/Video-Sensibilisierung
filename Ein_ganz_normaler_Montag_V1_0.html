@@ -66,43 +66,102 @@
    ===================================================================== */
 const W = 1920, H = 1080, FPS = 30;
 
-// Szenenzeiten laut Drehbuch V1.1; Szene 7 auf Wunsch um 8 s verlängert (Gesamt 4:18)
+// Szenenzeiten und -titel laut Drehbuch V1.2 (Summe 4:18)
 const SCENES = [
-  { n: 0, title: 'Titel',                        start: 0,   end: 12 },
-  { n: 1, title: 'Eine Stadt, die funktioniert', start: 12,  end: 32 },
-  { n: 2, title: 'Die Tür',                      start: 32,  end: 56 },
-  { n: 3, title: 'Der Generalschlüssel',         start: 56,  end: 88 },
-  { n: 4, title: 'Unbemerkt',                    start: 88,  end: 112 },
-  { n: 5, title: 'Offene Türen im Haus',         start: 112, end: 138 },
-  { n: 6, title: 'Tag X',                        start: 138, end: 170 },
-  { n: 7, title: 'Die Folgen',                   start: 170, end: 224 },
-  { n: 8, title: 'Was jetzt zählt',              start: 224, end: 258 },
+  { n: 0, title: "Titel", start: 0, end: 12 },
+  { n: 1, title: "Eine Stadt, die funktioniert", start: 12, end: 32 },
+  { n: 2, title: "Der Einstieg", start: 32, end: 56 },
+  { n: 3, title: "Zugang zu zentralen Systemen", start: 56, end: 88 },
+  { n: 4, title: "Unbemerkt", start: 88, end: 112 },
+  { n: 5, title: "Ausbreitung", start: 112, end: 138 },
+  { n: 6, title: "Der Angriff wird sichtbar", start: 138, end: 170 },
+  { n: 7, title: "Die Folgen", start: 170, end: 224 },
+  { n: 8, title: "Maßnahmen", start: 224, end: 258 },
 ];
 const TOTAL = 258;          // Sekunden
 const XFADE = 1.0;          // weiche Überblendung zwischen Szenen (Sekunden)
 
-// Sprechertext wörtlich aus dem Drehbuch (Quelle für Untertitel, SRT und Prüfung)
+// Sprechertext wörtlich aus dem Drehbuch V1.2 (Quelle für Untertitel, SRT und Prüfung)
 const SPRECHERTEXT = {
-  1: 'Jeden Tag verlassen sich zehntausende Menschen auf die Stadtverwaltung. Ein neuer Ausweis, eine Geburtsurkunde, das Wohngeld, der Kitaplatz, das Gehalt der Beschäftigten. Hinter all dem steht IT – unsichtbar, solange sie läuft.',
-  2: 'Es beginnt harmlos. Eine E-Mail, die echt aussieht. Ein Klick – so etwas passiert jeden Tag, überall. Das ist kein Versagen einzelner Menschen. Entscheidend ist, was danach geschieht.',
-  3: 'Wer einmal drin ist, sucht den Generalschlüssel. Bei uns kann die IT von zu vielen Stellen aus verwaltet werden, und intern genügt dafür bis heute ein Passwort. Zugleich haben zu viele Konten Zugriff auf alles. Für einen Angreifer heißt das: Er muss nicht einbrechen. Er kann aufschließen.',
-  4: 'Und niemand merkt es. Weil verdächtige Vorgänge nicht zentral erfasst und ausgewertet werden, kann ein Angreifer wochenlang bleiben. In einem echten Fall in Sachsen-Anhalt blieb ein Angreifer rund fünf Wochen unentdeckt.',
-  5: 'Einige Systeme an unserer Grenze zum Internet bekommen keine Sicherheitsupdates mehr – eine alte Tür, deren Schloss sich nicht mehr erneuern lässt. Viele Server laufen ohne die Schutzeinstellungen, die der Hersteller empfiehlt – Türen, in die nie ein Schloss eingebaut wurde. Und im Inneren fehlen teilweise die Trennwände, die einen Brand eindämmen würden.',
-  6: 'Dann schlägt der Angreifer zu. Montag, halb acht: Die Bildschirme gehen aus. Daten sind verschlüsselt, Kopien gestohlen, eine Forderung liegt vor. Und die Rückfallebene? Eine Datensicherung ohne zweites System. Für Teile der IT gibt es keine Notfallpläne – und manche Unterlagen liegen auf den gesperrten Systemen selbst.',
-  7: 'Die Folgen treffen alle. Der Wiederaufbau dauert Monate und kostet Millionen. Gestohlene Daten tauchen im Netz auf. Und vor allem trifft es die Menschen in unserer Stadt: die Familie, die auf die Geburtsurkunde wartet, die Rentnerin, deren Wohngeld nicht ankommt, den Handwerker, der sein Gewerbe nicht anmelden kann. Das ist keine Theorie – anderen Kommunen ist genau das passiert.',
-  8: 'Die gute Nachricht: Die Lücken sind bekannt, die Maßnahmen sind geplant. Ein gesicherter Weg in die IT mit einem zweiten Schloss. Rechte nur für die Aufgaben, die jemand wirklich hat. Die Server einheitlich absichern. Veraltete Systeme ersetzen. Angriffe früh erkennen. Und den Notfall üben, bevor er eintritt. Was dafür fehlt, sind Entscheidungen – und die liegen bei uns.',
+  1: "Ausweise, Urkunden, Sozialleistungen, Kitaplätze, Baugenehmigungen und die Gehälter der Beschäftigten: Fast jede Leistung der Stadtverwaltung hängt heute von funktionierender IT ab.",
+  2: "Ein typischer Angriff beginnt mit einer gefälschten E-Mail, die wie eine gewöhnliche Rechnung aussieht. Solche Nachrichten erreichen jede Verwaltung täglich, und einzelne Klicks lassen sich nie ganz verhindern. Entscheidend ist, wie weit ein Angreifer danach kommt.",
+  3: "In Herne lässt sich die IT nicht nur von wenigen, besonders geschützten Arbeitsplätzen aus verwalten. Intern reicht dafür ein Passwort, eine zweite Bestätigung bei der Anmeldung ist noch nicht eingeführt. Zudem haben mehr Konten weitreichende Rechte, als für die jeweiligen Aufgaben nötig wäre. Wer ein solches Konto übernimmt, erreicht damit zentrale Systeme.",
+  4: "Verdächtige Vorgänge werden nicht zentral gesammelt und ausgewertet. Ein Angreifer kann sich deshalb über Wochen im Netz bewegen, ohne aufzufallen. Auch im Landkreis Anhalt-Bitterfeld begann der Angriff nach späteren Auswertungen Wochen vor seiner Entdeckung.",
+  5: "Einige Systeme am Übergang zum Internet erhalten vom Hersteller keine Sicherheitsupdates mehr. Viele Server laufen ohne die empfohlenen Schutzeinstellungen. Und die Trennung zwischen den Bereichen im Netz ist noch unvollständig. Ein Angreifer kann sich deshalb leichter von einem System zum nächsten bewegen.",
+  6: "Erst im letzten Schritt wird der Angriff sichtbar: Die Daten werden verschlüsselt, Kopien sind bereits abgeflossen, es folgt eine Lösegeldforderung. Für die Wiederherstellung kommt es dann auf die Rückfallebene an. Die Datensicherung läuft ohne zweites System, für Teile der IT fehlen Notfallpläne, und manche Unterlagen liegen auf genau den Systemen, die dann gesperrt sind.",
+  7: "Vergleichbare Fälle zeigen, welche Folgen daraus entstehen. Anhalt-Bitterfeld rief den Katastrophenfall aus und beendete ihn erst nach rund sieben Monaten; der Aufwand lag nach Angaben des Landkreises bei rund 2,5 Millionen Euro. Sozialleistungen konnten mindestens eine Woche nicht ausgezahlt werden. Nach dem Angriff auf die Südwestfalen-IT waren Online-Dienste für rund 1,7 Millionen Einwohner erst nach etwa neun Monaten wieder weitgehend verfügbar. Für die Menschen in Herne hieße das: Urkunden und Zulassungen verzögern sich, Leistungen kommen später an, die Verwaltung ist kaum erreichbar.",
+  8: "Die Schwachstellen sind bekannt, die Maßnahmen geplant: ein geschützter Zugang zur IT-Verwaltung mit zweiter Bestätigung, Rechte nach Aufgaben, einheitlich abgesicherte Server, der Ersatz veralteter Systeme, eine zentrale Erkennung von Angriffen und eine geübte Notfallvorsorge. Für mehrere dieser Schritte braucht es Entscheidungen der Verwaltungsführung.",
+};
+
+// Alle sichtbaren Texte wörtlich aus dem Drehbuch V1.2 (Einblendungen, Beschriftungen, Kacheln)
+const TEXTE = {
+  titel: "Ein ganz normaler Montag",
+  unterzeile: "Was ein Cyberangriff für Herne bedeuten würde",
+  vertraulich: "Vertraulich – nur zur internen Verwendung",
+  hinweis: "Erfundener Ablauf auf Grundlage der aktuellen Sicherheitsprüfung. Ohne technische Einzelheiten.",
+  sym_ausweis: "Ausweis",
+  sym_geburtsurkunde: "Geburtsurkunde",
+  sym_wohngeld: "Wohngeld",
+  sym_kita: "Kita",
+  sym_baugenehmigung: "Baugenehmigung",
+  sym_gehaelter: "Gehälter",
+  sym_autokennzeichen: "Autokennzeichen",
+  betreff: "Rechnung zu Ihrer Bestellung",
+  tuer_archiv: "Archiv",
+  tuer_kasse: "Kasse",
+  tuer_server: "Serverraum",
+  uhrzeit: "Montagmorgen, 7:30 Uhr",
+  notfallplan: "Notfallplan",
+  kachel_technik_titel: "Technik",
+  kachel_technik_text: "Neuaufbau aller Systeme, Wochen bis Monate.",
+  kachel_technik_beleg: "Beleg: Landkreis Anhalt-Bitterfeld – Katastrophenfall für rund sieben Monate; Daten eines Bereichs auch nach einem Jahr nicht wiederhergestellt.",
+  kachel_geld_titel: "Geld",
+  kachel_geld_text: "Neue Hardware und Software, Datenrettung, externe Unterstützung.",
+  kachel_geld_beleg: "Beleg: rund 2,5 Mio. € Aufwand nach Angaben des Landkreises Anhalt-Bitterfeld.",
+  kachel_ansehen_titel: "Ansehen",
+  kachel_ansehen_text: "Veröffentlichung persönlicher Daten, Berichterstattung, Vertrauensverlust.",
+  kachel_ansehen_beleg: "Beleg: In Anhalt-Bitterfeld wurden abgeflossene personenbezogene Daten teilweise veröffentlicht.",
+  kachel_buerger_titel: "Bürgerinnen und Bürger",
+  kachel_buerger_text: "Bürgerbüro, Standesamt und Zulassung nur eingeschränkt, Leistungen werden später ausgezahlt, Verwaltung schwer erreichbar.",
+  kachel_buerger_beleg: "Beleg: Anhalt-Bitterfeld – Sozial- und Unterhaltsleistungen mindestens eine Woche nicht ausgezahlt; Südwestfalen-IT 2023 – Kommunen mit zusammen rund 1,7 Mio. Einwohnern betroffen, Online-Dienste nach rund neun Monaten wieder weitgehend verfügbar.",
+  vignette_kindergeld: "Kindergeld wartet",
+  vignette_wohngeld: "Wohngeld wartet",
+  buergerbuero: "Bürgerbüro",
+  massnahmen_titel: "Maßnahmen",
+  massnahme_1: "Geschützter Zugang zur IT-Verwaltung mit zweiter Bestätigung",
+  massnahme_2: "Rechte nach Aufgaben",
+  massnahme_3: "Server einheitlich absichern",
+  massnahme_4: "Veraltete Systeme ersetzen",
+  massnahme_5: "Angriffe zentral erkennen",
+  massnahme_6: "Notfallvorsorge aufbauen und üben",
+  schluss_titel: "Gemeinsam für ein sicheres Herne",
+  schluss_klein: "Stadt Herne · Informationssicherheit · Stand September 2026",
+  woche_1: "Woche 1",
+  woche_2: "Woche 2",
+  woche_3: "Woche 3",
+  woche_4: "Woche 4",
+};
+
+// Bildbestandteile außerhalb des Drehbuchs: laut Auftrag erlaubt (Regel 3) bzw. Verkehrszeichen
+const TEXTE_AUSNAHMEN = {
+  fassade: 'GEMEINSAM FÜR EIN LEBENSWERTES HERNE',   // Spruch an der Fassade wie in der Stilreferenz (Auftrag, Regel 3)
+  stele: 'Stadt Herne',                             // Text „Stadt Herne“ (Auftrag, Regel 3)
+  haltestelle: 'H',                                 // Haltestellenzeichen
 };
 
 // Untertitel-Cues: Zeiten absolut (s), Zeilen wortgleich aus SPRECHERTEXT (max. 2 Zeilen)
 const CUES = [
-  // Szene 3 – Der Generalschlüssel (0:56–1:28)
-  { scene: 3, start: 57.0, end: 60.4, lines: ['Wer einmal drin ist, sucht den Generalschlüssel.'] },
-  { scene: 3, start: 61.0, end: 65.2, lines: ['Bei uns kann die IT von zu vielen Stellen', 'aus verwaltet werden,'] },
-  { scene: 3, start: 65.4, end: 68.8, lines: ['und intern genügt dafür bis heute ein Passwort.'] },
-  { scene: 3, start: 69.8, end: 73.4, lines: ['Zugleich haben zu viele Konten Zugriff auf alles.'] },
-  { scene: 3, start: 74.4, end: 78.8, lines: ['Für einen Angreifer heißt das:', 'Er muss nicht einbrechen.'] },
-  { scene: 3, start: 82.0, end: 85.0, lines: ['Er kann aufschließen.'] },
+  // Szene 3 – Zugang zu zentralen Systemen (0:56–1:28); „erreicht damit zentrale Systeme“ fällt auf die Schlüsseldrehung am Serverraum
+  { scene: 3, start: 57.6, end: 65.4, lines: ["In Herne lässt sich die IT nicht nur von wenigen,", "besonders geschützten Arbeitsplätzen aus verwalten."] },
+  { scene: 3, start: 66.0, end: 68.4, lines: ["Intern reicht dafür ein Passwort,"] },
+  { scene: 3, start: 68.6, end: 73.2, lines: ["eine zweite Bestätigung bei der Anmeldung", "ist noch nicht eingeführt."] },
+  { scene: 3, start: 73.4, end: 79.4, lines: ["Zudem haben mehr Konten weitreichende Rechte,", "als für die jeweiligen Aufgaben nötig wäre."] },
+  { scene: 3, start: 79.8, end: 82.0, lines: ["Wer ein solches Konto übernimmt,"] },
+  { scene: 3, start: 82.2, end: 84.8, lines: ["erreicht damit zentrale Systeme."] },
 ];
+
+// Synchronpunkte Bild ↔ Sprechertext (Prüfung in check.mjs)
+const SYNC = [];
 
 /* =====================================================================
    2  HILFSFUNKTIONEN: Mathematik, Easing, Seed-Zufall, Farben, SVG-Bausteine
@@ -160,14 +219,35 @@ const OL = (sw = 3, color) => ({ stroke: color || C.line, 'stroke-width': sw, 's
 // Kontur-Glied: dicke Linie mit dunklem Rand (Arme, Beine, Äste)
 const Limb = (pts, color, w, sw = 3) => Poly(pts, C.line, w + 2 * sw) + Poly(pts, color, w);
 
-// Schrift und Textmessung (Arial; auf Linux die maßgleiche Liberation Sans)
+// Schrift und Textmessung (Arial bzw. die maßgleiche Ersatzschrift)
 const FONT = 'Arial, "Liberation Sans", Helvetica, sans-serif';
 const _mctx = document.createElement('canvas').getContext('2d');
 function measure(str, size, weight = 400) { _mctx.font = `${weight} ${size}px ${FONT}`; return _mctx.measureText(str).width; }
+// Jeder sichtbare Text trägt eine Kennung: data-k = Schlüssel in TEXTE/TEXTE_AUSNAHMEN, data-i = Zeilennummer
 function Txt(x, y, str, o = {}) {
   const { size = 40, weight = 400, fill = C.text, anchor = 'start', opacity, ls, italic } = o;
-  return `<text class="t"${A({ x, y, 'font-size': size, 'font-weight': weight, fill, 'text-anchor': anchor, opacity, 'letter-spacing': ls, 'font-style': italic ? 'italic' : undefined })}>${esc(str)}</text>`;
+  return `<text class="t"${A({ x, y, 'font-size': size, 'font-weight': weight, fill, 'text-anchor': anchor, opacity, 'letter-spacing': ls, 'font-style': italic ? 'italic' : undefined, 'data-k': o.k, 'data-i': o.i, 'data-cue': o.cue })}>${esc(str)}</text>`;
 }
+// Zeilenumbruch nur an Leerzeichen (Text bleibt wortgleich)
+function wrapLines(str, size, weight, maxW) {
+  const words = str.split(' ');
+  const lines = []; let cur = '';
+  for (const w of words) {
+    const t = cur ? cur + ' ' + w : w;
+    if (cur && measure(t, size, weight) > maxW) { lines.push(cur); cur = w; } else cur = t;
+  }
+  if (cur) lines.push(cur);
+  return lines;
+}
+// Mehrzeiliger Text aus TEXTE[key]; o.lines = feste Zeilen (müssen zusammen den Text ergeben), sonst automatischer Umbruch
+function TextBlock(key, x, y, o = {}) {
+  const src = TEXTE[key] ?? TEXTE_AUSNAHMEN[key];
+  const size = o.size || 40, weight = o.weight || 400;
+  const lines = o.lines || wrapLines(src, size, weight, o.maxW || 1e9);
+  const lh = o.lh || size * 1.25;
+  return lines.map((l, i) => Txt(x, y + i * lh, l, { ...o, size, weight, k: key, i })).join('');
+}
+const blockLines = (key, size, weight, maxW) => wrapLines(TEXTE[key], size, weight, maxW);
 
 /* =====================================================================
    3  FARBEN
@@ -583,9 +663,9 @@ function Card(x, y, w, h, o = {}) {
     Rect(x, y + 22, 9, h - 44, accent, { rx: 4.5 }) + (o.inner || ''));
 }
 function Confidential(op = 1) {
-  const label = 'Vertraulich – nur zur internen Verwendung';
+  const label = TEXTE.vertraulich;
   const w = measure(label, 22) + 32;
-  return G({ opacity: op }, Rect(36, H - 36 - 40, w, 40, '#FFFFFF', { rx: 8, opacity: 0.86 }) + Txt(52, H - 36 - 13, label, { size: 22, fill: C.text2 }));
+  return G({ opacity: op }, Rect(36, H - 36 - 40, w, 40, '#FFFFFF', { rx: 8, opacity: 0.86 }) + Txt(52, H - 36 - 13, label, { size: 22, fill: C.text2, k: 'vertraulich', i: 0 }));
 }
 // Untertitel unten mittig auf halbtransparentem Band
 const SUB = { size: 44, lh: 56, padX: 30, padY: 15, bottom: 50, bandOpacity: 0.78 };
@@ -599,7 +679,8 @@ function SubtitleSVG(t) {
   const bh = c.lines.length * SUB.lh + SUB.padY * 2 - (SUB.lh - SUB.size) + 4;
   const by = H - SUB.bottom - bh, bx = (W - bw) / 2;
   let s = Rect(bx, by, bw, bh, C.text, { rx: 10, opacity: SUB.bandOpacity });
-  c.lines.forEach((l, i) => { s += Txt(W / 2, by + SUB.padY + SUB.size * 0.8 + i * SUB.lh + 2, l, { size: SUB.size, fill: '#FFFFFF', anchor: 'middle' }); });
+  const ci = CUES.indexOf(c);
+  c.lines.forEach((l, i) => { s += Txt(W / 2, by + SUB.padY + SUB.size * 0.8 + i * SUB.lh + 2, l, { size: SUB.size, fill: '#FFFFFF', anchor: 'middle', k: 'sub', i, cue: ci }); });
   return G({ opacity: a }, s);
 }
 
@@ -683,9 +764,9 @@ function Rathaus() {
   // Spruch an der Fassade (laut Auftrag erlaubt); Schriftgröße so, dass er in die Wandfläche passt
   const px = gx0 + gw + 34, room = Mx + Mw - 70 - px;
   let fs = 30; while (measure('FÜR EIN LEBENSWERTES', fs) + 19 > room) fs -= 1;
-  s += Txt(px, My + 100, 'GEMEINSAM', { size: fs, fill: C.slogan, ls: 1 });
-  s += Txt(px, My + 100 + fs * 1.4, 'FÜR EIN LEBENSWERTES', { size: fs, fill: C.slogan, ls: 1 });
-  s += Txt(px, My + 100 + fs * 1.4 + fs * 1.75, 'HERNE', { size: Math.round(fs * 1.3), fill: C.slogan, ls: 2 });
+  s += Txt(px, My + 100, 'GEMEINSAM', { size: fs, fill: C.slogan, ls: 1, k: 'fassade', i: 0 });
+  s += Txt(px, My + 100 + fs * 1.4, 'FÜR EIN LEBENSWERTES', { size: fs, fill: C.slogan, ls: 1, k: 'fassade', i: 1 });
+  s += Txt(px, My + 100 + fs * 1.4 + fs * 1.75, 'HERNE', { size: Math.round(fs * 1.3), fill: C.slogan, ls: 2, k: 'fassade', i: 2 });
   // Erdgeschoss mit Eingang
   s += Rect(Mx + 10, b - 132, Mw - 20, 132, C.facadeDark, OL(2.5));
   for (let i = 0; i < 8; i++) s += Rect(Mx + 26 + i * 82, b - 118, 62, 118, C.glassDark, OL(2)) + Line(Mx + 57 + i * 82, b - 118, Mx + 57 + i * 82, b, C.mullion, 2);
@@ -704,7 +785,7 @@ function Bench(x, y, w, s = 1) {
 function Stele(x, base) {
   const w = 190, h = 360, top = base - h;
   return Rect(x + 10, top + 10, w, h, '#CFC5B8', OL(3)) + Rect(x, top, w, h, '#F1EAE0', OL(3))
-    + Txt(x + 30, top + 92, 'Stadt', { size: 34, fill: C.text2 }) + Txt(x + 30, top + 136, 'Herne', { size: 34, fill: C.text2 })
+    + TextBlock('stele', x + 30, top + 92, { size: 34, fill: C.text2, lines: ['Stadt', 'Herne'], lh: 44 })
     + Rect(x + 30, top + 162, 34, 5, C.text2);
 }
 function BusStopBack() {
@@ -719,7 +800,7 @@ function BusStopFront() {
   // Glaswand mit Haltestellenzeichen
   s += Rect(1606, 470, 150, 300, '#DDEBF0', { ...OL(2.5), opacity: 0.55 });
   s += Rect(1606, 470, 150, 300, 'none', OL(2.5));
-  s += Circ(1650, 520, 30, '#F6C63A', OL(3)) + Circ(1650, 520, 24, 'none', { stroke: '#2E8B3E', 'stroke-width': 4 }) + Txt(1650, 534, 'H', { size: 36, weight: 700, fill: '#2E8B3E', anchor: 'middle' });
+  s += Circ(1650, 520, 30, '#F6C63A', OL(3)) + Circ(1650, 520, 24, 'none', { stroke: '#2E8B3E', 'stroke-width': 4 }) + Txt(1650, 534, TEXTE_AUSNAHMEN.haltestelle, { size: 36, weight: 700, fill: '#2E8B3E', anchor: 'middle', k: 'haltestelle', i: 0 });
   s += Rect(1590, 770, 190, 18, '#B9C2C6', OL(2.5));
   return s;
 }
@@ -876,23 +957,23 @@ const S0 = {
 
     // Oberfläche: Titelkarte, Hinweis, Vertraulich-Vermerk
     let ui = '';
-    const tIn = ez(lt, 0.6, 1.5, EASE.out), tOut = ez(lt, 6.9, 7.5);
+    const tIn = ez(lt, 0.6, 1.5, EASE.out), tOut = ez(lt, 5.3, 5.9);
     const top = 96, left = 96;
-    if (lt < 7.6) {
-      const t1 = 'Ein ganz normaler Montag', t2 = 'Was ein Cyberangriff für Herne bedeuten würde';
-      const w1 = measure(t1, 70, 700), w2 = measure(t2, 36);
+    if (lt < 6.0) {
+      const w1 = measure(TEXTE.titel, 70, 700), w2 = measure(TEXTE.unterzeile, 36);
       const cw = Math.max(w1, w2) + 120, ch = 200;
       const sub = ez(lt, 1.3, 2.1, EASE.out);
-      const inner = Txt(left + 60, top + 102, t1, { size: 70, weight: 700, fill: C.text })
-        + G({ opacity: sub }, Txt(left + 60, top + 156, t2, { size: 36, fill: C.text2 }));
+      const inner = Txt(left + 60, top + 102, TEXTE.titel, { size: 70, weight: 700, fill: C.text, k: 'titel', i: 0 })
+        + G({ opacity: sub }, Txt(left + 60, top + 156, TEXTE.unterzeile, { size: 36, fill: C.text2, k: 'unterzeile', i: 0 }));
       ui += Card(left, top, cw, ch, { opacity: tIn * (1 - tOut), dy: (1 - tIn) * 18, inner });
     }
-    if (lt > 7.4) {
-      const h1 = 'Das folgende Szenario ist fiktiv.', h2 = 'Es enthält keine technischen Einzelheiten.';
-      const cw = Math.max(measure(h1, 44), measure(h2, 44)) + 120, ch = 190;
-      const a = fadeIO(lt, 7.5, 8.0, 11.0, 11.5);
-      const inner = Txt(left + 60, top + 84, h1, { size: 44, fill: C.text }) + Txt(left + 60, top + 142, h2, { size: 44, fill: C.text });
-      ui += Card(left, top, cw, ch, { opacity: a, dy: (1 - ez(lt, 7.5, 8.1, EASE.out)) * 14, inner, accent: C.zyan });
+    if (lt >= 5.95) {
+      // Hinweis-Einblendung 0:06–0:12, Zeilen an Satz- bzw. Sinngrenzen
+      const lines = ['Erfundener Ablauf auf Grundlage', 'der aktuellen Sicherheitsprüfung.', 'Ohne technische Einzelheiten.'];
+      const cw = Math.max(...lines.map(l => measure(l, 42))) + 120, ch = 234;
+      const a = fadeIO(lt, 6.0, 6.4, 11.6, 12.0);
+      const inner = TextBlock('hinweis', left + 60, top + 76, { size: 42, fill: C.text, lines, lh: 56 });
+      ui += Card(left, top, cw, ch, { opacity: a, dy: (1 - ez(lt, 6.0, 6.6, EASE.out)) * 14, inner, accent: C.zyan });
     }
     ui += Confidential(ez(lt, 0.3, 1.1));
     return { world: w, warn: '', ui, grade: GRADE.day };
@@ -909,13 +990,14 @@ const S3L = {
   floorY: 800, lane: 874, sh: 1.16,
   desks: [420, 820, 1220, 1620],
   doors: [
-    { x: 2210, label: 'Archiv', leaf: C.doorWood, kind: 'archiv', unlock: 19.0, open: 19.9 },
-    { x: 2610, label: 'Kasse', leaf: C.doorWood, kind: 'kasse', unlock: 22.8, open: 23.7 },
-    { x: 3010, label: 'Serverraum', leaf: C.doorGrey, kind: 'server', unlock: 26.2, open: 27.1 },
+    { x: 2210, key: 'tuer_archiv', leaf: C.doorWood, kind: 'archiv', unlock: 19.0, open: 19.9 },
+    { x: 2610, key: 'tuer_kasse', leaf: C.doorWood, kind: 'kasse', unlock: 22.8, open: 23.7 },
+    { x: 3010, key: 'tuer_server', leaf: C.doorGrey, kind: 'server', unlock: 26.2, open: 27.1 },   // Drehung 26,2–26,65 s = „erreicht damit zentrale Systeme“
   ],
   doorW: 180, doorH: 370,
 };
 const deskHook = i => [S3L.desks[i] + 130 + 92, 546];
+SYNC.push({ label: 'Szene 3: Schlüssel dreht im Schloss des Serverraums', t: 56 + S3L.doors[2].unlock, phrase: 'erreicht damit zentrale Systeme' });
 function Desk(x, lt, i, keyOn, glow) {
   const fy = 815, top = 664;
   let s = '';
@@ -1027,8 +1109,9 @@ function Door(d, lt, i) {
     s += Circ(lx, lockY + 2, 4.5, C.line) + Path(P([[lx - 3, lockY + 4], [lx + 3, lockY + 4], [lx + 2, lockY + 13], [lx - 2, lockY + 13]]), C.line);
   }
   // Türschild
-  const tw = measure(d.label, 28, 700) + 36;
-  s += Rect(x + w / 2 - tw / 2, top - 70, tw, 44, C.plate, { ...OL(2.5), rx: 6 }) + Txt(x + w / 2, top - 38, d.label, { size: 28, weight: 700, fill: C.text, anchor: 'middle' });
+  const label = TEXTE[d.key];
+  const tw = measure(label, 28, 700) + 36;
+  s += Rect(x + w / 2 - tw / 2, top - 70, tw, 44, C.plate, { ...OL(2.5), rx: 6 }) + Txt(x + w / 2, top - 38, label, { size: 28, weight: 700, fill: C.text, anchor: 'middle', k: d.key, i: 0 });
   return s;
 }
 function CeilingLights() {
@@ -1119,7 +1202,7 @@ const S3 = {
     const hand = shO.out.handF;
 
     // Welt zusammensetzen
-    const glowAll = bump(lt, 15.4, 1.6) * (lt > 14 ? 1 : 0);
+    const glowAll = bump(lt, 18.6, 1.6);   // zu „Zudem haben mehr Konten weitreichende Rechte …“ (ab 1:13,4)
     let w = Use('s3-room');
     // Durchtritt durch die Wand: weicher dunkler Fleck, der sich auflöst
     const wallU = seg(lt, 0.1, 2.2);
@@ -1169,8 +1252,8 @@ function Placeholder(sc) {
     n: sc.n,
     defs() { return ''; },
     draw(lt) {
-      const ui = Rect(0, 0, W, H, '#2C3A40') + Txt(W / 2, H / 2 - 10, `Szene ${sc.n} – ${sc.title}`, { size: 56, weight: 700, fill: '#F5F7F7', anchor: 'middle' })
-        + Txt(W / 2, H / 2 + 50, 'in Arbeit', { size: 32, fill: '#CAF278', anchor: 'middle' });
+      const ui = Rect(0, 0, W, H, '#2C3A40') + Txt(W / 2, H / 2 - 10, `Szene ${sc.n} – ${sc.title}`, { size: 56, weight: 700, fill: '#F5F7F7', anchor: 'middle', k: 'platzhalter', i: 0 })
+        + Txt(W / 2, H / 2 + 50, 'in Arbeit', { size: 32, fill: '#CAF278', anchor: 'middle', k: 'platzhalter', i: 1 });
       return { world: '', warn: '', ui, grade: GRADE.day };
     },
   };
@@ -1312,7 +1395,7 @@ function setupPlayer() {
 }
 
 // Export-Schnittstelle
-window.VIDEO = { W, H, FPS, TOTAL, SCENES, CUES, SPRECHERTEXT, frames: Math.round(TOTAL * FPS) };
+window.VIDEO = { W, H, FPS, TOTAL, SCENES, CUES, SPRECHERTEXT, TEXTE, TEXTE_AUSNAHMEN, SYNC, frames: Math.round(TOTAL * FPS) };
 window.renderFrame = t => render(t);
 (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => {
   init();
