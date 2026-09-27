@@ -68,7 +68,7 @@ Drehbuch: Drehbuch_Video_Angriffsszenario_Herne_V1_2.md · Video: Ein_ganz_norma
 
 - ℹ️ Szene 0 0:00.0–0:12.0 (12 s) · Szene 1 0:12.0–0:32.0 (20 s) · Szene 2 0:32.0–0:56.0 (24 s) · Szene 3 0:56.0–1:28.0 (32 s) · Szene 4 1:28.0–1:52.0 (24 s) · Szene 5 1:52.0–2:18.0 (26 s) · Szene 6 2:18.0–2:50.0 (32 s) · Szene 7 2:50.0–3:44.0 (54 s) · Szene 8 3:44.0–4:18.0 (34 s)
 - ✅ SRT: 47 Einträge, Text und Zeiten identisch mit den eingebrannten Untertiteln
-- ✅ MP4: h264 High, 1920×1080, yuv420p, 30/1 fps, 7740 Bilder, 258.000 s, 40.5 MB, ohne Ton
+- ✅ MP4: h264 High, 1920×1080, yuv420p, 30/1 fps, 7740 Bilder, 258.000 s, 43.5 MB, ohne Ton
 
 ## Technik
 
