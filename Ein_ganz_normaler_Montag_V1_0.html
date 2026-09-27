@@ -197,6 +197,15 @@ const CUES = [
   { scene: 7, start: 208.4, end: 211.4, lines: ["Urkunden und Zulassungen verzögern sich,"] },
   { scene: 7, start: 211.8, end: 214.0, lines: ["Leistungen kommen später an,"] },
   { scene: 7, start: 214.4, end: 217.0, lines: ["die Verwaltung ist kaum erreichbar."] },
+  // Szene 8 – Maßnahmen (3:44–4:18); Schlusstafel ab 4:12 ohne Sprechertext
+  { scene: 8, start: 225.0, end: 228.8, lines: ["Die Schwachstellen sind bekannt,", "die Maßnahmen geplant:"] },
+  { scene: 8, start: 229.2, end: 233.8, lines: ["ein geschützter Zugang zur IT-Verwaltung", "mit zweiter Bestätigung,"] },
+  { scene: 8, start: 234.0, end: 235.8, lines: ["Rechte nach Aufgaben,"] },
+  { scene: 8, start: 236.0, end: 238.4, lines: ["einheitlich abgesicherte Server,"] },
+  { scene: 8, start: 238.6, end: 240.8, lines: ["der Ersatz veralteter Systeme,"] },
+  { scene: 8, start: 241.0, end: 243.6, lines: ["eine zentrale Erkennung von Angriffen"] },
+  { scene: 8, start: 243.8, end: 246.2, lines: ["und eine geübte Notfallvorsorge."] },
+  { scene: 8, start: 246.6, end: 252.0, lines: ["Für mehrere dieser Schritte braucht es", "Entscheidungen der Verwaltungsführung."] },
 ];
 
 // Synchronpunkte Bild ↔ Sprechertext (Prüfung in check.mjs)
@@ -1521,7 +1530,7 @@ function OutsideView() {
   o += Tree(560, 700, 0.75, 81) + Tree(1560, 700, 0.8, 82) + Tree(200, 700, 0.6, 83);
   return o;
 }
-const S2L = { windows: [[140, 260, 400, 340], [760, 260, 400, 340], [1380, 260, 400, 340]] };
+const S2L = { fenster: [[140, 260, 400, 340], [760, 260, 400, 340], [1380, 260, 400, 340]] };
 // Nahaufnahme des Bildschirms: neutrale E-Mail-Ansicht, nur der Betreff ist lesbar
 function MailScreen(lt) {
   const X = 230, Y = 90, Wd = 1460, Hd = 780;
@@ -1572,7 +1581,7 @@ const S2 = {
   defs() {
     let d = '';
     // Außenansicht, auf die Fenster zugeschnitten
-    d += `<clipPath id="s2-win">${S2L.windows.map(([x, y, w, h]) => `<rect x="${x}" y="${y}" width="${w}" height="${h}"/>`).join('')}</clipPath>`;
+    d += `<clipPath id="s2-win">${S2L.fenster.map(([x, y, w, h]) => `<rect x="${x}" y="${y}" width="${w}" height="${h}"/>`).join('')}</clipPath>`;
     d += `<g id="s2-outside">${OutsideView()}</g>`;
     let room = Rect(-400, 0, 2800, 700, '#E3E8E6') + Rect(-400, 0, 2800, 60, '#EEF1F0') + Line(-400, 60, 2400, 60, C.line, 2);
     room += Rect(-400, 640, 2800, 60, '#D5DBD9') + Rect(-400, 690, 2800, 12, '#9AA4A8', OL(2));
@@ -1581,7 +1590,7 @@ const S2 = {
     for (let k = 0; k < 5; k++) room += Rect(80 + k * 400, 60, 240, 10, '#FFFFFF', { ...OL(2), rx: 3 });
     d += `<g id="s2-room">${room}</g>`;
     let frames = '';
-    for (const [x, y, w, h] of S2L.windows) frames += Rect(x, y, w, h, '#DDEFFA', { opacity: 0.18 }) + Rect(x, y, w, h, 'none', { stroke: '#8E9AA0', 'stroke-width': 12 }) + Line(x + w / 2, y, x + w / 2, y + h, '#8E9AA0', 8) + Rect(x - 14, y + h, w + 28, 14, '#BFC6C9', OL(2));
+    for (const [x, y, w, h] of S2L.fenster) frames += Rect(x, y, w, h, '#DDEFFA', { opacity: 0.18 }) + Rect(x, y, w, h, 'none', { stroke: '#8E9AA0', 'stroke-width': 12 }) + Line(x + w / 2, y, x + w / 2, y + h, '#8E9AA0', 8) + Rect(x - 14, y + h, w + 28, 14, '#BFC6C9', OL(2));
     frames += Rect(1850, 470, 60, 150, '#B98D62', OL(2.5)) + Bush(1880, 474, 90, 140, 84, { sw: 2.5 });
     frames += Rect(-60, 430, 150, 260, '#D8CDBE', OL(2.5));
     for (let r = 0; r < 3; r++) for (let c = 0; c < 4; c++) frames += Rect(-44 + c * 32, 446 + r * 80, 24, 64, ['#6D8FB0', '#9DB86B', '#C9A04A', '#8E9AA0'][(r + c) % 4], OL(1.5));
@@ -1914,7 +1923,7 @@ function WaveFill(lt, o = {}) {
   let s = '';
   for (const [id, [t0, side]] of Object.entries(XS.wave)) {
     let u = ez(lt, t0, t0 + 1.2, EASE.inOut);
-    u *= 1 - back;
+    u *= 1 - (o.backFn ? o.backFn(t0) : back);
     if (u <= 0.001) continue;
     let x, y, w, h;
     if (id === 's') { x = XS.x0 + XS.rw * 4; y = XS.y0; w = XS.stairW; h = XS.rh * 3; }
@@ -2273,21 +2282,153 @@ const S7 = {
 };
 
 /* =====================================================================
-   11  PLATZHALTER für noch nicht umgesetzte Szenen (nur Vorschau)
+   18  SZENE 8 – MASSNAHMEN (3:44–4:18)
+   Rücklauf: rote Welle zieht sich zurück, Brandschutztüren schließen. Dann
+   verwandelt sich jede Metapher synchron zum Sprechertext in ihr Gegenbild;
+   daneben baut sich die Einblendung „Maßnahmen“ auf. Zurück in die sonnige
+   Innenstadt; Schlusstafel 4:12–4:18.
    ===================================================================== */
-function Placeholder(sc) {
-  return {
-    n: sc.n,
-    defs() { return ''; },
-    draw(lt) {
-      const ui = Rect(0, 0, W, H, '#2C3A40') + Txt(W / 2, H / 2 - 10, `Szene ${sc.n} – ${sc.title}`, { size: 56, weight: 700, fill: '#F5F7F7', anchor: 'middle', k: 'platzhalter', i: 0 })
-        + Txt(W / 2, H / 2 + 50, 'in Arbeit', { size: 32, fill: '#CAF278', anchor: 'middle', k: 'platzhalter', i: 1 });
-      return { world: '', warn: '', ui, grade: GRADE.day };
-    },
-  };
+const Check = (x, y, r, op = 1) => op <= 0.01 ? '' : G({ opacity: N(op) }, Circ(x, y, r, C.hellgruen, OL(2.5)) + Path(`M${N(x - r * 0.45)},${N(y + r * 0.02)} L${N(x - r * 0.1)},${N(y + r * 0.38)} L${N(x + r * 0.5)},${N(y - r * 0.36)}`, 'none', { stroke: C.gruen, 'stroke-width': N(r * 0.24), 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }));
+const GreenGlow = (x, y, r, op) => op <= 0.01 ? '' : Circ(x, y, r, '#6EE08E', { opacity: N(0.45 * op), filter: 'url(#fGlow)' });
+// Tür frontal mit bis zu zwei Schlössern (Szene 8)
+function SecureDoor(x, base, w, h, o = {}) {
+  const top = base - h;
+  let d = Rect(x - 14, top - 14, w + 28, h + 14, '#7D8990', OL(3)) + Rect(x, top, w, h, o.leaf || '#8E9CA3', OL(3));
+  d += Path(`M${x + w - 16},${top + h * 0.5 - 30} L${x + w - 44},${top + h * 0.5 - 30}`, 'none', { stroke: C.line, 'stroke-width': 9, 'stroke-linecap': 'round' }) + Path(`M${x + w - 16},${top + h * 0.5 - 30} L${x + w - 44},${top + h * 0.5 - 30}`, 'none', { stroke: '#D5DBDE', 'stroke-width': 4.5, 'stroke-linecap': 'round' });
+  const lx = x + w - 30, ly = top + h * 0.5;
+  d += GreenGlow(lx, ly + 10, 40, o.ok1 || 0) + Rect(lx - 10, ly - 12, 20, 46, '#B8C0C4', { ...OL(2.5), rx: 5 }) + Circ(lx, ly + 4, 4.5, C.line) + Path(P([[lx - 3, ly + 6], [lx + 3, ly + 6], [lx + 2, ly + 15], [lx - 2, ly + 15]]), C.line);
+  if (o.second > 0.001) {
+    const sy = ly + 90;
+    d += G({ opacity: N(o.second), transform: `translate(${N(lx)} ${N(sy)}) scale(${N(0.5 + 0.5 * o.second)}) translate(${N(-lx)} ${N(-sy)})` }, GreenGlow(lx, sy, 44, o.ok2 || 0) + Rect(lx - 18, sy - 22, 36, 44, '#5B666B', { ...OL(2.5), rx: 8 }) + Circ(lx, sy, 11, o.ok2 > 0.5 ? '#6EE08E' : '#AEB6BA', OL(2)));
+  }
+  return d;
 }
-const IMPL = { 0: S0, 1: S1, 2: S2, 3: S3, 4: S4, 5: S5, 6: S6, 7: S7 };
-const SCENE_OBJ = SCENES.map(sc => IMPL[sc.n] || Placeholder(sc));
+function Leitstelle(x, y, s, on) {
+  let l = Rect(-90, -60, 180, 120, '#E7EAEB', OL(3)) + Path('M-104,-58 L0,-120 L104,-58 Z', '#9AA4A8', OL(3)) + Rect(-60, -30, 120, 60, '#BFD8E6', OL(2.5));
+  l += Person({ x: 0, y: 36, s: 0.24, dir: 1, top: '#4E82C0', pants: C.black, hair: C.hairDark, skin: C.skin2, mood: 'neutral' });
+  l += Line(60, -120, 60, -160, C.line, 4) + Circ(60, -166, 9, on ? '#6EE08E' : '#AEB6BA', OL(2)) + GreenGlow(60, -166, 22, on);
+  return G({ transform: TR(x, y, s) }, l);
+}
+function Flipchart(x, y, s, lt) {
+  let f = Line(-40, 120, 0, -80, C.line, 5) + Line(40, 120, 0, -80, C.line, 5) + Rect(-60, -90, 120, 150, '#FFFFFF', { ...OL(3), rx: 3 });
+  for (let i = 0; i < 3; i++) f += Check(-34, -58 + i * 40, 10, ez(lt, 0.6 + i * 0.5, 0.9 + i * 0.5)) + Rect(-16, -62 + i * 40, 58, 8, '#C9CFD2', { rx: 4 });
+  return G({ transform: TR(x, y, s) }, f);
+}
+const S8 = {
+  n: 8,
+  items: [5.2, 10.0, 12.0, 14.6, 17.0, 19.8],     // Listenpunkt erscheint, wenn er gesprochen wird
+  stage: [[5.0, 9.8], [9.8, 11.9], [11.9, 14.5], [14.5, 16.9], [16.9, 19.7], [19.7, 23.3]],
+  defs() { return ''; },
+  mini(k, lt, u) {
+    // u = Zeit seit Beginn des Gegenbilds
+    let m = '';
+    if (k === 0) {        // gesicherter Eingang mit zweitem Schloss; offene Generalschlüssel verschwinden
+      for (let i = 0; i < 3; i++) {
+        const x = 90 + i * 130, y = 640;
+        m += Rect(x, y, 110, 10, C.deskTop, OL(2)) + Rect(x + 8, y + 10, 8, 80, C.deskSide) + Rect(x + 94, y + 10, 8, 80, C.deskSide) + Rect(x + 30, y - 58, 56, 40, C.monitor, { ...OL(2), rx: 3 }) + Rect(x + 34, y - 54, 48, 32, C.screen);
+        m += G({ opacity: N(1 - ez(u, 0.3 + i * 0.25, 0.9 + i * 0.25)) }, Key(x + 94, y - 60, 0.42, Math.sin(lt * 1.4 + i) * 5));
+      }
+      m += SecureDoor(640, 790, 250, 470, { second: ez(u, 1.0, 1.7, EASE.outBack), ok1: ez(u, 2.2, 2.6), ok2: ez(u, 2.9, 3.3) });
+      m += Check(1020, 330, 30, ez(u, 3.4, 3.8));
+    } else if (k === 1) { // jeder bekommt nur die Schlüssel, die er braucht
+      const cols = [C.zyan, '#8CC152', C.gold];
+      for (let i = 0; i < 3; i++) {
+        const x = 110 + i * 360;
+        m += SecureDoor(x, 700, 170, 340, { leaf: mix(cols[i], '#FFFFFF', 0.55) }) + Rect(x - 14, 346, 198, 12, cols[i], { rx: 4 });
+        const pOut = {};
+        m += Person({ x: x + 80, y: 880, s: 0.85, dir: 1, top: ['#6D8FB0', '#B77A8C', '#8FA36A'][i], pants: C.black, hair: [C.hairDark, C.hairAuburn, C.hairGrey][i], hairStyle: ['short', 'long', 'bald'][i], skin: [C.skin3, C.skin1, C.skin2][i], arms: { f: { sh: 60, el: 30 } }, out: pOut });
+        if (pOut.handF) m += Key(pOut.handF[0] + 6, pOut.handF[1] - 6, 0.5, -30, { gold: cols[i] });
+        m += Check(x + 85, 300, 24, ez(u, 0.5 + i * 0.35, 0.8 + i * 0.35));
+      }
+    } else if (k === 2) { // Schlösser an allen Türen, einheitlich eingebaut
+      for (let i = 0; i < 4; i++) m += OfficeDoor(90 + i * 270, 770, 180, 380, 0, { lock: 'none', newLock: ez(u, 0.3 + i * 0.35, 0.7 + i * 0.35, EASE.outBack), leaf: '#9E927F' }) + Check(180 + i * 270, 340, 22, ez(u, 0.6 + i * 0.35, 0.9 + i * 0.35));
+    } else if (k === 3) { // neue Eingangstür
+      m += G({ transform: 'translate(590 470) scale(0.95) translate(-960 -560)' }, BackEntrance(lt, { renew: ez(u, 0.4, 1.4), day: true }));
+      m += Check(900, 250, 30, ez(u, 1.5, 1.9));
+    } else if (k === 4) { // Alarmanlage leuchtet grün, mit Leitstelle verbunden
+      const on = ez(u, 0.3, 0.9);
+      m += Rect(40, 60, 1130, 820, '#DDE3E1');
+      m += G({ transform: 'translate(170 250) scale(1.6)' }, AlarmPanel(0, 0, 1, on, lt));
+      m += CeilingCam(560, 200, 1.5, on);
+      m += Path('M258,522 L258,560 L800,560', 'none', { stroke: '#4F5B61', 'stroke-width': 6 });
+      const pu = (lt * 0.8) % 1;
+      if (on > 0.5) m += Circ(lerp(258, 800, pu), 560, 7, '#6EE08E');
+      m += Leitstelle(900, 560, 1.3, on);
+    } else {             // zweites Sicherungssystem, Notfallordner im zweiten Gebäude, Team übt
+      m += BackupUnit(70, 330, 0.85, 1) + G({ opacity: N(ez(u, 0.2, 0.8)) }, BackupUnit(240, 330, 0.85, 1)) + GreenGlow(312, 460, 60, bump(u, 1.0, 0.6));
+      m += G({ transform: 'translate(520 300)' }, Rect(0, 0, 170, 130, '#E7DCCD', OL(3)) + Path('M-14,4 L85,-56 L184,4 Z', C.roofRed, OL(3)) + Rect(64, 60, 42, 70, '#9C7040', OL(2.5)));
+      const fu = ez(u, 0.5, 1.5);
+      const fx = lerp(880, 605, fu), fy = lerp(620, 350, fu) - 90 * Math.sin(fu * Math.PI);
+      m += G({ transform: TR(fx, fy, 0.8, -10 * fu) }, Rect(-60, -22, 120, 44, '#C9A04A', { ...OL(2.5), rx: 4 }) + Rect(-52, -15, 104, 30, '#FFFFFF', OL(1.5)) + Txt(0, 8, TEXTE.notfallplan, { size: 20, weight: 700, fill: C.text, anchor: 'middle', k: 'notfallplan', i: 0 }));
+      m += Rect(780, 640, 300, 16, '#B98548', OL(2.5)) + Rect(800, 656, 14, 110, '#9C7040') + Rect(1046, 656, 14, 110, '#9C7040');
+      m += Rect(850, 610, 120, 30, '#C9A04A', { ...OL(2), rx: 3 });
+      m += Person({ x: 760, y: 860, s: 0.9, dir: 1, top: '#2E8C87', pants: '#5B666B', hair: C.hairDark, hairStyle: 'bun', skin: C.skin2, arms: { f: { sh: 110, el: 10 } } });
+      m += Person({ x: 1000, y: 860, s: 0.9, dir: -1, top: '#4F6B33', jacket: '#4F6B33', pants: C.jeans, hair: C.hairBrown, skin: C.skin1 });
+      m += Person({ x: 1110, y: 880, s: 0.92, dir: -1, top: '#F4B844', pants: C.jeans, hair: C.hairBrown, hairStyle: 'ponytail', skin: C.skin3 });
+      m += Flipchart(660, 610, 1.0, u);
+    }
+    return m;
+  },
+  draw(lt) {
+    let world = '', warn = '', ui = '';
+    const grade = gradeMix(GRADE.s5, GRADE.day, ez(lt, 0.5, 23.5, EASE.sine));
+    // 1) Rücklauf im Gebäudeschnitt
+    const rew = 1 - ez(lt, 4.6, 5.2);
+    if (rew > 0.001) {
+      const cam = 'translate(960 510) scale(1.0) translate(-960 -500)';
+      world += G({ opacity: N(rew) }, G({ transform: cam }, Rect(-200, -200, 2400, 1500, '#2F3942') + CrossSection(26, { closeAll: ez(lt, 1.6, 3.6) })));
+      warn += G({ opacity: N(rew), transform: cam }, WaveFill(26, { backFn: t0 => ez(lt, 0.4 + (23.7 - t0) * 0.45, 1.2 + (23.7 - t0) * 0.45) }));
+    }
+    // 2) Gegenbilder auf der Bühne links, Einblendung „Maßnahmen“ rechts
+    const stageOp = ez(lt, 4.6, 5.2) * (1 - ez(lt, 22.9, 23.6));
+    if (stageOp > 0.001) {
+      let st = Rect(0, 0, W, H, '#EEF2F0') + Rect(40, 60, 1130, 820, '#F7F9F8', { ...OL(3), rx: 22 });
+      let minis = '';
+      this.stage.forEach(([a, b], k) => {
+        const op = fadeIO(lt, a - 0.25, a + 0.2, b - 0.2, b + 0.25);
+        if (op > 0.001) minis += G({ opacity: N(op) }, this.mini(k, lt, lt - a));
+      });
+      st += `<clipPath id="s8-stage"><rect x="40" y="60" width="1130" height="820" rx="22"/></clipPath>` + G({ 'clip-path': 'url(#s8-stage)' }, minis);
+      world += G({ opacity: N(stageOp) }, st);
+    }
+    // 3) sonnige Innenstadt
+    const city = ez(lt, 22.9, 23.6);
+    if (city > 0.001) world += G({ opacity: N(city) }, S0.draw(Math.min(11.5, 6 + (lt - 23) * 0.5)).world);
+    // Einblendung „Maßnahmen“ (bleibt bis zur Schlusstafel)
+    const panelOp = ez(lt, 4.8, 5.3) * (1 - ez(lt, 27.6, 28.0));
+    if (panelOp > 0.001) {
+      const px = 1200, py = 60, pw = 680, ph = 820;
+      let pnl = Rect(px, py, pw, ph, '#FFFFFF', { rx: 20, opacity: 0.96 }) + Rect(px, py + 26, 9, ph - 52, C.gruen, { rx: 4.5 });
+      pnl += Txt(px + 50, py + 82, TEXTE.massnahmen_titel, { size: 46, weight: 700, fill: C.text, k: 'massnahmen_titel', i: 0 });
+      let y = py + 160;
+      this.items.forEach((t0, i) => {
+        const key = `massnahme_${i + 1}`;
+        const lines = blockLines(key, 31, 400, pw - 150);
+        const a = ez(lt, t0, t0 + 0.5, EASE.out);
+        pnl += G({ opacity: N(a), transform: `translate(${N((1 - a) * 24)} 0)` }, Check(px + 66, y - 10, 22, 1) + TextBlock(key, px + 104, y, { size: 31, fill: C.text, lines, lh: 40 }));
+        y += lines.length * 40 + 36;
+      });
+      ui += G({ opacity: N(panelOp), filter: 'url(#fCardShadow)' }, pnl);
+    }
+    // 4) Schlusstafel 4:12–4:18
+    const endOp = ez(lt, 28.0, 28.35);
+    if (endOp > 0.001) {
+      world += Rect(0, 0, W, H, '#FFFFFF', { opacity: N(0.45 * endOp) });
+      const t1 = TEXTE.schluss_titel, t2 = TEXTE.schluss_klein;
+      const cw = Math.max(measure(t1, 70, 700), measure(t2, 30)) + 160, chh = 230;
+      const inner = Txt(W / 2, 470, t1, { size: 70, weight: 700, fill: C.text, anchor: 'middle', k: 'schluss_titel', i: 0 }) + Txt(W / 2, 540, t2, { size: 30, fill: C.text2, anchor: 'middle', k: 'schluss_klein', i: 0 }) + Rect(W / 2 - 60, 568, 120, 6, C.gruen, { rx: 3 });
+      ui += G({ opacity: N(endOp), filter: 'url(#fCardShadow)' }, Rect((W - cw) / 2, 370, cw, chh, '#FFFFFF', { rx: 22, opacity: 0.96 }) + inner);
+      ui += Confidential(endOp);
+    }
+    return { world: world + (city < 1 ? Use('vignette') : ''), warn, ui, grade };
+  },
+};
+
+/* =====================================================================
+   11  SZENENVERZEICHNIS
+   ===================================================================== */
+const IMPL = { 0: S0, 1: S1, 2: S2, 3: S3, 4: S4, 5: S5, 6: S6, 7: S7, 8: S8 };
+const SCENE_OBJ = SCENES.map(sc => IMPL[sc.n]);
 
 /* =====================================================================
    12  RENDER-KERN: Szenenwahl, Überblendung, Ebenen, Farbstimmung
@@ -2325,7 +2466,12 @@ function render(t) {
   const act = activeScenes(t);
   SLOTS.forEach((slot, k) => {
     const idx = act[k];
-    if (idx === undefined) { setStyle(slot.root, slot.cache, 'disp', 'display', 'none'); return; }
+    if (idx === undefined) {
+      // nicht benötigter Slot: ausblenden und leeren (kein veralteter Inhalt im Seitenaufbau)
+      setStyle(slot.root, slot.cache, 'disp', 'display', 'none');
+      setHTML(slot.world, slot.cache, 'w', ''); setHTML(slot.warn, slot.cache, 'x', ''); setHTML(slot.ui, slot.cache, 'u', '');
+      return;
+    }
     const sc = SCENES[idx];
     const lt = t - sc.start;
     const out = SCENE_OBJ[idx].draw(lt, sc.end - sc.start);

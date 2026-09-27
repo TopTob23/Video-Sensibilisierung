@@ -170,15 +170,20 @@ const visibleTexts = new Map();   // Schlüssel → { text, von, bis, quelle }
   const issues = new Map();
   const note = (key, msg) => { if (!issues.has(key)) issues.set(key, msg); };
   const checkGroup = (els, t) => {
-    const groups = {};
+    // Gruppierung je Vorkommen: aufeinanderfolgende Zeilen (data-i 0, 1, 2 …) desselben Schlüssels bilden einen Textblock
+    const groups = [];
+    const open = {};
     for (const e of els) {
+      if (e.op <= 0.001) continue;   // unsichtbar (ausgeblendet)
       if (!e.k) { note('ohne:' + e.text, `Text ohne Kennung „${e.text}“ (${fmt(t)})`); continue; }
       if (e.k === 'sub') continue;   // Untertitel separat geprüft
       if (e.k === 'platzhalter') { note('ph:' + sceneOf(t).n, `Platzhalter sichtbar in Szene ${sceneOf(t).n} („${e.text}“)`); continue; }
-      (groups[e.k] = groups[e.k] || []).push(e);
+      const g = open[e.k];
+      if (g && e.i === g[g.length - 1].i + 1) g.push(e);
+      else { const ng = [e]; groups.push([e.k, ng]); open[e.k] = ng; }
     }
-    for (const [k, list] of Object.entries(groups)) {
-      const joined = list.sort((a, b) => a.i - b.i).map(e => e.text).join(' ');
+    for (const [k, list] of groups) {
+      const joined = list.map(e => e.text).join(' ');
       const soll = expect(k);
       if (soll === null) note('unbek:' + k, `unbekannter Textschlüssel ${k}: „${joined}“`);
       else if (joined !== soll) note('abw:' + k + joined, `„${joined}“ (${k}) ≠ Drehbuch „${soll}“ (${fmt(t)})`);
