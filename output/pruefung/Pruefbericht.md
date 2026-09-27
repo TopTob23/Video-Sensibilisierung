@@ -2,7 +2,7 @@
 
 Drehbuch: Drehbuch_Video_Angriffsszenario_Herne_V1_2.md · Video: Ein_ganz_normaler_Montag_V1_0.html · Umfang: alle Szenen
 
-**Ergebnis:** 0 Fehler · 0 Warnungen · 28 bestandene Prüfungen · 15 Hinweise
+**Ergebnis:** 0 Fehler · 0 Warnungen · 31 bestandene Prüfungen · 13 Hinweise
 
 ## Szenen und Zeiten
 
@@ -53,7 +53,7 @@ Drehbuch: Drehbuch_Video_Angriffsszenario_Herne_V1_2.md · Video: Ein_ganz_norma
 ## Verbotsliste
 
 - ✅ Sichtbare Texte und Untertitel: keine Produkt-/Herstellernamen, Versionen, IP-Adressen, Ports, Befehle oder URLs
-- ℹ️ SRT noch nicht erzeugt – wird beim Export mitgeprüft
+- ✅ SRT (Ein_ganz_normaler_Montag_V1_0.srt): keine Treffer
 - ℹ️ Code, eingeordnet: Schriftangabe laut Auftrag (Arial bzw. maßgleiche Ersatzschrift) – Arial [Ein_ganz_normaler_Montag_V1_0.html], Liberation Sans [Ein_ganz_normaler_Montag_V1_0.html], Helvetica [Ein_ganz_normaler_Montag_V1_0.html], Arial [export/check.mjs]
 - ℹ️ Code, eingeordnet: SVG-Namensraum (technisch notwendig, nicht im Bild) – http://www.w3.org/2000/svg [Ein_ganz_normaler_Montag_V1_0.html]
 - ℹ️ Code, eingeordnet: Export-Werkzeug laut Auftrag (Node, Playwright, ffmpeg/H.264), nur in Skripten – chromium [export/check.mjs], ffprobe [export/check.mjs], node [export/check.mjs], Playwright [export/lib.mjs], playwright [export/lib.mjs], npm [export/lib.mjs], chromium [export/render.mjs], ffmpeg [export/render.mjs], libx264 [export/render.mjs], x264 [export/render.mjs], H.264 [export/render.mjs], node [export/render.mjs], chromium [export/stills.mjs], node [export/stills.mjs], playwright [package.json], node [package.json]
@@ -67,7 +67,8 @@ Drehbuch: Drehbuch_Video_Angriffsszenario_Herne_V1_2.md · Video: Ein_ganz_norma
 ## Dauer und Dateien
 
 - ℹ️ Szene 0 0:00.0–0:12.0 (12 s) · Szene 1 0:12.0–0:32.0 (20 s) · Szene 2 0:32.0–0:56.0 (24 s) · Szene 3 0:56.0–1:28.0 (32 s) · Szene 4 1:28.0–1:52.0 (24 s) · Szene 5 1:52.0–2:18.0 (26 s) · Szene 6 2:18.0–2:50.0 (32 s) · Szene 7 2:50.0–3:44.0 (54 s) · Szene 8 3:44.0–4:18.0 (34 s)
-- ℹ️ MP4 noch nicht exportiert
+- ✅ SRT: 47 Einträge, Text und Zeiten identisch mit den eingebrannten Untertiteln
+- ✅ MP4: h264 High, 1920×1080, yuv420p, 30/1 fps, 7740 Bilder, 258.000 s, 40.5 MB, ohne Ton
 
 ## Technik
 
@@ -133,10 +134,10 @@ Drehbuch: Drehbuch_Video_Angriffsszenario_Herne_V1_2.md · Video: Ein_ganz_norma
 
 | Schlüssel | Text | sichtbar |
 |---|---|---|
-| fassade | GEMEINSAM FÜR EIN LEBENSWERTES HERNE | Bildbestandteil |
-| stele | Stadt Herne | Bildbestandteil |
-| haltestelle | H | Bildbestandteil |
-| vertraulich | Vertraulich – nur zur internen Verwendung | 0:00.6–4:17.8 |
+| fassade | GEMEINSAM FÜR EIN LEBENSWERTES HERNE | Bildbestandteil (Szene 0, 1, 8) |
+| stele | Stadt Herne | Bildbestandteil (Szene 0, 1, 8) |
+| haltestelle | H | Bildbestandteil (Szene 0, 1, 8) |
+| vertraulich | Vertraulich – nur zur internen Verwendung | 0:00.6–0:12.4, 4:12.2–4:17.8 |
 | titel | Ein ganz normaler Montag | 0:00.8–0:05.6 |
 | unterzeile | Was ein Cyberangriff für Herne bedeuten würde | 0:01.4–0:05.6 |
 | hinweis | Erfundener Ablauf auf Grundlage der aktuellen Sicherheitsprüfung. Ohne technische Einzelheiten. | 0:06.2–0:11.8 |
@@ -155,7 +156,7 @@ Drehbuch: Drehbuch_Video_Angriffsszenario_Herne_V1_2.md · Video: Ein_ganz_norma
 | woche_2 | Woche 2 | 1:35.2–1:40.0 |
 | woche_3 | Woche 3 | 1:38.4–1:43.2 |
 | woche_4 | Woche 4 | 1:41.8–1:52.4 |
-| notfallplan | Notfallplan | 2:17.8–4:07.2 |
+| notfallplan | Notfallplan | 2:17.8–2:50.4, 4:03.6–4:07.4 |
 | uhrzeit | Montagmorgen, 7:30 Uhr | 2:18.6–2:22.6 |
 | kachel_technik_titel | Technik | 2:52.4–3:25.6 |
 | kachel_technik_text | Neuaufbau aller Systeme, Wochen bis Monate. | 2:52.6–3:25.6 |
@@ -169,9 +170,9 @@ Drehbuch: Drehbuch_Video_Angriffsszenario_Herne_V1_2.md · Video: Ein_ganz_norma
 | kachel_buerger_titel | Bürgerinnen und Bürger | 3:08.4–3:25.6 |
 | kachel_buerger_text | Bürgerbüro, Standesamt und Zulassung nur eingeschränkt, Leistungen werden später ausgezahlt, Verwaltung schwer erreichbar. | 3:08.6–3:25.6 |
 | kachel_buerger_beleg | Beleg: Anhalt-Bitterfeld – Sozial- und Unterhaltsleistungen mindestens eine Woche nicht ausgezahlt; Südwestfalen-IT 2023 – Kommunen mit zusammen rund 1,7 Mio. Einwohnern betroffen, Online-Dienste nach rund neun Monaten wieder weitgehend verfügbar. | 3:09.0–3:25.6 |
-| vignette_kindergeld | Kindergeld wartet | 3:25.8–3:44.4 |
-| buergerbuero | Bürgerbüro | 3:31.4–3:44.4 |
-| vignette_wohngeld | Wohngeld wartet | 3:32.4–3:44.4 |
+| vignette_kindergeld | Kindergeld wartet | 3:25.8–3:31.8, 3:37.8–3:44.4 |
+| buergerbuero | Bürgerbüro | 3:31.4–3:34.4, 3:37.8–3:44.4 |
+| vignette_wohngeld | Wohngeld wartet | 3:32.4–3:34.4, 3:37.8–3:44.4 |
 | massnahmen_titel | Maßnahmen | 3:49.0–4:11.8 |
 | massnahme_1 | Geschützter Zugang zur IT-Verwaltung mit zweiter Bestätigung | 3:49.4–4:11.8 |
 | massnahme_2 | Rechte nach Aufgaben | 3:54.2–4:11.8 |

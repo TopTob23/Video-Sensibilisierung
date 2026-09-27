@@ -1,0 +1,214 @@
+1
+00:00:13,000 --> 00:00:17,000
+Ausweise, Urkunden, Sozialleistungen, Kitaplätze,
+
+2
+00:00:17,200 --> 00:00:21,400
+Baugenehmigungen und die Gehälter der Beschäftigten:
+
+3
+00:00:21,800 --> 00:00:28,200
+Fast jede Leistung der Stadtverwaltung
+hängt heute von funktionierender IT ab.
+
+4
+00:00:33,000 --> 00:00:37,000
+Ein typischer Angriff beginnt
+mit einer gefälschten E-Mail,
+
+5
+00:00:37,200 --> 00:00:40,200
+die wie eine gewöhnliche Rechnung aussieht.
+
+6
+00:00:41,000 --> 00:00:44,800
+Solche Nachrichten erreichen
+jede Verwaltung täglich,
+
+7
+00:00:45,000 --> 00:00:49,000
+und einzelne Klicks lassen sich
+nie ganz verhindern.
+
+8
+00:00:50,000 --> 00:00:54,400
+Entscheidend ist, wie weit
+ein Angreifer danach kommt.
+
+9
+00:00:57,600 --> 00:01:05,400
+In Herne lässt sich die IT nicht nur von wenigen,
+besonders geschützten Arbeitsplätzen aus verwalten.
+
+10
+00:01:06,000 --> 00:01:08,400
+Intern reicht dafür ein Passwort,
+
+11
+00:01:08,600 --> 00:01:13,200
+eine zweite Bestätigung bei der Anmeldung
+ist noch nicht eingeführt.
+
+12
+00:01:13,400 --> 00:01:19,400
+Zudem haben mehr Konten weitreichende Rechte,
+als für die jeweiligen Aufgaben nötig wäre.
+
+13
+00:01:19,800 --> 00:01:22,000
+Wer ein solches Konto übernimmt,
+
+14
+00:01:22,200 --> 00:01:24,800
+erreicht damit zentrale Systeme.
+
+15
+00:01:29,000 --> 00:01:34,000
+Verdächtige Vorgänge werden nicht zentral
+gesammelt und ausgewertet.
+
+16
+00:01:34,400 --> 00:01:40,000
+Ein Angreifer kann sich deshalb über Wochen
+im Netz bewegen, ohne aufzufallen.
+
+17
+00:01:40,600 --> 00:01:46,200
+Auch im Landkreis Anhalt-Bitterfeld begann
+der Angriff nach späteren Auswertungen
+
+18
+00:01:46,400 --> 00:01:49,000
+Wochen vor seiner Entdeckung.
+
+19
+00:01:53,000 --> 00:01:59,400
+Einige Systeme am Übergang zum Internet erhalten
+vom Hersteller keine Sicherheitsupdates mehr.
+
+20
+00:02:00,000 --> 00:02:04,400
+Viele Server laufen ohne
+die empfohlenen Schutzeinstellungen.
+
+21
+00:02:05,000 --> 00:02:10,000
+Und die Trennung zwischen den Bereichen
+im Netz ist noch unvollständig.
+
+22
+00:02:10,400 --> 00:02:16,000
+Ein Angreifer kann sich deshalb leichter
+von einem System zum nächsten bewegen.
+
+23
+00:02:19,000 --> 00:02:22,600
+Erst im letzten Schritt wird der Angriff sichtbar:
+
+24
+00:02:23,000 --> 00:02:27,400
+Die Daten werden verschlüsselt,
+Kopien sind bereits abgeflossen,
+
+25
+00:02:27,600 --> 00:02:30,000
+es folgt eine Lösegeldforderung.
+
+26
+00:02:30,600 --> 00:02:35,200
+Für die Wiederherstellung kommt es dann
+auf die Rückfallebene an.
+
+27
+00:02:35,600 --> 00:02:38,800
+Die Datensicherung läuft ohne zweites System,
+
+28
+00:02:39,000 --> 00:02:41,800
+für Teile der IT fehlen Notfallpläne,
+
+29
+00:02:42,200 --> 00:02:47,600
+und manche Unterlagen liegen auf genau
+den Systemen, die dann gesperrt sind.
+
+30
+00:02:51,000 --> 00:02:55,200
+Vergleichbare Fälle zeigen,
+welche Folgen daraus entstehen.
+
+31
+00:02:55,600 --> 00:03:02,200
+Anhalt-Bitterfeld rief den Katastrophenfall aus
+und beendete ihn erst nach rund sieben Monaten;
+
+32
+00:03:02,400 --> 00:03:07,400
+der Aufwand lag nach Angaben des Landkreises
+bei rund 2,5 Millionen Euro.
+
+33
+00:03:08,000 --> 00:03:13,000
+Sozialleistungen konnten mindestens
+eine Woche nicht ausgezahlt werden.
+
+34
+00:03:13,600 --> 00:03:20,200
+Nach dem Angriff auf die Südwestfalen-IT waren
+Online-Dienste für rund 1,7 Millionen Einwohner
+
+35
+00:03:20,400 --> 00:03:24,400
+erst nach etwa neun Monaten
+wieder weitgehend verfügbar.
+
+36
+00:03:25,400 --> 00:03:28,000
+Für die Menschen in Herne hieße das:
+
+37
+00:03:28,400 --> 00:03:31,400
+Urkunden und Zulassungen verzögern sich,
+
+38
+00:03:31,800 --> 00:03:34,000
+Leistungen kommen später an,
+
+39
+00:03:34,400 --> 00:03:37,000
+die Verwaltung ist kaum erreichbar.
+
+40
+00:03:45,000 --> 00:03:48,800
+Die Schwachstellen sind bekannt,
+die Maßnahmen geplant:
+
+41
+00:03:49,200 --> 00:03:53,800
+ein geschützter Zugang zur IT-Verwaltung
+mit zweiter Bestätigung,
+
+42
+00:03:54,000 --> 00:03:55,800
+Rechte nach Aufgaben,
+
+43
+00:03:56,000 --> 00:03:58,400
+einheitlich abgesicherte Server,
+
+44
+00:03:58,600 --> 00:04:00,800
+der Ersatz veralteter Systeme,
+
+45
+00:04:01,000 --> 00:04:03,600
+eine zentrale Erkennung von Angriffen
+
+46
+00:04:03,800 --> 00:04:06,200
+und eine geübte Notfallvorsorge.
+
+47
+00:04:06,600 --> 00:04:12,000
+Für mehrere dieser Schritte braucht es
+Entscheidungen der Verwaltungsführung.
