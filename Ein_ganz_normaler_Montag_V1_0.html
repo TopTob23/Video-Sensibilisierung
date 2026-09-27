@@ -151,6 +151,16 @@ const TEXTE_AUSNAHMEN = {
 
 // Untertitel-Cues: Zeiten absolut (s), Zeilen wortgleich aus SPRECHERTEXT (max. 2 Zeilen)
 const CUES = [
+  // Szene 1 – Eine Stadt, die funktioniert (0:12–0:32)
+  { scene: 1, start: 13.0, end: 17.0, lines: ["Ausweise, Urkunden, Sozialleistungen, Kitaplätze,"] },
+  { scene: 1, start: 17.2, end: 21.4, lines: ["Baugenehmigungen und die Gehälter der Beschäftigten:"] },
+  { scene: 1, start: 21.8, end: 28.2, lines: ["Fast jede Leistung der Stadtverwaltung", "hängt heute von funktionierender IT ab."] },
+  // Szene 2 – Der Einstieg (0:32–0:56)
+  { scene: 2, start: 33.0, end: 37.0, lines: ["Ein typischer Angriff beginnt", "mit einer gefälschten E-Mail,"] },
+  { scene: 2, start: 37.2, end: 40.2, lines: ["die wie eine gewöhnliche Rechnung aussieht."] },
+  { scene: 2, start: 41.0, end: 44.8, lines: ["Solche Nachrichten erreichen", "jede Verwaltung täglich,"] },
+  { scene: 2, start: 45.0, end: 49.0, lines: ["und einzelne Klicks lassen sich", "nie ganz verhindern."] },
+  { scene: 2, start: 50.0, end: 54.4, lines: ["Entscheidend ist, wie weit", "ein Angreifer danach kommt."] },
   // Szene 3 – Zugang zu zentralen Systemen (0:56–1:28); „erreicht damit zentrale Systeme“ fällt auf die Schlüsseldrehung am Serverraum
   { scene: 3, start: 57.6, end: 65.4, lines: ["In Herne lässt sich die IT nicht nur von wenigen,", "besonders geschützten Arbeitsplätzen aus verwalten."] },
   { scene: 3, start: 66.0, end: 68.4, lines: ["Intern reicht dafür ein Passwort,"] },
@@ -158,6 +168,35 @@ const CUES = [
   { scene: 3, start: 73.4, end: 79.4, lines: ["Zudem haben mehr Konten weitreichende Rechte,", "als für die jeweiligen Aufgaben nötig wäre."] },
   { scene: 3, start: 79.8, end: 82.0, lines: ["Wer ein solches Konto übernimmt,"] },
   { scene: 3, start: 82.2, end: 84.8, lines: ["erreicht damit zentrale Systeme."] },
+  // Szene 4 – Unbemerkt (1:28–1:52)
+  { scene: 4, start: 89.0, end: 94.0, lines: ["Verdächtige Vorgänge werden nicht zentral", "gesammelt und ausgewertet."] },
+  { scene: 4, start: 94.4, end: 100.0, lines: ["Ein Angreifer kann sich deshalb über Wochen", "im Netz bewegen, ohne aufzufallen."] },
+  { scene: 4, start: 100.6, end: 106.2, lines: ["Auch im Landkreis Anhalt-Bitterfeld begann", "der Angriff nach späteren Auswertungen"] },
+  { scene: 4, start: 106.4, end: 109.0, lines: ["Wochen vor seiner Entdeckung."] },
+  // Szene 5 – Ausbreitung (1:52–2:18)
+  { scene: 5, start: 113.0, end: 119.4, lines: ["Einige Systeme am Übergang zum Internet erhalten", "vom Hersteller keine Sicherheitsupdates mehr."] },
+  { scene: 5, start: 120.0, end: 124.4, lines: ["Viele Server laufen ohne", "die empfohlenen Schutzeinstellungen."] },
+  { scene: 5, start: 125.0, end: 130.0, lines: ["Und die Trennung zwischen den Bereichen", "im Netz ist noch unvollständig."] },
+  { scene: 5, start: 130.4, end: 136.0, lines: ["Ein Angreifer kann sich deshalb leichter", "von einem System zum nächsten bewegen."] },
+  // Szene 6 – Der Angriff wird sichtbar (2:18–2:50)
+  { scene: 6, start: 139.0, end: 142.6, lines: ["Erst im letzten Schritt wird der Angriff sichtbar:"] },
+  { scene: 6, start: 143.0, end: 147.4, lines: ["Die Daten werden verschlüsselt,", "Kopien sind bereits abgeflossen,"] },
+  { scene: 6, start: 147.6, end: 150.0, lines: ["es folgt eine Lösegeldforderung."] },
+  { scene: 6, start: 150.6, end: 155.2, lines: ["Für die Wiederherstellung kommt es dann", "auf die Rückfallebene an."] },
+  { scene: 6, start: 155.6, end: 158.8, lines: ["Die Datensicherung läuft ohne zweites System,"] },
+  { scene: 6, start: 159.0, end: 161.8, lines: ["für Teile der IT fehlen Notfallpläne,"] },
+  { scene: 6, start: 162.2, end: 167.6, lines: ["und manche Unterlagen liegen auf genau", "den Systemen, die dann gesperrt sind."] },
+  // Szene 7 – Die Folgen (2:50–3:44)
+  { scene: 7, start: 171.0, end: 175.2, lines: ["Vergleichbare Fälle zeigen,", "welche Folgen daraus entstehen."] },
+  { scene: 7, start: 175.6, end: 182.2, lines: ["Anhalt-Bitterfeld rief den Katastrophenfall aus", "und beendete ihn erst nach rund sieben Monaten;"] },
+  { scene: 7, start: 182.4, end: 187.4, lines: ["der Aufwand lag nach Angaben des Landkreises", "bei rund 2,5 Millionen Euro."] },
+  { scene: 7, start: 188.0, end: 193.0, lines: ["Sozialleistungen konnten mindestens", "eine Woche nicht ausgezahlt werden."] },
+  { scene: 7, start: 193.6, end: 200.2, lines: ["Nach dem Angriff auf die Südwestfalen-IT waren", "Online-Dienste für rund 1,7 Millionen Einwohner"] },
+  { scene: 7, start: 200.4, end: 204.4, lines: ["erst nach etwa neun Monaten", "wieder weitgehend verfügbar."] },
+  { scene: 7, start: 205.4, end: 208.0, lines: ["Für die Menschen in Herne hieße das:"] },
+  { scene: 7, start: 208.4, end: 211.4, lines: ["Urkunden und Zulassungen verzögern sich,"] },
+  { scene: 7, start: 211.8, end: 214.0, lines: ["Leistungen kommen später an,"] },
+  { scene: 7, start: 214.4, end: 217.0, lines: ["die Verwaltung ist kaum erreichbar."] },
 ];
 
 // Synchronpunkte Bild ↔ Sprechertext (Prüfung in check.mjs)
@@ -687,10 +726,81 @@ function SubtitleSVG(t) {
 /* =====================================================================
    8  FARBSTIMMUNG (je Szene): Sättigung, Helligkeit, Kontrast, kühle Tönung
    ===================================================================== */
+// Szenen 2–6 werden schrittweise kühler und entsättigt; Szene 8 kehrt zum Tageslicht zurück
 const GRADE = {
   day: { sat: 1.0,  bri: 1.0,  con: 1.0,  tint: '#FFFFFF', ta: 0 },
+  s2:  { sat: 0.88, bri: 0.99, con: 1.0,  tint: '#D9E4EE', ta: 0.35 },
   s3:  { sat: 0.72, bri: 0.98, con: 1.03, tint: '#C3D2DE', ta: 0.5 },
+  s4:  { sat: 0.58, bri: 0.94, con: 1.04, tint: '#C7C0CB', ta: 0.5 },
+  s5:  { sat: 0.42, bri: 0.9,  con: 1.05, tint: '#A9B8CB', ta: 0.55 },
+  s6:  { sat: 0.28, bri: 0.88, con: 1.06, tint: '#B3BCC6', ta: 0.55 },
+  s7:  { sat: 0.9,  bri: 1.0,  con: 1.0,  tint: '#FFFFFF', ta: 0 },
 };
+function gradeMix(a, b, u) {
+  return { sat: lerp(a.sat, b.sat, u), bri: lerp(a.bri, b.bri, u), con: lerp(a.con, b.con, u), tint: mix(a.tint, b.tint, u), ta: lerp(a.ta, b.ta, u) };
+}
+
+/* =====================================================================
+   8b  WEITERE SYMBOLE (für mehrere Szenen)
+   ===================================================================== */
+// Euro-Zeichen als Pfad (kein Text); Ursprung = Mitte
+function EuroSign(x, y, s, color, sw = 3) {
+  const r = 11 * s;
+  return Path(`M${N(x + r * 0.78)},${N(y - r * 0.68)} A${N(r)},${N(r)} 0 1 0 ${N(x + r * 0.78)},${N(y + r * 0.68)}`, 'none', { stroke: color, 'stroke-width': N(sw * s), 'stroke-linecap': 'round' })
+    + Line(x - r * 1.3, y - r * 0.22, x + r * 0.3, y - r * 0.22, color, sw * 0.8 * s) + Line(x - r * 1.3, y + r * 0.3, x + r * 0.15, y + r * 0.3, color, sw * 0.8 * s);
+}
+// Schloss-Symbol (einzige kräftige Warnfarbe neben der roten Welle)
+function RedLock(x, y, s = 1, op = 1) {
+  if (op <= 0.01) return '';
+  return G({ transform: TR(x, y, s), opacity: N(op) },
+    Path('M-15,-4 L-15,-18 A15,15 0 0 1 15,-18 L15,-4', 'none', { stroke: C.warn, 'stroke-width': 7, 'stroke-linecap': 'round' })
+    + Rect(-24, -6, 48, 38, C.warn, { rx: 7 }) + Circ(0, 8, 5.5, '#FFFFFF') + Path('M-3,10 L3,10 L2,21 L-2,21 Z', '#FFFFFF'));
+}
+// Briefumschlag
+function Envelope(x, y, s = 1, fill = '#FFFFFF', op = 1) {
+  if (op <= 0.01) return '';
+  return G({ transform: TR(x, y, s), opacity: N(op) }, Rect(-26, -18, 52, 36, fill, { ...OL(3), rx: 4 }) + Path('M-24,-15 L0,4 L24,-15', 'none', { stroke: C.line, 'stroke-width': 3, 'stroke-linejoin': 'round' }));
+}
+// Telefon mit Stumm-Zeichen (durchgestrichener Lautsprecher)
+function Phone(x, y, s = 1, muted = 0) {
+  let p = Rect(-30, -8, 60, 26, '#4C565B', { ...OL(2.5), rx: 6 }) + Path('M-32,-10 Q-32,-22 -20,-22 L20,-22 Q32,-22 32,-10 L22,-10 L22,-14 L-22,-14 L-22,-10 Z', '#3A4348', OL(2.5));
+  for (let r = 0; r < 2; r++) for (let c = 0; c < 3; c++) p += Rect(-14 + c * 10, -2 + r * 8, 7, 5, '#8C969B');
+  if (muted > 0.01) p += G({ transform: 'translate(0 -52)', opacity: N(muted) }, Circ(0, 0, 20, '#FFFFFF', OL(2.5)) + Path('M-10,-5 L-4,-5 L3,-11 L3,11 L-4,5 L-10,5 Z', '#5B666B') + Line(-12, 12, 12, -12, C.line, 3.5));
+  return G({ transform: TR(x, y, s) }, p);
+}
+// Ordner (Aktenordner) mit optionalem Rückenschild-Text
+function Folder(x, y, w, h, color, o = {}) {
+  let f = Rect(x, y, w, h, color, { ...OL(2.5), rx: 3 }) + Rect(x + w * 0.2, y + h * 0.12, w * 0.6, h * 0.28, '#FFFFFF', OL(1.5)) + Circ(x + w / 2, y + h * 0.72, w * 0.16, '#FFFFFF', OL(1.5));
+  return f + (o.label ? o.label : '');
+}
+// Gestrichelte Umrisslinie (leerer Platz)
+const Dashed = (x, y, w, h, o = {}) => Rect(x, y, w, h, 'none', { stroke: o.color || '#5B666B', 'stroke-width': o.sw || 3, 'stroke-dasharray': o.dash || '12 9', rx: o.rx || 6 });
+// Wanduhr mit Zeigern (Stunde, Minute)
+function WallClock(x, y, r, hh, mm) {
+  const ha = ((hh % 12) + mm / 60) * 30, ma = mm * 6;
+  let s = Circ(x, y, r, '#FFFFFF', OL(3)) + Circ(x, y, r - 6, 'none', { stroke: '#C9CFD2', 'stroke-width': 2 });
+  for (let i = 0; i < 12; i++) { const a = i * 30 * DEG; s += Line(x + Math.sin(a) * (r - 12), y - Math.cos(a) * (r - 12), x + Math.sin(a) * (r - 7), y - Math.cos(a) * (r - 7), C.line, i % 3 ? 2 : 3.5); }
+  s += Line(x, y, x + Math.sin(ha * DEG) * r * 0.5, y - Math.cos(ha * DEG) * r * 0.5, C.line, 5) + Line(x, y, x + Math.sin(ma * DEG) * r * 0.75, y - Math.cos(ma * DEG) * r * 0.75, C.line, 3.5);
+  return s + Circ(x, y, 4, C.line);
+}
+// Server-Racks mit ruhig blinkenden Lämpchen (deterministisch)
+function Racks(x0, y0, n, lt, o = {}) {
+  const w = o.w || 74, h = o.h || 230, gap = o.gap || 22, dark = o.off || 0;
+  let s = '';
+  for (let k = 0; k < n; k++) {
+    const x = x0 + k * (w + gap);
+    s += Rect(x, y0, w, h, '#1E2A31', { ...OL(3), rx: 4 });
+    const rows = Math.floor((h - 24) / 22);
+    for (let r = 0; r < rows; r++) {
+      const y = y0 + 12 + r * 22;
+      s += Rect(x + 7, y, w - 14, 16, '#2E3C45', { rx: 2 });
+      const on = 0.35 + 0.65 * (0.5 + 0.5 * Math.sin(lt * (1.1 + ((r * 7 + k * 3) % 5) * 0.23) + r * 1.9 + k * 2.7));
+      s += Circ(x + w - 16, y + 8, 3, r % 3 ? '#7FD6A0' : '#7FC6E8', { opacity: N(on * (1 - dark)) });
+      s += Rect(x + 12, y + 6, w * 0.35, 4, '#46565F');
+    }
+  }
+  return s;
+}
 
 /* =====================================================================
    9  SZENE 0 – TITEL (0:00–0:12)
@@ -1245,6 +1355,924 @@ const S3 = {
 };
 
 /* =====================================================================
+   12  SZENE 1 – EINE STADT, DIE FUNKTIONIERT (0:12–0:32)
+   Aus dem Rathaus steigen feine Linien zu sieben Symbolen auf; die Linien
+   laufen im Keller in einen ruhig pulsierenden Serverraum.
+   ===================================================================== */
+function SymIcon(key) {
+  const ol = OL(3), grey = '#8E9AA0';
+  switch (key) {
+    case 'sym_ausweis': return Rect(-38, -25, 76, 50, '#EAF5EE', { ...ol, rx: 7 }) + Rect(-30, -17, 24, 32, '#CFE3EE', { ...OL(2), rx: 3 })
+      + Circ(-18, -6, 6.5, C.skin2, OL(2)) + Path('M-28,14 Q-18,1 -8,14 Z', '#6D8FB0', OL(2))
+      + Line(2, -10, 28, -10, grey, 4) + Line(2, 0, 28, 0, grey, 4) + Line(2, 10, 20, 10, grey, 4);
+    case 'sym_geburtsurkunde': return Rect(-28, -36, 56, 72, '#FFFFFF', { ...ol, rx: 4 }) + Line(-18, -22, 18, -22, grey, 4) + Line(-18, -12, 18, -12, grey, 4) + Line(-18, -2, 8, -2, grey, 4)
+      + Path('M6,20 L2,40 L10,35 L16,42 L18,22 Z', C.hellgruen, OL(2)) + Circ(12, 16, 11, C.gruen, OL(2.5)) + Circ(12, 16, 5, C.hellgruen);
+    case 'sym_wohngeld': return Path('M-34,-4 L0,-32 L34,-4 Z', C.roofRed, ol) + Rect(-26, -4, 52, 36, '#F2E7D4', ol) + Rect(-8, 10, 16, 22, C.woodDark, OL(2))
+      + Circ(24, 22, 16, C.gold, ol) + EuroSign(25, 22, 0.78, C.goldDark, 3.2);
+    case 'sym_kita': return Rect(-36, 4, 32, 32, '#F7C544', ol) + Rect(4, 4, 32, 32, C.zyan, ol) + Rect(-16, -30, 32, 32, C.hellgruen, ol)
+      + Circ(-20, 20, 7, '#FFFFFF', OL(2)) + Path('M12,28 L20,12 L28,28 Z', '#FFFFFF', OL(2)) + Rect(-6, -20, 12, 12, '#FFFFFF', OL(2));
+    case 'sym_baugenehmigung': return Rect(-28, -36, 56, 72, '#FFFFFF', { ...ol, rx: 4 }) + Path('M-17,-6 L-3,-21 L11,-6', 'none', { stroke: '#6D8FB0', 'stroke-width': 3, 'stroke-linejoin': 'round' }) + Rect(-13, -6, 20, 16, 'none', { stroke: '#6D8FB0', 'stroke-width': 3 })
+      + Circ(12, 21, 13, C.gruen, OL(2.5)) + Path('M5,21 L10,27 L19,15', 'none', { stroke: '#FFFFFF', 'stroke-width': 3.5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' });
+    case 'sym_gehaelter': return Rect(-38, -26, 60, 34, '#A8D39A', { ...ol, rx: 4 }) + Rect(-30, -15, 60, 34, '#C4E4B8', { ...ol, rx: 4 }) + Circ(0, 2, 9, 'none', { stroke: '#6E9C3B', 'stroke-width': 2.5 })
+      + Ell(26, 32, 15, 6, C.goldDark, OL(2)) + Ell(26, 26, 15, 6, C.gold, OL(2)) + Ell(26, 20, 15, 6, C.gold, OL(2));
+    case 'sym_autokennzeichen': return Rect(-42, -15, 84, 30, '#FFFFFF', { rx: 5 }) + Rect(-42, -15, 14, 30, '#2F5DA8', { rx: 3 }) + Circ(-35, -4, 3, '#F7C544')
+      + Rect(-20, -6, 16, 12, '#2A2B2B', { rx: 2 }) + Rect(0, -6, 12, 12, '#2A2B2B', { rx: 2 }) + Rect(16, -6, 20, 12, '#2A2B2B', { rx: 2 }) + Rect(-42, -15, 84, 30, 'none', { ...ol, rx: 5 });
+  }
+  return '';
+}
+// Erdreich im Schnitt und Kellerraum (Koordinaten des Rathauses, Boden y = 612)
+function Soil() {
+  let s = Rect(-1800, 626, 6400, 1400, '#B99D7B') + Rect(-1800, 626, 6400, 18, '#9E8262');
+  const r = rng(91);
+  for (let i = 0; i < 190; i++) s += Ell(-1700 + r() * 6200, 670 + r() * 1300, 6 + r() * 12, 4 + r() * 6, i % 2 ? '#A98D6A' : '#C4AA88');
+  // Fundament und Kellerraum
+  s += Rect(990, 626, 20, 90, '#8C8C88', OL(2.5)) + Rect(1890, 626, 20, 90, '#8C8C88', OL(2.5));
+  s += Rect(980, 700, 940, 440, '#3A5563', { ...OL(4), rx: 10 });
+  s += Rect(996, 714, 908, 28, '#4E6C79', { rx: 4 });           // Kabelkanal
+  for (let i = 0; i < 4; i++) s += Rect(1060 + i * 220, 746, 120, 8, '#DDF3FF', { rx: 4 });   // Deckenleuchten
+  s += Rect(996, 1080, 908, 44, '#30444F');                    // Boden
+  return s;
+}
+function bez(p0, p1, p2, p3, u) {
+  const v = 1 - u;
+  return [v * v * v * p0[0] + 3 * v * v * u * p1[0] + 3 * v * u * u * p2[0] + u * u * u * p3[0], v * v * v * p0[1] + 3 * v * v * u * p1[1] + 3 * v * u * u * p2[1] + u * u * u * p3[1]];
+}
+const S1 = {
+  n: 1,
+  // Reihenfolge wie im Sprechertext; Einblendzeit (lt) zur jeweils genannten Leistung
+  syms: [['sym_ausweis', 1.3], ['sym_geburtsurkunde', 2.2], ['sym_wohngeld', 3.1], ['sym_kita', 4.3], ['sym_baugenehmigung', 5.6], ['sym_gehaelter', 7.0], ['sym_autokennzeichen', 8.8]],
+  defs() {
+    return `<g id="s1-rathaus">${Rathaus()}</g>`
+      + `<g id="s1-green">${Tree(620, 650, 0.85, 71)}${Tree(2270, 650, 0.9, 72)}${Bush(960, 652, 200, 70, 73)}${Bush(1930, 652, 220, 70, 74)}</g>`
+      + `<g id="s1-plaza">${Rect(-1800, 606, 6400, 900, C.pave)}${Plaza()}</g>`
+      + `<g id="s1-soil">${Soil()}</g>`;
+  },
+  draw(lt) {
+    const reveal = ez(lt, 9.8, 12.6);
+    const k = lerp(0.72, 0.56, reveal), gy = lerp(700, 512, reveal);
+    const ox = 960 - 1440 * k, oy = gy - 612 * k;
+    const toS = (x, y) => [ox + x * k, oy + y * k];
+    let w = Use('s0-sky');
+    for (const [x, y, sc, v] of [[70, 372, 0.72, 6], [1810, 360, 0.68, 5]]) w += Cloud(x + lt * v, y - reveal * 40, sc);
+    // Welt (Rathaus-Koordinaten)
+    let r = '';
+    if (reveal > 0.001) {
+      let base = Use('s1-soil');
+      base += Racks(1040, 800, 7, lt, { w: 92, h: 276, gap: 30 });
+      // ruhiges Pulsieren: kühles Licht atmet langsam
+      base += Rect(996, 742, 908, 338, '#6CCBF2', { opacity: N(0.08 + 0.08 * (0.5 + 0.5 * Math.sin(lt * 1.5))) });
+      r += G({ opacity: N(reveal) }, base);
+    }
+    if (reveal < 0.999) {
+      let pz = Use('s1-plaza');
+      const ppl = [[700, 690, 0.42, 1, 20, '#3D6A8C', C.skin1], [1040, 668, 0.36, -1, 16, '#7A5C8E', C.skin3], [1300, 700, 0.44, 1, 18, '#4F6B33', C.skin2], [1720, 676, 0.38, -1, 17, '#B3563F', C.skin4], [2050, 720, 0.46, -1, 21, '#2B3A45', C.skin1]];
+      ppl.sort((a, b) => a[1] - b[1]).forEach(([x0, y0, sc, dir, v, col, skin], i) => {
+        pz += Person({ x: x0 + dir * v * (lt + 12), y: y0, s: sc, dir, walk: 1, phase: stepPhase(v * (lt + 12), sc) + i, top: col, pants: i % 2 ? C.black : C.jeans, hair: i % 2 ? C.hairDark : C.hairBrown, skin });
+      });
+      r += G({ opacity: N(1 - reveal) }, pz);
+    }
+    r += Rect(260, 604, 2400, 24, '#D6C8B5', OL(2));
+    r += Use('s1-rathaus') + Use('s1-green');
+    w += G({ transform: `translate(${N(ox)} ${N(oy)}) scale(${N(k)})` }, r);
+
+    // Linien und Symbole (Bildschirmkoordinaten)
+    const R = toS(1259, 76);   // über der Glasfassade (Spruch bleibt frei)
+    const lineCol = C.zyan;
+    let lines = '', badges = '', dots = '';
+    this.syms.forEach(([key, t0], i) => {
+      const x = 960 + (i - 3) * 252, y = 118 + 34 * Math.pow((i - 3) / 3, 2);
+      const B = [x, y + 56];
+      const p1 = [R[0] + (x - R[0]) * 0.15, R[1] - 70], p2 = [x, B[1] + 70];
+      let len = 0, prev = R;
+      for (let q = 1; q <= 16; q++) { const pnt = bez(R, p1, p2, B, q / 16); len += Math.hypot(pnt[0] - prev[0], pnt[1] - prev[1]); prev = pnt; }
+      const u = ez(lt, t0 - 0.8, t0, EASE.inOut);
+      if (u > 0) lines += Path(`M${N(R[0])},${N(R[1])} C${N(p1[0])},${N(p1[1])} ${N(p2[0])},${N(p2[1])} ${N(B[0])},${N(B[1])}`, 'none', { stroke: lineCol, 'stroke-width': 3, 'stroke-dasharray': `${N(len)} ${N(len)}`, 'stroke-dashoffset': N(len * (1 - u)), 'stroke-linecap': 'round', opacity: 0.9 });
+      const pop = EASE.outBack(seg(lt, t0, t0 + 0.55));
+      if (lt >= t0) {
+        const label = TEXTE[key], lw = measure(label, 24, 700) + 22;
+        badges += G({ transform: `translate(${N(x)} ${N(y)}) scale(${N(Math.max(0.01, pop))})`, opacity: N(seg(lt, t0, t0 + 0.2)) },
+          Circ(0, 0, 56, '#FFFFFF', OL(3)) + Circ(0, 0, 49, 'none', { stroke: C.gruen, 'stroke-width': 3 }) + G({ transform: 'scale(0.92)' }, SymIcon(key))
+          + Rect(-lw / 2, 66, lw, 34, '#FFFFFF', { rx: 17, opacity: 0.9 }) + Txt(0, 91, label, { size: 24, weight: 700, fill: C.text, anchor: 'middle', k: key, i: 0 }));
+      }
+      // Lichtpunkte laufen zum Rathaus und weiter in den Keller
+      if (lt > 12.2) {
+        for (let m = 0; m < 2; m++) {
+          const uu = ((lt - 12.2) * 0.32 + i * 0.137 + m * 0.5) % 1;
+          const pnt = bez(B, p2, p1, R, uu);
+          dots += Circ(pnt[0], pnt[1], 5, '#FFFFFF', { opacity: N(0.9 * ez(lt, 12.2, 12.8)) }) + Circ(pnt[0], pnt[1], 9, lineCol, { opacity: N(0.25 * ez(lt, 12.2, 12.8)) });
+        }
+      }
+    });
+    // Linienbündel durch das Gebäude in den Keller
+    const D = toS(1259, 742);
+    const down = ez(lt, 10.4, 12.8);
+    if (down > 0) {
+      for (const dx of [-14, 0, 14]) {
+        const L = D[1] - R[1];
+        lines += Path(`M${N(R[0] + dx)},${N(R[1])} L${N(R[0] + dx)},${N(D[1])}`, 'none', { stroke: lineCol, 'stroke-width': 3, 'stroke-dasharray': `${N(L)} ${N(L)}`, 'stroke-dashoffset': N(L * (1 - down)), opacity: 0.85 });
+      }
+      if (lt > 12.8) for (let m = 0; m < 4; m++) { const uu = ((lt - 12.8) * 0.45 + m * 0.25) % 1; dots += Circ(R[0] + [-14, 0, 14, 0][m], lerp(R[1], D[1], uu), 5, '#FFFFFF', { opacity: 0.9 }); }
+    }
+    w += lines + dots + badges;
+    return { world: w, warn: '', ui: '', grade: GRADE.day };
+  },
+};
+
+/* =====================================================================
+   13  SZENE 2 – DER EINSTIEG (0:32–0:56)
+   Büro: Eine Beschäftigte öffnet eine E-Mail „Rechnung zu Ihrer Bestellung“;
+   der Bildschirm zeigt nichts Auffälliges. Draußen zieht ein Schatten vorbei
+   und verschwindet in der Wand. Bei „nicht verhindern“: viele Arbeitsplätze.
+   ===================================================================== */
+// Schreibtisch in Seitenansicht mit Monitor (Bildschirm zeigt nach links zur Person)
+function SideDesk(x, fy, s, o = {}) {
+  const top = fy - 125 * s, w = 250 * s;
+  let d = Rect(x, top, w, 12 * s, C.deskTop, OL(2.5)) + Rect(x + 12 * s, top + 12 * s, 10 * s, 113 * s, C.deskSide, OL(2)) + Rect(x + w - 22 * s, top + 12 * s, 10 * s, 113 * s, C.deskSide, OL(2));
+  d += Rect(x + 150 * s, top + 12 * s, 70 * s, 90 * s, '#BCC3C7', OL(2));
+  d += Rect(x + 28 * s, top - 5 * s, 70 * s, 5 * s, '#E6EAEC', OL(1.5));
+  const mx = x + 150 * s;
+  d += Rect(mx + 10 * s, top - 24 * s, 10 * s, 24 * s, C.monitor) + Rect(mx - 6 * s, top - 5 * s, 40 * s, 5 * s, C.monitor, { rx: 2 });
+  d += Path(`M${N(mx)},${N(top - 100 * s)} L${N(mx + 30 * s)},${N(top - 108 * s)} L${N(mx + 30 * s)},${N(top - 22 * s)} L${N(mx)},${N(top - 28 * s)} Z`, '#3A444A', OL(2.5));
+  d += Path(`M${N(mx)},${N(top - 100 * s)} L${N(mx - 5 * s)},${N(top - 97 * s)} L${N(mx - 5 * s)},${N(top - 31 * s)} L${N(mx)},${N(top - 28 * s)} Z`, o.dark ? '#141A1E' : '#BFD8E6', OL(2));
+  if (o.mug) d += Rect(x + 108 * s, top - 26 * s, 20 * s, 26 * s, '#FFFFFF', { ...OL(2), rx: 3 });
+  return d;
+}
+// Bürostuhl in Seitenansicht (Lehne links, Sitz auf Hüfthöhe)
+function SideChair(x, fy, s) {
+  const seat = fy - 70 * s;
+  return Rect(x - 6 * s, seat, 12 * s, 58 * s, '#4C565B', OL(2)) + Line(x - 40 * s, fy - 6 * s, x + 40 * s, fy - 6 * s, C.line, 7 * s)
+    + Circ(x - 38 * s, fy - 2 * s, 5 * s, C.line) + Circ(x + 38 * s, fy - 2 * s, 5 * s, C.line)
+    + Rect(x - 44 * s, seat - 10 * s, 92 * s, 18 * s, '#56626A', { ...OL(2.5), rx: 7 * s }) + Rect(x - 52 * s, seat - 96 * s, 18 * s, 96 * s, '#56626A', { ...OL(2.5), rx: 7 * s });
+}
+// sitzende Person am Schreibtisch, tippt (Hände wippen leicht)
+function SeatedWorker(dx, fy, s, lt, look, seed) {
+  const top = fy - 125 * s;
+  const hx = dx - 6 * s;                      // Hüfte links vom Tisch
+  const typ = k => 2.5 * s * Math.abs(Math.sin(lt * 9 + seed * 1.7 + k * 1.3));
+  return SideChair(hx - 6 * s, fy, s) + Person({ ...look, x: hx, y: fy, s, dir: 1, seated: true, reachF: [dx + 70 * s, top - 4 * s - typ(0)], reachB: [dx + 44 * s, top - 4 * s - typ(1)], lean: 4 });
+}
+// Blick nach draußen (wird auf die Fensterflächen zugeschnitten)
+function OutsideView() {
+  let o = Rect(0, 200, 1920, 460, '#BFE0F6') + Rect(0, 470, 1920, 200, '#D7EAF6');
+  o += Cloud(420, 320, 0.7) + Cloud(1500, 300, 0.8);
+  // Gebäude gegenüber
+  o += Rect(900, 360, 520, 320, '#E7DCCD', OL(2.5));
+  for (let r = 0; r < 3; r++) for (let c = 0; c < 5; c++) o += Rect(930 + c * 98, 390 + r * 86, 56, 50, C.winGlass, OL(2));
+  o += Tree(560, 700, 0.75, 81) + Tree(1560, 700, 0.8, 82) + Tree(200, 700, 0.6, 83);
+  return o;
+}
+const S2L = { windows: [[140, 260, 400, 340], [760, 260, 400, 340], [1380, 260, 400, 340]] };
+// Nahaufnahme des Bildschirms: neutrale E-Mail-Ansicht, nur der Betreff ist lesbar
+function MailScreen(lt) {
+  const X = 230, Y = 90, Wd = 1460, Hd = 780;
+  let s = Rect(0, 0, W, H, '#2A3136');
+  s += Rect(X - 30, Y - 30, Wd + 60, Hd + 60, '#23292D', { ...OL(4), rx: 22 });
+  s += Rect(X, Y, Wd, Hd, '#FFFFFF');
+  s += Rect(X, Y, Wd, 64, C.flaeche2);                                           // Kopfleiste
+  s += Envelope(X + 44, Y + 32, 0.62, '#FFFFFF') + Circ(X + Wd - 100, Y + 32, 7, '#B8C2C6') + Circ(X + Wd - 72, Y + 32, 7, '#B8C2C6') + Circ(X + Wd - 44, Y + 32, 7, '#B8C2C6');
+  s += Rect(X, Y + 64, 250, Hd - 64, C.flaeche);                                // Ordnerleiste
+  for (let i = 0; i < 6; i++) s += Rect(X + 30, Y + 104 + i * 54, 150 - (i % 3) * 24, 14, '#D2D8DB', { rx: 7 });
+  const LX = X + 250, LW = 540;
+  s += Line(LX + LW, Y + 64, LX + LW, Y + Hd, '#E1E6E8', 2);
+  // Nachrichtenliste: oberste Zeile neu (hervorgehoben), übrige als graue Platzhalter
+  const hl = 0.55 + 0.45 * Math.sin(lt * 3.2);
+  for (let i = 0; i < 7; i++) {
+    const y = Y + 64 + i * 96;
+    if (i === 0) s += Rect(LX, y, LW, 96, '#DDF2FA', { opacity: N(0.75 + 0.25 * hl) });
+    s += Line(LX, y + 96, LX + LW, y + 96, '#E6EAEC', 2);
+    s += Envelope(LX + 50, y + 48, 0.7, i === 0 ? '#FFFFFF' : '#F2F4F5');
+    if (i === 0) {
+      s += Circ(LX + 18, y + 48, 6, C.zyan);
+      s += Txt(LX + 96, y + 58, TEXTE.betreff, { size: 30, weight: 700, fill: C.text, k: 'betreff', i: 0 });
+    } else {
+      s += Rect(LX + 96, y + 32, 250 - (i % 3) * 40, 14, '#D2D8DB', { rx: 7 }) + Rect(LX + 96, y + 56, 330 - (i % 2) * 60, 12, '#E3E7E9', { rx: 6 });
+    }
+  }
+  // Lesebereich: nach dem Klick erscheint die Nachricht (unauffällig)
+  const RX = LX + LW + 50, open = ez(lt, 7.7, 8.3);
+  if (open > 0) {
+    let m = Txt(RX, Y + 140, TEXTE.betreff, { size: 38, weight: 700, fill: C.text, k: 'betreff', i: 0 });
+    m += Rect(RX, Y + 170, 220, 12, '#D2D8DB', { rx: 6 });
+    for (let i = 0; i < 7; i++) m += Rect(RX, Y + 230 + i * 40, [560, 590, 520, 600, 480, 560, 300][i], 12, '#E3E7E9', { rx: 6 });
+    m += Rect(RX, Y + 540, 250, 52, '#EEF1F2', { rx: 8 });
+    s += G({ opacity: N(open) }, m);
+  } else {
+    for (let i = 0; i < 5; i++) s += Rect(RX, Y + 180 + i * 44, 480 - i * 30, 12, '#F0F2F3', { rx: 6 });
+  }
+  // Mauszeiger: fährt zur neuen Nachricht, Klick
+  const u = ez(lt, 6.0, 7.2);
+  const cx = lerp(X + 1200, LX + 330, u), cy = lerp(Y + 640, Y + 64 + 52, u);
+  const click = bump(lt, 7.45, 0.3);
+  if (click > 0) s += Circ(cx, cy, 16 + 26 * seg(lt, 7.3, 7.75), C.zyan, { opacity: N(0.5 * click) });
+  s += G({ transform: TR(cx, cy, 1.6) }, Path('M0,0 L0,30 L8,23 L13,35 L18,33 L13,21 L23,21 Z', '#FFFFFF', { ...OL(2.2) }));
+  return s;
+}
+const S2 = {
+  n: 2,
+  defs() {
+    let d = '';
+    // Außenansicht, auf die Fenster zugeschnitten
+    d += `<clipPath id="s2-win">${S2L.windows.map(([x, y, w, h]) => `<rect x="${x}" y="${y}" width="${w}" height="${h}"/>`).join('')}</clipPath>`;
+    d += `<g id="s2-outside">${OutsideView()}</g>`;
+    let room = Rect(-400, 0, 2800, 700, '#E3E8E6') + Rect(-400, 0, 2800, 60, '#EEF1F0') + Line(-400, 60, 2400, 60, C.line, 2);
+    room += Rect(-400, 640, 2800, 60, '#D5DBD9') + Rect(-400, 690, 2800, 12, '#9AA4A8', OL(2));
+    room += Rect(-400, 700, 2800, 400, '#CFC8BC');
+    for (let k = 0; k < 6; k++) room += Line(-400, 730 + k * k * 11, 2400, 730 + k * k * 11, '#C1B9AC', 2, { opacity: 0.7 });
+    for (let k = 0; k < 5; k++) room += Rect(80 + k * 400, 60, 240, 10, '#FFFFFF', { ...OL(2), rx: 3 });
+    d += `<g id="s2-room">${room}</g>`;
+    let frames = '';
+    for (const [x, y, w, h] of S2L.windows) frames += Rect(x, y, w, h, '#DDEFFA', { opacity: 0.18 }) + Rect(x, y, w, h, 'none', { stroke: '#8E9AA0', 'stroke-width': 12 }) + Line(x + w / 2, y, x + w / 2, y + h, '#8E9AA0', 8) + Rect(x - 14, y + h, w + 28, 14, '#BFC6C9', OL(2));
+    frames += Rect(1850, 470, 60, 150, '#B98D62', OL(2.5)) + Bush(1880, 474, 90, 140, 84, { sw: 2.5 });
+    frames += Rect(-60, 430, 150, 260, '#D8CDBE', OL(2.5));
+    for (let r = 0; r < 3; r++) for (let c = 0; c < 4; c++) frames += Rect(-44 + c * 32, 446 + r * 80, 24, 64, ['#6D8FB0', '#9DB86B', '#C9A04A', '#8E9AA0'][(r + c) % 4], OL(1.5));
+    d += `<g id="s2-frames">${frames}</g>`;
+    return d;
+  },
+  // Kamerafahrt: Halbnah → (Bildschirm) → Halbnah → Totale (viele Arbeitsplätze) → Wand
+  cam(lt) {
+    const K = [[0, 1.65, 930, 790], [13.5, 1.65, 930, 790], [16.0, 1.18, 960, 610], [18.0, 1.18, 960, 610], [22.4, 1.62, 1270, 500]];
+    let z = K[0][1], cx = K[0][2], cy = K[0][3];
+    for (let i = 0; i < K.length - 1; i++) {
+      const [t0, z0, x0, y0] = K[i], [t1, z1, x1, y1] = K[i + 1];
+      if (lt >= t0) { const u = ez(lt, t0, t1); z = lerp(z0, z1, u); cx = lerp(x0, x1, u); cy = lerp(y0, y1, u); }
+    }
+    return { z, cx, cy };
+  },
+  draw(lt) {
+    const c = this.cam(lt);
+    let w = Use('s2-room');
+    // draußen: Schatten zieht vorbei und verschwindet in der Wand
+    let out = Use('s2-outside');
+    const sx = lerp(1130, 790, ez(lt, 10.4, 13.0, EASE.lin));
+    const sop = 0.9 * ez(lt, 10.4, 10.9) * (1 - ez(lt, 12.3, 13.0));
+    if (sop > 0.01) out += Shade({ x: sx, y: 668, s: 0.62, dir: -1, walk: 1, phase: stepPhase(1130 - sx, 0.62, 17), opacity: sop });
+    w += G({ 'clip-path': 'url(#s2-win)' }, out);
+    w += Use('s2-frames');
+    // dunkler Fleck in der Wand (der Angreifer ist im Haus)
+    const stain = ez(lt, 19.0, 21.6);
+    if (stain > 0) w += G({ opacity: N(0.42 * stain) }, Ell(1270, 470, 58, 150, C.shadow, { filter: 'url(#fShadeHalo)' }) + Ell(1270, 372, 30, 36, C.shadow, { filter: 'url(#fShadeHalo)' }));
+    // Arbeitsplätze: hintere Reihe (kleiner), vordere Reihe; Mitte vorn = die Beschäftigte
+    const looks = [
+      { top: '#6D8FB0', pants: C.black, hair: C.hairDark, skin: C.skin3, hairStyle: 'short' },
+      { top: '#D9A45C', pants: C.jeans, hair: C.hairAuburn, skin: C.skin1, hairStyle: 'long' },
+      { top: '#8FA36A', pants: C.black, hair: C.hairGrey, skin: C.skin2, hairStyle: 'bald' },
+      { top: '#B77A8C', pants: C.jeansDark, hair: C.hairBrown, skin: C.skin4, hairStyle: 'ponytail' },
+      { top: '#4E82C0', pants: C.black, hair: C.hairBlond, skin: C.skin1, hairStyle: 'short' },
+      { top: '#2E8C87', pants: '#5B666B', hair: C.hairDark, skin: C.skin2, hairStyle: 'bun' },   // die Beschäftigte
+      { top: '#C9A27E', pants: C.jeans, hair: C.hairBrown, skin: C.skin3, hairStyle: 'short' },
+    ];
+    const back = [[170, 0], [560, 1], [1250, 2], [1640, 3]], front = [[300, 4], [880, 5], [1460, 6]];
+    for (const [x, i] of back) w += SeatedWorker(x, 772, 0.78, lt, looks[i], i) + SideDesk(x, 772, 0.78, { mug: i % 2 === 0 });
+    for (const [x, i] of front) w += SeatedWorker(x, 968, 1.0, lt, looks[i], i) + SideDesk(x, 968, 1.0, { mug: i === 6 });
+    // neue Nachricht: Umschlag über dem Monitor der Beschäftigten, später über vielen Monitoren
+    const env = (x, y, s, t0) => { const p = EASE.outBack(seg(lt, t0, t0 + 0.5)); return p > 0.01 ? Envelope(x, y - 10 * p, s * p, '#FFFFFF', seg(lt, t0, t0 + 0.2)) : ''; };
+    const monTop = (x, fy, sc) => [x + 165 * sc, fy - 125 * sc - 108 * sc - 26 * sc];
+    w += env(...monTop(880, 968, 1), 0.9, 2.6);
+    [[170, 772, 0.78, 14.3], [560, 772, 0.78, 15.1], [1250, 772, 0.78, 14.7], [1640, 772, 0.78, 15.6], [300, 968, 1, 15.3], [1460, 968, 1, 14.9]].forEach(([x, fy, sc, t0]) => { const [ex, ey] = monTop(x, fy, sc); w += env(ex, ey, sc * 0.9, t0); });
+    let world = G({ transform: `translate(960 540) scale(${N(c.z)}) translate(${N(-c.cx)} ${N(-c.cy)})` }, w);
+    // Nahaufnahme des Bildschirms (Zoom in den Monitor)
+    const ins = ez(lt, 5.0, 5.8) * (1 - ez(lt, 9.4, 10.2));
+    if (ins > 0.001) {
+      const zin = lerp(1.65, 5.5, ins), zx = lerp(930, 1045, ins), zy = lerp(790, 776, ins);
+      world = G({ transform: `translate(960 540) scale(${N(zin)}) translate(${N(-zx)} ${N(-zy)})` }, w);
+      world += G({ opacity: N(clamp((ins - 0.35) / 0.65)) }, MailScreen(lt));
+    }
+    return { world: world + Use('vignette'), warn: '', ui: '', grade: GRADE.s2 };
+  },
+};
+
+/* =====================================================================
+   14  SZENE 4 – UNBEMERKT (1:28–1:52) · L5
+   Abendlicht, lange Schatten. Alarmanlage ohne Kabel und Licht, Kamera ohne
+   Licht. Kalenderblätter Woche 1–4. Der Schatten sammelt Ordner in einen Sack.
+   ===================================================================== */
+function AlarmPanel(x, y, s = 1, on = 0, lt = 0) {
+  let a = Rect(x, y, 110 * s, 116 * s, '#F1F1EC', { ...OL(3), rx: 10 * s });
+  a += Rect(x + 16 * s, y + 16 * s, 78 * s, 26 * s, on ? '#1E3A2A' : '#2A2F32', { rx: 4 * s });
+  for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) a += Rect(x + (22 + c * 24) * s, y + (54 + r * 17) * s, 16 * s, 11 * s, '#D2D6D8', { ...OL(1.5), rx: 2 });
+  a += Circ(x + 94 * s, y + 30 * s, 7 * s, on ? '#6EE08E' : '#4A4F52', OL(2));
+  if (on) a += Circ(x + 94 * s, y + 30 * s, 16 * s, '#6EE08E', { opacity: N(0.35 * on), filter: 'url(#fGlow)' });
+  if (on) a += Path(`M${N(x + 55 * s)},${N(y + 116 * s)} L${N(x + 55 * s)},${N(y + 150 * s)} Q${N(x + 55 * s)},${N(y + 170 * s)} ${N(x + 75 * s)},${N(y + 170 * s)} L${N(x + 400 * s)},${N(y + 170 * s)}`, 'none', { stroke: C.line, 'stroke-width': 5 * s });
+  else {
+    // Kabel lose: hängt herunter, Stecker endet im Leeren
+    const sw = Math.sin(lt * 1.3) * 5 * s;
+    a += Path(`M${N(x + 55 * s)},${N(y + 116 * s)} C${N(x + 55 * s)},${N(y + 170 * s)} ${N(x + 30 * s + sw)},${N(y + 190 * s)} ${N(x + 40 * s + sw)},${N(y + 230 * s)}`, 'none', { stroke: C.line, 'stroke-width': 5 * s, 'stroke-linecap': 'round' });
+    a += Rect(x + 32 * s + sw, y + 228 * s, 16 * s, 22 * s, '#5B666B', { ...OL(2), rx: 3 }) + Line(x + 36 * s + sw, y + 250 * s, x + 36 * s + sw, y + 258 * s, C.line, 2.5) + Line(x + 44 * s + sw, y + 250 * s, x + 44 * s + sw, y + 258 * s, C.line, 2.5);
+  }
+  return a;
+}
+function CeilingCam(x, y, s = 1, on = 0) {
+  let c = Rect(x - 6 * s, y - 60 * s, 12 * s, 40 * s, '#C9CFD2', OL(2.5)) + Rect(x - 30 * s, y - 66 * s, 60 * s, 10 * s, '#C9CFD2', OL(2.5));
+  c += Path(`M${N(x - 26 * s)},${N(y - 20 * s)} L${N(x + 30 * s)},${N(y - 30 * s)} L${N(x + 46 * s)},${N(y + 6 * s)} L${N(x - 20 * s)},${N(y + 16 * s)} Z`, '#E7EAEB', OL(2.5));
+  c += Circ(x + 40 * s, y - 8 * s, 10 * s, '#2A2F32', OL(2)) + Circ(x - 12 * s, y - 14 * s, 4 * s, on ? '#6EE08E' : '#4A4F52');
+  if (on) c += Circ(x - 12 * s, y - 14 * s, 12 * s, '#6EE08E', { opacity: N(0.35 * on), filter: 'url(#fGlow)' });
+  return c;
+}
+// Abreißkalender: sichtbare Seite „Woche n“
+function CalendarPage(x, y, n, o = {}) {
+  let c = Rect(x, y, 170, 200, '#FFFFFF', { ...OL(3), rx: 4 }) + Rect(x, y, 170, 40, '#5B666B', { ...OL(3), rx: 4 });
+  c += Circ(x + 50, y + 20, 6, '#FFFFFF') + Circ(x + 120, y + 20, 6, '#FFFFFF');
+  c += Txt(x + 85, y + 118, TEXTE['woche_' + n], { size: 34, weight: 700, fill: C.text, anchor: 'middle', k: 'woche_' + n, i: 0 });
+  for (let i = 0; i < 3; i++) c += Rect(x + 30, y + 146 + i * 14, 110 - i * 20, 6, '#DCE0E2', { rx: 3 });
+  return c;
+}
+function ArchiveShelf(x, y, w, h, seed, gone = []) {
+  const r = rng(seed);
+  let s = Rect(x, y, w, h, '#A58C6E', OL(3)) + Rect(x + 10, y + 10, w - 20, h - 20, '#8D765B');
+  const boards = 5, bh = (h - 20) / boards;
+  const cols = ['#5E7FA3', '#8DAF5E', '#C9A04A', '#9A9EA3', '#6C8C8A', '#B07A62'];
+  for (let b = 0; b < boards; b++) {
+    const by = y + 10 + (b + 1) * bh;
+    s += Rect(x + 6, by - 8, w - 12, 10, '#C2A988', OL(2));
+    for (let i = 0; i < 8; i++) {
+      if (gone.includes(b * 10 + i)) continue;
+      const fh = bh - 22 - r() * 10, fx = x + 16 + i * ((w - 32) / 8);
+      s += Rect(fx, by - 8 - fh, (w - 32) / 8 - 3, fh, cols[(i + b * 3 + seed) % 6], OL(1.5)) + Rect(fx + 3, by - 8 - fh + 10, (w - 32) / 8 - 9, 12, '#FFFFFF', { opacity: 0.8 });
+    }
+  }
+  return s;
+}
+function Sack(x, y, s) {
+  return G({ transform: TR(x, y, s) }, Path('M-6,-6 L6,-6 L10,6 Q46,20 40,70 Q34,98 0,98 Q-34,98 -40,70 Q-46,20 -10,6 Z', '#4A4238', OL(3)) + Path('M-12,4 Q0,12 12,4', 'none', { stroke: '#2E2922', 'stroke-width': 3 }));
+}
+const S4L = {
+  shelves: [[640, 250], [900, 250], [1160, 250]], sw: 230, sh: 510,
+  grabs: [ // Regal, Fach (Brett*10+Nr.), Zeitpunkt des Zugriffs
+    { shelf: 0, slot: 23, t: 8.2 }, { shelf: 1, slot: 14, t: 11.2 }, { shelf: 2, slot: 32, t: 14.2 }, { shelf: 2, slot: 5, t: 16.0 },
+  ],
+  tears: [7.2, 10.4, 13.6],   // Woche 1 → 2 → 3 → 4
+};
+const slotPos = (shelf, slot) => {
+  const [x, y] = S4L.shelves[shelf], bh = (S4L.sh - 20) / 5, b = Math.floor(slot / 10), i = slot % 10;
+  return [x + 16 + i * ((S4L.sw - 32) / 8) + 10, y + 10 + (b + 1) * bh - 8 - 30];
+};
+const S4 = {
+  n: 4,
+  defs() {
+    let d = '';
+    // Raum im Abendlicht
+    let room = Rect(-300, 0, 2600, 760, '#D8D0C6') + Rect(-300, 0, 2600, 64, '#E4DED6') + Line(-300, 64, 2300, 64, C.line, 2);
+    room += Rect(-300, 740, 2600, 22, '#9C8F80', OL(2)) + Rect(-300, 760, 2600, 340, '#B7AC9D');
+    // Fenster mit Abendhimmel und tiefer Sonne
+    room += `<linearGradient id="gEve" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8FA0C0"/><stop offset="0.55" stop-color="#E7A98A"/><stop offset="1" stop-color="#F6C98E"/></linearGradient>`;
+    room += Rect(1420, 200, 420, 420, 'url(#gEve)') + Circ(1700, 560, 46, '#FFE3A8') + Circ(1700, 560, 70, '#FFE3A8', { opacity: 0.35 });
+    room += Path('M1420,620 L1420,540 L1470,540 L1470,500 L1530,500 L1530,560 L1590,560 L1590,520 L1650,520 L1650,575 L1740,575 L1740,530 L1800,530 L1800,560 L1840,560 L1840,620 Z', '#5E6377', { opacity: 0.8 });
+    room += Rect(1420, 200, 420, 420, 'none', { stroke: '#8A7F72', 'stroke-width': 14 }) + Line(1630, 200, 1630, 620, '#8A7F72', 10) + Rect(1404, 620, 452, 16, '#C4B8A8', OL(2));
+    // Tür links
+    room += Rect(50, 320, 220, 440, '#8E8374', OL(3)) + Rect(64, 334, 192, 426, '#B79E80', OL(2.5)) + Rect(226, 540, 12, 40, '#D5DBDE', { ...OL(2), rx: 4 });
+    d += `<g id="s4-room">${room}</g>`;
+    return d;
+  },
+  shadowX(lt) {
+    const K = [[0, 760], [9.4, 760], [10.6, 1010], [12.4, 1010], [13.6, 1270], [17.4, 1270], [21.8, 200]];
+    if (lt <= K[0][0]) return K[0][1];
+    for (let i = 0; i < K.length - 1; i++) { const [t0, x0] = K[i], [t1, x1] = K[i + 1]; if (lt <= t1) return x0 === x1 ? x0 : lerp(x0, x1, EASE.inOut(seg(lt, t0, t1))); }
+    return K[K.length - 1][1];
+  },
+  draw(lt) {
+    const L = S4L;
+    // Kamera: nah an Alarmanlage/Kamera → Totale → leicht zur Tür
+    let z = 1.9, cx = 430, cy = 350;
+    const u1 = ez(lt, 6.0, 8.2), u2 = ez(lt, 19.5, 23.5);
+    z = lerp(1.9, 1.0, u1); cx = lerp(430, 960, u1); cy = lerp(350, 540, u1);
+    z = lerp(z, 1.12, u2); cx = lerp(cx, 780, u2);
+    let w = Use('s4-room');
+    // Lichtbahnen der tiefen Sonne (warm) und lange Schatten nach links
+    w += Path('M1420,640 L1840,640 L1150,1100 L420,1100 Z', '#FFD9A6', { opacity: 0.22 });
+    w += Path('M1420,250 L1440,250 L700,700 L520,700 Z', '#FFE2B8', { opacity: 0.16 });
+    for (const [x] of L.shelves) w += Path(`M${x},762 L${x + L.sw},762 L${x - 420},960 L${x - 700},960 Z`, '#3E3630', { opacity: 0.16 });
+    // Regale mit Ordnern (entnommene fehlen)
+    L.shelves.forEach(([x, y], k) => { const gone = L.grabs.filter(g => g.shelf === k && lt >= g.t).map(g => g.slot); w += ArchiveShelf(x, y, L.sw, L.sh, 40 + k, gone); });
+    // Alarmanlage ohne Kabel und Licht, Kamera ohne Licht
+    w += AlarmPanel(300, 400, 1, 0, lt) + CeilingCam(360, 150, 1.1, 0);
+    // Abreißkalender
+    const week = 1 + L.tears.filter(t => lt >= t).length;
+    w += CalendarPage(440, 300, week);
+    L.tears.forEach((t0, i) => {
+      const u = seg(lt, t0, t0 + 1.8);
+      if (u > 0 && u < 1) {
+        const x = 440 + 520 * EASE.out(u) + Math.sin(u * 9) * 30, y = 300 + 320 * u * u - 90 * Math.sin(u * Math.PI);
+        w += G({ transform: `translate(${N(x + 85)} ${N(y + 100)}) rotate(${N(-40 * u + Math.sin(u * 12) * 18)}) scale(${N(1 + 0.4 * u)}) translate(-85 -100)`, opacity: N(1 - Math.pow(u, 3)) }, CalendarPage(0, 0, i + 1));
+      }
+    });
+    // Schatten mit Sack
+    const x = this.shadowX(lt), dt = 1 / 60;
+    const v = Math.abs(this.shadowX(lt + dt) - this.shadowX(lt - dt)) / (2 * dt);
+    let dist = 0; for (let q = 0; q < lt; q += 0.05) dist += Math.abs(this.shadowX(Math.min(lt, q + 0.05)) - this.shadowX(q));
+    const dir = lt > 17.3 ? -1 : 1;
+    const op = 0.92 * ez(lt, 5.4, 6.4) * (1 - ez(lt, 21.6, 23.2));
+    const sO = { x, y: 900, s: 1.12, dir, walk: clamp(v / 110), phase: stepPhase(dist, 1.12, 17), opacity: op, out: {} };
+    let carry = null;
+    for (const g of L.grabs) {
+      const [px, py] = slotPos(g.shelf, g.slot);
+      const reachU = ez(lt, g.t - 0.6, g.t) * (1 - ez(lt, g.t, g.t + 0.8));
+      if (reachU > 0.001) sO.reachF = [lerp(x + 70, px, reachU), lerp(700, py, reachU)];
+      if (lt >= g.t && lt < g.t + 0.9) carry = { u: seg(lt, g.t, g.t + 0.9), from: [px, py] };
+    }
+    sO.arms = { b: { sh: -10, el: 8 } };
+    const shadowSVG = Shade(sO);
+    const bag = L.grabs.filter(g => lt >= g.t + 0.9).length;
+    // langer Schatten des Schattens auf dem Boden
+    if (op > 0.02) w += Path(`M${N(x - 30)},900 L${N(x + 30)},900 L${N(x - 420)},990 L${N(x - 560)},990 Z`, C.shadow, { opacity: N(0.16 * op / 0.92) });
+    w += shadowSVG;
+    const hb = sO.out.handB;
+    if (op > 0.02 && hb) w += G({ opacity: N(op / 0.92) }, Sack(hb[0], hb[1] - 4, 0.62 + 0.09 * bag));
+    if (carry && hb) {
+      const fx = lerp(carry.from[0], hb[0], EASE.inOut(carry.u)), fy = lerp(carry.from[1], hb[1] + 20, EASE.inOut(carry.u)) - 60 * Math.sin(carry.u * Math.PI);
+      w += G({ transform: `translate(${N(fx)} ${N(fy)}) rotate(${N(carry.u * 70)})` }, Rect(-12, -34, 24, 68, '#5E7FA3', OL(2)) + Rect(-8, -24, 16, 12, '#FFFFFF', { opacity: 0.8 }));
+    }
+    const world = G({ transform: `translate(960 540) scale(${N(z)}) translate(${N(-cx)} ${N(-cy)})` }, w) + Use('vignette');
+    return { world, warn: '', ui: '', grade: GRADE.s4 };
+  },
+};
+
+/* =====================================================================
+   15  SZENE 5 – AUSBREITUNG (1:52–2:18) · L3, L4, L7
+   Außen: alte Hintertür mit rostigem Schloss, durchgestrichenes Update-Symbol.
+   Innen: Bürotüren ohne Schloss, der Schatten drückt sie auf. Gebäudeschnitt:
+   Flure ohne Brandschutztüren, eine rote Welle breitet sich von Raum zu Raum aus.
+   ===================================================================== */
+// Update-Symbol (zwei Pfeile im Kreis), optional durchgestrichen
+function UpdateSign(x, y, s = 1, strike = 0, op = 1) {
+  if (op <= 0.01) return '';
+  let g = Rect(-46, -46, 92, 92, '#F5F7F7', { ...OL(3), rx: 10 });
+  g += Path('M-22,-8 A24,24 0 0 1 18,-16', 'none', { stroke: '#3A4348', 'stroke-width': 7, 'stroke-linecap': 'round' }) + Path('M10,-26 L24,-14 L6,-8 Z', '#3A4348');
+  g += Path('M22,8 A24,24 0 0 1 -18,16', 'none', { stroke: '#3A4348', 'stroke-width': 7, 'stroke-linecap': 'round' }) + Path('M-10,26 L-24,14 L-6,8 Z', '#3A4348');
+  if (strike > 0.001) g += Line(-34, -34, -34 + 68 * strike, -34 + 68 * strike, C.text, 8);
+  return G({ transform: TR(x, y, s), opacity: N(op) }, g);
+}
+// Rückseite des Rathauses in der Dämmerung mit Hintereingang (o.renew = 0..1: neue Tür, Szene 8)
+function BackEntrance(lt, o = {}) {
+  const renew = o.renew || 0;
+  let s = `<linearGradient id="gDusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${o.day ? '#7CC2F4' : '#3E4C6C'}"/><stop offset="0.6" stop-color="${o.day ? '#A9DAF8' : '#8C7E96'}"/><stop offset="1" stop-color="${o.day ? '#C3E6FB' : '#C89C88'}"/></linearGradient>`;
+  s += Rect(-200, -200, 2400, 900, 'url(#gDusk)');
+  s += Rect(-200, 180, 2400, 700, '#BDB3A6', OL(3)) + Rect(-200, 160, 2400, 28, '#A99E90', OL(3));
+  for (let c = 0; c < 6; c++) for (let r = 0; r < 2; r++) {
+    const wx = 60 + c * 330 + (c > 2 ? 260 : 0), wy = 240 + r * 200;
+    if (c === 3 && r === 1) continue;
+    s += Rect(wx, wy, 150, 120, (c + r) % 3 === 0 && !o.day ? '#E9C98E' : '#7D93A6', OL(2.5)) + Line(wx + 75, wy, wx + 75, wy + 120, '#EDE7DD', 5);
+  }
+  s += Rect(-200, 820, 2400, 300, '#6D6F73') + Rect(-200, 812, 2400, 14, '#8C8F93', OL(2));
+  // Treppe und Tür
+  s += Rect(780, 780, 360, 40, '#9D9A95', OL(2.5));
+  s += Rect(840, 420, 240, 360, '#7F776C', OL(3));
+  if (renew < 1) {
+    let d = Rect(856, 436, 208, 344, '#6F7D6A', OL(3));
+    for (const [x, y, r] of [[900, 500, 18], [1010, 650, 14], [880, 720, 10], [1040, 470, 9]]) d += Ell(x, y, r * 1.6, r, '#8A9383', { opacity: 0.9 });
+    d += Rect(1012, 572, 30, 62, '#9A5B3A', { ...OL(2.5), rx: 4 }) + Ell(1020, 590, 8, 5, '#B8743F') + Ell(1032, 616, 6, 4, '#7E4629');
+    d += Circ(1027, 600, 5, C.line) + Path('M1024,603 L1030,603 L1029,614 L1025,614 Z', C.line);
+    d += Path('M1027,566 L1000,566', 'none', { stroke: C.line, 'stroke-width': 9, 'stroke-linecap': 'round' }) + Path('M1027,566 L1000,566', 'none', { stroke: '#9DA3A6', 'stroke-width': 4.5, 'stroke-linecap': 'round' });
+    s += G({ opacity: N(1 - renew) }, d);
+  }
+  if (renew > 0) {
+    let d = Rect(856, 436, 208, 344, '#E9EEF0', OL(3)) + Rect(880, 460, 70, 180, '#BFD8E6', OL(2.5));
+    d += Rect(1010, 560, 32, 76, '#8C969B', { ...OL(2.5), rx: 5 }) + Rect(1016, 572, 20, 20, '#2A2F32', { rx: 3 }) + Circ(1026, 612, 5, C.line);
+    d += Path('M1026,552 L996,552', 'none', { stroke: C.line, 'stroke-width': 9, 'stroke-linecap': 'round' }) + Path('M1026,552 L996,552', 'none', { stroke: '#D5DBDE', 'stroke-width': 4.5, 'stroke-linecap': 'round' });
+    s += G({ opacity: N(renew) }, d);
+  }
+  // Wandleuchte
+  s += Rect(940, 360, 40, 30, '#3A4348', { ...OL(2), rx: 6 }) + Ell(960, 396, 26, 8, o.day ? '#E7EAEB' : '#FFE9B8', { opacity: 0.9 });
+  if (!o.day) s += Path('M936,398 L984,398 L1040,560 L880,560 Z', '#FFE9B8', { opacity: 0.18 });
+  return s;
+}
+// einfache Bürotür; ohne Schloss: leere Aussparung im Türblatt und im Rahmen
+function OfficeDoor(x, base, w, h, open, o = {}) {
+  const top = base - h;
+  let s = Rect(x - 12, top - 12, w + 24, h + 12, o.frame || '#6F7A80', OL(3));
+  s += Rect(x, top, w, h, '#1B2226', OL(2));
+  if (open > 0.001 && o.inside) s += G({ 'clip-path': `url(#${o.clip})` }, o.inside);
+  const a = open * 72 * DEG, pw = w * Math.cos(a), sh = h * 0.08 * Math.sin(a);
+  s += Path(P([[x, top], [x + pw, top + sh], [x + pw, base - sh * 0.5], [x, base]]), mix(o.leaf || '#A8977E', '#1F272B', open * 0.4), OL(3));
+  const ly = base - h * 0.47;
+  if (pw > 22) {
+    const lx = x + pw * 0.84;
+    s += Path(`M${N(lx)},${N(ly - 28)} L${N(lx - 26 * Math.cos(a))},${N(ly - 28)}`, 'none', { stroke: C.line, 'stroke-width': 9, 'stroke-linecap': 'round' }) + Path(`M${N(lx)},${N(ly - 28)} L${N(lx - 26 * Math.cos(a))},${N(ly - 28)}`, 'none', { stroke: '#D5DBDE', 'stroke-width': 4.5, 'stroke-linecap': 'round' });
+    if (o.lock === 'none') s += Rect(lx - 8, ly - 8, 16, 34, '#1B2226', { ...OL(2), rx: 3 });
+    else s += Rect(lx - 9, ly - 12, 18, 44, '#B8C0C4', { ...OL(2.5), rx: 5 }) + Circ(lx, ly + 4, 4.5, C.line) + Path(P([[lx - 3, ly + 6], [lx + 3, ly + 6], [lx + 2, ly + 15], [lx - 2, ly + 15]]), C.line);
+  }
+  if (o.lock === 'none') s += Rect(x + w + 1, ly - 6, 9, 30, '#1B2226', { rx: 2 });   // leere Aussparung im Rahmen
+  if (o.newLock > 0.001 && pw > 22) {
+    const lx = x + pw * 0.84;
+    s += G({ opacity: N(o.newLock), transform: `translate(${N(lx)} ${N(ly + 8)}) scale(${N(0.6 + 0.4 * o.newLock)}) translate(${N(-lx)} ${N(-(ly + 8))})` }, Rect(lx - 9, ly - 12, 18, 44, '#B8C0C4', { ...OL(2.5), rx: 5 }) + Circ(lx, ly + 4, 4.5, C.line) + Path(P([[lx - 3, ly + 6], [lx + 3, ly + 6], [lx + 2, ly + 15], [lx - 2, ly + 15]]), C.line));
+  }
+  return s;
+}
+function DimOffice(x, top, w, h) {
+  return Rect(x, top, w, h, '#3B464D') + Rect(x + 30, top + h - 120, 120, 10, '#56626A') + Rect(x + 60, top + h - 196, 70, 50, '#2A3338', OL(1.5)) + Rect(x + 66, top + h - 190, 58, 38, '#56707E');
+}
+// Gebäudeschnitt: 3 Etagen × 4 Räume + Treppenhaus; Verbindungen offen oder mit Brandschutztür
+const XS = {
+  x0: 290, y0: 160, rw: 320, rh: 228, stairW: 150,
+  // horizontale Verbindungen je Etage (c ↔ c+1): 'open' = Durchgang ohne Brandschutztür, 'fire' = Brandschutztür vorhanden
+  links: [['open', 'open', 'open'], ['fire', 'open', 'open'], ['open', 'fire', 'open']],
+  // Zeitpunkte (lt, Szene 5), zu denen die Welle einen Raum erreicht, und Eintrittsseite
+  wave: { '0-0': [18.4, 'l'], '0-1': [19.2, 'l'], '0-2': [20.0, 'l'], '0-3': [20.8, 'l'], 's': [21.5, 'b'], '1-3': [22.1, 'r'], '2-3': [22.5, 'r'], '1-2': [22.9, 'r'], '2-2': [23.3, 'r'], '1-1': [23.7, 'r'] },
+};
+const roomRect = (f, c) => [XS.x0 + c * XS.rw, XS.y0 + (2 - f) * XS.rh, XS.rw, XS.rh];
+function CrossSection(lt, o = {}) {
+  // o.closeAll 0..1: fehlende Brandschutztüren schließen (Szene 8); o.hint: Hervorhebung fehlender Türen
+  const { x0, y0, rw, rh, stairW } = XS;
+  const W4 = rw * 4;
+  let s = Rect(x0 - 30, y0 - 60, W4 + stairW + 60, rh * 3 + 90, '#7E858B', OL(4));         // Außenwand/Dach
+  s += Path(`M${x0 - 50},${y0 - 60} L${x0 + (W4 + stairW) / 2},${y0 - 150} L${x0 + W4 + stairW + 50},${y0 - 60} Z`, '#5E6870', OL(4));
+  for (let f = 0; f < 3; f++) for (let c = 0; c < 4; c++) {
+    const [x, y] = roomRect(f, c);
+    s += Rect(x, y, rw, rh, (f + c) % 2 ? '#C9CED0' : '#C2C8CB');
+    s += Rect(x + 40, y + rh - 70, 110, 10, '#8E979C') + Rect(x + 70, y + rh - 124, 60, 44, '#4A565D', OL(1.5)) + Rect(x + 200, y + 40, 80, rh - 60, '#A9B0B4', OL(1.5));
+    for (let i = 0; i < 3; i++) s += Line(x + 206, y + 70 + i * 44, x + 274, y + 70 + i * 44, '#8E979C', 3);
+  }
+  // Treppenhaus
+  const sx = x0 + W4;
+  s += Rect(sx, y0, stairW, rh * 3, '#B4BBBF');
+  for (let f = 0; f < 3; f++) { const y = y0 + (2 - f) * rh; s += Poly([[sx + 10, y + rh - 10], [sx + 40, y + rh - 10], [sx + 40, y + rh - 50], [sx + 70, y + rh - 50], [sx + 70, y + rh - 90], [sx + 100, y + rh - 90], [sx + 100, y + rh - 130], [sx + 130, y + rh - 130]], '#7E858B', 6); }
+  // Decken, Wände mit Durchgängen
+  for (let f = 0; f <= 3; f++) s += Rect(x0 - 30, y0 + f * rh - 8, W4 + stairW + 60, 16, '#6B7278', OL(2));
+  const dh = 150;   // Durchgangshöhe
+  for (let f = 0; f < 3; f++) {
+    const y = y0 + (2 - f) * rh;
+    for (let c = 1; c <= 4; c++) {
+      const wx = x0 + c * rw;
+      s += Rect(wx - 8, y + 8, 16, rh - 8 - dh, '#6B7278', OL(2));          // Wand über dem Durchgang
+      const kind = c < 4 ? XS.links[f][c - 1] : 'open';
+      const gy = y + rh - dh;
+      if (kind === 'fire' || (o.closeAll > 0 && c < 4)) {
+        // Brandschutztür: deutlicher, geschlossener Türblock im Durchgang (schiebt sich in Szene 8 zu)
+        const sw = kind === 'fire' ? 1 : ez(o.closeAll, 0, 1, EASE.out);
+        const dw = 30 * sw;
+        s += Rect(wx - 15, gy, dw, dh, '#4E6B5C', OL(3)) + (sw > 0.5 ? Rect(wx - 15 + dw * 0.22, gy + 26, dw * 0.56, 34, '#CFE0E8', { ...OL(1.5), opacity: N(seg(sw, 0.5, 1)) }) + Rect(wx - 15, gy - 10, dw, 8, '#2E3D35', OL(1.5)) : '');
+      } else {
+        s += Rect(wx - 10, gy, 20, dh, 'none', { stroke: '#8E979C', 'stroke-width': 3 });
+        if (o.hint > 0) s += Rect(wx - 12, gy - 2, 24, dh + 4, 'none', { stroke: '#FFFFFF', 'stroke-width': 4, 'stroke-dasharray': '10 7', opacity: N(o.hint) });
+      }
+    }
+  }
+  return s;
+}
+// rote Welle: Füllung je Raum (Warnebene, #C0392B), eintreffend von der Seite des Durchgangs
+function WaveFill(lt, o = {}) {
+  const back = o.back || 0;       // Szene 8: Welle zieht sich zurück
+  let s = '';
+  for (const [id, [t0, side]] of Object.entries(XS.wave)) {
+    let u = ez(lt, t0, t0 + 1.2, EASE.inOut);
+    u *= 1 - back;
+    if (u <= 0.001) continue;
+    let x, y, w, h;
+    if (id === 's') { x = XS.x0 + XS.rw * 4; y = XS.y0; w = XS.stairW; h = XS.rh * 3; }
+    else { const [f, c] = id.split('-').map(Number); [x, y, w, h] = roomRect(f, c); x += 16; w -= 32; }
+    if (side === 'b') { const hh = h * u; s += Rect(x + 4, y + h - hh, w - 8, hh, C.warn, { opacity: 0.5 }); continue; }
+    const ww = w * u, xx = side === 'l' ? x : x + w - ww;
+    const edge = side === 'l' ? xx + ww : xx;
+    let d = `M${N(side === 'l' ? x : x + w)},${N(y + 8)} L${N(edge)},${N(y + 8)}`;
+    for (let k = 1; k <= 8; k++) d += ` L${N(edge + (side === 'l' ? 1 : -1) * Math.sin(k * 1.4 + lt * 4) * 8 * (1 - u * 0.6))},${N(y + 8 + (h - 16) * k / 8)}`;
+    d += ` L${N(side === 'l' ? x : x + w)},${N(y + h - 8)} Z`;
+    s += Path(d, C.warn, { opacity: 0.5 });
+  }
+  return s;
+}
+const S5 = {
+  n: 5,
+  defs() {
+    let d = `<g id="s5-back">${BackEntrance(0)}</g>`;
+    [0, 1, 2].forEach(i => { d += `<clipPath id="s5-door${i}"><rect x="${420 + i * 440}" y="${800 - 380}" width="190" height="380"/></clipPath>`; });
+    return d;
+  },
+  draw(lt) {
+    const A = 1 - ez(lt, 7.5, 8.3), Cc = ez(lt, 12.6, 13.4), B = 1 - A - Cc;
+    let world = '', warn = '';
+    // A: Hintereingang, langsame Fahrt auf das Schloss; Update-Symbol wird durchgestrichen
+    if (A > 0.001) {
+      const z = lerp(1.0, 1.4, ez(lt, 0, 7.8, EASE.sine));
+      let a = Use('s5-back') + UpdateSign(1180, 560, 1, ez(lt, 5.6, 6.4), ez(lt, 2.2, 2.8));
+      world += G({ opacity: N(A) }, G({ transform: `translate(960 540) scale(${N(z)}) translate(${N(-1030)} ${N(-580)})` }, a));
+    }
+    // B: Flur mit Bürotüren ohne Schloss; der Schatten drückt sie auf
+    if (B > 0.001) {
+      let b = Rect(-100, 0, 2200, 800, '#B9BEC1') + Rect(-100, 0, 2200, 70, '#C9CDD0') + Rect(-100, 786, 2200, 14, '#7F898E', OL(2)) + Rect(-100, 800, 2200, 300, '#8E979B');
+      const pushes = [9.0, 10.4, 11.8];
+      [0, 1, 2].forEach(i => {
+        const x = 420 + i * 440;
+        b += OfficeDoor(x, 800, 190, 380, ez(lt, pushes[i], pushes[i] + 0.9), { lock: 'none', inside: DimOffice(x, 420, 190, 380), clip: `s5-door${i}`, leaf: '#9E927F' });
+      });
+      // Schatten: geht an den Türen entlang und drückt sie mit der Hand auf
+      const sx = lerp(260, 1500, ez(lt, 8.0, 12.4, EASE.lin));
+      const reach = Math.max(...pushes.map(t => bump(lt, t, 0.45)));
+      const target = pushes.map((t, i) => [t, 420 + i * 440 + 150]).find(([t]) => Math.abs(lt - t) < 0.45);
+      const sO = { x: sx, y: 872, s: 1.12, dir: 1, walk: 1, phase: stepPhase(sx - 260, 1.12, 17), opacity: 0.92 };
+      if (target && reach > 0.05) sO.reachF = [lerp(sx + 70, target[1], reach), lerp(680, 620, reach)];
+      b += Shade(sO);
+      world += G({ opacity: N(B) }, b);
+    }
+    // C: Gebäudeschnitt, rote Welle breitet sich durch Flure ohne Brandschutztüren aus
+    if (Cc > 0.001) {
+      const hint = bump(lt, 15.6, 2.2);
+      const cam = `translate(960 510) scale(${N(lerp(0.96, 1.0, ez(lt, 13, 26)))}) translate(-960 -500)`;
+      world += G({ opacity: N(Cc) }, G({ transform: cam }, Rect(-200, -200, 2400, 1500, '#2F3942') + CrossSection(lt, { hint })));
+      warn += G({ opacity: N(Cc), transform: cam }, WaveFill(lt));
+    }
+    return { world: world + Use('vignette'), warn, ui: '', grade: GRADE.s5 };
+  },
+};
+
+/* =====================================================================
+   16  SZENE 6 – DER ANGRIFF WIRD SICHTBAR (2:18–2:50) · L6
+   Montagmorgen, 7:30 Uhr: Bildschirme werden nacheinander schwarz, ein
+   Schloss-Symbol erscheint; Telefone stumm; ein Blatt mit €-Zeichen;
+   Dokumente fliegen zu einem dunklen Marktstand. Keller: eine Datensicherung,
+   daneben ein leerer Platz; Notfallordner unerreichbar im gesperrten Raum,
+   für andere Räume keiner.
+   ===================================================================== */
+function FrontDesk(x, top, w, s = 1) {
+  return Rect(x, top, w, 14 * s, C.deskTop, OL(2.5)) + Rect(x + 8 * s, top + 14 * s, w - 16 * s, 96 * s, '#BCC3C7', OL(2.5)) + Line(x + 20 * s, top + 60 * s, x + w - 20 * s, top + 60 * s, '#A4ACB0', 3);
+}
+// Monitor frontal; dark = 0 (an) … 1 (schwarz)
+function FrontMonitor(cx, by, s, dark) {
+  const w = 190 * s, h = 118 * s, x = cx - w / 2, y = by - 28 * s - h;
+  return Rect(cx - 8 * s, by - 30 * s, 16 * s, 30 * s, C.monitor) + Rect(cx - 36 * s, by - 6 * s, 72 * s, 6 * s, C.monitor, { rx: 2 })
+    + Rect(x, y, w, h, C.monitor, { ...OL(3), rx: 6 * s }) + Rect(x + 8 * s, y + 8 * s, w - 16 * s, h - 16 * s, mix('#C3D6E0', '#0F1417', dark), { rx: 3 })
+    + (dark < 0.5 ? Path(P([[x + 8 * s, y + h * 0.62], [x + w * 0.4, y + h * 0.4], [x + w * 0.7, y + h * 0.55], [x + w - 8 * s, y + h * 0.35], [x + w - 8 * s, y + h - 8 * s], [x + 8 * s, y + h - 8 * s]]), '#DDE8EE', { opacity: N(0.8 * (1 - dark * 2)) }) : '');
+}
+function MarketStall(x, y, s, op) {
+  if (op <= 0.01) return '';
+  let m = Path('M-190,40 Q-200,-40 -120,-60 Q-100,-130 -10,-120 Q60,-170 130,-110 Q220,-110 210,-20 Q250,40 180,70 L-160,70 Q-230,70 -190,40 Z', '#232A2F', { opacity: 0.95 });
+  m += Rect(-110, -40, 8, 100, '#101417') + Rect(102, -40, 8, 100, '#101417');
+  m += Path('M-130,-40 L130,-40 L110,-80 L-110,-80 Z', '#161B1F', OL(2));
+  for (let i = 0; i < 6; i++) m += Path(`M${-130 + i * 43.3},-40 q21.6,22 43.3,0`, '#1D2327', OL(1.5));
+  m += Rect(-120, 20, 240, 16, '#161B1F', OL(2)) + Circ(80, -24, 6, '#6B6F5A', { opacity: 0.7 });
+  return G({ transform: TR(x, y, s), opacity: N(op) }, m);
+}
+function Paper(x, y, s, rot, o = {}) {
+  let p = Rect(-30, -40, 60, 80, '#FFFFFF', { ...OL(2.5), rx: 3 });
+  for (let i = 0; i < 5; i++) p += Rect(-20, -28 + i * 12, i === 4 ? 24 : 40, 4, '#C9CFD2', { rx: 2 });
+  if (o.euro) p += EuroSign(4, 22, 1.25, C.text, 3.6);
+  return G({ transform: TR(x, y, s, rot) }, p);
+}
+function BackupUnit(x, y, s = 1, on = 1) {
+  let b = Rect(x, y, 170 * s, 300 * s, '#5B666B', { ...OL(3), rx: 6 });
+  for (let r = 0; r < 6; r++) b += Rect(x + 16 * s, y + (24 + r * 40) * s, 138 * s, 28 * s, '#7B868B', { ...OL(1.5), rx: 3 }) + Circ(x + 136 * s, y + (38 + r * 40) * s, 4 * s, '#7FD6A0', { opacity: N(on * (0.5 + 0.5 * ((r * 3) % 2))) });
+  return b;
+}
+const S6 = {
+  n: 6,
+  defs() {
+    let d = '';
+    // Büro (frontal), grauer Morgen
+    let o = Rect(-200, 0, 2320, 1080, '#C7CCCF') + Rect(-200, 0, 2320, 70, '#D5D9DB') + Line(-200, 70, 2120, 70, C.line, 2);
+    for (const wx of [120, 1420]) o += Rect(wx, 150, 380, 330, '#AEB9C2', OL(3)) + Rect(wx + 8, 158, 364, 314, '#D4DAE0') + Cloud(wx + 150, 300, 0.7) + Line(wx + 190, 150, wx + 190, 480, '#8E9AA0', 8) + Rect(wx, 150, 380, 330, 'none', { stroke: '#8E9AA0', 'stroke-width': 12 });
+    o += Rect(-200, 700, 2320, 400, '#A9A49B') + Rect(-200, 690, 2320, 14, '#8C969B', OL(2));
+    o += Rect(660, 130, 600, 36, '#B9BFC3', { rx: 4 });
+    // Unterbau zwischen Büro und Keller
+    o += Rect(-200, 1080, 2320, 240, '#8A8F93') + Rect(-200, 1080, 2320, 30, '#6F757A', OL(2));
+    for (let i = 0; i < 8; i++) o += Line(-200, 1140 + i * 22, 2120, 1140 + i * 22, '#7C8286', 2);
+    // Keller
+    o += Rect(-200, 1320, 2320, 1100, '#9AA0A4') + Rect(-200, 1320, 2320, 70, '#868C90') + Rect(-200, 2000, 2320, 420, '#7E8488') + Rect(-200, 1990, 2320, 14, '#6B7176', OL(2));
+    for (let i = 0; i < 3; i++) o += Rect(-200, 1400 + i * 18, 2320, 10, '#7A8084', OL(1.5));
+    d += `<g id="s6-room">${o}</g>`;
+    return d;
+  },
+  draw(lt) {
+    // Kamera: Büro → Schwenk in den Keller → Fahrt auf den gesperrten Raum
+    const down = ez(lt, 12.8, 16.0);
+    let cy = lerp(540, 1840, down), z = 1, cx = 960;
+    const push = ez(lt, 24.2, 27.6);
+    z = lerp(1, 1.55, push); cx = lerp(960, 1080, push); cy = lerp(cy, 1830, push);
+    let w = Use('s6-room');
+    let warn = '';
+    // --- Büro ---
+    w += WallClock(960, 250, 64, 7, 30);
+    // hintere Reihe (kleiner), vordere Reihe; je zwei Monitore frontal
+    const desks = [[220, 700, 420, 0.8], [760, 700, 420, 0.8], [1300, 700, 420, 0.8], [380, 880, 520, 1], [1020, 880, 520, 1]];
+    const mons = [];
+    desks.forEach(([x, top, wd, sc]) => {
+      w += FrontDesk(x, top, wd, sc);
+      for (let k = 0; k < 2; k++) mons.push([x + wd * (k * 0.5 + 0.25), top, sc < 1 ? 0.68 : 1]);
+    });
+    // Bildschirme werden nacheinander schwarz, ein Schloss-Symbol erscheint
+    mons.forEach(([mx, by, sc], k) => {
+      const t0 = 4.8 + k * 0.3;
+      const dk = ez(lt, t0, t0 + 0.35);
+      w += FrontMonitor(mx, by, sc, dk);
+      warn += RedLock(mx, by - 28 * sc - 59 * sc, sc * 0.95, ez(lt, t0 + 0.2, t0 + 0.5));
+    });
+    // Telefone stumm (zwischen den Monitoren der vorderen Reihe)
+    [[640, 864], [1280, 864]].forEach(([x, y], i) => { w += Phone(x, y, 0.9, ez(lt, 5.8 + i * 0.4, 6.3 + i * 0.4)); });
+    // Menschen kommen an und schauen besorgt auf die Bildschirme
+    const mood = lt > 5.2 ? 'concern' : 'neutral';
+    w += Person({ x: 210, y: 1010, s: 1.0, dir: 1, top: '#FFFFFF', jacket: '#5C6F8A', pants: C.black, hair: C.hairDark, skin: C.skin3, mood, arms: { f: { sh: 18, el: 60 } } });
+    w += Person({ x: 1730, y: 1010, s: 0.98, dir: -1, top: '#E9D8B8', coat: '#9A8A74', pants: C.jeans, hair: C.hairAuburn, hairStyle: 'long', skin: C.skin1, mood });
+    // Blatt mit €-Zeichen fällt auf den vorderen Tisch
+    const pf = ez(lt, 9.8, 10.9, EASE.out);
+    if (pf > 0) w += Paper(900, lerp(560, 866, pf), 1.25, lerp(-25, -6, pf), { euro: true });
+    // Kopien fliegen zum dunklen Marktstand
+    w += MarketStall(1700, 190, 1.0, ez(lt, 7.2, 7.9) * (1 - down));
+    for (let i = 0; i < 6; i++) {
+      const u = seg(lt, 7.8 + i * 0.25, 9.6 + i * 0.25);
+      if (u <= 0 || u >= 1) continue;
+      const p0 = [700 + i * 30, 740], p1 = [900, 300], p2 = [1400, 60], p3 = [1690, 210];
+      const q = bez(p0, p1, p2, p3, EASE.inOut(u));
+      w += G({ opacity: N(1 - Math.pow(u, 4)) }, Paper(q[0], q[1], lerp(0.8, 0.35, u), u * 200 + i * 20));
+    }
+    // --- Keller (y + 1320) ---
+    const K = 1320;
+    w += BackupUnit(230, K + 380, 1.1, 1);
+    const empty = bump(lt, 19.2, 1.8);
+    w += Dashed(450, K + 380, 187, 330, { color: '#EEF2F3', sw: 4 }) + Dashed(440, K + 690, 207, 40, { color: '#EEF2F3', sw: 3, rx: 2 });
+    if (empty > 0) w += Rect(450, K + 380, 187, 330, '#FFFFFF', { rx: 6, opacity: N(0.15 * empty) });
+    // gesperrter Raum mit Glaswand: Notfallordner unerreichbar
+    const gx = 760, gy = K + 250, gw = 560, gh = 480;
+    w += Rect(gx, gy, gw, gh, '#56646C', OL(3));
+    w += Racks(gx + 30, gy + 150, 3, lt, { w: 80, h: 300, gap: 26, off: 0.9 });
+    w += Rect(gx + 330, gy + 330, 190, 16, '#8C969B', OL(2)) + Rect(gx + 348, gy + 346, 12, 104, '#6F7A80') + Rect(gx + 490, gy + 346, 12, 104, '#6F7A80');
+    w += Rect(gx + 350, gy + 282, 150, 48, '#C9A04A', { ...OL(2.5), rx: 4 }) + Rect(gx + 360, gy + 290, 130, 32, '#FFFFFF', OL(1.5));
+    w += Txt(gx + 425, gy + 315, TEXTE.notfallplan, { size: 24, weight: 700, fill: C.text, anchor: 'middle', k: 'notfallplan', i: 0 });
+    w += Rect(gx, gy, gw, gh, '#BFD8E6', { opacity: 0.22 }) + Path(P([[gx + 40, gy], [gx + 120, gy], [gx + 20, gy + gh], [gx - 60, gy + gh]]), '#FFFFFF', { opacity: 0.12 });
+    w += Rect(gx, gy, gw, gh, 'none', { stroke: '#8E9AA0', 'stroke-width': 12 }) + Line(gx + 280, gy, gx + 280, gy + gh, '#8E9AA0', 8);
+    // Tür des gesperrten Raums mit Schloss-Symbol
+    const pulse = 1 + 0.12 * bump(lt, 26.4, 0.8);
+    warn += RedLock(gx + gw - 60, gy + 250, 1.05 * pulse, ez(lt, 16.4, 17.0));
+    // andere Räume: Halter ohne Notfallordner
+    [[1420, 'a'], [1700, 'b']].forEach(([x], i) => {
+      w += Rect(x, K + 330, 190, 400, '#7F898E', OL(3)) + Rect(x + 12, K + 342, 166, 388, '#98A2A6', OL(2)) + Rect(x + 150, K + 530, 12, 40, '#D5DBDE', { ...OL(2), rx: 4 });
+      w += Rect(x - 70, K + 420, 50, 110, '#B7BDC0', OL(2)) + Dashed(x - 62, K + 430, 34, 90, { color: '#EEF2F3', sw: 3, dash: '8 6', rx: 3 });
+      const hl = bump(lt, 22.4 + i * 0.4, 1.4);
+      if (hl > 0) w += Rect(x - 70, K + 420, 50, 110, '#FFFFFF', { opacity: N(0.25 * hl) });
+    });
+    const cam = `translate(960 540) scale(${N(z)}) translate(${N(-cx)} ${N(-cy)})`;
+    let world = G({ transform: cam }, w) + Use('vignette');
+    warn = G({ transform: cam }, warn);
+    // Einblendung „Montagmorgen, 7:30 Uhr“
+    let ui = '';
+    const a = fadeIO(lt, 0.4, 0.9, 4.4, 4.9);
+    if (a > 0.001) { const tw = measure(TEXTE.uhrzeit, 44, 700) + 120; ui += Card(96, 96, tw, 110, { opacity: a, inner: Txt(156, 168, TEXTE.uhrzeit, { size: 44, weight: 700, fill: C.text, k: 'uhrzeit', i: 0 }) }); }
+    return { world, warn, ui, grade: GRADE.s6 };
+  },
+};
+
+/* =====================================================================
+   17  SZENE 7 – DIE FOLGEN (2:50–3:44)
+   Vier Kacheln mit Mini-Animation und kleiner gesetzter Belegzeile; danach drei
+   Alltagsvignetten und zum Abschluss alle drei nebeneinander.
+   ===================================================================== */
+function Hourglass(x, y, s, lt) {
+  const u = (lt * 0.4) % 1;
+  return G({ transform: TR(x, y, s, u > 0.9 ? (u - 0.9) * 1800 : 0) },
+    Path('M-14,-20 L14,-20 L2,0 L14,20 L-14,20 L-2,0 Z', '#EAF5EE', OL(2.5)) + Path(`M${N(-10 + 8 * u)},-17 L${N(10 - 8 * u)},-17 L0,-2 Z`, C.gold) + Path(`M0,2 L${N(-4 - 6 * u)},18 L${N(4 + 6 * u)},18 Z`, C.gold)
+    + Rect(-18, -24, 36, 6, '#8C969B', { ...OL(2), rx: 2 }) + Rect(-18, 18, 36, 6, '#8C969B', { ...OL(2), rx: 2 }));
+}
+// Mini-Animationen der Kacheln (Mittelpunkt 0,0; ca. 200 × 200)
+function TileAnim(kind, lt) {
+  let a = Circ(0, 0, 96, C.flaeche2, { stroke: '#D5E6DA', 'stroke-width': 3 });
+  if (kind === 'technik') {
+    // Rack wird Stück für Stück neu aufgebaut
+    a += Rect(-52, -70, 104, 150, '#3E4A51', { ...OL(3), rx: 6 });
+    const u = (lt * 0.35) % 1, n = Math.floor(u * 6);
+    for (let i = 0; i < 5; i++) {
+      const slide = i < n ? 1 : i === n ? EASE.out(seg(u * 6 - n, 0, 0.8)) : 0;
+      if (slide > 0) a += Rect(-42 + (1 - slide) * 90, 52 - i * 26, 84, 20, '#7FA9BC', { ...OL(2), rx: 3, opacity: N(slide) }) + Circ(28 + (1 - slide) * 90, 62 - i * 26, 3, '#7FD6A0', { opacity: N(slide) });
+    }
+    a += G({ transform: 'translate(58 -58) rotate(35)' }, Rect(-6, -2, 12, 48, '#8C969B', OL(2)) + Path('M-14,-8 L-14,-20 L-4,-12 L4,-12 L14,-20 L14,-8 Q14,4 0,4 Q-14,4 -14,-8 Z', '#8C969B', OL(2)));
+  } else if (kind === 'geld') {
+    // Münzen stapeln sich
+    const u = (lt * 0.5) % 1;
+    for (let i = 0; i < 5; i++) a += Ell(-26, 60 - i * 14, 36, 11, i % 2 ? C.gold : C.goldDark, OL(2));
+    for (let i = 0; i < 3; i++) a += Ell(34, 60 - i * 14, 36, 11, i % 2 ? C.gold : C.goldDark, OL(2));
+    const fy = lerp(-90, 18, EASE.in(u));
+    a += G({ opacity: N(1 - seg(u, 0.85, 1)) }, Ell(34, fy, 36, 11, C.gold, OL(2)));
+    a += Circ(-26, -30, 30, C.gold, OL(3)) + EuroSign(-25, -30, 1.1, C.goldDark, 3.4);
+  } else if (kind === 'ansehen') {
+    // Zeitung mit Schlagzeilen-Balken, Datenkarten fliegen heraus
+    a += Rect(-66, -58, 110, 130, '#FFFFFF', { ...OL(3), rx: 4 }) + Rect(-54, -44, 86, 14, '#5B666B', { rx: 3 }) + Rect(-54, -22, 86, 8, '#C9CFD2', { rx: 3 });
+    for (let i = 0; i < 5; i++) a += Rect(-54, -6 + i * 14, i % 2 ? 60 : 86, 6, '#DCE0E2', { rx: 3 });
+    for (let k = 0; k < 2; k++) {
+      const u = (lt * 0.3 + k * 0.5) % 1;
+      a += G({ transform: TR(20 + 60 * u, -10 - 50 * u, 1, 18 * u), opacity: N(1 - Math.pow(u, 2)) }, Rect(-26, -16, 52, 34, '#EAF5EE', { ...OL(2), rx: 4 }) + Circ(-12, -4, 6, C.skin2, OL(1.5)) + Path('M-20,12 Q-12,2 -4,12 Z', '#6D8FB0') + Line(2, -6, 18, -6, '#8E9AA0', 3) + Line(2, 4, 14, 4, '#8E9AA0', 3));
+    }
+  } else {
+    // geschlossener Schalter, Wartende, Uhr läuft
+    a += Rect(-80, -50, 160, 120, '#D5DBDE', { ...OL(3), rx: 4 });
+    for (let i = 0; i < 6; i++) a += Line(-72, -40 + i * 12, 72, -40 + i * 12, '#9AA4A8', 3);
+    a += Rect(-80, 40, 160, 16, '#A9B1B5', OL(2));
+    a += Person({ x: -30, y: 96, s: 0.24, dir: 1, top: '#6D8FB0', pants: C.black, hair: C.hairDark, skin: C.skin2, mood: 'neutral' }) + Person({ x: 30, y: 96, s: 0.22, dir: -1, top: '#B77A8C', pants: C.jeans, hair: C.hairGrey, hairStyle: 'bun', skin: C.skin1, mood: 'neutral' });
+    a += G({ transform: 'translate(62 -62)' }, WallClock(0, 0, 26, (lt * 2) % 12, (lt * 24) % 60));
+  }
+  return a;
+}
+const S7L = {
+  tiles: [
+    { key: 'technik', t: 2.0 }, { key: 'geld', t: 11.8 }, { key: 'ansehen', t: 15.8 }, { key: 'buerger', t: 18.0 },
+  ],
+  box: (i) => [70 + (i % 2) * 905, 44 + Math.floor(i / 2) * 424, 875, 404],
+};
+function Tile(i, lt) {
+  const { key, t } = S7L.tiles[i];
+  const [x, y, w, h] = S7L.box(i);
+  const a = ez(lt, t, t + 0.6, EASE.out);
+  if (a <= 0.001) return '';
+  const tx = x + 232, tw = w - 232 - 30;
+  let inner = Rect(x, y, w, h, '#FFFFFF', { rx: 18 }) + Rect(x, y + 26, 9, h - 52, C.gruen, { rx: 4.5 });
+  inner += G({ transform: `translate(${N(x + 124)} ${N(y + h / 2)}) scale(0.9)` }, TileAnim(key, lt - t));
+  const titleOp = ez(lt, t + 0.2, t + 0.6), bodyOp = ez(lt, t + 0.4, t + 0.9), belegOp = ez(lt, t + 0.7, t + 1.3);
+  // Kacheltext und Beleg (kleiner, kursiv): größtmögliche Schrift, die in die Kachel passt
+  const ts = 44;
+  let bs = 32, gs = 26, bl, gl, need;
+  for (;;) {
+    bl = blockLines(`kachel_${key}_text`, bs, 400, tw); gl = blockLines(`kachel_${key}_beleg`, gs, 400, tw);
+    need = ts + 18 + bl.length * bs * 1.28 + 26 + gl.length * gs * 1.3;
+    if (need <= h - 44) break;
+    if (gs > 21) gs -= 1; else if (bs > 26) bs -= 1; else break;
+  }
+  const y0 = y + (h - need) / 2 + ts * 0.85;
+  inner += G({ opacity: N(titleOp) }, Txt(tx, y0, TEXTE[`kachel_${key}_titel`], { size: ts, weight: 700, fill: C.text, k: `kachel_${key}_titel`, i: 0 }));
+  const by = y0 + 18 + bs * 1.05;
+  inner += G({ opacity: N(bodyOp) }, TextBlock(`kachel_${key}_text`, tx, by, { size: bs, fill: C.text, lines: bl, lh: bs * 1.28 }));
+  const gy = by + (bl.length - 1) * bs * 1.28 + 26 + gs * 0.95;
+  inner += G({ opacity: N(belegOp) }, Line(tx, gy - gs * 1.05, tx + 90, gy - gs * 1.05, '#C9D6CD', 3) + TextBlock(`kachel_${key}_beleg`, tx, gy + 4, { size: gs, fill: C.text2, italic: true, lines: gl, lh: gs * 1.3 }));
+  return G({ opacity: N(a), transform: `translate(0 ${N((1 - a) * 24)})`, filter: 'url(#fCardShadow)' }, inner);
+}
+// Alltagsvignetten (Welt 1920 × 1080)
+function VignetteFamily(lt) {
+  let v = Rect(0, 0, W, H, '#EFE7DA') + Rect(0, 770, W, 320, '#D9C9B2') + Rect(0, 760, W, 14, '#BFA98C', OL(2));
+  v += Rect(1300, 170, 380, 320, '#BFE0F6', OL(3)) + Line(1490, 170, 1490, 490, '#8E9AA0', 8) + Rect(1300, 170, 380, 320, 'none', { stroke: '#8E9AA0', 'stroke-width': 12 }) + Tree(1420, 540, 0.5, 91);
+  v += Rect(260, 300, 200, 150, '#D8CDBE', OL(3)) + Rect(276, 316, 168, 118, '#F5F1EA', OL(2));
+  // Tisch mit Unterlagen; leere Stelle, wo die Geburtsurkunde liegen müsste
+  v += Rect(700, 640, 520, 18, '#B98548', OL(3)) + Rect(730, 658, 18, 112, '#9C7040', OL(2)) + Rect(1172, 658, 18, 112, '#9C7040', OL(2));
+  v += G({ transform: TR(800, 628, 1, -4) }, Rect(-40, -10, 80, 12, '#FFFFFF', OL(2))) + G({ transform: TR(812, 616, 1, 3) }, Rect(-40, -10, 80, 12, '#F5F7F7', OL(2)));
+  v += Dashed(950, 560, 130, 70, { color: '#6F7A80', sw: 3.5, rx: 4 });
+  v += Person({ x: 590, y: 930, s: 1.22, dir: 1, top: '#FFFFFF', jacket: '#5C7FA0', pants: C.jeans, hair: C.hairDark, skin: C.skin3, mood: 'concern', arms: { f: { sh: 40, el: 50 } } });
+  const mom = {};
+  v += Person({ x: 1360, y: 930, s: 1.18, dir: -1, top: '#E9B49A', pants: C.jeansDark, hair: C.hairBrown, hairStyle: 'long', skin: C.skin1, mood: 'concern', arms: { f: { sh: 64, el: 72 }, b: { sh: 44, el: 84 } }, out: mom });
+  if (mom.handF) v += G({ transform: TR(mom.handF[0] + 16, mom.handF[1] - 10, 1.15) }, Ell(0, 0, 46, 25, '#F5F7F7', OL(3)) + Path('M-6,-22 Q16,-30 40,-12', 'none', { stroke: '#DDE3E6', 'stroke-width': 6 }) + Circ(-32, -10, 18, C.skin1, OL(2.5)) + Path('M-48,-18 Q-34,-36 -18,-20', 'none', { stroke: C.hairBrown, 'stroke-width': 4, 'stroke-linecap': 'round' }) + Circ(-38, -9, 2, C.line) + Circ(-28, -9, 2, C.line));
+  return v;
+}
+function VignetteSenior(lt) {
+  let v = Rect(0, 0, W, H, '#DCE3E6') + Rect(0, 780, W, 300, '#BDBAB4') + Rect(0, 770, W, 14, '#A09C95', OL(2));
+  // Eingang Bürgerbüro, geschlossen (Rollgitter unten)
+  v += Rect(640, 230, 640, 550, '#C9C2B6', OL(3)) + Rect(700, 330, 520, 450, '#6F7A80', OL(3));
+  for (let i = 0; i < 14; i++) v += Line(700, 346 + i * 31, 1220, 346 + i * 31, '#8C969B', 5);
+  v += Rect(700, 764, 520, 16, '#5B666B', OL(2));
+  const lw = measure(TEXTE.buergerbuero, 40, 700) + 60;
+  v += Rect(960 - lw / 2, 256, lw, 60, C.plate, { ...OL(3), rx: 8 }) + Txt(960, 300, TEXTE.buergerbuero, { size: 40, weight: 700, fill: C.text, anchor: 'middle', k: 'buergerbuero', i: 0 });
+  v += Person({ x: 1420, y: 930, s: 1.0, dir: -1, top: '#D8D2C4', coat: '#7E8C9A', pants: '#5B666B', shoes: '#5A4636', hair: C.hairGrey, hairStyle: 'bun', skin: C.skin1, senior: true, mood: 'concern', bag: '#8C5A36' });
+  return v;
+}
+function VignetteCraftsman(lt) {
+  let v = Rect(0, 0, W, H, '#E4E1D8') + Rect(0, 770, W, 310, '#B8B2A6') + Rect(0, 760, W, 14, '#9C958A', OL(2));
+  // Transporter (ohne Beschriftung) und geschlossener Schalter
+  v += Rect(120, 420, 560, 330, '#F1F3F2', { ...OL(3), rx: 24 }) + Rect(470, 450, 180, 130, '#7D93A6', { ...OL(3), rx: 10 }) + Rect(120, 640, 560, 40, '#6F8A96', OL(2.5));
+  v += Circ(250, 760, 52, C.line) + Circ(250, 760, 24, '#9AA2A6') + Circ(560, 760, 52, C.line) + Circ(560, 760, 24, '#9AA2A6');
+  v += Rect(1180, 300, 520, 470, '#C9C2B6', OL(3)) + Rect(1240, 400, 400, 230, '#6F7A80', OL(3));
+  for (let i = 0; i < 7; i++) v += Line(1240, 414 + i * 31, 1640, 414 + i * 31, '#8C969B', 5);
+  v += Rect(1220, 630, 440, 24, '#A9B1B5', OL(2.5));
+  // Werkzeugkiste
+  v += Rect(700, 820, 150, 80, '#C9A04A', { ...OL(3), rx: 6 }) + Path('M740,820 L740,796 L810,796 L810,820', 'none', { stroke: C.line, 'stroke-width': 6 });
+  const hands = {};
+  v += Person({ x: 960, y: 930, s: 1.06, dir: 1, top: '#4E6E8C', jacket: '#4E6E8C', pants: '#4E6E8C', shoes: '#3A3530', hair: C.hairBrown, cap: '#3F8C4B', skin: C.skin2, mood: 'concern', arms: { f: { sh: 70, el: 40 } }, out: hands });
+  // Formular ohne Stempel
+  if (hands.handF) v += G({ transform: TR(hands.handF[0] + 36, hands.handF[1] - 10, 1, -6) }, Rect(-40, -54, 80, 108, '#FFFFFF', { ...OL(2.5), rx: 3 }) + Rect(-28, -40, 56, 6, '#C9CFD2') + Rect(-28, -28, 40, 6, '#C9CFD2') + Rect(-28, -16, 50, 6, '#C9CFD2') + Circ(14, 26, 16, 'none', { stroke: '#8C969B', 'stroke-width': 3, 'stroke-dasharray': '6 5' }));
+  return v;
+}
+function WaitTag(x, y, key, s = 1, op = 1) {
+  if (op <= 0.01) return '';
+  const size = 30 * s, tw = measure(TEXTE[key], size, 700) + 90 * s;
+  return G({ opacity: N(op) }, Rect(x - tw / 2, y - 34 * s, tw, 68 * s, '#FFFFFF', { rx: 34 * s, filter: 'url(#fCardShadow)' }) + G({ transform: TR(x - tw / 2 + 38 * s, y, 0.9 * s) }, Hourglass(0, 0, 1, 0))
+    + Txt(x - tw / 2 + 70 * s, y + 10 * s, TEXTE[key], { size, weight: 700, fill: C.text, k: key, i: 0 }));
+}
+const S7 = {
+  n: 7,
+  defs() { return ''; },
+  draw(lt) {
+    // Phasen: Kacheln (bis 35,4) → Vignetten 1–3 → alle drei nebeneinander (ab 47,4)
+    const toV = ez(lt, 35.0, 35.8);
+    let world = Rect(0, 0, W, H, C.flaeche) + Rect(0, 0, W, H, C.flaeche2, { opacity: 0.35 });
+    let ui = '';
+    if (toV < 1) { let g = ''; for (let i = 0; i < 4; i++) g += Tile(i, lt); ui += G({ opacity: N(1 - toV) }, g); }
+    const V = [[VignetteFamily, 35.0, 41.6, 'vignette_kindergeld', [1015, 470], [1.25, 960, 620]], [VignetteSenior, 41.6, 44.2, 'vignette_wohngeld', [1420, 420], [1.2, 1080, 560]], [VignetteCraftsman, 44.2, 47.4, null, null, [1.18, 900, 600]]];
+    const tri = ez(lt, 47.4, 48.4);
+    V.forEach(([fn, a, b, tag, pos, cam], i) => {
+      const op = (i === 0 ? ez(lt, a, a + 0.8) : ez(lt, a - 0.4, a + 0.4)) * (1 - (i < 2 ? ez(lt, b - 0.4, b + 0.4) : 0));
+      if (op > 0.001 && tri < 1) {
+        const zz = lerp(cam[0], cam[0] * 1.05, seg(lt, a, b + 0.4));
+        world += G({ opacity: N(op * (1 - tri)) }, G({ transform: `translate(960 540) scale(${N(zz)}) translate(${N(-cam[1])} ${N(-cam[2])})` }, fn(lt)));
+        if (tag) ui += WaitTag(pos[0], pos[1], tag, 1, op * (1 - tri) * ez(lt, a + 0.6, a + 1.1));
+      }
+    });
+    // Abschluss: alle drei Vignetten nebeneinander
+    if (tri > 0) {
+      const pw = 600, ph = 338, py = 300;
+      let g = '';
+      V.forEach(([fn, , , tag], i) => {
+        const px = 40 + i * (pw + 20);
+        g += `<clipPath id="s7-p${i}"><rect x="${px}" y="${py}" width="${pw}" height="${ph}" rx="14"/></clipPath>`;
+        g += G({ 'clip-path': `url(#s7-p${i})` }, G({ transform: `translate(${px} ${py}) scale(${N(pw / W)})` }, fn(lt)));
+        g += Rect(px, py, pw, ph, 'none', { ...OL(4), rx: 14 });
+      });
+      world += G({ opacity: N(tri) }, g);
+      ui += WaitTag(40 + pw / 2, py + ph + 74, 'vignette_kindergeld', 0.9, tri) + WaitTag(40 + (pw + 20) + pw / 2, py + ph + 74, 'vignette_wohngeld', 0.9, tri);
+    }
+    return { world, warn: '', ui, grade: GRADE.s7 };
+  },
+};
+
+/* =====================================================================
    11  PLATZHALTER für noch nicht umgesetzte Szenen (nur Vorschau)
    ===================================================================== */
 function Placeholder(sc) {
@@ -1258,7 +2286,7 @@ function Placeholder(sc) {
     },
   };
 }
-const IMPL = { 0: S0, 3: S3 };
+const IMPL = { 0: S0, 1: S1, 2: S2, 3: S3, 4: S4, 5: S5, 6: S6, 7: S7 };
 const SCENE_OBJ = SCENES.map(sc => IMPL[sc.n] || Placeholder(sc));
 
 /* =====================================================================
