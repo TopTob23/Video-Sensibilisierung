@@ -189,8 +189,9 @@ const visibleTexts = new Map();   // Schlüssel → { text, von, bis, quelle }
       else if (joined !== soll) note('abw:' + k + joined, `„${joined}“ (${k}) ≠ Drehbuch „${soll}“ (${fmt(t)})`);
       const vis = Math.max(...list.map(e => e.op));
       if (vis > 0.05) {
-        const r = visibleTexts.get(k) || { text: soll, von: t, bis: t, opMax: 0 };
+        const r = visibleTexts.get(k) || { text: soll, von: t, bis: t, opMax: 0, times: [] };
         r.von = Math.min(r.von, t); r.bis = Math.max(r.bis, t); r.opMax = Math.max(r.opMax, vis);
+        if (r.times[r.times.length - 1] !== t) r.times.push(t);
         visibleTexts.set(k, r);
       }
     }
@@ -394,7 +395,9 @@ if (cueMetrics.length) {
 }
 if (visibleTexts.size) {
   rep += `## Sichtbare Texte (Abtastung)\n\n| Schlüssel | Text | sichtbar |\n|---|---|---|\n`;
-  for (const [k, r] of [...visibleTexts.entries()].sort((a, b) => a[1].von - b[1].von)) rep += `| ${k} | ${r.text} | ${r.statisch && r.von === 0 && r.bis === 0 ? 'Bildbestandteil' : fmt(r.von) + '–' + fmt(r.bis)} |\n`;
+  // Sichtbarkeit als Intervalle (Lücke > 2 Abtastschritte = neues Intervall)
+  const intervals = times => { const out = []; for (const t of times) { const last = out[out.length - 1]; if (last && t - last[1] <= STEP * 2 + 1e-6) last[1] = t; else out.push([t, t]); } return out.map(([a, b]) => `${fmt(a)}–${fmt(b)}`).join(', '); };
+  for (const [k, r] of [...visibleTexts.entries()].sort((a, b) => a[1].von - b[1].von)) rep += `| ${k} | ${r.text} | ${r.statisch && r.times.length <= 1 ? 'Bildbestandteil (Szene 0, 1, 8)' : intervals([...new Set(r.times)].sort((a, b) => a - b).filter(t => !(r.statisch && t === 0)))} |\n`;
   rep += '\n';
 }
 const repFile = path.join(OUTDIR, `Pruefbericht${SCOPE ? '_Szenen' + SCOPE.join('') : ''}.md`);
