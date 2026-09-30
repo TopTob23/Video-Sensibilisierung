@@ -1,0 +1,1 @@
+Einige Systeme am Übergang zum Internet erhalten vom Hersteller keine Sicherheitsupdates mehr. Viele Server laufen ohne die empfohlenen Schutzeinstellungen. Und die Trennung zwischen den Bereichen im Netz ist noch unvollständig. Ein Angreifer kann sich deshalb leichter von einem System zum nächsten bewegen.

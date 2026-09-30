@@ -1,4 +1,4 @@
-// Prüfung des Videos gegen das Drehbuch (Standard: Drehbuch V1.2).
+// Prüfung des Videos gegen das Drehbuch (Standard: die neueste Drehbuch-Datei im Projektordner, derzeit V1_4).
 //
 // Aufruf:
 //   node export/check.mjs                      → Gesamtprüfung aller Szenen
@@ -12,10 +12,11 @@ import path from 'path';
 import { execFileSync } from 'child_process';
 import { pathToFileURL } from 'url';
 import { loadPlaywright, openVideo, renderAt, ROOT, BASENAME, HTML } from './lib.mjs';
+import { findDrehbuch } from './drehbuch.mjs';
 
 const argv = process.argv.slice(2);
 const opt = (name, def) => { const i = argv.indexOf('--' + name); return i >= 0 ? (argv[i + 1] && !argv[i + 1].startsWith('--') ? argv[i + 1] : true) : def; };
-const DREHBUCH = path.resolve(ROOT, opt('drehbuch', 'Drehbuch_Video_Angriffsszenario_Herne_V1_2.md'));
+const DREHBUCH = opt('drehbuch', null) ? path.resolve(ROOT, opt('drehbuch')) : findDrehbuch();
 const SCOPE = opt('scenes', null) ? String(opt('scenes')).split(',').map(Number) : null;
 const STEP = Number(opt('step', 0.2));
 const MP4 = path.resolve(ROOT, opt('mp4', `output/${BASENAME}.mp4`));
@@ -38,7 +39,7 @@ const dScenes = [...md.matchAll(/^### Szene (\d+) – (.+?) \((\d+):(\d\d)–(\d
 const dSpeech = {};
 for (const sec of md.split(/\n### /).slice(1)) {
   const n = +sec.match(/^Szene (\d+)/)[1];
-  const m = sec.match(/\*\*Sprechertext:\*\*\s*„([\s\S]*?)“/);
+  const m = sec.match(/\*\*Sprechertext(?: \(ab \d+:\d\d\))?:\*\*\s*„([\s\S]*?)“/);
   if (m) dSpeech[n] = m[1];
 }
 // zeitlich festgelegte Einblendungen laut Drehbuch
