@@ -921,8 +921,8 @@ function SubtitleSVG(t) {
 }
 
 
-// SITS-Marke oben rechts: Logo in Originalgröße (nicht skaliert), darunter die Zeile; verschwindet mit der Schlusstafel
-// (dort steht das Logo mit derselben Zeile mittig unter dem Stadt-Herne-Text).
+// SITS-Marke oben rechts: Logo in Originalgröße (nicht skaliert), darunter die Zeile, beides mittig im Kasten; verschwindet
+// mit der Schlusstafel (dort steht das Logo mit derselben Zeile mittig unter dem Stadt-Herne-Text).
 const MARKE = { rechts: 1896, oben: 24, pad: 12, schrift: 15, lh: 18, maxB: 1000 };   // Zeile unter dem Logo einzeilig
 function markeBlock(x, y, o = {}) {           // Logo mit der Zeile darunter; x = rechte Kante (anchor end) bzw. Mitte (anchor middle)
   const mitte = o.anchor === 'middle';
@@ -943,7 +943,7 @@ function BrandSVG(t) {
   const op = 1 - ez(t, start - 0.4, start + 0.2);
   if (op < 0.01) return '';
   const r = markeRahmen();
-  const m = markeBlock(MARKE.rechts, MARKE.oben);
+  const m = markeBlock(r.x + r.w / 2, MARKE.oben, { anchor: 'middle' });   // Logo und Zeile mittig im Kasten
   return G({ opacity: N(op) }, Rect(r.x, r.y, r.w, r.h, '#FFFFFF', { rx: 12, opacity: 0.88 }) + m.g);
 }
 
@@ -1665,7 +1665,7 @@ const S1 = {
     const lineCol = C.zyan;
     let lines = '', badges = '', dots = '';
     this.syms.forEach(([key, t0], i) => {
-      const x = 855 + (i - 3) * 240, y = 118 + 34 * Math.pow((i - 3) / 3, 2);   // rechts frei für die Marke
+      const x = 765 + (i - 3) * 218, y = 118 + 34 * Math.pow((i - 3) / 3, 2);   // endet vor der Marke oben rechts (auch beim Aufspringen)
       const B = [x, y + 56];
       const p1 = [R[0] + (x - R[0]) * 0.15, R[1] - 70], p2 = [x, B[1] + 70];
       let len = 0, prev = R;

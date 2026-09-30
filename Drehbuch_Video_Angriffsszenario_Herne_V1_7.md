@@ -5,7 +5,7 @@ Stand 30.09.2026 · Fa. SITS (Berater) · Vertraulich – nur zur internen Verwe
 
 ## Änderungen gegenüber V1_6
 
-- **Branding:** Die Zeile unter dem SITS-Logo lautet „Ihr zuverlässiger Partner für IT- und Informationssicherheit“. Oben rechts steht sie in einer Zeile unter dem Logo; die Marke ist dafür breiter. Karten, die oben rechts an die Marke reichten, sind schmaler: In Szene 7 sind die Kacheln neu aufgeteilt (oben schmaler, unten rechts breiter), in Szene 9 stehen die Tafeln schmaler in der Mitte.
+- **Branding:** Die Zeile unter dem SITS-Logo lautet „Ihr zuverlässiger Partner für IT- und Informationssicherheit“. Oben rechts steht sie in einer Zeile unter dem Logo; die Marke ist dafür breiter, Logo und Zeile stehen mittig im Kasten. Bildteile, die oben rechts an die Marke reichten, rücken davon ab: In Szene 1 steht die Symbolreihe etwas enger und weiter links, in Szene 7 sind die Kacheln neu aufgeteilt (oben schmaler, unten rechts breiter), in Szene 9 stehen die Tafeln schmaler in der Mitte.
 
 ## Änderungen gegenüber V1_5
 
@@ -36,7 +36,7 @@ Gelten für Sprechertext, Untertitel und alle Einblendungen.
 
 ## Branding
 
-- **SITS oben rechts in allen Szenen** außer der Schlusstafel: Logo (`SITS_Logo.png`, freigestellt, höchstens in Originalgröße – etwa 150 px breit – nicht hochskalieren) und darunter in kleiner Schrift in einer Zeile „Ihr zuverlässiger Partner für IT- und Informationssicherheit“. Dezent, darf Titelkarte, Einblendungen und Untertitel nicht überdecken.
+- **SITS oben rechts in allen Szenen** außer der Schlusstafel: Logo (`SITS_Logo.png`, freigestellt, höchstens in Originalgröße – etwa 150 px breit – nicht hochskalieren) und darunter in kleiner Schrift in einer Zeile „Ihr zuverlässiger Partner für IT- und Informationssicherheit“, beides mittig im Kasten. Dezent, darf Titelkarte, Einblendungen (samt Symbolen und Karten) und Untertitel nicht überdecken.
 - **Schlusstafel:** zusätzlich zentriert unter dem Stadt-Herne-Text das SITS-Logo mit derselben Zeile.
 - Keine weiteren Logos; kein Wappen der Stadt.
 

@@ -83,6 +83,7 @@ Die Musik entsteht beim Export automatisch neu, sobald sich Zeitplan oder Kompos
   zum Schluss. Unter der Stimme etwa 19 LU leiser als die Sprache, in den Pausen zwischen den Szenen hörbar.
 - **Ortsname:** Die Stimme sagt „die Stadt“ statt „Herne“; im Bild und in den Untertiteln steht der Name.
 - **Marke:** SITS-Logo (Data-URI, Originalgröße) oben rechts in allen Szenen außer der Schlusstafel, darunter einzeilig „Ihr zuverlässiger
-  Partner für IT- und Informationssicherheit“; auf der Schlusstafel mittig unter dem Stadt-Herne-Text.
+  Partner für IT- und Informationssicherheit“, beides mittig im Kasten; auf der Schlusstafel mittig unter dem Stadt-Herne-Text. Die Prüfung
+  meldet, wenn die Marke Texte, Symbole oder Karten einer Einblendung überdeckt.
 - **Untertitel auf Titelkarte und Schlusstafel** stehen etwas höher, damit sie den Vertraulich-Vermerk unten links nicht berühren.
 - **Schrift:** Arial. Wo Arial fehlt, wird die maßgleiche Ersatzschrift verwendet, die Zeilenumbrüche bleiben gleich.

@@ -288,9 +288,24 @@ const visibleTexts = new Map();   // Schlüssel → { text, von, bis, quelle }
         const brand = document.querySelector('#stage svg.brand');
         const img = brand && brand.querySelector('image');
         const marke = img ? { op: opOf(img), rahmen: markeRahmen() } : null;
+        // Einblendung samt Karte oder Plakette: nächste Gruppe über dem Text mit weißen Flächen (Rechteck oder Kreis) als direkten
+        // Kindern, höchstens 1000 × 700 px; jede dieser Flächen zählt einzeln – so gelten auch Symbolkreis, Beschriftungsfeld und
+        // Karte als Teil der Einblendung, nicht nur die Schrift
+        const einheitVon = e => {
+          for (let n = e.parentElement; n && n.id !== 'stage' && n.tagName.toLowerCase() !== 'svg'; n = n.parentElement) {
+            if (n.tagName.toLowerCase() !== 'g') continue;
+            const platten = [...n.querySelectorAll(':scope > rect, :scope > circle')].filter(p => (p.getAttribute('fill') || '').toUpperCase() === '#FFFFFF');
+            if (!platten.length) continue;
+            const r = n.getBoundingClientRect();
+            return r.width <= 1000 && r.height <= 700 ? platten.map(p => { const q = p.getBoundingClientRect(); return [q.x, q.y, q.width, q.height]; }) : null;
+          }
+          return null;
+        };
+        const markeSichtbar = marke && marke.op > 0.05;
         const els = [...document.querySelectorAll('#stage text')].map(e => {
-          const r = e.getBoundingClientRect();
-          return { k: e.dataset.k || null, i: +(e.dataset.i || 0), text: e.textContent, op: opOf(e), marke: !!e.closest('svg.brand'), box: [r.x, r.y, r.width, r.height] };
+          const r = e.getBoundingClientRect(), k = e.dataset.k || null, op = opOf(e), inMarke = !!e.closest('svg.brand');
+          const einheit = markeSichtbar && k && k !== 'sub' && !inMarke && op > 0.05 && !(k in TEXTE_AUSNAHMEN) ? einheitVon(e) : null;
+          return { k, i: +(e.dataset.i || 0), text: e.textContent, op, marke: inMarke, box: [r.x, r.y, r.width, r.height], einheit };
         });
         const rahmen = [...document.querySelectorAll('#stage rect[data-rahmen]')].map(e => { const r = e.getBoundingClientRect(); return { k: e.dataset.rahmen, op: opOf(e), box: [r.x, r.y, r.width, r.height] }; });
         return { els, marke, rahmen };
@@ -299,13 +314,12 @@ const visibleTexts = new Map();   // Schlüssel → { text, von, bis, quelle }
       // Marke oben rechts darf Titelkarte, Einblendungen und Untertitel nicht überdecken
       if (marke && marke.op > 0.05) {
         const m = marke.rahmen;
+        const trifft = ([x, y, w, h]) => x < m.x + m.w && x + w > m.x && y < m.y + m.h && y + h > m.y;
         for (const e of els) {
           if (e.marke || e.op <= 0.05 || !e.k) continue;
-          const [x, y, w, h] = e.box;
-          if (x < m.x + m.w && x + w > m.x && y < m.y + m.h && y + h > m.y) {
-            const bild = e.k in V.TEXTE_AUSNAHMEN;
-            ueberdeckt.set(e.k + (bild ? ':bild' : ''), { k: e.k, text: e.text, t: tt, bild });
-          }
+          const bild = e.k in V.TEXTE_AUSNAHMEN;
+          if (trifft(e.box)) ueberdeckt.set(e.k + (bild ? ':bild' : ''), { k: e.k, text: e.text, t: tt, bild });
+          else if (e.einheit && e.einheit.some(trifft)) ueberdeckt.set(e.k + ':einheit', { k: e.k, text: e.text, t: tt, bild: false, einheit: true });
         }
       }
       // Untertitelband und Vertraulich-Vermerk: mindestens 8 px Abstand (gemessen an den Rahmen im Bild)
@@ -340,8 +354,8 @@ const visibleTexts = new Map();   // Schlüssel → { text, von, bis, quelle }
     else FEHLER(B, `Einblendung „${tm.key}“: Sichtbarkeit weicht von ${fmt(tm.from)}–${fmt(tm.to)} ab`);
   }
   // Marke: Überdeckung
-  for (const u of ueberdeckt.values()) (u.bild ? WARN : FEHLER)('Marke', `Marke oben rechts überdeckt ${u.bild ? 'den Bildtext' : 'die Einblendung'} „${u.text}“ (${u.k}) bei ${fmt(u.t)}`);
-  if (!ueberdeckt.size) OK('Marke', `Marke oben rechts überdeckt an keinem der ${samples} Zeitpunkte eine Titelkarte, Einblendung oder einen Untertitel`);
+  for (const u of ueberdeckt.values()) (u.bild ? WARN : FEHLER)('Marke', `Marke oben rechts überdeckt ${u.bild ? 'den Bildtext' : u.einheit ? 'Karte oder Symbol der Einblendung' : 'die Einblendung'} „${u.text}“ (${u.k}) bei ${fmt(u.t)}`);
+  if (!ueberdeckt.size) OK('Marke', `Marke oben rechts überdeckt an keinem der ${samples} Zeitpunkte eine Titelkarte, Einblendung (samt Karte oder Symbol) oder einen Untertitel`);
   for (const [text, t] of vermerkUeberdeckt) FEHLER('Untertitel', `Untertitel „${text.slice(0, 40)}…“ berührt bei ${fmt(t)} den Vertraulich-Vermerk`);
   if (!vermerkUeberdeckt.size) OK('Untertitel', `Untertitel und Vertraulich-Vermerk (Titelkarte, Schlusstafel) berühren sich an keinem der ${samples} Zeitpunkte`);
   // „Woche 5“ darf nicht mehr vorkommen (V1.2: Kalenderblätter nur bis Woche 4)
@@ -599,7 +613,7 @@ const visibleTexts = new Map();   // Schlüssel → { text, von, bis, quelle }
   const logoOK = bilder.every(b => b.href.startsWith('data:image/png;base64') && b.w === V.LOGO.w && b.h === V.LOGO.h);
   (logoOK && !extern.length ? OK : FEHLER)(B, `Logo als Data-URI eingebettet, einzige Bilddatei, Originalgröße ${V.LOGO.w} × ${V.LOGO.h} px (nicht hochskaliert)${extern.length ? '; externe Bilder: ' + extern.join(', ') : ''}`);
   // sichtbar in allen Szenen außer der Schlusstafel; auf der Schlusstafel mittig unter dem Stadt-Herne-Text
-  const fehlt = [], mehrzeilig = [];
+  const fehlt = [], mehrzeilig = [], schief = [];
   for (const sc of V.SCENES) {
     if (!inScope(sc.n)) continue;
     const t = Math.round((sc.start + Math.min(3, (sc.end - sc.start) / 2)) * V.FPS) / V.FPS;
@@ -610,15 +624,23 @@ const visibleTexts = new Map();   // Schlüssel → { text, von, bis, quelle }
       // Zeile unter dem Logo: Anzahl der Textzeilen und ihre Ausdehnung (muss ganz im Bild liegen)
       const z = [...document.querySelectorAll('#stage svg.brand text[data-k="marke_zeile"]')];
       const zb = z.map(t => t.getBoundingClientRect());
-      return { op, w: b.width, h: b.height, x: b.x, y: b.y, zeilen: z.map(t => t.textContent), links: Math.min(...zb.map(q => q.x)), rechts: Math.max(...zb.map(q => q.x + q.width)) };
+      // Kasten der Marke (weiße Fläche) und die Mitten von Kasten, Logo und Zeile
+      const k = document.querySelector('#stage svg.brand rect').getBoundingClientRect();
+      return { op, w: b.width, h: b.height, x: b.x, y: b.y, zeilen: z.map(t => t.textContent), links: Math.min(...zb.map(q => q.x)), rechts: Math.max(...zb.map(q => q.x + q.width)),
+        mitteKasten: k.x + k.width / 2, mitteLogo: b.x + b.width / 2, mitteZeile: zb.length ? (Math.min(...zb.map(q => q.x)) + Math.max(...zb.map(q => q.x + q.width))) / 2 : null };
     });
     if (!r || r.op < 0.9 || Math.abs(r.w - V.LOGO.w) > 0.5 || r.x + r.w < 1700 || r.y > 60) fehlt.push(sc.n);
-    else if (r.zeilen.length !== 1 || r.zeilen[0] !== V.TEXTE.marke_zeile || r.links < 0 || r.rechts > V.W) mehrzeilig.push(`${sc.n} (${r.zeilen.length} Zeilen: „${r.zeilen.join(' / ')}“)`);
+    else {
+      if (r.zeilen.length !== 1 || r.zeilen[0] !== V.TEXTE.marke_zeile || r.links < 0 || r.rechts > V.W) mehrzeilig.push(`${sc.n} (${r.zeilen.length} Zeilen: „${r.zeilen.join(' / ')}“)`);
+      if (Math.abs(r.mitteLogo - r.mitteKasten) > 1 || r.mitteZeile === null || Math.abs(r.mitteZeile - r.mitteKasten) > 1.5) schief.push(`${sc.n} (Kasten ${r.mitteKasten.toFixed(1)}, Logo ${r.mitteLogo.toFixed(1)}, Zeile ${r.mitteZeile === null ? '–' : r.mitteZeile.toFixed(1)})`);
+    }
   }
   if (fehlt.length) FEHLER(B, `Logo oben rechts fehlt oder ist verändert in Szene ${fehlt.join(', ')}`);
   else OK(B, `Logo oben rechts in Originalgröße mit der Zeile „${V.TEXTE.marke_zeile}“ sichtbar${SCOPE ? ' (geprüfte Szenen)' : ' in allen Szenen'}`);
   if (mehrzeilig.length) FEHLER(B, `Zeile unter dem Logo oben rechts nicht einzeilig oder nicht wortgleich in Szene ${mehrzeilig.join('; ')}`);
   else if (!fehlt.length) OK(B, `Zeile unter dem Logo oben rechts einzeilig, wortgleich und ganz im Bild${SCOPE ? ' (geprüfte Szenen)' : ' in allen Szenen'}`);
+  if (schief.length) FEHLER(B, `Logo und Zeile oben rechts nicht mittig im Kasten in Szene ${schief.join('; ')}`);
+  else if (!fehlt.length) OK(B, `Logo und Zeile oben rechts mittig im Kasten${SCOPE ? ' (geprüfte Szenen)' : ' in allen Szenen'}`);
   if (inScope(V.SCENES[V.SCENES.length - 1].n)) {
     await renderAt(page, V.TOTAL - 1);
     const e = await page.evaluate(() => {
