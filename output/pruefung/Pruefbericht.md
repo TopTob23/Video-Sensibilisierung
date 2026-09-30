@@ -2,7 +2,7 @@
 
 Drehbuch: Drehbuch_Video_Angriffsszenario_Herne_V1_4.md · Video: Ein_ganz_normaler_Montag_V1_0.html · Umfang: alle Szenen
 
-**Ergebnis:** 0 Fehler · 6 Warnungen · 46 bestandene Prüfungen · 21 Hinweise
+**Ergebnis:** 0 Fehler · 6 Warnungen · 52 bestandene Prüfungen · 19 Hinweise
 
 ## Szenen und Zeiten
 
@@ -81,12 +81,12 @@ Drehbuch: Drehbuch_Video_Angriffsszenario_Herne_V1_4.md · Video: Ein_ganz_norma
 ## Verbotsliste
 
 - ✅ Sichtbare Texte und Untertitel: keine Produkt-/Herstellernamen, Versionen, IP-Adressen, Ports, Befehle oder URLs
-- ℹ️ SRT noch nicht erzeugt – wird beim Export mitgeprüft
+- ✅ SRT (Ein_ganz_normaler_Montag_V1_0.srt): keine Treffer
 - ✅ Sprechtexte für die Sprachausgabe (29 Dateien): keine Treffer
 - ✅ Ortsname kommt in keinem Text für die Sprachausgabe vor (Vorgabe des Auftraggebers)
 - ℹ️ Code, eingeordnet: Schriftangabe laut Auftrag (Arial bzw. maßgleiche Ersatzschrift) – Arial [Ein_ganz_normaler_Montag_V1_0.html], Liberation Sans [Ein_ganz_normaler_Montag_V1_0.html], Helvetica [Ein_ganz_normaler_Montag_V1_0.html], Arial [export/check.mjs]
 - ℹ️ Code, eingeordnet: SVG-Namensraum (technisch notwendig, nicht im Bild) – http://www.w3.org/2000/svg [Ein_ganz_normaler_Montag_V1_0.html]
-- ℹ️ Code, eingeordnet: Export-Werkzeug laut Auftrag (Node, Playwright, ffmpeg/H.264), nur in Skripten – ffmpeg [export/audio.mjs], node [export/audio.mjs], chromium [export/check.mjs], ffmpeg [export/check.mjs], ffprobe [export/check.mjs], node [export/check.mjs], node [export/embed-logo.mjs], Playwright [export/lib.mjs], playwright [export/lib.mjs], npm [export/lib.mjs], chromium [export/render.mjs], ffmpeg [export/render.mjs], libx264 [export/render.mjs], x264 [export/render.mjs], H.264 [export/render.mjs], node [export/render.mjs], chromium [export/stills.mjs], node [export/stills.mjs], node [export/sync.mjs], ffmpeg [export/timeline.mjs], ffprobe [export/timeline.mjs], node [export/tts-text.mjs], ffprobe [export/tts.mjs], node [export/tts.mjs], Node [export/tts.mjs], playwright [package.json], node [package.json]
+- ℹ️ Code, eingeordnet: Export-Werkzeug laut Auftrag (Node, Playwright, ffmpeg/H.264), nur in Skripten – ffmpeg [export/audio.mjs], node [export/audio.mjs], chromium [export/check.mjs], ffmpeg [export/check.mjs], ffprobe [export/check.mjs], node [export/check.mjs], node [export/embed-logo.mjs], Playwright [export/lib.mjs], playwright [export/lib.mjs], npm [export/lib.mjs], chromium [export/render.mjs], ffmpeg [export/render.mjs], ffprobe [export/render.mjs], libx264 [export/render.mjs], x264 [export/render.mjs], H.264 [export/render.mjs], node [export/render.mjs], chromium [export/stills.mjs], node [export/stills.mjs], node [export/sync.mjs], ffmpeg [export/timeline.mjs], ffprobe [export/timeline.mjs], node [export/tts-text.mjs], ffprobe [export/tts.mjs], node [export/tts.mjs], Node [export/tts.mjs], playwright [package.json], node [package.json]
 - ℹ️ Code, eingeordnet: Schnittstelle der Sprachausgabe (nur im Skript, nicht im Bild) – https://api.elevenlabs.io/v1/text-to-speech/${t.stimme.id}/with-timestamps?output_format=mp3_44100_128`; [export/tts.mjs]
 - ℹ️ Code, eingeordnet: Paketversion in package.json (Build-Werkzeug, nicht im Video) – 1.0.0 [package.json], 1.56.1 [package.json]
 - ✅ Code (14 Dateien): keine Produktnamen, Versionen, IP-Muster, Ports oder Befehle außer erklärten Stellen
@@ -98,7 +98,11 @@ Drehbuch: Drehbuch_Video_Angriffsszenario_Herne_V1_4.md · Video: Ein_ganz_norma
 ## Dauer und Dateien
 
 - ℹ️ Szene 0 0:00.0–0:12.0 (12.00 s) · Szene 1 0:12.0–0:32.0 (20.00 s) · Szene 2 0:32.0–0:56.0 (24.00 s) · Szene 3 0:56.0–1:28.0 (32.00 s) · Szene 4 1:28.0–1:52.0 (24.00 s) · Szene 5 1:52.0–2:18.0 (26.00 s) · Szene 6 2:18.0–2:50.0 (32.00 s) · Szene 7 2:50.0–3:44.0 (54.00 s) · Szene 8 3:44.0–4:28.0 (44.00 s) · Szene 9 4:28.0–5:15.0 (47.03 s) · Szene 10 5:15.0–6:00.0 (45.00 s) · Szene 11 6:00.0–6:30.0 (30.00 s) · Szene 12 6:30.0–7:36.0 (66.00 s)
-- ℹ️ MP4 noch nicht exportiert
+- ✅ SRT: 75 Einträge, Text und Zeiten identisch mit den eingebrannten Untertiteln
+- ✅ MP4 Bild: h264 High, 1920×1080, yuv420p, 30/1 fps, 13681 Bilder (Soll 13681), 456.033 s, 75.6 MB
+- ✅ MP4 Ton: aac, 48000 Hz, 2 Kanäle, 192 kbit/s während der Sprache (Soll 192), 138 kbit/s im Mittel über das ganze Video wegen der Pausen
+- ✅ Länge Ton 456.033 s, Länge Bild 456.033 s (Abweichung -0.000 s)
+- ✅ Lautheit -16.1 LUFS integriert (Soll −16), True Peak -1.4 dBTP (Soll ≤ −1)
 
 ## Ton
 

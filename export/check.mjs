@@ -421,8 +421,16 @@ const visibleTexts = new Map();   // Schlüssel → { text, von, bis, quelle }
     if (!a) FEHLER(B, 'MP4 ohne Tonspur');
     else {
       const kbit = Math.round(+a.bit_rate / 1000), vd = +v.nb_read_frames / 30, ad = +a.duration;
-      const okA = a.codec_name === 'aac' && +a.sample_rate === 48000 && +a.channels === 2 && kbit >= 170 && kbit <= 200;
-      (okA ? OK : FEHLER)(B, `MP4 Ton: ${a.codec_name}, ${a.sample_rate} Hz, ${a.channels} Kanäle, ${kbit} kbit/s (Soll AAC 192 kbit/s)`);
+      // Bitrate während der Sprache (in Pausen braucht AAC kaum Daten, der Mittelwert liegt deshalb niedriger)
+      let kbitSprache = null;
+      if (TL) {
+        const sp = TL.szenen.flatMap(S => S.saetze.map(x => [S.start + x.beginn, S.start + x.ende]));
+        const pk = execFileSync('ffprobe', ['-v', 'error', '-select_streams', 'a:0', '-show_entries', 'packet=pts_time,size', '-of', 'csv=p=0', MP4], { maxBuffer: 1 << 26 }).toString().split('\n').map(l => l.split(',').filter(Boolean).map(Number)).filter(f => f.length === 2);
+        let bytes = 0; for (const [t, sz] of pk) if (sp.some(([x, y]) => t >= x && t < y)) bytes += sz;
+        kbitSprache = Math.round(bytes * 8 / sp.reduce((q, [x, y]) => q + y - x, 0) / 1000);
+      }
+      const okA = a.codec_name === 'aac' && +a.sample_rate === 48000 && +a.channels === 2 && (kbitSprache ?? kbit) >= 180 && (kbitSprache ?? kbit) <= 200;
+      (okA ? OK : FEHLER)(B, `MP4 Ton: ${a.codec_name}, ${a.sample_rate} Hz, ${a.channels} Kanäle, ${kbitSprache !== null ? `${kbitSprache} kbit/s während der Sprache (Soll 192), ${kbit} kbit/s im Mittel über das ganze Video wegen der Pausen` : `${kbit} kbit/s (Soll 192)`}`);
       (Math.abs(ad - vd) <= 0.05 ? OK : FEHLER)(B, `Länge Ton ${ad.toFixed(3)} s, Länge Bild ${vd.toFixed(3)} s (Abweichung ${(ad - vd).toFixed(3)} s)`);
       const r = spawnSync('ffmpeg', ['-hide_banner', '-nostats', '-i', MP4, '-map', '0:a', '-af', 'ebur128=peak=true', '-f', 'null', '-'], { encoding: 'utf8', maxBuffer: 1 << 28 });
       const z = (r.stderr || '').slice((r.stderr || '').lastIndexOf('Summary:'));
