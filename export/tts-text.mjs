@@ -138,7 +138,7 @@ export function ersetzungenMarkdown(liste, db) {
   md += '| Ortsname | „Stadt Herne“ → „Stadt“, „in Herne“ → „in der Stadt“ (die Stimme nennt den Ortsnamen nicht; Bild und Untertitel zeigen ihn) |\n';
   md += '| NIS-2 | Nis-zwei |\n| BSI | B-S-I |\n| NRW | N-R-W |\n| EU | E-U |\n| KI | K-I |\n| ISMS | I-S-M-S |\n| IT | I-T |\n| Dezimalzahl | Ganzzahl als Wort, „Komma“, Ziffern einzeln (2,5 → zwei Komma fünf) |\n| Zahl | ausgeschrieben (2025 → zweitausendfünfundzwanzig) |\n';
   md += '\nEine Sicherung bricht ab, wenn im Sprachtext noch eine Ziffer oder ein Buchstabenkürzel steht, das keine Regel abdeckt.\n';
-  md += '\n## Nicht ersetzt\n\n- „7:30 Uhr“ steht nur als Einblendung (Szene 6), nicht im Sprechertext.\n- „E-Mail“, „Sicherheitsupdates“, „Grundschutz-Checks“, „Audit“ und „Budget“ bleiben unverändert; sie werden beim Hörtest geprüft.\n';
+  md += '\n## Nicht ersetzt\n\n- „7:30 Uhr“ steht nur als Einblendung (Szene 6), nicht im Sprechertext.\n- „E-Mail“, „Sicherheitsupdates“, „Grundschutz-Checks“, „Audit“ und „Budget“ bleiben unverändert; sie werden beim Hörtest geprüft.\n- „neam“ (Szene 9, Firmenname der Kollegen, die die Schulung halten) bleibt unverändert; die Aussprache wird beim Hörtest geprüft.\n';
   return md;
 }
 

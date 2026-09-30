@@ -3,6 +3,10 @@
 Erklärvideo für die Verwaltungsführung der Stadt Herne · Motion Graphics · ca. 7:34 Minuten · 16:9
 Stand 30.09.2026 · Fa. SITS (Berater) · Vertraulich – nur zur internen Verwendung
 
+## Änderungen gegenüber V1_7
+
+- **Szene 9, Sprechertext:** Beim Punkt „schulen“ folgt ein kurzer Einschub zur Schulung im heutigen Termin durch die Kollegen von neam; danach geht es mit dem nächsten Punkt weiter (Risiken kennen und verantworten, mit Unterschrift unter die ISMS-Dokumente). Nur Szene 9 wird neu gesprochen. Im Bild bleibt „schulen“ während des Einschubs hervorgehoben, „Risiken verantworten“ wird erst beim nächsten Punkt aktiv.
+
 ## Änderungen gegenüber V1_6
 
 - **Branding:** Die Zeile unter dem SITS-Logo lautet „Ihr zuverlässiger Partner für IT- und Informationssicherheit“. Oben rechts steht sie in einer Zeile unter dem Logo; die Marke ist dafür breiter, Logo und Zeile stehen mittig im Kasten. Bildteile, die oben rechts an die Marke reichten, rücken davon ab: In Szene 1 steht die Symbolreihe etwas enger und weiter links, in Szene 7 sind die Kacheln neu aufgeteilt (oben schmaler, unten rechts breiter), in Szene 9 stehen die Tafeln schmaler in der Mitte.
@@ -118,7 +122,7 @@ Vier Kacheln bauen sich nacheinander auf, jede mit eigener Mini-Animation; die B
 ### Szene 9 – Verantwortung der Leitung (4:28–5:13)
 
 - **Bild:** Besprechungsraum der Verwaltungsspitze. Drei Tafeln erscheinen nacheinander: „IT-Grundschutz: Gesamtverantwortung der Leitung“ – „NIS-2 / BSI-Gesetz: Informationssicherheit als Leitungsaufgabe“ – „InfoSiG NRW: NIS-2 für die Landesverwaltung“. Dann vier Symbole zu „prüfen und billigen, überwachen, schulen, Risiken verantworten“: ein Dokument mit Freigabevermerk, ein Übersichtsbildschirm, eine Schulungssituation, ein Dokument mit Unterschrift.
-- **Sprechertext:** „Informationssicherheit ist eine Aufgabe der Verwaltungsleitung. Im IT-Grundschutz ist die Übernahme der Gesamtverantwortung durch die Leitung eine Basis-Anforderung, die im Überwachungsaudit vollständig geprüft wird. Die NIS-2-Richtlinie der EU schreibt dieselbe Verantwortung gesetzlich fest: seit Dezember 2025 im BSI-Gesetz, seit Januar 2026 im Informationssicherheitsgesetz NRW für die Landesverwaltung. Für Kommunen gelten beide nicht unmittelbar. Sie zeigen aber, was von einer Verwaltungsleitung erwartet wird: Maßnahmen prüfen und billigen, ihre Umsetzung überwachen, sich regelmäßig schulen lassen und die Risiken kennen und verantworten – mit ihrer Unterschrift unter die ISMS-Dokumente.“
+- **Sprechertext:** „Informationssicherheit ist eine Aufgabe der Verwaltungsleitung. Im IT-Grundschutz ist die Übernahme der Gesamtverantwortung durch die Leitung eine Basis-Anforderung, die im Überwachungsaudit vollständig geprüft wird. Die NIS-2-Richtlinie der EU schreibt dieselbe Verantwortung gesetzlich fest: seit Dezember 2025 im BSI-Gesetz, seit Januar 2026 im Informationssicherheitsgesetz NRW für die Landesverwaltung. Für Kommunen gelten beide nicht unmittelbar. Sie zeigen aber, was von einer Verwaltungsleitung erwartet wird: Maßnahmen prüfen und billigen, ihre Umsetzung überwachen, sich regelmäßig schulen lassen. Dafür wird im heutigen Termin ja bereits der erste Stein gesetzt. Freuen Sie sich auf eine spannende Schulung durch die werten Kollegen von neam. Weiter zum nächsten Punkt: die Risiken kennen und verantworten – mit ihrer Unterschrift unter die ISMS-Dokumente.“
 
 ### Szene 10 – Was es braucht (5:13–5:58)
 

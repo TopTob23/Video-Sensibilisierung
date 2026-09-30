@@ -3,13 +3,14 @@
 Vertraulich – nur zur internen Verwendung.
 
 Erklärvideo für die Verwaltungsführung der Stadt Herne, 1920 × 1080, 30 fps, mit Sprachausgabe, Hintergrundmusik und eingebrannten Untertiteln.
-Grundlage ist das Drehbuch `Drehbuch_Video_Angriffsszenario_Herne_V1_7.md` (13 Szenen, Richtwert ca. 7:34, mit Sprachausgabe). Die Stilreferenz
+Grundlage ist das Drehbuch `Drehbuch_Video_Angriffsszenario_Herne_V1_8.md` (13 Szenen, Richtwert ca. 7:34, mit Sprachausgabe). Die Stilreferenz
 `referenz/Stilreferenz_Herne_Flat_Vector.png` dient nur als Vorlage und ist nicht Teil des Videos.
 
-> **Stand:** Fertig nach Drehbuch V1_7: Begrüßung statt Stille am Anfang, Übergang in Szene 1, Schlusssatz; durchgehender
+> **Stand:** Fertig nach Drehbuch V1_8: Begrüßung statt Stille am Anfang, Übergang in Szene 1, Schlusssatz; durchgehender
 > Sprechfluss; Pausen zwischen den Szenen 1,5–4,4 s; Hintergrundmusik (eigene Komposition). Szene 9 nennt vier Erwartungen an die
 > Verwaltungsleitung (prüfen und billigen, überwachen, schulen, Risiken verantworten – mit Unterschrift unter die ISMS-Dokumente),
-> Szene 12 zeigt unter „Vorbereitet“, wer als Nächstes was tut, bei Umsetzungsleitfäden und Härtungslisten auch ihren Zweck. 13 Szenen, 6:32 (Drehbuchzeiten sind Richtwerte), Ton AAC
+> beim Punkt „schulen“ mit einem kurzen Einschub zur Schulung im heutigen Termin;
+> Szene 12 zeigt unter „Vorbereitet“, wer als Nächstes was tut, bei Umsetzungsleitfäden und Härtungslisten auch ihren Zweck. 13 Szenen, 6:44 (Drehbuchzeiten sind Richtwerte), Ton AAC
 > 192 kbit/s, −16 LUFS, True Peak ≤ −1 dBTP. Erzähler „Alexander“, Pressefragen „Carla Blum“ und „Dan“ im Wechsel.
 
 ## Dateien
@@ -48,7 +49,7 @@ Die HTML-Datei im Browser öffnen. Bedienung:
 Voraussetzungen: Node.js ab Version 18, `npm install`, `npx playwright install chromium`, ffmpeg im Suchpfad und Python 3 mit numpy und scipy (Musik).
 
 ```bash
-npm run check                 # Prüfung gegen das neueste Drehbuch im Projektordner (derzeit V1_7)
+npm run check                 # Prüfung gegen das neueste Drehbuch im Projektordner (derzeit V1_8)
 npm run check -- --stills     # zusätzlich Standbilder bei 25/50/75 % je Szene und Kontaktbogen
 npm run export                # MP4 und SRT nach output/
 npm run tts:text              # Sprachtexte und Ersetzungsliste nach audio/tts/

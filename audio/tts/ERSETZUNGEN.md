@@ -1,6 +1,6 @@
 # Aussprache: Ersetzungen im Sprachtext
 
-Grundlage: Drehbuch_Video_Angriffsszenario_Herne_V1_6.md. Die Untertitel bleiben wortgleich mit dem Drehbuch, nur der Text für die Stimme wird angepasst.
+Grundlage: Drehbuch_Video_Angriffsszenario_Herne_V1_8.md. Die Untertitel bleiben wortgleich mit dem Drehbuch, nur der Text für die Stimme wird angepasst.
 
 ## Angewendete Ersetzungen
 
@@ -47,3 +47,4 @@ Eine Sicherung bricht ab, wenn im Sprachtext noch eine Ziffer oder ein Buchstabe
 
 - „7:30 Uhr“ steht nur als Einblendung (Szene 6), nicht im Sprechertext.
 - „E-Mail“, „Sicherheitsupdates“, „Grundschutz-Checks“, „Audit“ und „Budget“ bleiben unverändert; sie werden beim Hörtest geprüft.
+- „neam“ (Szene 9, Firmenname der Kollegen, die die Schulung halten) bleibt unverändert; die Aussprache wird beim Hörtest geprüft.

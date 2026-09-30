@@ -1,4 +1,4 @@
-// Prüfung des Videos gegen das Drehbuch (Standard: die neueste Drehbuch-Datei im Projektordner, derzeit V1_7).
+// Prüfung des Videos gegen das Drehbuch (Standard: die neueste Drehbuch-Datei im Projektordner, derzeit V1_8).
 //
 // Aufruf:
 //   node export/check.mjs                      → Gesamtprüfung aller Szenen
