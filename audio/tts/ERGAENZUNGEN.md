@@ -1,6 +1,6 @@
 # Ergänzungen zum Sprechertext
 
-Auf Wunsch des Auftraggebers (Rückmeldung zum fertigen Video) spricht die Stimme zusätzlich zum Drehbuch (Drehbuch_Video_Angriffsszenario_Herne_V1_5.md) diese Sätze. Sie erscheinen auch in den Untertiteln. Der Drehbuchtext bleibt wortgleich; check.mjs lässt nur diese Ergänzungen an dieser Stelle zu.
+Auf Wunsch des Auftraggebers (Rückmeldung zum fertigen Video) spricht die Stimme zusätzlich zum Drehbuch (Drehbuch_Video_Angriffsszenario_Herne_V1_6.md) diese Sätze. Sie erscheinen auch in den Untertiteln. Der Drehbuchtext bleibt wortgleich; check.mjs lässt nur diese Ergänzungen an dieser Stelle zu.
 
 | Szene | Stelle | Text | Grund | Grundlage im Drehbuch |
 |---|---|---|---|---|

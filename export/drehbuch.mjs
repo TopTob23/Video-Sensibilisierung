@@ -39,13 +39,19 @@ export function einblendungen(db) {
   const szene = n => db.scenes.find(s => s.n === n).text;
   const zitate = t => [...t.matchAll(/„([^“]*)“/g)].map(m => m[1]);
   const feld = (t, label) => { const m = t.match(new RegExp(`\\*\\*${label}[^\\n]*?:\\*\\*\\s*([^\\n]*)`)); return m ? m[1] : null; };
-  const liste = (t, label) => {                                  // Aufzählung unter „- **Spalte „X“:**“ (Unterpunkte mit „  - “)
+  const liste = (t, label, mitUnter = false) => {               // Aufzählung unter „- **Spalte „X“:**“ (Punkte mit „  - “)
     const i = t.indexOf(`**${label}:**`);
     if (i < 0) return null;
     const rest = t.slice(i).split('\n').slice(1);
     const out = [];
-    for (const l of rest) { const m = l.match(/^\s{2,}- (.*)$/); if (!m) break; out.push(m[1].trim()); }
-    return out;
+    for (const l of rest) {
+      const u = l.match(/^\s{4,}- (.*)$/);                         // Unterpunkt („    - Zweck: …“) gehört zum Punkt davor
+      if (u && out.length) { out[out.length - 1].unter.push(u[1].trim()); continue; }
+      const m = l.match(/^\s{2,3}- (.*)$/);
+      if (!m) break;
+      out.push({ text: m[1].trim(), unter: [] });
+    }
+    return mitUnter ? out : out.map(p => p.text);
   };
   const s8 = szene(8), s9 = szene(9), s10 = szene(10), s11 = szene(11), s12 = szene(12);
   const e = {};
@@ -57,7 +63,8 @@ export function einblendungen(db) {
   e.warnmarken = [...s11.matchAll(/^\s+(\d+)\. (.*)$/gm)].map(m => m[2].trim());
   e.spalten = {
     erreicht: { titel: 'Erreicht', punkte: liste(s12, 'Spalte „Erreicht“') },
-    vorbereitet: { titel: 'Vorbereitet', punkte: liste(s12, 'Spalte „Vorbereitet“').map(p => p.split(' → ')[0]), rollen: liste(s12, 'Spalte „Vorbereitet“').map(p => p.split(' → ')[1] || null) },
+    vorbereitet: { titel: 'Vorbereitet', punkte: liste(s12, 'Spalte „Vorbereitet“').map(p => p.split(' → ')[0]), rollen: liste(s12, 'Spalte „Vorbereitet“').map(p => p.split(' → ').slice(1)),   // je Punkt die Schritte in Reihenfolge
+      zwecke: liste(s12, 'Spalte „Vorbereitet“', true).map(p => p.unter.find(u => u.startsWith('Zweck: ')) || null) },
     offen: { titel: 'Offen – nächste Schritte', punkte: liste(s12, 'Spalte „Offen – nächste Schritte“') },
   };
   e.offeneAnforderungen = zitate(feld(s12, 'Einblendung darunter \\(klein\\)'))[0];

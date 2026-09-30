@@ -3,6 +3,11 @@
 Erklärvideo für die Verwaltungsführung der Stadt Herne · Motion Graphics · ca. 7:34 Minuten · 16:9
 Stand 30.09.2026 · Fa. SITS (Berater) · Vertraulich – nur zur internen Verwendung
 
+## Änderungen gegenüber V1_5
+
+- **Szene 12, Spalte „Vorbereitet“:** Bei Umsetzungsleitfäden und Härtungslisten steht zusätzlich klein, welchem Zweck sie dienen (nur im Bild, nicht gesprochen); als nächster Schritt steht dort „IT-Betrieb: prüfen, beschließen, umsetzen“. Die Entscheidungsvorlage prüft zuerst der Fachbereich, bevor sie der Verwaltungsleitung vorgelegt wird; die Verwaltungsleitung prüft und billigt, um Risiken bewusst zu akzeptieren.
+- **Szene 12, Spalte „Offen“ und Sprechertext:** „Budget- und Ressourcenplanung für die Umsetzung“ statt „Budget und Personal für die Umsetzung“.
+
 ## Änderungen gegenüber V1_4
 
 - **Szene 9:** Von der Verwaltungsleitung wird erwartet, Maßnahmen zu prüfen und zu billigen, ihre Umsetzung zu überwachen, sich regelmäßig schulen zu lassen und die Risiken zu kennen und zu verantworten – mit ihrer Unterschrift unter die ISMS-Dokumente. Vier statt drei Symbole.
@@ -141,28 +146,30 @@ Vier Kacheln bauen sich nacheinander auf, jede mit eigener Mini-Animation; die B
 
 ### Szene 12 – Wo wir stehen (6:28–7:34)
 
-- **Bild:** Ruhige, helle Übersicht in drei Spalten, die nacheinander aufgebaut werden. Sachliche Symbole (Dokumente, Häkchen, Werkzeugkasten, Waage, Kalender), kein Rot außer bei den offenen Punkten. In der Spalte „Vorbereitet“ steht unter jedem Punkt klein, wer als Nächstes was tut. Zum Schluss hebt sich die dritte Spalte hervor.
+- **Bild:** Ruhige, helle Übersicht in drei Spalten, die nacheinander aufgebaut werden. Sachliche Symbole (Dokumente, Häkchen, Werkzeugkasten, Waage, Kalender), kein Rot außer bei den offenen Punkten. In der Spalte „Vorbereitet“ steht unter jedem Punkt klein, wer als Nächstes was tut, bei Umsetzungsleitfäden und Härtungslisten davor klein ihr Zweck (nur im Bild). Zum Schluss hebt sich die dritte Spalte hervor.
 - **Spalte „Erreicht“:**
   - Strukturanalyse, Schutzbedarfsfeststellung und Modellierung überarbeitet
   - Grundschutz-Checks aller Zielobjekte ausgewertet
   - Risikoanalyse und Realisierungsplan mit 32 Arbeitspaketen im Entwurf
   - Richtlinien im Entwurf, internes Auditprogramm aufgestellt
 - **Spalte „Vorbereitet“:**
-  - 15 Umsetzungsleitfäden mit Schritt-für-Schritt-Anweisungen → IT-Betrieb: umsetzen
-  - 13 Härtungslisten für die Server → IT-Betrieb: Server härten
-  - Entscheidungsvorlage mit 22 Entscheidungen → Verwaltungsleitung: prüfen und billigen
+  - 15 Umsetzungsleitfäden mit Schritt-für-Schritt-Anweisungen → IT-Betrieb: prüfen, beschließen, umsetzen
+    - Zweck: einheitlich und prüfbar umsetzen
+  - 13 Härtungslisten für die Server → IT-Betrieb: prüfen, beschließen, umsetzen
+    - Zweck: Server einheitlich sicher einstellen
+  - Entscheidungsvorlage mit 22 Entscheidungen → Fachbereich: vorab prüfen → Verwaltungsleitung: prüfen und billigen, um Risiken bewusst zu akzeptieren
   - Prüfschema für den technischen Review → ISB: Umsetzung prüfen
   - Bereinigungsliste für die Grundschutz-Checks → ISB: Checks bereinigen
 - **Spalte „Offen – nächste Schritte“:**
   - Entscheidungen der Verwaltungsleitung, zwölf davon vor dem Überwachungsaudit
-  - Budget und Personal für die Umsetzung
+  - Budget- und Ressourcenplanung für die Umsetzung
   - Übernahme der verbleibenden Risiken durch die Leitung
   - Richtlinien in Kraft setzen
   - Maßnahmen umsetzen und technisch prüfen
   - 77 Abweichungen aus dem Audit 2025 beheben
   - Überwachungsaudit
 - **Einblendung darunter (klein):** „Offene Anforderungen laut Realisierungsplan: 966 Standard-Teilanforderungen; 264 Basis-Teilanforderungen bisher nur durch Musterantworten belegt.“
-- **Sprechertext:** „Für die Zertifizierung ist bereits viel erreicht. Die Referenzdokumente sind überarbeitet, die Grundschutz-Checks aller Zielobjekte ausgewertet, Risikoanalyse und Realisierungsplan liegen im Entwurf vor. Für die Umsetzung sind fünfzehn Leitfäden, dreizehn Härtungslisten und eine Entscheidungsvorlage vorbereitet. Was zu tun ist, ist damit beschrieben. Offen sind die Entscheidungen der Verwaltungsleitung, Budget und Personal für die Umsetzung, die Übernahme der verbleibenden Risiken und die Behebung der Abweichungen aus dem letzten Audit, rechtzeitig vor dem Überwachungsaudit.“
+- **Sprechertext:** „Für die Zertifizierung ist bereits viel erreicht. Die Referenzdokumente sind überarbeitet, die Grundschutz-Checks aller Zielobjekte ausgewertet, Risikoanalyse und Realisierungsplan liegen im Entwurf vor. Für die Umsetzung sind fünfzehn Leitfäden, dreizehn Härtungslisten und eine Entscheidungsvorlage vorbereitet. Was zu tun ist, ist damit beschrieben. Offen sind die Entscheidungen der Verwaltungsleitung, die Budget- und Ressourcenplanung für die Umsetzung, die Übernahme der verbleibenden Risiken und die Behebung der Abweichungen aus dem letzten Audit, rechtzeitig vor dem Überwachungsaudit.“
 - **Schlusstafel (7:28–7:34):** „Gemeinsam für ein sicheres Herne“ · klein: „Stadt Herne · Informationssicherheit · Stand September 2026“ · darunter SITS-Logo mit „Unser zuverlässiger Partner für IT- und Informationssicherheit“
 - **Schlusssatz (Sprecher, auf der Schlusstafel):** „Vielen Dank für Ihre Aufmerksamkeit.“
 

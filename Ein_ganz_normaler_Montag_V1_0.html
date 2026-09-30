@@ -66,7 +66,7 @@
    ===================================================================== */
 const W = 1920, H = 1080, FPS = 30;
 
-// Szenen laut Drehbuch V1_5: Titel und Richtzeiten [s]. Die tatsächlichen Zeiten stehen in TIMELINE
+// Szenen laut Drehbuch V1_6: Titel und Richtzeiten [s]. Die tatsächlichen Zeiten stehen in TIMELINE
 // (erzeugt von export/sync.mjs aus den Längen der Sprachaufnahmen); Szenen werden nur länger, nie kürzer.
 const SZENEN = [
   { n: 0, title: "Titel", nominal: [0, 12] },
@@ -105,7 +105,7 @@ const ANKER = {
   9: [[5.1, "Im IT-Grundschutz ist"], [15.0, "Die NIS-2-Richtlinie der"], [28.8, "im Informationssicherheitsgesetz NRW"], [37.4, "Sie zeigen aber,"], [42.0, "prüfen und billigen,"], [44.3, "überwachen, sich regelmäßig"], [46.2, "schulen lassen und"], [47.6, "Risiken kennen und"], [50.5, "Unterschrift unter die"]],
   10: [[0.5, "Die Maßnahmen sind"], [8.8, "Investitionen sind nötig"], [10.8, "Ersatz veralteter Systeme,"], [12.8, "einen geschützten Zugang"], [17.4, "eine zentrale Erkennung"], [19.9, "ein zweites Sicherungssystem."], [22.2, "Ebenso wichtig sind"], [24.3, "Server müssen laufend"], [26.4, "Updates eingespielt und"], [28.4, "Sicherheitseinstellungen regelmäßig geprüft"], [32.1, "Eine Überwachung schützt"], [34.2, "jemand die Meldungen"], [36.0, "und im Ernstfall"], [37.8, "reagiert."]],
   11: [[0.5, "So stellt sich"], [3.1, "Alle gezeigten Schwachstellen"], [8.0, "Ohne zusätzliche Mittel"], [13.7, "Stadt und ihre"]],
-  12: [[0.5, "Für die Zertifizierung"], [3.7, "Die Referenzdokumente sind"], [6.3, "die Grundschutz-Checks aller"], [9.7, "Risikoanalyse und Realisierungsplan"], [14.4, "Für die Umsetzung"], [15.7, "fünfzehn Leitfäden, dreizehn"], [17.3, "dreizehn Härtungslisten und"], [19.3, "eine Entscheidungsvorlage vorbereitet."], [21.8, "Was zu tun"], [24.5, "Offen sind die"], [25.4, "Entscheidungen der Verwaltungsleitung,"], [27.6, "Budget und Personal"], [30.3, "die Übernahme der"], [32.8, "die Behebung der"], [36.9, "Überwachungsaudit."]],
+  12: [[0.5, "Für die Zertifizierung"], [3.7, "Die Referenzdokumente sind"], [6.3, "die Grundschutz-Checks aller"], [9.7, "Risikoanalyse und Realisierungsplan"], [14.4, "Für die Umsetzung"], [15.7, "fünfzehn Leitfäden, dreizehn"], [17.3, "dreizehn Härtungslisten und"], [19.3, "eine Entscheidungsvorlage vorbereitet."], [21.8, "Was zu tun"], [24.5, "Offen sind die"], [25.4, "Entscheidungen der Verwaltungsleitung,"], [27.6, "Budget- und Ressourcenplanung"], [30.3, "die Übernahme der"], [32.8, "die Behebung der"], [36.9, "Überwachungsaudit."]],
 };
 /* ANKER-END */
 
@@ -135,7 +135,7 @@ const TIMELINE = {
     9: {"start":227.43333333333334,"end":280.26666666666665,"entwurf":45,"anker":[[5.1,4.854],[15,14.758],[28.8,27.436],[37.4,35.296],[42,39.928],[44.3,42.18],[46.2,44.108],[47.6,45.501],[50.5,48.426]],"tail":1},
     10: {"start":280.26666666666665,"end":320.6333333333333,"entwurf":45,"anker":[[0.5,0.5],[8.8,8.557],[10.8,10.763],[12.8,12.818],[17.4,17.288],[19.9,20.214],[22.2,22.49],[24.3,24.44],[26.4,26.46],[28.4,28.527],[32.1,31.963],[34.2,33.948],[36,35.794],[37.8,37.362]],"tail":1},
     11: {"start":320.6333333333333,"end":340.56666666666666,"entwurf":30,"anker":[[0.5,0.5],[3.1,2.659],[8,7.478],[13.7,13.701]],"tail":1},
-    12: {"start":340.56666666666666,"end":391.53333333333336,"entwurf":66,"anker":[[0.5,0.5],[3.7,3.948],[6.3,6.502],[9.7,9.776],[14.4,14.455],[15.7,15.662],[17.3,17.148],[19.3,19.169],[21.8,21.874],[24.5,24.579],[25.4,25.31],[27.6,27.597],[30.3,30.082],[32.8,32.496],[36.9,36.537]],"tail":1}
+    12: {"start":340.56666666666666,"end":392.8,"entwurf":66,"anker":[[0.5,0.5],[3.7,3.948],[6.3,6.502],[9.7,9.776],[14.4,14.455],[15.7,15.662],[17.3,17.148],[19.3,19.169],[21.8,21.862],[24.5,24.59],[25.4,25.322],[27.6,27.748],[30.3,30.895],[32.8,33.762],[36.9,37.826]],"tail":1}
   },
   cues: [
     {"scene":0,"start":1.4,"end":6.856,"lines":["Guten Tag. Dieses Video zeigt an einem erfundenen,","aber realistischen Ablauf,"]},
@@ -212,12 +212,13 @@ const TIMELINE = {
     {"scene":12,"start":344.415,"end":350.173,"lines":["Die Referenzdokumente sind überarbeitet,","die Grundschutz-Checks aller Zielobjekte ausgewertet,"]},
     {"scene":12,"start":350.243,"end":354.852,"lines":["Risikoanalyse und Realisierungsplan","liegen im Entwurf vor."]},
     {"scene":12,"start":354.922,"end":357.616,"lines":["Für die Umsetzung sind fünfzehn Leitfäden,"]},
-    {"scene":12,"start":357.686,"end":362.271,"lines":["dreizehn Härtungslisten und eine","Entscheidungsvorlage vorbereitet."]},
-    {"scene":12,"start":362.341,"end":364.976,"lines":["Was zu tun ist, ist damit beschrieben."]},
-    {"scene":12,"start":365.046,"end":370.479,"lines":["Offen sind die Entscheidungen der Verwaltungsleitung,","Budget und Personal für die Umsetzung,"]},
-    {"scene":12,"start":370.549,"end":375.866,"lines":["die Übernahme der verbleibenden Risiken und die","Behebung der Abweichungen aus dem letzten Audit,"]},
-    {"scene":12,"start":375.936,"end":379.04,"lines":["rechtzeitig vor dem Überwachungsaudit."]},
-    {"scene":12,"start":386.234,"end":388.827,"lines":["Vielen Dank für Ihre Aufmerksamkeit."]}
+    {"scene":12,"start":357.686,"end":362.259,"lines":["dreizehn Härtungslisten und eine","Entscheidungsvorlage vorbereitet."]},
+    {"scene":12,"start":362.329,"end":364.987,"lines":["Was zu tun ist, ist damit beschrieben."]},
+    {"scene":12,"start":365.057,"end":367.948,"lines":["Offen sind die Entscheidungen","der Verwaltungsleitung,"]},
+    {"scene":12,"start":368.018,"end":371.351,"lines":["die Budget- und Ressourcenplanung für die Umsetzung,"]},
+    {"scene":12,"start":371.421,"end":377.05,"lines":["die Übernahme der verbleibenden Risiken und die","Behebung der Abweichungen aus dem letzten Audit,"]},
+    {"scene":12,"start":377.12,"end":380.573,"lines":["rechtzeitig vor dem Überwachungsaudit."]},
+    {"scene":12,"start":387.5,"end":390.093,"lines":["Vielen Dank für Ihre Aufmerksamkeit."]}
   ],
 };
 /* TIMELINE-END */
@@ -252,7 +253,7 @@ function toActual(n, d) {
   return sc.start + x;
 }
 
-// Sprechertext wörtlich aus dem Drehbuch V1_5 (Quelle für Untertitel, SRT und Prüfung)
+// Sprechertext wörtlich aus dem Drehbuch V1_6 (Quelle für Untertitel, SRT und Prüfung)
 const SPRECHERTEXT = {
   1: "Ausweise, Urkunden, Sozialleistungen, Kitaplätze, Baugenehmigungen und die Gehälter der Beschäftigten: Fast jede Leistung der Stadtverwaltung hängt heute von funktionierender IT ab.",
   2: "Ein typischer Angriff beginnt mit einer gefälschten E-Mail, die wie eine gewöhnliche Rechnung aussieht. Solche Nachrichten erreichen jede Verwaltung täglich, und einzelne Klicks lassen sich nie ganz verhindern. Entscheidend ist, wie weit ein Angreifer danach kommt.",
@@ -265,12 +266,12 @@ const SPRECHERTEXT = {
   9: "Informationssicherheit ist eine Aufgabe der Verwaltungsleitung. Im IT-Grundschutz ist die Übernahme der Gesamtverantwortung durch die Leitung eine Basis-Anforderung, die im Überwachungsaudit vollständig geprüft wird. Die NIS-2-Richtlinie der EU schreibt dieselbe Verantwortung gesetzlich fest: seit Dezember 2025 im BSI-Gesetz, seit Januar 2026 im Informationssicherheitsgesetz NRW für die Landesverwaltung. Für Kommunen gelten beide nicht unmittelbar. Sie zeigen aber, was von einer Verwaltungsleitung erwartet wird: Maßnahmen prüfen und billigen, ihre Umsetzung überwachen, sich regelmäßig schulen lassen und die Risiken kennen und verantworten – mit ihrer Unterschrift unter die ISMS-Dokumente.",
   10: "Die Maßnahmen sind geplant, umsetzen lassen sie sich aber nur mit ausreichenden Mitteln und qualifiziertem Personal. Investitionen sind nötig für den Ersatz veralteter Systeme, einen geschützten Zugang zur IT-Verwaltung mit zweiter Bestätigung, eine zentrale Erkennung von Angriffen und ein zweites Sicherungssystem. Ebenso wichtig sind Fachkräfte: Server müssen laufend gewartet, Updates eingespielt und Sicherheitseinstellungen regelmäßig geprüft werden. Eine Überwachung schützt nur, wenn jemand die Meldungen auswertet und im Ernstfall sofort reagiert.",
   11: "So stellt sich die Lage heute dar. Alle gezeigten Schwachstellen wurden in der aktuellen Sicherheitsprüfung festgestellt. Ohne zusätzliche Mittel und Personal bleibt dieser Zustand bestehen und mit ihm das Risiko für die Stadt und ihre Bürgerinnen und Bürger.",
-  12: "Für die Zertifizierung ist bereits viel erreicht. Die Referenzdokumente sind überarbeitet, die Grundschutz-Checks aller Zielobjekte ausgewertet, Risikoanalyse und Realisierungsplan liegen im Entwurf vor. Für die Umsetzung sind fünfzehn Leitfäden, dreizehn Härtungslisten und eine Entscheidungsvorlage vorbereitet. Was zu tun ist, ist damit beschrieben. Offen sind die Entscheidungen der Verwaltungsleitung, Budget und Personal für die Umsetzung, die Übernahme der verbleibenden Risiken und die Behebung der Abweichungen aus dem letzten Audit, rechtzeitig vor dem Überwachungsaudit.",
+  12: "Für die Zertifizierung ist bereits viel erreicht. Die Referenzdokumente sind überarbeitet, die Grundschutz-Checks aller Zielobjekte ausgewertet, Risikoanalyse und Realisierungsplan liegen im Entwurf vor. Für die Umsetzung sind fünfzehn Leitfäden, dreizehn Härtungslisten und eine Entscheidungsvorlage vorbereitet. Was zu tun ist, ist damit beschrieben. Offen sind die Entscheidungen der Verwaltungsleitung, die Budget- und Ressourcenplanung für die Umsetzung, die Übernahme der verbleibenden Risiken und die Behebung der Abweichungen aus dem letzten Audit, rechtzeitig vor dem Überwachungsaudit.",
 };
-// Fragen der Presse (Szene 8), wörtlich aus dem Drehbuch V1_5; erscheinen als Sprechblasen und als Untertitel
+// Fragen der Presse (Szene 8), wörtlich aus dem Drehbuch V1_6; erscheinen als Sprechblasen und als Untertitel
 const PRESSEFRAGEN = ["Wie konnte es dazu kommen?", "Waren die Schwachstellen bekannt?", "Warum wurde nicht gehandelt, obwohl die Bedrohung – auch durch KI – seit Jahren bekannt ist?", "Was passiert mit den Daten der Bürgerinnen und Bürger?"];
 
-// Alle sichtbaren Texte wörtlich aus dem Drehbuch V1_5 (Einblendungen, Beschriftungen, Kacheln, Marke)
+// Alle sichtbaren Texte wörtlich aus dem Drehbuch V1_6 (Einblendungen, Beschriftungen, Kacheln, Marke)
 const TEXTE = {
   titel: "Ein ganz normaler Montag",
   unterzeile: "Was ein Cyberangriff für Herne bedeuten würde",
@@ -361,15 +362,18 @@ const TEXTE = {
   vorbereitet_3: "Entscheidungsvorlage mit 22 Entscheidungen",
   vorbereitet_4: "Prüfschema für den technischen Review",
   vorbereitet_5: "Bereinigungsliste für die Grundschutz-Checks",
-  // wer als Nächstes was tut (je Punkt in „Vorbereitet“, klein darunter)
-  rolle_1: "IT-Betrieb: umsetzen",
-  rolle_2: "IT-Betrieb: Server härten",
-  rolle_3: "Verwaltungsleitung: prüfen und billigen",
+  // wofür (nur Umsetzungsleitfäden und Härtungslisten) und wer als Nächstes was tut – je Punkt in „Vorbereitet“, klein darunter
+  zweck_1: "Zweck: einheitlich und prüfbar umsetzen",
+  zweck_2: "Zweck: Server einheitlich sicher einstellen",
+  rolle_1: "IT-Betrieb: prüfen, beschließen, umsetzen",
+  rolle_2: "IT-Betrieb: prüfen, beschließen, umsetzen",
+  rolle_3a: "Fachbereich: vorab prüfen",
+  rolle_3b: "Verwaltungsleitung: prüfen und billigen, um Risiken bewusst zu akzeptieren",
   rolle_4: "ISB: Umsetzung prüfen",
   rolle_5: "ISB: Checks bereinigen",
   spalte_offen: "Offen – nächste Schritte",
   offen_1: "Entscheidungen der Verwaltungsleitung, zwölf davon vor dem Überwachungsaudit",
-  offen_2: "Budget und Personal für die Umsetzung",
+  offen_2: "Budget- und Ressourcenplanung für die Umsetzung",
   offen_3: "Übernahme der verbleibenden Risiken durch die Leitung",
   offen_4: "Richtlinien in Kraft setzen",
   offen_5: "Maßnahmen umsetzen und technisch prüfen",
@@ -2810,9 +2814,21 @@ function s12Layout() {
       let y = S12L.top + 124;
       const punkte = sp.punkte.map((t, k) => {
         const key = `${sp.key}_${k + 1}`, lines = wrapLines(TEXTE[key], size, 400, innerW);
-        const rolle = sp.key === 'vorbereitet' && TEXTE[`rolle_${k + 1}`] ? `rolle_${k + 1}` : null;   // wer als Nächstes was tut
-        const p = { key, t, lines, y, rolle, ry: y + lines.length * lh + Math.round(size * 0.1) };
-        y += lines.length * lh + (rolle ? Math.round(size * 1.05) : 0) + Math.round(size * 0.62);
+        // wer als Nächstes was tut: ein oder mehrere Schritte je Punkt (rolle_3a, rolle_3b … in Reihenfolge)
+        const rollen = sp.key === 'vorbereitet' ? Object.keys(TEXTE).filter(x => new RegExp(`^rolle_${k + 1}[a-z]?$`).test(x)).sort() : [];
+        const rs = Math.round(size * 0.84), rlh = Math.round(rs * 1.22);
+        // Umbruch bevorzugt nach einem Komma („…, um Risiken …“ nicht nach „um“ trennen)
+        const brich = t => { const w = S12L.w - 124, i = t.lastIndexOf(', ');
+          if (measure(t, rs, 600) > w && i > 0 && measure(t.slice(0, i + 1), rs, 600) <= w && measure(t.slice(i + 2), rs, 600) <= w) return [t.slice(0, i + 1), t.slice(i + 2)];
+          return wrapLines(t, rs, 600, w); };
+        const rl = rollen.map(r => ({ key: r, lines: brich(TEXTE[r]) }));
+        const zweck = sp.key === 'vorbereitet' && TEXTE[`zweck_${k + 1}`] ? `zweck_${k + 1}` : null;   // wofür (nur im Bild)
+        const zs = Math.round(size * 0.84), zlh = Math.round(zs * 1.22);
+        const zl = zweck ? wrapLines(TEXTE[zweck], zs, 400, S12L.w - 96) : [];
+        const zy = y + lines.length * lh + Math.round(size * 0.1);
+        const p = { key, t, lines, y, rl, rs, rlh, zweck, zl, zs, zlh, zy, ry: zy + zl.length * zlh };
+        const rh = rl.reduce((a, r) => a + r.lines.length * rlh, 0);
+        y += lines.length * lh + zl.length * zlh + rh + Math.round(size * 0.62);
         return p;
       });
       return { ...sp, x, punkte, bottom: y + 10 };
@@ -2863,11 +2879,14 @@ const S12 = {
           if (u <= 0.001) return;
           let pg = PunktMarke(sp.icon, sp.x + 44, p.y - L.size * 0.33, seg(lt, p.t - 0.1, p.t + 0.5), sp.farbe);
           pg += TextBlock(p.key, sp.x + 72, p.y, { size: L.size, fill: C.text, lines: p.lines, lh: L.lh });
-          if (p.rolle) {                               // Rollenzeile: kleiner Pfeil, dann „Rolle: Aufgabe“ in der Spaltenfarbe
-            const rs = Math.round(L.size * 0.84), ay = p.ry - rs * 0.36;
+          if (p.zweck) pg += TextBlock(p.zweck, sp.x + 72, p.zy, { size: p.zs, fill: C.text2, lines: p.zl, lh: p.zlh });    // Zweck, grau, bündig unter dem Punkt
+          let ry = p.ry;
+          for (const r of p.rl) {                      // Schritte: kleiner Pfeil, dann „Rolle: Aufgabe“ in der Spaltenfarbe (umbrochen bündig)
+            const ay = ry - p.rs * 0.36;
             pg += Path(`M${sp.x + 74},${N(ay - 9)} L${sp.x + 74},${N(ay)} L${sp.x + 92},${N(ay)}`, 'none', { stroke: sp.farbe, 'stroke-width': 2.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' })
               + Path(`M${sp.x + 86},${N(ay - 5)} L${sp.x + 93},${N(ay)} L${sp.x + 86},${N(ay + 5)}`, 'none', { stroke: sp.farbe, 'stroke-width': 2.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' })
-              + Txt(sp.x + 102, p.ry, TEXTE[p.rolle], { size: rs, weight: 600, fill: sp.farbe, k: p.rolle, i: 0 });
+              + TextBlock(r.key, sp.x + 102, ry, { size: p.rs, weight: 600, fill: sp.farbe, lines: r.lines, lh: p.rlh });
+            ry += r.lines.length * p.rlh;
           }
           g += G({ opacity: N(u), transform: `translate(${N((1 - EASE.out(u)) * 18)} 0)` }, pg);
         });

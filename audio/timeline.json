@@ -1,6 +1,6 @@
 {
- "drehbuch": "Drehbuch_Video_Angriffsszenario_Herne_V1_5.md",
- "gesamt": 391.53333333333336,
+ "drehbuch": "Drehbuch_Video_Angriffsszenario_Herne_V1_6.md",
+ "gesamt": 392.8,
  "szenen": [
   {
    "n": 0,
@@ -4511,7 +4511,7 @@
     454
    ],
    "start": 340.56666666666666,
-   "ende": 391.53333333333336,
+   "ende": 392.8,
    "entwurf": 66,
    "anker": [
     [
@@ -4548,31 +4548,31 @@
     ],
     [
      21.8,
-     21.874
+     21.862
     ],
     [
      24.5,
-     24.579
+     24.59
     ],
     [
      25.4,
-     25.31
+     25.322
     ],
     [
      27.6,
-     27.597
+     27.748
     ],
     [
      30.3,
-     30.082
+     30.895
     ],
     [
      32.8,
-     32.496
+     33.762
     ],
     [
      36.9,
-     36.537
+     37.826
     ]
    ],
    "tail": 1,
@@ -4583,7 +4583,7 @@
      "stimme": "Alexander – Deep TV Narrator",
      "rolle": "Erzähler",
      "art": "erzaehler",
-     "dauer": 37.564
+     "dauer": 39.105
     },
     {
      "id": "szene_12_schluss",
@@ -4736,7 +4736,7 @@
      "art": "erzaehler",
      "ziel": null,
      "beginn": 14.455,
-     "ende": 21.363,
+     "ende": 21.351,
      "worte": [
       [
        "Für",
@@ -4796,7 +4796,7 @@
       [
        "vorbereitet.",
        20.539,
-       21.363
+       21.351
       ]
      ]
     },
@@ -4805,203 +4805,208 @@
      "teil": "szene_12",
      "art": "erzaehler",
      "ziel": null,
-     "beginn": 21.874,
-     "ende": 24.068,
+     "beginn": 21.862,
+     "ende": 24.08,
      "worte": [
       [
        "Was",
-       21.874,
-       22.094
+       21.862,
+       22.083
       ],
       [
        "zu",
-       22.164,
-       22.257
+       22.152,
+       22.245
       ],
       [
        "tun",
-       22.326,
-       22.559
+       22.315,
+       22.547
       ],
       [
        "ist,",
-       22.628,
+       22.617,
        22.942
       ],
       [
        "ist",
-       22.977,
-       23.151
+       22.988,
+       23.162
       ],
       [
        "damit",
-       23.174,
-       23.383
+       23.186,
+       23.395
       ],
       [
        "beschrieben.",
-       23.429,
-       24.068
+       23.441,
+       24.08
       ]
      ]
     },
     {
-     "text": "Offen sind die Entscheidungen der Verwaltungsleitung, Budget und Personal für die Umsetzung, die Übernahme der verbleibenden Risiken und die Behebung der Abweichungen aus dem letzten Audit, rechtzeitig vor dem Überwachungsaudit.",
+     "text": "Offen sind die Entscheidungen der Verwaltungsleitung, die Budget- und Ressourcenplanung für die Umsetzung, die Übernahme der verbleibenden Risiken und die Behebung der Abweichungen aus dem letzten Audit, rechtzeitig vor dem Überwachungsaudit.",
      "teil": "szene_12",
      "art": "erzaehler",
      "ziel": null,
-     "beginn": 24.579,
-     "ende": 38.023,
+     "beginn": 24.59,
+     "ende": 39.556,
      "worte": [
       [
        "Offen",
-       24.579,
-       24.915
+       24.59,
+       24.927
       ],
       [
        "sind",
-       24.974,
-       25.136
+       24.985,
+       25.148
       ],
       [
        "die",
-       25.171,
-       25.264
+       25.183,
+       25.275
       ],
       [
        "Entscheidungen",
-       25.31,
-       25.914
+       25.322,
+       25.926
       ],
       [
        "der",
-       25.96,
+       25.972,
        26.1
       ],
       [
        "Verwaltungsleitung,",
        26.169,
-       27.423
+       27.377
       ],
       [
-       "Budget",
-       27.597,
-       28.061
+       "die",
+       27.551,
+       27.702
+      ],
+      [
+       "Budget-",
+       27.748,
+       28.189
       ],
       [
        "und",
-       28.143,
-       28.317
+       28.236,
+       28.41
       ],
       [
-       "Personal",
-       28.41,
-       28.909
+       "Ressourcenplanung",
+       28.526,
+       29.525
       ],
       [
        "für",
-       28.967,
-       29.083
+       29.594,
+       29.757
       ],
       [
        "die",
-       29.106,
-       29.176
+       29.78,
+       29.861
       ],
       [
        "Umsetzung,",
-       29.234,
-       29.907
+       29.931,
+       30.744
       ],
       [
        "die",
-       30.082,
-       30.221
+       30.895,
+       31.022
       ],
       [
        "Übernahme",
-       30.302,
-       30.79
+       31.08,
+       31.591
       ],
       [
        "der",
-       30.825,
-       30.918
+       31.638,
+       31.754
       ],
       [
        "verbleibenden",
-       30.964,
-       31.544
+       31.812,
+       32.462
       ],
       [
        "Risiken",
-       31.603,
-       32.102
+       32.52,
+       33.089
       ],
       [
        "und",
-       32.218,
-       32.38
+       33.414,
+       33.646
       ],
       [
        "die",
-       32.496,
-       32.601
+       33.762,
+       33.878
       ],
       [
        "Behebung",
-       32.647,
-       33.158
+       33.936,
+       34.401
       ],
       [
        "der",
-       33.216,
-       33.309
+       34.447,
+       34.54
       ],
       [
        "Abweichungen",
-       33.367,
-       34.017
+       34.598,
+       35.202
       ],
       [
        "aus",
-       34.075,
-       34.203
+       35.271,
+       35.422
       ],
       [
        "dem",
-       34.261,
-       34.366
+       35.48,
+       35.597
       ],
       [
        "letzten",
-       34.412,
-       34.737
+       35.655,
+       35.98
       ],
       [
        "Audit,",
-       34.795,
-       35.294
+       36.038,
+       36.479
       ],
       [
        "rechtzeitig",
-       35.469,
-       36.119
+       36.653,
+       37.361
       ],
       [
        "vor",
-       36.154,
-       36.316
+       37.408,
+       37.582
       ],
       [
        "dem",
-       36.363,
-       36.467
+       37.628,
+       37.744
       ],
       [
        "Überwachungsaudit.",
-       36.537,
-       38.023
+       37.826,
+       39.556
       ]
      ]
     },
@@ -5010,33 +5015,33 @@
      "teil": "szene_12_schluss",
      "art": "schluss",
      "ziel": null,
-     "beginn": 45.767,
-     "ende": 47.81,
+     "beginn": 47.033,
+     "ende": 49.076,
      "worte": [
       [
        "Vielen",
-       45.767,
-       46.069
+       47.033,
+       47.335
       ],
       [
        "Dank",
-       46.104,
-       46.278
+       47.37,
+       47.544
       ],
       [
        "für",
-       46.324,
-       46.417
+       47.59,
+       47.683
       ],
       [
        "Ihre",
-       46.452,
-       46.626
+       47.718,
+       47.892
       ],
       [
        "Aufmerksamkeit.",
-       46.661,
-       47.81
+       47.927,
+       49.076
       ]
      ]
     }
@@ -5046,7 +5051,7 @@
      "id": "szene_12",
      "datei": "audio/szene_12.mp3",
      "von": 0,
-     "bis": 37.564,
+     "bis": 39.105,
      "bei": 341.067,
      "stimme": "Alexander – Deep TV Narrator"
     },
@@ -5055,7 +5060,7 @@
      "datei": "audio/szene_12_schluss.mp3",
      "von": 0,
      "bis": 2.09,
-     "bei": 386.333,
+     "bei": 387.6,
      "stimme": "Alexander – Deep TV Narrator"
     }
    ],
@@ -5063,11 +5068,11 @@
    "bildende": {
     "entwurf": 40.8,
     "halten": 4.5,
-    "ist": 44.937
+    "ist": 46.226
    },
-   "schlusstafel": 44.967,
-   "audioEnde": 38.023,
-   "aenderung": -15.033
+   "schlusstafel": 46.233,
+   "audioEnde": 39.556,
+   "aenderung": -13.767
   }
  ],
  "cues": [
@@ -5722,7 +5727,7 @@
   {
    "szene": 12,
    "start": 357.686,
-   "end": 362.271,
+   "end": 362.259,
    "lines": [
     "dreizehn Härtungslisten und eine",
     "Entscheidungsvorlage vorbereitet."
@@ -5730,25 +5735,33 @@
   },
   {
    "szene": 12,
-   "start": 362.341,
-   "end": 364.976,
+   "start": 362.329,
+   "end": 364.987,
    "lines": [
     "Was zu tun ist, ist damit beschrieben."
    ]
   },
   {
    "szene": 12,
-   "start": 365.046,
-   "end": 370.479,
+   "start": 365.057,
+   "end": 367.948,
    "lines": [
-    "Offen sind die Entscheidungen der Verwaltungsleitung,",
-    "Budget und Personal für die Umsetzung,"
+    "Offen sind die Entscheidungen",
+    "der Verwaltungsleitung,"
    ]
   },
   {
    "szene": 12,
-   "start": 370.549,
-   "end": 375.866,
+   "start": 368.018,
+   "end": 371.351,
+   "lines": [
+    "die Budget- und Ressourcenplanung für die Umsetzung,"
+   ]
+  },
+  {
+   "szene": 12,
+   "start": 371.421,
+   "end": 377.05,
    "lines": [
     "die Übernahme der verbleibenden Risiken und die",
     "Behebung der Abweichungen aus dem letzten Audit,"
@@ -5756,16 +5769,16 @@
   },
   {
    "szene": 12,
-   "start": 375.936,
-   "end": 379.04,
+   "start": 377.12,
+   "end": 380.573,
    "lines": [
     "rechtzeitig vor dem Überwachungsaudit."
    ]
   },
   {
    "szene": 12,
-   "start": 386.234,
-   "end": 388.827,
+   "start": 387.5,
+   "end": 390.093,
    "lines": [
     "Vielen Dank für Ihre Aufmerksamkeit."
    ]

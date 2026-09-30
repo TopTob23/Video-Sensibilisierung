@@ -351,28 +351,32 @@ liegen im Entwurf vor.
 Für die Umsetzung sind fünfzehn Leitfäden,
 
 75
-00:05:57,686 --> 00:06:02,271
+00:05:57,686 --> 00:06:02,259
 dreizehn Härtungslisten und eine
 Entscheidungsvorlage vorbereitet.
 
 76
-00:06:02,341 --> 00:06:04,976
+00:06:02,329 --> 00:06:04,987
 Was zu tun ist, ist damit beschrieben.
 
 77
-00:06:05,046 --> 00:06:10,479
-Offen sind die Entscheidungen der Verwaltungsleitung,
-Budget und Personal für die Umsetzung,
+00:06:05,057 --> 00:06:07,948
+Offen sind die Entscheidungen
+der Verwaltungsleitung,
 
 78
-00:06:10,549 --> 00:06:15,866
+00:06:08,018 --> 00:06:11,351
+die Budget- und Ressourcenplanung für die Umsetzung,
+
+79
+00:06:11,421 --> 00:06:17,050
 die Übernahme der verbleibenden Risiken und die
 Behebung der Abweichungen aus dem letzten Audit,
 
-79
-00:06:15,936 --> 00:06:19,040
+80
+00:06:17,120 --> 00:06:20,573
 rechtzeitig vor dem Überwachungsaudit.
 
-80
-00:06:26,234 --> 00:06:28,827
+81
+00:06:27,500 --> 00:06:30,093
 Vielen Dank für Ihre Aufmerksamkeit.

@@ -1,6 +1,6 @@
 # Aussprache: Ersetzungen im Sprachtext
 
-Grundlage: Drehbuch_Video_Angriffsszenario_Herne_V1_5.md. Die Untertitel bleiben wortgleich mit dem Drehbuch, nur der Text für die Stimme wird angepasst.
+Grundlage: Drehbuch_Video_Angriffsszenario_Herne_V1_6.md. Die Untertitel bleiben wortgleich mit dem Drehbuch, nur der Text für die Stimme wird angepasst.
 
 ## Angewendete Ersetzungen
 
