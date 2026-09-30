@@ -9,10 +9,12 @@
 // Ergebnis: Konsole + output/pruefung/Pruefbericht[_SzenenX].md; Exit-Code 1 bei Fehlern.
 import fs from 'fs';
 import path from 'path';
-import { execFileSync } from 'child_process';
+import { execFileSync, spawnSync } from 'child_process';
 import { pathToFileURL } from 'url';
 import { loadPlaywright, openVideo, renderAt, ROOT, BASENAME, HTML } from './lib.mjs';
-import { findDrehbuch } from './drehbuch.mjs';
+import { findDrehbuch, parseDrehbuch } from './drehbuch.mjs';
+import { sprachtexte } from './tts-text.mjs';
+import { ERZAEHLER, EINSTELLUNGEN, MODELL, fragenStimmen } from './tts-lib.mjs';
 
 const argv = process.argv.slice(2);
 const opt = (name, def) => { const i = argv.indexOf('--' + name); return i >= 0 ? (argv[i + 1] && !argv[i + 1].startsWith('--') ? argv[i + 1] : true) : def; };
@@ -42,6 +44,10 @@ for (const sec of md.split(/\n### /).slice(1)) {
   const m = sec.match(/\*\*Sprechertext(?: \(ab \d+:\d\d\))?:\*\*\s*„([\s\S]*?)“/);
   if (m) dSpeech[n] = m[1];
 }
+const DB = parseDrehbuch(DREHBUCH);
+const dPress = (DB.scenes.find(s => s.press.length) || { press: [] }).press;
+const TLFILE = path.join(ROOT, 'audio', 'timeline.json');
+const TL = fs.existsSync(TLFILE) ? JSON.parse(fs.readFileSync(TLFILE, 'utf8')) : null;
 // zeitlich festgelegte Einblendungen laut Drehbuch
 const timed = [];
 { const m = md.match(/\*\*Hinweis-Einblendung \((\d+):(\d\d)–(\d+):(\d\d)\):\*\*/); if (m) timed.push({ key: 'hinweis', from: +m[1] * 60 + +m[2], to: +m[3] * 60 + +m[4] }); }
@@ -64,21 +70,23 @@ const inScope = n => !SCOPE || SCOPE.includes(n);
 const sceneOf = t => V.SCENES.find(s => t >= s.start && t < s.end) || V.SCENES[V.SCENES.length - 1];
 
 // ================================================================ A  Szenen und Zeiten
+// Zeiten laut Drehbuch sind Richtwerte; sie dürfen sich durch die Sprachausgabe verschieben. Szenen werden nur länger, nie kürzer.
 {
   const B = 'Szenen und Zeiten';
-  if (dScenes.length !== V.SCENES.length) FEHLER(B, `Anzahl Szenen: Drehbuch ${dScenes.length}, Video ${V.SCENES.length}`);
+  let ok = true;
+  if (dScenes.length !== V.SCENES.length) { FEHLER(B, `Anzahl Szenen: Drehbuch ${dScenes.length}, Video ${V.SCENES.length}`); ok = false; }
   for (const d of dScenes) {
     const v = V.SCENES.find(s => s.n === d.n);
-    if (!v) { FEHLER(B, `Szene ${d.n} fehlt im Video`); continue; }
-    const diffs = [];
-    if (v.title !== d.title) diffs.push(`Titel „${v.title}“ ≠ „${d.title}“`);
-    if (v.start !== d.start || v.end !== d.end) diffs.push(`Zeit ${fmt(v.start)}–${fmt(v.end)} ≠ ${fmt(d.start)}–${fmt(d.end)}`);
-    if (diffs.length) FEHLER(B, `Szene ${d.n}: ${diffs.join('; ')}`);
+    if (!v) { FEHLER(B, `Szene ${d.n} fehlt im Video`); ok = false; continue; }
+    if (v.title !== d.title) { FEHLER(B, `Szene ${d.n}: Titel „${v.title}“ ≠ „${d.title}“`); ok = false; }
+    const lv = v.end - v.start, ld = d.end - d.start;
+    if (lv < ld - 1e-6) { FEHLER(B, `Szene ${d.n}: ${lv.toFixed(2)} s, kürzer als im Drehbuch (${ld} s)`); ok = false; }
+    else if (lv > ld + 1e-6) INFO(B, `Szene ${d.n} „${d.title}“: ${fmt(v.start)}–${fmt(v.end)} statt ${fmt(d.start)}–${fmt(d.end)}, ${(lv - ld).toFixed(2)} s länger wegen der Sprachaufnahme`);
+    else if (Math.abs(v.start - d.start) > 1e-6) INFO(B, `Szene ${d.n} „${d.title}“: verschoben auf ${fmt(v.start)}–${fmt(v.end)}, Länge wie Drehbuch`);
   }
-  const total = dScenes[dScenes.length - 1].end;
-  if (V.TOTAL === total && V.frames === total * V.FPS) OK(B, `Szenentitel und -zeiten wie Drehbuch; Gesamtdauer ${fmt(V.TOTAL)} (${V.TOTAL} s = ${V.frames} Bilder bei ${V.FPS} fps)`);
-  else FEHLER(B, `Gesamtdauer ${V.TOTAL} s / ${V.frames} Bilder, Drehbuch ${total} s`);
-  for (let i = 1; i < dScenes.length; i++) if (dScenes[i].start !== dScenes[i - 1].end) FEHLER(B, `Lücke/Überlappung zwischen Szene ${dScenes[i - 1].n} und ${dScenes[i].n}`);
+  for (let i = 1; i < V.SCENES.length; i++) if (Math.abs(V.SCENES[i].start - V.SCENES[i - 1].end) > 1e-6) { FEHLER(B, `Lücke/Überlappung zwischen Szene ${V.SCENES[i - 1].n} und ${V.SCENES[i].n}`); ok = false; }
+  if (V.frames !== Math.round(V.TOTAL * V.FPS)) { FEHLER(B, `Bildanzahl ${V.frames} passt nicht zu ${V.TOTAL} s`); ok = false; }
+  if (ok) OK(B, `${dScenes.length} Szenen, Titel und Reihenfolge wie Drehbuch, keine Szene kürzer als im Drehbuch; Gesamtdauer ${fmt(V.TOTAL)} (${V.frames} Bilder bei ${V.FPS} fps; Richtwert Drehbuch ${fmt(dScenes[dScenes.length - 1].end)})`);
 }
 
 // ================================================================ B  Sprechertext
@@ -89,6 +97,10 @@ const sceneOf = t => V.SCENES.find(s => t >= s.start && t < s.end) || V.SCENES[V
     else FEHLER(B, `Szene ${n}: weicht vom Drehbuch ab`);
   }
   for (const n of Object.keys(V.SPRECHERTEXT).map(Number)) if (!(n in dSpeech)) FEHLER(B, `Szene ${n}: Sprechertext im Video, aber nicht im Drehbuch`);
+  if (dPress.length) {
+    const same = JSON.stringify(V.PRESSEFRAGEN || []) === JSON.stringify(dPress);
+    (same ? OK : FEHLER)(B, `Pressefragen (Szene 8): ${same ? `${dPress.length} Fragen wortgleich` : 'weichen vom Drehbuch ab'}`);
+  }
 }
 
 // ================================================================ C  Untertitel (Cues)
@@ -101,18 +113,21 @@ const cueMetrics = [];
     const cs = cues.filter(c => c.scene === n);
     if (!cs.length) { (inScope(n) ? FEHLER : INFO)(B, `Szene ${n}: noch keine Untertitel`); continue; }
     const joined = cs.map(c => c.lines.join(' ')).join(' ');
-    if (joined === dSpeech[n]) OK(B, `Szene ${n}: ${cs.length} Untertitel, zusammen wortgleich und vollständig`);
-    else FEHLER(B, `Szene ${n}: Untertitel ergeben nicht den Sprechertext`);
+    const dsc = DB.scenes.find(s => s.n === n);
+    const soll = [...(dsc && dsc.press.length ? dsc.press : []), dSpeech[n]].join(' ');
+    if (joined === soll) OK(B, `Szene ${n}: ${cs.length} Untertitel, zusammen wortgleich und vollständig${dsc && dsc.press.length ? ' (Pressefragen und Sprechertext)' : ''}`);
+    else FEHLER(B, `Szene ${n}: Untertitel ergeben nicht den Sprechertext${dsc && dsc.press.length ? ' mit den Pressefragen' : ''}`);
     cs.forEach((c, k) => {
       const dur = c.end - c.start, chars = c.lines.join(' ').length, cps = chars / dur;
       cueMetrics.push({ n, i: c.i, start: c.start, end: c.end, dur, chars, cps, lines: c.lines });
       if (c.start < sc.start || c.end > sc.end) FEHLER(B, `Cue ${c.i + 1} liegt außerhalb von Szene ${n}`);
       if (c.lines.length > 2) FEHLER(B, `Cue ${c.i + 1}: mehr als zwei Zeilen`);
-      if (dur < 1.2) WARN(B, `Cue ${c.i + 1}: nur ${dur.toFixed(1)} s sichtbar`);
-      if (cps > 17) FEHLER(B, `Cue ${c.i + 1}: Lesetempo ${cps.toFixed(1)} Zeichen/s (> 17)`);
-      else if (cps > 15) WARN(B, `Cue ${c.i + 1}: Lesetempo ${cps.toFixed(1)} Zeichen/s (> 15)`);
+      if (dur < 1.0) WARN(B, `Cue ${c.i + 1}: nur ${dur.toFixed(1)} s sichtbar`);
+      // Die Untertitel folgen der Stimme; das Lesetempo ergibt sich aus dem Sprechtempo
+      if (cps > 20) FEHLER(B, `Cue ${c.i + 1}: Lesetempo ${cps.toFixed(1)} Zeichen/s (> 20)`);
+      else if (cps > 17) WARN(B, `Cue ${c.i + 1}: Lesetempo ${cps.toFixed(1)} Zeichen/s (> 17, folgt dem Sprechtempo)`);
       if (k > 0 && c.start < cs[k - 1].end) FEHLER(B, `Cue ${c.i + 1} überlappt Cue ${c.i}`);
-      if (k > 0 && c.start - cs[k - 1].end < 0.1) WARN(B, `Cue ${c.i + 1}: Abstand zum Vorgänger < 0,1 s`);
+      if (k > 0 && c.start - cs[k - 1].end < 0.06) WARN(B, `Cue ${c.i + 1}: Abstand zum Vorgänger < 2 Bilder`);
     });
   }
   // Sichtbarkeit, Wortlaut und Lage im Bild zur Cue-Mitte
@@ -133,6 +148,23 @@ const cueMetrics = [];
     if (probs.length) FEHLER(B, `Cue ${c.i + 1} bei ${fmt(t)}: ${probs.join('; ')}`); else geomOK++;
   }
   if (geomTotal) (geomOK === geomTotal ? OK : FEHLER)(B, `${geomOK} von ${geomTotal} Untertiteln zur Cue-Mitte korrekt angezeigt, vollständig im Bild, max. 2 Zeilen`);
+  // Synchron zur Stimme: jeder Untertitel beginnt kurz vor seinem ersten gesprochenen Wort und steht bis nach dem letzten
+  if (TL) {
+    const worte = [];
+    for (const S of TL.szenen) for (const st of S.saetze) for (const [w, a, b] of st.worte) worte.push({ w, a: S.start + a, b: S.start + b, n: S.n });
+    let pos = 0, schlecht = 0, maxVor = 0;
+    for (const c of V.CUES) {
+      const anz = c.lines.join(' ').split(' ').length, ws = worte.slice(pos, pos + anz);
+      pos += anz;
+      if (ws.length !== anz || ws.map(x => x.w).join(' ') !== c.lines.join(' ')) { schlecht++; FEHLER(B, `Cue „${c.lines.join(' ').slice(0, 40)}…“ passt nicht zu den Wörtern der Sprachaufnahme`); continue; }
+      const vor = ws[0].a - c.start, nach = c.end - ws[ws.length - 1].b;
+      maxVor = Math.max(maxVor, vor);
+      // bei dicht folgenden Wörtern liegt die Grenze mittig in der Wortlücke (± 1 Bild)
+      if (vor < -0.05 || vor > 0.3 || nach < -0.05) { schlecht++; if (inScope(c.scene)) FEHLER(B, `Cue „${c.lines.join(' ').slice(0, 40)}…“ nicht synchron zur Stimme (Beginn ${vor.toFixed(2)} s vor dem ersten Wort, Ende ${nach.toFixed(2)} s nach dem letzten)`); }
+    }
+    if (!schlecht && pos === worte.length) OK(B, `alle ${V.CUES.length} Untertitel synchron zur Stimme: Beginn höchstens ${maxVor.toFixed(2)} s vor dem ersten Wort, Ende nach dem letzten Wort; SRT und Bild aus denselben Zeitmarken`);
+    else if (pos !== worte.length) FEHLER(B, `Untertitel decken ${pos} von ${worte.length} gesprochenen Wörtern ab`);
+  } else INFO(B, 'Zeitplan der Sprachaufnahmen (audio/timeline.json) fehlt – Synchronität nicht geprüft');
 }
 
 // ================================================================ D  Synchronpunkte
@@ -141,11 +173,15 @@ const cueMetrics = [];
   for (const s of V.SYNC || []) {
     const sc = sceneOf(s.t);
     if (!inScope(sc.n)) continue;
-    const c = V.CUES.find(c => c.lines.join(' ').includes(s.phrase));
-    if (!c) { FEHLER(B, `${s.label}: kein Untertitel mit „${s.phrase}“`); continue; }
-    const d = c.start - s.t;
-    if (Math.abs(d) <= 0.15 && c.end > s.t + 0.3) OK(B, `${s.label} bei ${fmt(s.t)} – Untertitel „${c.lines.join(' ')}“ ab ${fmt(c.start)} (Abweichung ${d.toFixed(2)} s)`);
-    else FEHLER(B, `${s.label} bei ${fmt(s.t)}, Untertitel „${s.phrase}“ erst/schon ab ${fmt(c.start)}`);
+    // Zeitpunkt des ersten Wortes der Phrase in der Sprachaufnahme
+    const nw = x => x.toLowerCase().replace(/[^\p{L}\p{N}-]+/gu, '');
+    const pw = s.phrase.split(' ').map(nw);
+    const worte = TL ? TL.szenen.flatMap(S => S.saetze.flatMap(st => st.worte.map(([w, a]) => ({ w: nw(w), a: S.start + a })))) : [];
+    const i = worte.findIndex((_, k) => pw.every((p, q) => worte[k + q] && worte[k + q].w === p));
+    if (i < 0) { FEHLER(B, `${s.label}: „${s.phrase}“ nicht in der Sprachaufnahme gefunden`); continue; }
+    const d = worte[i].a - s.t;
+    if (Math.abs(d) <= 0.1) OK(B, `${s.label} bei ${fmt(s.t)} – die Stimme sagt „${s.phrase}“ ab ${fmt(worte[i].a)} (Abweichung ${d.toFixed(2)} s)`);
+    else FEHLER(B, `${s.label} bei ${fmt(s.t)}, die Stimme sagt „${s.phrase}“ erst/schon ab ${fmt(worte[i].a)}`);
   }
 }
 
@@ -207,16 +243,35 @@ const visibleTexts = new Map();   // Schlüssel → { text, von, bis, quelle }
   if (SCOPE && SCOPE.includes(0)) ranges[0][0] = 0;
   let samples = 0;
   const timedSeen = {};
+  const ueberdeckt = new Map();
   for (const [a, b] of ranges) {
     for (let t = a; t < b - 1e-6; t += STEP) {
       const tt = Math.round(t * V.FPS) / V.FPS;
       await renderAt(page, tt);
-      const els = await page.evaluate(() => [...document.querySelectorAll('#stage text')].map(e => {
-        let op = 1, n = e;
-        while (n && n.id !== 'stage') { const cs = getComputedStyle(n); if (cs.display === 'none') { op = 0; break; } op *= parseFloat(cs.opacity || '1'); n = n.parentElement; }
-        return { k: e.dataset.k || null, i: +(e.dataset.i || 0), text: e.textContent, op };
-      }));
+      const { els, marke } = await page.evaluate(() => {
+        const opOf = e => { let op = 1, n = e; while (n && n.id !== 'stage') { const cs = getComputedStyle(n); if (cs.display === 'none') return 0; op *= parseFloat(cs.opacity || '1'); n = n.parentElement; } return op; };
+        const brand = document.querySelector('#stage svg.brand');
+        const img = brand && brand.querySelector('image');
+        const marke = img ? { op: opOf(img), rahmen: markeRahmen() } : null;
+        const els = [...document.querySelectorAll('#stage text')].map(e => {
+          const r = e.getBoundingClientRect();
+          return { k: e.dataset.k || null, i: +(e.dataset.i || 0), text: e.textContent, op: opOf(e), marke: !!e.closest('svg.brand'), box: [r.x, r.y, r.width, r.height] };
+        });
+        return { els, marke };
+      });
       checkGroup(els, tt);
+      // Marke oben rechts darf Titelkarte, Einblendungen und Untertitel nicht überdecken
+      if (marke && marke.op > 0.05) {
+        const m = marke.rahmen;
+        for (const e of els) {
+          if (e.marke || e.op <= 0.05 || !e.k) continue;
+          const [x, y, w, h] = e.box;
+          if (x < m.x + m.w && x + w > m.x && y < m.y + m.h && y + h > m.y) {
+            const bild = e.k in V.TEXTE_AUSNAHMEN;
+            ueberdeckt.set(e.k + (bild ? ':bild' : ''), { k: e.k, text: e.text, t: tt, bild });
+          }
+        }
+      }
       for (const tm of timed) { const vis = Math.max(0, ...els.filter(e => e.k === tm.key).map(e => e.op)); (timedSeen[tm.key] = timedSeen[tm.key] || []).push([tt, vis]); }
       samples++;
     }
@@ -224,8 +279,15 @@ const visibleTexts = new Map();   // Schlüssel → { text, von, bis, quelle }
   if (issues.size) for (const m of issues.values()) (m.startsWith('Platzhalter') ? (SCOPE ? INFO : FEHLER) : FEHLER)(B, m);
   const hard = [...issues.values()].filter(m => !m.startsWith('Platzhalter')).length;
   if (!hard) OK(B, `${samples} Zeitpunkte abgetastet (alle ${STEP} s${SCOPE ? ', Szenen ' + SCOPE.join(', ') : ''}): jeder Text trägt eine Kennung und ist wortgleich`);
-  // Einblendezeiten laut Drehbuch
+  // Einblendezeiten laut Drehbuch, umgerechnet auf die Videozeit: am Szenenende ausgerichtet (Schlusstafel) oder ab Szenenbeginn
   for (const tm of timed) {
+    const d = dScenes.find(x => tm.from >= x.start && tm.from < x.end), v = d && V.SCENES.find(x => x.n === d.n);
+    if (d && v) {
+      const len = tm.to - tm.from, amEnde = Math.abs(tm.to - d.end) < 1e-6;
+      const von = amEnde ? v.end - len : v.start + (tm.from - d.start);
+      if (Math.abs(von - tm.from) > 1e-6) INFO(B, `Einblendung „${tm.key}“: laut Drehbuch ${fmt(tm.from)}–${fmt(tm.to)}, im Video ${fmt(von)}–${fmt(von + len)} (Szene ${d.n} verschoben)`);
+      tm.from = von; tm.to = von + len;
+    }
     if (!inScope(sceneOf(tm.from).n)) { INFO(B, `Einblendung „${tm.key}“ (${fmt(tm.from)}–${fmt(tm.to)}): Szene ${sceneOf(tm.from).n} nicht im Prüfumfang`); continue; }
     const seen = timedSeen[tm.key];
     if (!seen) continue;
@@ -235,6 +297,9 @@ const visibleTexts = new Map();   // Schlüssel → { text, von, bis, quelle }
     if (inOK && outOK) OK(B, `Einblendung „${tm.key}“ sichtbar ${fmt(tm.from)}–${fmt(tm.to)} wie im Drehbuch`);
     else FEHLER(B, `Einblendung „${tm.key}“: Sichtbarkeit weicht von ${fmt(tm.from)}–${fmt(tm.to)} ab`);
   }
+  // Marke: Überdeckung
+  for (const u of ueberdeckt.values()) (u.bild ? WARN : FEHLER)('Marke', `Marke oben rechts überdeckt ${u.bild ? 'den Bildtext' : 'die Einblendung'} „${u.text}“ (${u.k}) bei ${fmt(u.t)}`);
+  if (!ueberdeckt.size) OK('Marke', `Marke oben rechts überdeckt an keinem der ${samples} Zeitpunkte eine Titelkarte, Einblendung oder einen Untertitel`);
   // „Woche 5“ darf nicht mehr vorkommen (V1.2: Kalenderblätter nur bis Woche 4)
   const html = fs.readFileSync(HTML, 'utf8');
   if (/Woche 5/.test(html)) FEHLER(B, '„Woche 5“ kommt im Video vor (V1.2: nur bis Woche 4)'); else OK(B, '„Woche 5“ kommt nicht vor (V1.2: Kalenderblätter bis Woche 4)');
@@ -280,10 +345,23 @@ const visibleTexts = new Map();   // Schlüssel → { text, von, bis, quelle }
     const sHits = scan('SRT', fs.readFileSync(SRT, 'utf8'), true);
     if (sHits.length) sHits.forEach(h => FEHLER(B, `SRT: ${h.typ} „${h.wort}“`)); else OK(B, `SRT (${path.basename(SRT)}): keine Treffer`);
   } else INFO(B, 'SRT noch nicht erzeugt – wird beim Export mitgeprüft');
+  // Sprechtexte, die an die Sprachausgabe gehen (audio/tts/*.txt und die gesendeten Texte in audio/*.json)
+  {
+    const tdir = path.join(ROOT, 'audio', 'tts'), adir = path.join(ROOT, 'audio');
+    const quellen = [];
+    if (fs.existsSync(tdir)) for (const f of fs.readdirSync(tdir).filter(f => f.endsWith('.txt'))) quellen.push([`audio/tts/${f}`, fs.readFileSync(path.join(tdir, f), 'utf8')]);
+    if (fs.existsSync(adir)) for (const f of fs.readdirSync(adir).filter(f => /^szene_.*\.json$/.test(f))) quellen.push([`audio/${f}`, JSON.parse(fs.readFileSync(path.join(adir, f), 'utf8')).text]);
+    const tHits = quellen.flatMap(([f, t]) => scan(f, t, true).map(h => ({ ...h, f })));
+    if (tHits.length) tHits.forEach(h => FEHLER(B, `Sprechtext ${h.f}: ${h.typ} „${h.wort}“`)); else OK(B, `Sprechtexte für die Sprachausgabe (${quellen.length} Dateien): keine Treffer`);
+    const ort = quellen.filter(([, t]) => /herne/i.test(t));
+    if (ort.length) ort.forEach(([f]) => FEHLER(B, `Ortsname in einem Text für die Sprachausgabe: ${f} (Vorgabe: die Stimme sagt „die Stadt“)`));
+    else OK(B, `Ortsname kommt in keinem Text für die Sprachausgabe vor (Vorgabe des Auftraggebers)`);
+  }
   // Code: Treffer mit Einordnung
   const files = [HTML, ...fs.readdirSync(path.join(ROOT, 'export')).filter(f => f.endsWith('.mjs')).map(f => path.join(ROOT, 'export', f)), path.join(ROOT, 'package.json')];
   const known = [
     [/^URL$/, /w3\.org\/2000\/svg/, 'SVG-Namensraum (technisch notwendig, nicht im Bild)'],
+    [/^URL$/, /api\.elevenlabs\.io/, 'Schnittstelle der Sprachausgabe (nur im Skript, nicht im Bild)'],
     [/^Werkzeug$/, /./, 'Export-Werkzeug laut Auftrag (Node, Playwright, ffmpeg/H.264), nur in Skripten'],
     [/^Schrift$/, /./, 'Schriftangabe laut Auftrag (Arial bzw. maßgleiche Ersatzschrift)'],
     [/^Versionsnummer$/, /"(version|playwright)"\s*:/, 'Paketversion in package.json (Build-Werkzeug, nicht im Video)'],
@@ -327,7 +405,7 @@ const visibleTexts = new Map();   // Schlüssel → { text, von, bis, quelle }
 // ================================================================ H  Dauer, SRT, MP4
 {
   const B = 'Dauer und Dateien';
-  const rows = V.SCENES.map(s => `Szene ${s.n} ${fmt(s.start)}–${fmt(s.end)} (${s.end - s.start} s)`).join(' · ');
+  const rows = V.SCENES.map(s => `Szene ${s.n} ${fmt(s.start)}–${fmt(s.end)} (${(s.end - s.start).toFixed(2)} s)`).join(' · ');
   INFO(B, rows);
   if (fs.existsSync(SRT)) {
     const srt = fs.readFileSync(SRT, 'utf8').replace(/\r/g, '').trim().split(/\n\n+/);
@@ -336,11 +414,92 @@ const visibleTexts = new Map();   // Schlüssel → { text, von, bis, quelle }
     (same ? OK : FEHLER)(B, `SRT: ${parsed.length} Einträge, ${same ? 'Text und Zeiten identisch mit den eingebrannten Untertiteln' : 'weicht von den Untertiteln ab'}`);
   }
   if (fs.existsSync(MP4)) {
-    const j = JSON.parse(execFileSync('ffprobe', ['-v', 'error', '-count_frames', '-show_entries', 'stream=codec_name,profile,width,height,pix_fmt,r_frame_rate,nb_read_frames,codec_type:format=duration,size', '-of', 'json', MP4]).toString());
-    const v = j.streams.find(s => s.codec_type === 'video'), audio = j.streams.some(s => s.codec_type === 'audio');
-    const okAll = v.codec_name === 'h264' && v.pix_fmt === 'yuv420p' && v.width === 1920 && v.height === 1080 && v.r_frame_rate === '30/1' && +v.nb_read_frames === V.frames && !audio;
-    (okAll ? OK : FEHLER)(B, `MP4: ${v.codec_name} ${v.profile}, ${v.width}×${v.height}, ${v.pix_fmt}, ${v.r_frame_rate} fps, ${v.nb_read_frames} Bilder, ${(+j.format.duration).toFixed(3)} s, ${(j.format.size / 1e6).toFixed(1)} MB, ${audio ? 'MIT Tonspur' : 'ohne Ton'}`);
+    const j = JSON.parse(execFileSync('ffprobe', ['-v', 'error', '-count_frames', '-show_entries', 'stream=codec_name,profile,width,height,pix_fmt,r_frame_rate,nb_read_frames,codec_type,sample_rate,channels,bit_rate,duration:format=duration,size', '-of', 'json', MP4]).toString());
+    const v = j.streams.find(s => s.codec_type === 'video'), a = j.streams.find(s => s.codec_type === 'audio');
+    const okV = v.codec_name === 'h264' && v.pix_fmt === 'yuv420p' && v.width === 1920 && v.height === 1080 && v.r_frame_rate === '30/1' && +v.nb_read_frames === V.frames;
+    (okV ? OK : FEHLER)(B, `MP4 Bild: ${v.codec_name} ${v.profile}, ${v.width}×${v.height}, ${v.pix_fmt}, ${v.r_frame_rate} fps, ${v.nb_read_frames} Bilder (Soll ${V.frames}), ${(+j.format.duration).toFixed(3)} s, ${(j.format.size / 1e6).toFixed(1)} MB`);
+    if (!a) FEHLER(B, 'MP4 ohne Tonspur');
+    else {
+      const kbit = Math.round(+a.bit_rate / 1000), vd = +v.nb_read_frames / 30, ad = +a.duration;
+      const okA = a.codec_name === 'aac' && +a.sample_rate === 48000 && +a.channels === 2 && kbit >= 170 && kbit <= 200;
+      (okA ? OK : FEHLER)(B, `MP4 Ton: ${a.codec_name}, ${a.sample_rate} Hz, ${a.channels} Kanäle, ${kbit} kbit/s (Soll AAC 192 kbit/s)`);
+      (Math.abs(ad - vd) <= 0.05 ? OK : FEHLER)(B, `Länge Ton ${ad.toFixed(3)} s, Länge Bild ${vd.toFixed(3)} s (Abweichung ${(ad - vd).toFixed(3)} s)`);
+      const r = spawnSync('ffmpeg', ['-hide_banner', '-nostats', '-i', MP4, '-map', '0:a', '-af', 'ebur128=peak=true', '-f', 'null', '-'], { encoding: 'utf8', maxBuffer: 1 << 28 });
+      const z = (r.stderr || '').slice((r.stderr || '').lastIndexOf('Summary:'));
+      const lufs = +(z.match(/I:\s+(-?[\d.]+) LUFS/) || [])[1], tp = +(z.match(/Peak:\s+(-?[\d.]+) dBFS/) || [])[1];
+      (Math.abs(lufs + 16) <= 0.5 && tp <= -1.0 ? OK : FEHLER)(B, `Lautheit ${lufs} LUFS integriert (Soll −16), True Peak ${tp} dBTP (Soll ≤ −1)`);
+    }
   } else INFO(B, 'MP4 noch nicht exportiert');
+}
+
+// ================================================================ J  Ton (Sprachausgabe)
+{
+  const B = 'Ton';
+  if (!TL) INFO(B, 'Noch keine Sprachaufnahmen (audio/timeline.json fehlt)');
+  else {
+    // Aufnahmen aktuell: gesendeter Text = heutiger Sprachtext, Stimme und Einstellungen wie vorgegeben
+    const soll = new Map();
+    for (const e of sprachtexte(DB)) e.teile.forEach((t, i) => soll.set(e.art === 'fragen' ? `szene_${String(e.szene).padStart(2, '0')}_frage_${i + 1}` : `szene_${String(e.szene).padStart(2, '0')}`, t));
+    const st = fragenStimmen();
+    let aktuell = 0, fehlt = [];
+    for (const [id, t] of soll) {
+      const jf = path.join(ROOT, 'audio', id + '.json');
+      if (!fs.existsSync(jf) || !fs.existsSync(path.join(ROOT, 'audio', id + '.mp3'))) { fehlt.push(id); continue; }
+      const j = JSON.parse(fs.readFileSync(jf, 'utf8'));
+      const stimmeSoll = t.stimme === 'Erzähler' ? ERZAEHLER.id : st && st[t.stimme] && st[t.stimme].id;
+      const probs = [];
+      if (j.text !== t.text) probs.push('Text veraltet');
+      if (j.stimme.id !== stimmeSoll) probs.push('andere Stimme');
+      if (j.modell !== MODELL || JSON.stringify(j.einstellungen) !== JSON.stringify(EINSTELLUNGEN)) probs.push('Modell/Einstellungen abweichend');
+      if (probs.length) FEHLER(B, `${id}: ${probs.join(', ')}`); else aktuell++;
+    }
+    const szFehlt = fehlt.map(id => +id.slice(6, 8));
+    if (fehlt.length) (szFehlt.some(n => inScope(n)) && !SCOPE ? FEHLER : INFO)(B, `Noch keine Aufnahme für: ${fehlt.join(', ')}${st ? '' : ' (Stimmen der Pressefragen noch nicht freigegeben)'}`);
+    OK(B, `${aktuell} Aufnahmen aktuell: Text wie Sprachtext, Stimme ${ERZAEHLER.name} (${MODELL}; stability ${EINSTELLUNGEN.stability}, similarity_boost ${EINSTELLUNGEN.similarity_boost}, style ${EINSTELLUNGEN.style}, speaker boost an, Geschwindigkeit ${EINSTELLUNGEN.speed})${st ? `; Pressefragen: ${st.A.name} / ${st.B.name}` : ''}`);
+    // Pausen und Tempo: 0,5 s am Szenenanfang, 0,8 s am Ende verlängerter Szenen, nie beschleunigt
+    let pOK = true;
+    for (const S of TL.szenen) {
+      if (!S.saetze.length || !inScope(S.n)) continue;
+      const erst = Math.min(...S.saetze.map(x => x.beginn)), letzt = Math.max(...S.saetze.map(x => x.ende)), L = S.ende - S.start;
+      if (erst < 0.5 - 0.01) { pOK = false; FEHLER(B, `Szene ${S.n}: Sprechbeginn ${erst.toFixed(2)} s nach Szenenbeginn (Soll ≥ 0,5 s)`); }
+      if (L - letzt < 0.8 - 0.01) { pOK = false; FEHLER(B, `Szene ${S.n}: nach dem letzten Wort nur ${(L - letzt).toFixed(2)} s bis Szenenende (Soll ≥ 0,8 s)`); }
+      if (S.verlaengert && L - letzt > 0.8 + 1 / 30 + 0.01 && S.tail === 1) WARN(B, `Szene ${S.n}: verlängert, aber ${(L - letzt).toFixed(2)} s Pause am Ende (Soll 0,8 s)`);
+    }
+    if (EINSTELLUNGEN.speed !== 1.0) { pOK = false; FEHLER(B, 'Stimme beschleunigt (speed ≠ 1,0)'); }
+    if (pOK) OK(B, 'Pausen: Sprechbeginn ≥ 0,5 s nach Szenenbeginn, ≥ 0,8 s nach dem letzten Wort bis Szenenende; Stimme nicht beschleunigt (Geschwindigkeit 1,0, keine Zeitstreckung in der Mischung)');
+  }
+}
+
+// ================================================================ K  Marke (SITS-Logo)
+{
+  const B = 'Marke';
+  const bilder = await page.evaluate(() => [...document.querySelectorAll('image')].map(e => ({ href: (e.getAttribute('href') || '').slice(0, 22), w: +e.getAttribute('width'), h: +e.getAttribute('height') })));
+  const extern = [...fs.readFileSync(HTML, 'utf8').matchAll(/(?:src|href)=["'](?!data:|#|https?:\/\/www\.w3\.org)([^"']+\.(?:png|jpe?g|gif|webp|svg))/gi)].map(m => m[1]);
+  const logoOK = bilder.every(b => b.href.startsWith('data:image/png;base64') && b.w === V.LOGO.w && b.h === V.LOGO.h);
+  (logoOK && !extern.length ? OK : FEHLER)(B, `Logo als Data-URI eingebettet, einzige Bilddatei, Originalgröße ${V.LOGO.w} × ${V.LOGO.h} px (nicht hochskaliert)${extern.length ? '; externe Bilder: ' + extern.join(', ') : ''}`);
+  // sichtbar in allen Szenen außer der Schlusstafel; auf der Schlusstafel mittig unter dem Stadt-Herne-Text
+  const fehlt = [];
+  for (const sc of V.SCENES) {
+    if (!inScope(sc.n)) continue;
+    const t = Math.round((sc.start + Math.min(3, (sc.end - sc.start) / 2)) * V.FPS) / V.FPS;
+    await renderAt(page, t);
+    const r = await page.evaluate(() => { const i = document.querySelector('#stage svg.brand image'); if (!i) return null; const b = i.getBoundingClientRect(); let op = 1, n = i; while (n && n.id !== 'stage') { op *= parseFloat(getComputedStyle(n).opacity || '1'); n = n.parentElement; } return { op, w: b.width, h: b.height, x: b.x, y: b.y }; });
+    if (!r || r.op < 0.9 || Math.abs(r.w - V.LOGO.w) > 0.5 || r.x + r.w < 1700 || r.y > 60) fehlt.push(sc.n);
+  }
+  if (fehlt.length) FEHLER(B, `Logo oben rechts fehlt oder ist verändert in Szene ${fehlt.join(', ')}`);
+  else OK(B, `Logo oben rechts in Originalgröße mit der Zeile „${V.TEXTE.marke_zeile}“ sichtbar${SCOPE ? ' (geprüfte Szenen)' : ' in allen Szenen'}`);
+  if (inScope(V.SCENES[V.SCENES.length - 1].n)) {
+    await renderAt(page, V.TOTAL - 1);
+    const e = await page.evaluate(() => {
+      const oben = document.querySelector('#stage svg.brand image');
+      const imgs = [...document.querySelectorAll('#stage image')].filter(i => !i.closest('svg.brand')).map(i => { const b = i.getBoundingClientRect(); return { x: b.x + b.width / 2, y: b.y, w: b.width }; });
+      const klein = [...document.querySelectorAll('#stage text[data-k="schluss_klein"]')].map(t => t.getBoundingClientRect())[0];
+      const zeile = [...document.querySelectorAll('#stage text[data-k="marke_zeile"]')].filter(t => !t.closest('svg.brand')).map(t => t.textContent);
+      return { oben: !!oben, imgs, kleinUnten: klein ? klein.y + klein.height : null, zeile };
+    });
+    const mittig = e.imgs.length === 1 && Math.abs(e.imgs[0].x - 960) < 1.5 && e.kleinUnten !== null && e.imgs[0].y > e.kleinUnten && Math.abs(e.imgs[0].w - V.LOGO.w) < 0.5;
+    (mittig && !e.oben && e.zeile.join(' ') === V.TEXTE.marke_zeile ? OK : FEHLER)(B, `Schlusstafel: Logo oben rechts ${e.oben ? 'noch sichtbar' : 'ausgeblendet'}; Logo ${mittig ? 'mittig unter dem Stadt-Herne-Text' : 'nicht mittig unter dem Stadt-Herne-Text'} mit der Zeile „${e.zeile.join(' ')}“`);
+  }
 }
 
 // ================================================================ I  Skriptfehler, Standbilder

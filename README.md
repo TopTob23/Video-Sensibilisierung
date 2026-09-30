@@ -6,8 +6,9 @@ Erklärvideo für die Verwaltungsführung der Stadt Herne, 1920 × 1080, 30 fps.
 Grundlage ist das Drehbuch `Drehbuch_Video_Angriffsszenario_Herne_V1_4.md` (13 Szenen, ca. 7:34, mit Sprachausgabe). Die Stilreferenz
 `referenz/Stilreferenz_Herne_Flat_Vector.png` dient nur als Vorlage und ist nicht Teil des Videos.
 
-> **Stand:** Das Video wird auf Drehbuch V1_4 umgebaut. Die HTML-Datei und die Dateien in `output/` zeigen bis zum Abschluss noch den
-> Stand nach Drehbuch V1.2 (9 Szenen, 4:18, ohne Ton); `npm run check` meldet dazu Abweichungen.
+> **Stand:** Umbau auf Drehbuch V1_4 mit Sprachausgabe. Fertig: Tonpipeline, Zeitplan aus den Aufnahmen, SITS-Logo, Szene 1 (korrigiert),
+> Szenen 8, 9 und 12 als Muster. Offen: Pressefragen (Stimmen in Freigabe), Szenen 10 und 11, Abstimmung der Szenen 0–7 auf die Sprachzeiten.
+> Die Dateien `output/Ein_ganz_normaler_Montag_V1_0.*` zeigen noch den Stand nach Drehbuch V1.2 (ohne Ton).
 
 ## Dateien
 
@@ -17,7 +18,11 @@ Grundlage ist das Drehbuch `Drehbuch_Video_Angriffsszenario_Herne_V1_4.md` (13 S
 | `export/render.mjs` | Export: nimmt jedes Bild über `render(t)` auf und setzt es mit ffmpeg zu MP4 zusammen (H.264, yuv420p, 30 fps); erzeugt die SRT |
 | `export/check.mjs` | Prüfung gegen das Drehbuch (neueste Fassung im Projektordner); Bericht, Standbilder und Kontaktbogen in `output/pruefung/` |
 | `export/drehbuch.mjs` | Liest das Drehbuch (Szenen, Zeiten, Sprechertext, Pressefragen) |
-| `export/tts-text.mjs` | Sprachtexte mit ausgeschriebenen Abkürzungen und Zahlen, Ersetzungsliste |
+| `export/tts-text.mjs` | Sprachtexte mit ausgeschriebenen Abkürzungen und Zahlen, Ersetzungsliste; der Ortsname wird nicht gesprochen |
+| `export/tts.mjs` | Sprachausgabe (ElevenLabs, mit Zeitmarken); Schlüssel nur aus `ELEVENLABS_API_KEY` |
+| `export/sync.mjs`, `export/timeline.mjs` | Zeitplan aus den Aufnahmen: Szenenlängen, Bild-Ton-Anker, Untertitel |
+| `export/audio.mjs` | Tonmischung, −16 LUFS integriert, True Peak ≤ −1 dBTP |
+| `audio/` | Aufnahmen je Sprechteil (`szene_XX.mp3` + Zeitmarken `.json`), `timeline.json` |
 | `audio/tts/` | Sprachtexte je Szene (`szene_XX.txt`) und `ERSETZUNGEN.md` |
 | `SITS_Logo.png` | Logo (152 × 88 px), wird als Data-URI in die HTML-Datei eingebettet |
 | `export/stills.mjs` | Standbilder zu beliebigen Zeitpunkten |
@@ -43,6 +48,8 @@ npm run check                 # Prüfung gegen das neueste Drehbuch im Projektor
 npm run check -- --stills     # zusätzlich Standbilder bei 25/50/75 % je Szene und Kontaktbogen
 npm run export                # MP4 und SRT nach output/
 npm run tts:text              # Sprachtexte und Ersetzungsliste nach audio/tts/
+node export/tts.mjs           # Sprachausgabe für geänderte Texte (braucht ELEVENLABS_API_KEY)
+node export/sync.mjs          # Zeitplan aus den Aufnahmen in die HTML-Datei übernehmen
 ```
 
 ## Hinweise zur Umsetzung

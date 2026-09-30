@@ -101,7 +101,10 @@ const ANKER = {
   5: [[1, "Einige Systeme am"], [8, "Viele Server laufen"], [13, "Und die Trennung"], [18.4, "Ein Angreifer kann"]],
   6: [[1, "Erst im letzten"], [5, "Die Daten werden"], [9.6, "es folgt eine"], [12.6, "Für die Wiederherstellung"], [17.6, "Die Datensicherung läuft"], [21, "für Teile der"], [24.2, "und manche Unterlagen"]],
   7: [[1, "Vergleichbare Fälle zeigen,"], [5.6, "Anhalt-Bitterfeld rief den"], [12.4, "der Aufwand lag"], [18, "Sozialleistungen konnten mindestens"], [23.6, "Nach dem Angriff"], [30.4, "erst nach etwa"], [35.4, "Für die Menschen"], [38.4, "Urkunden und Zulassungen"], [41.8, "Leistungen kommen später"], [44.4, "die Verwaltung ist"]],
-  8: [], 9: [], 10: [], 11: [], 12: [],
+  8: [[0.5, "Wie konnte es"], [3.0, "Waren die Schwachstellen"], [5.9, "Warum wurde nicht"], [12.5, "Was passiert mit"], [16.0, "Nach einem Angriff"], [20.1, "Der Vorfall muss"], [24.1, "Das BSI warnt"], [31.5, "Die Frage, ob"], [36.0, "Sie sind in"]],
+  9: [[5.1, "Im IT-Grundschutz ist"], [15.0, "Die NIS-2-Richtlinie der"], [28.8, "im Informationssicherheitsgesetz NRW"], [37.4, "Sie zeigen aber,"], [41.1, "Maßnahmen billigen, ihre"], [43.3, "überwachen und sich"], [45.2, "schulen lassen."]],
+  10: [], 11: [],
+  12: [[0.5, "Für die Zertifizierung"], [3.7, "Die Referenzdokumente sind"], [6.3, "die Grundschutz-Checks aller"], [9.7, "Risikoanalyse und Realisierungsplan"], [14.4, "Für die Umsetzung"], [15.7, "fünfzehn Leitfäden, dreizehn"], [17.3, "dreizehn Härtungslisten und"], [19.3, "eine Entscheidungsvorlage vorbereitet."], [21.8, "Was zu tun"], [24.5, "Offen sind die"], [25.4, "Entscheidungen der Verwaltungsleitung,"], [27.6, "Budget und Personal"], [30.3, "die Übernahme der"], [32.8, "die Behebung der"], [36.9, "Überwachungsaudit."]],
 };
 /* ANKER-END */
 
@@ -116,84 +119,84 @@ const TIMELINE = {
     5: {"start":112,"end":138,"entwurf":26,"anker":[[1,1],[8,6.791],[13,10.584],[18.4,14.982]],"tail":1},
     6: {"start":138,"end":170,"entwurf":32,"anker":[[1,1],[5,3.705],[9.6,7.444],[12.6,9.879],[17.6,13.745],[21,16.915],[24.2,19.887]],"tail":1},
     7: {"start":170,"end":224,"entwurf":54,"anker":[[1,1],[5.6,5.249],[12.4,12.053],[18,17.855],[23.6,22.159],[30.4,29.821],[35.4,34.616],[38.4,36.694],[41.8,39.667],[44.4,41.443]],"tail":1},
-    8: {"start":224,"end":268,"entwurf":44,"anker":[],"tail":1},
-    9: {"start":268,"end":316,"entwurf":45,"anker":[],"tail":1},
-    10: {"start":316,"end":361,"entwurf":45,"anker":[],"tail":1},
-    11: {"start":361,"end":391,"entwurf":30,"anker":[],"tail":1},
-    12: {"start":391,"end":457,"entwurf":66,"anker":[],"tail":1}
+    8: {"start":224,"end":268,"entwurf":44,"anker":[[16,16],[20.1,20.119],[24.1,24.121],[31.5,31.513],[36,36.018]],"tail":1.002},
+    9: {"start":268,"end":315.03333333333336,"entwurf":45,"anker":[[5.1,5.086],[15,14.966],[28.8,28.793],[37.4,37.44],[41.1,41.086],[43.3,43.326],[45.2,45.161]],"tail":1},
+    10: {"start":315.03333333333336,"end":360.03333333333336,"entwurf":45,"anker":[],"tail":1},
+    11: {"start":360.03333333333336,"end":390.03333333333336,"entwurf":30,"anker":[],"tail":1},
+    12: {"start":390.03333333333336,"end":456.03333333333336,"entwurf":66,"anker":[[0.5,0.5],[3.7,3.736],[6.3,6.267],[9.7,9.727],[14.4,14.426],[15.7,15.68],[17.3,17.306],[19.3,19.349],[21.8,21.75],[24.5,24.501],[25.4,25.395],[27.6,27.578],[30.3,30.26],[32.8,32.802],[36.9,36.889]],"tail":1}
   },
   cues: [
-    {"scene":1,"start":12.9,"end":17.355,"lines":["Ausweise, Urkunden, Sozialleistungen, Kitaplätze,"]},
-    {"scene":1,"start":17.405,"end":20.571,"lines":["Baugenehmigungen und die Gehälter der Beschäftigten:"]},
+    {"scene":1,"start":12.9,"end":17.335,"lines":["Ausweise, Urkunden, Sozialleistungen, Kitaplätze,"]},
+    {"scene":1,"start":17.405,"end":20.551,"lines":["Baugenehmigungen und die Gehälter der Beschäftigten:"]},
     {"scene":1,"start":20.621,"end":26.082,"lines":["Fast jede Leistung der Stadtverwaltung","hängt heute von funktionierender IT ab."]},
-    {"scene":2,"start":32.9,"end":36.31,"lines":["Ein typischer Angriff beginnt","mit einer gefälschten E-Mail,"]},
-    {"scene":2,"start":36.36,"end":39.209,"lines":["die wie eine gewöhnliche Rechnung aussieht."]},
-    {"scene":2,"start":39.259,"end":42.401,"lines":["Solche Nachrichten erreichen","jede Verwaltung täglich,"]},
-    {"scene":2,"start":42.451,"end":45.919,"lines":["und einzelne Klicks lassen sich nie ganz verhindern."]},
+    {"scene":2,"start":32.9,"end":36.35,"lines":["Ein typischer Angriff beginnt","mit einer gefälschten E-Mail,"]},
+    {"scene":2,"start":36.42,"end":39.189,"lines":["die wie eine gewöhnliche Rechnung aussieht."]},
+    {"scene":2,"start":39.259,"end":42.381,"lines":["Solche Nachrichten erreichen","jede Verwaltung täglich,"]},
+    {"scene":2,"start":42.451,"end":45.899,"lines":["und einzelne Klicks lassen sich nie ganz verhindern."]},
     {"scene":2,"start":45.969,"end":50.095,"lines":["Entscheidend ist, wie weit","ein Angreifer danach kommt."]},
-    {"scene":3,"start":57.5,"end":61.235,"lines":["In Herne lässt sich die IT nicht nur von wenigen,"]},
-    {"scene":3,"start":61.285,"end":64.784,"lines":["besonders geschützten Arbeitsplätzen aus verwalten."]},
-    {"scene":3,"start":64.838,"end":67.226,"lines":["Intern reicht dafür ein Passwort,"]},
-    {"scene":3,"start":67.276,"end":71.463,"lines":["eine zweite Bestätigung bei der Anmeldung","ist noch nicht eingeführt."]},
-    {"scene":3,"start":71.513,"end":77.404,"lines":["Zudem haben mehr Konten weitreichende Rechte,","als für die jeweiligen Aufgaben nötig wäre."]},
+    {"scene":3,"start":57.5,"end":61.292,"lines":["In Herne lässt sich die IT nicht nur von wenigen,"]},
+    {"scene":3,"start":61.362,"end":64.768,"lines":["besonders geschützten Arbeitsplätzen aus verwalten."]},
+    {"scene":3,"start":64.838,"end":67.206,"lines":["Intern reicht dafür ein Passwort,"]},
+    {"scene":3,"start":67.276,"end":71.443,"lines":["eine zweite Bestätigung bei der Anmeldung","ist noch nicht eingeführt."]},
+    {"scene":3,"start":71.513,"end":77.384,"lines":["Zudem haben mehr Konten weitreichende Rechte,","als für die jeweiligen Aufgaben nötig wäre."]},
     {"scene":3,"start":77.454,"end":82.021,"lines":["Wer ein solches Konto übernimmt,","erreicht damit zentrale Systeme."]},
-    {"scene":4,"start":88.9,"end":93.143,"lines":["Verdächtige Vorgänge werden nicht zentral","gesammelt und ausgewertet."]},
-    {"scene":4,"start":93.193,"end":98.144,"lines":["Ein Angreifer kann sich deshalb über Wochen","im Netz bewegen, ohne aufzufallen."]},
-    {"scene":4,"start":98.194,"end":101.407,"lines":["Auch im Landkreis Anhalt-Bitterfeld","begann der Angriff"]},
-    {"scene":4,"start":101.457,"end":105.374,"lines":["nach späteren Auswertungen","Wochen vor seiner Entdeckung."]},
-    {"scene":5,"start":112.9,"end":118.641,"lines":["Einige Systeme am Übergang zum Internet erhalten","vom Hersteller keine Sicherheitsupdates mehr."]},
-    {"scene":5,"start":118.691,"end":122.434,"lines":["Viele Server laufen ohne die","empfohlenen Schutzeinstellungen."]},
-    {"scene":5,"start":122.484,"end":126.832,"lines":["Und die Trennung zwischen den Bereichen","im Netz ist noch unvollständig."]},
+    {"scene":4,"start":88.9,"end":93.123,"lines":["Verdächtige Vorgänge werden nicht zentral","gesammelt und ausgewertet."]},
+    {"scene":4,"start":93.193,"end":98.124,"lines":["Ein Angreifer kann sich deshalb über Wochen","im Netz bewegen, ohne aufzufallen."]},
+    {"scene":4,"start":98.194,"end":101.487,"lines":["Auch im Landkreis Anhalt-Bitterfeld","begann der Angriff"]},
+    {"scene":4,"start":101.557,"end":105.374,"lines":["nach späteren Auswertungen","Wochen vor seiner Entdeckung."]},
+    {"scene":5,"start":112.9,"end":118.621,"lines":["Einige Systeme am Übergang zum Internet erhalten","vom Hersteller keine Sicherheitsupdates mehr."]},
+    {"scene":5,"start":118.691,"end":122.414,"lines":["Viele Server laufen ohne die","empfohlenen Schutzeinstellungen."]},
+    {"scene":5,"start":122.484,"end":126.812,"lines":["Und die Trennung zwischen den Bereichen","im Netz ist noch unvollständig."]},
     {"scene":5,"start":126.882,"end":131.692,"lines":["Ein Angreifer kann sich deshalb leichter","von einem System zum nächsten bewegen."]},
-    {"scene":6,"start":138.9,"end":143.285,"lines":["Erst im letzten Schritt wird der Angriff","sichtbar: Die Daten werden verschlüsselt,"]},
-    {"scene":6,"start":143.335,"end":147.729,"lines":["Kopien sind bereits abgeflossen,","es folgt eine Lösegeldforderung."]},
-    {"scene":6,"start":147.779,"end":151.595,"lines":["Für die Wiederherstellung kommt","es dann auf die Rückfallebene an."]},
-    {"scene":6,"start":151.645,"end":157.737,"lines":["Die Datensicherung läuft ohne zweites System,","für Teile der IT fehlen Notfallpläne,"]},
+    {"scene":6,"start":138.9,"end":143.36,"lines":["Erst im letzten Schritt wird der Angriff sichtbar:","Die Daten werden verschlüsselt,"]},
+    {"scene":6,"start":143.43,"end":147.709,"lines":["Kopien sind bereits abgeflossen,","es folgt eine Lösegeldforderung."]},
+    {"scene":6,"start":147.779,"end":151.575,"lines":["Für die Wiederherstellung kommt","es dann auf die Rückfallebene an."]},
+    {"scene":6,"start":151.645,"end":157.717,"lines":["Die Datensicherung läuft ohne zweites System,","für Teile der IT fehlen Notfallpläne,"]},
     {"scene":6,"start":157.787,"end":162.702,"lines":["und manche Unterlagen liegen auf genau","den Systemen, die dann gesperrt sind."]},
-    {"scene":7,"start":170.9,"end":175.096,"lines":["Vergleichbare Fälle zeigen,","welche Folgen daraus entstehen."]},
-    {"scene":7,"start":175.149,"end":181.903,"lines":["Anhalt-Bitterfeld rief den Katastrophenfall","aus und beendete ihn erst nach rund sieben Monaten;"]},
-    {"scene":7,"start":181.953,"end":187.705,"lines":["der Aufwand lag nach Angaben des Landkreises","bei rund 2,5 Millionen Euro."]},
-    {"scene":7,"start":187.755,"end":192.009,"lines":["Sozialleistungen konnten mindestens","eine Woche nicht ausgezahlt werden."]},
-    {"scene":7,"start":192.059,"end":198.348,"lines":["Nach dem Angriff auf die Südwestfalen-IT","waren Online-Dienste für rund 1,7"]},
-    {"scene":7,"start":198.398,"end":204.466,"lines":["Millionen Einwohner erst nach etwa neun","Monaten wieder weitgehend verfügbar."]},
-    {"scene":7,"start":204.516,"end":209.517,"lines":["Für die Menschen in Herne hieße das:","Urkunden und Zulassungen verzögern sich,"]},
+    {"scene":7,"start":170.9,"end":175.079,"lines":["Vergleichbare Fälle zeigen,","welche Folgen daraus entstehen."]},
+    {"scene":7,"start":175.149,"end":181.883,"lines":["Anhalt-Bitterfeld rief den Katastrophenfall","aus und beendete ihn erst nach rund sieben Monaten;"]},
+    {"scene":7,"start":181.953,"end":187.685,"lines":["der Aufwand lag nach Angaben des Landkreises","bei rund 2,5 Millionen Euro."]},
+    {"scene":7,"start":187.755,"end":191.989,"lines":["Sozialleistungen konnten mindestens","eine Woche nicht ausgezahlt werden."]},
+    {"scene":7,"start":192.059,"end":198.446,"lines":["Nach dem Angriff auf die Südwestfalen-IT","waren Online-Dienste für rund 1,7"]},
+    {"scene":7,"start":198.516,"end":204.446,"lines":["Millionen Einwohner erst nach etwa neun","Monaten wieder weitgehend verfügbar."]},
+    {"scene":7,"start":204.516,"end":209.497,"lines":["Für die Menschen in Herne hieße das:","Urkunden und Zulassungen verzögern sich,"]},
     {"scene":7,"start":209.567,"end":214.331,"lines":["Leistungen kommen später an, die","Verwaltung ist kaum erreichbar."]},
-    {"scene":8,"start":239.9,"end":243.969,"lines":["Nach einem Angriff steht","die Verwaltungsspitze in der Verantwortung."]},
-    {"scene":8,"start":244.019,"end":247.971,"lines":["Der Vorfall muss der Datenschutzaufsicht","gemeldet werden."]},
-    {"scene":8,"start":248.021,"end":252.115,"lines":["Das BSI warnt seit Jahren","vor der hohen Bedrohungslage,"]},
-    {"scene":8,"start":252.165,"end":255.363,"lines":["die durch Künstliche Intelligenz weiter steigt."]},
-    {"scene":8,"start":255.413,"end":259.868,"lines":["Die Frage, ob die Schwachstellen bekannt","waren, wäre mit Ja zu beantworten:"]},
+    {"scene":8,"start":239.9,"end":243.949,"lines":["Nach einem Angriff steht","die Verwaltungsspitze in der Verantwortung."]},
+    {"scene":8,"start":244.019,"end":247.951,"lines":["Der Vorfall muss der Datenschutzaufsicht","gemeldet werden."]},
+    {"scene":8,"start":248.021,"end":252.196,"lines":["Das BSI warnt seit Jahren","vor der hohen Bedrohungslage,"]},
+    {"scene":8,"start":252.266,"end":255.343,"lines":["die durch Künstliche Intelligenz weiter steigt."]},
+    {"scene":8,"start":255.413,"end":259.848,"lines":["Die Frage, ob die Schwachstellen bekannt waren,","wäre mit Ja zu beantworten:"]},
     {"scene":8,"start":259.918,"end":263.603,"lines":["Sie sind in der aktuellen","Sicherheitsprüfung dokumentiert."]},
-    {"scene":9,"start":268.4,"end":272.932,"lines":["Informationssicherheit ist eine","Aufgabe der Verwaltungsleitung."]},
-    {"scene":9,"start":272.986,"end":277.487,"lines":["Im IT-Grundschutz ist die Übernahme","der Gesamtverantwortung durch die Leitung"]},
-    {"scene":9,"start":277.537,"end":282.816,"lines":["eine Basis-Anforderung,","die im Überwachungsaudit vollständig geprüft wird."]},
-    {"scene":9,"start":282.866,"end":289.19,"lines":["Die NIS-2-Richtlinie der EU schreibt","dieselbe Verantwortung gesetzlich fest:"]},
-    {"scene":9,"start":289.24,"end":293.741,"lines":["seit Dezember 2025 im BSI-Gesetz,"]},
-    {"scene":9,"start":293.791,"end":301.876,"lines":["seit Januar 2026 im Informationssicherheitsgesetz","NRW für die Landesverwaltung."]},
-    {"scene":9,"start":301.93,"end":305.29,"lines":["Für Kommunen gelten beide nicht unmittelbar."]},
-    {"scene":9,"start":305.34,"end":308.936,"lines":["Sie zeigen aber, was von einer","Verwaltungsleitung erwartet wird:"]},
+    {"scene":9,"start":268.4,"end":272.916,"lines":["Informationssicherheit ist eine","Aufgabe der Verwaltungsleitung."]},
+    {"scene":9,"start":272.986,"end":277.556,"lines":["Im IT-Grundschutz ist die Übernahme","der Gesamtverantwortung durch die Leitung"]},
+    {"scene":9,"start":277.626,"end":282.796,"lines":["eine Basis-Anforderung,","die im Überwachungsaudit vollständig geprüft wird."]},
+    {"scene":9,"start":282.866,"end":289.17,"lines":["Die NIS-2-Richtlinie der EU schreibt","dieselbe Verantwortung gesetzlich fest:"]},
+    {"scene":9,"start":289.24,"end":293.721,"lines":["seit Dezember 2025 im BSI-Gesetz,"]},
+    {"scene":9,"start":293.791,"end":301.86,"lines":["seit Januar 2026 im Informationssicherheitsgesetz","NRW für die Landesverwaltung."]},
+    {"scene":9,"start":301.93,"end":305.27,"lines":["Für Kommunen gelten beide nicht unmittelbar."]},
+    {"scene":9,"start":305.34,"end":308.916,"lines":["Sie zeigen aber, was von einer","Verwaltungsleitung erwartet wird:"]},
     {"scene":9,"start":308.986,"end":314.667,"lines":["Maßnahmen billigen, ihre Umsetzung überwachen","und sich regelmäßig schulen lassen."]},
-    {"scene":10,"start":316.4,"end":318.208,"lines":["Die Maßnahmen sind geplant,"]},
-    {"scene":10,"start":318.258,"end":324.392,"lines":["umsetzen lassen sie sich aber nur mit ausreichenden","Mitteln und qualifiziertem Personal."]},
-    {"scene":10,"start":324.655,"end":328.61,"lines":["Investitionen sind nötig","für den Ersatz veralteter Systeme,"]},
-    {"scene":10,"start":328.66,"end":333.289,"lines":["einen geschützten Zugang zur IT-Verwaltung","mit zweiter Bestätigung,"]},
-    {"scene":10,"start":333.339,"end":338.026,"lines":["eine zentrale Erkennung von Angriffen","und ein zweites Sicherungssystem."]},
-    {"scene":10,"start":338.076,"end":342.217,"lines":["Ebenso wichtig sind Fachkräfte:","Server müssen laufend gewartet,"]},
-    {"scene":10,"start":342.267,"end":347.937,"lines":["Updates eingespielt und Sicherheitseinstellungen","regelmäßig geprüft werden."]},
-    {"scene":10,"start":347.991,"end":355.217,"lines":["Eine Überwachung schützt nur, wenn jemand die","Meldungen auswertet und im Ernstfall sofort reagiert."]},
-    {"scene":11,"start":361.4,"end":363.925,"lines":["So stellt sich die Lage heute dar."]},
-    {"scene":11,"start":363.975,"end":368.845,"lines":["Alle gezeigten Schwachstellen wurden in der","aktuellen Sicherheitsprüfung festgestellt."]},
-    {"scene":11,"start":368.895,"end":372.967,"lines":["Ohne zusätzliche Mittel und Personal","bleibt dieser Zustand bestehen"]},
-    {"scene":11,"start":373.017,"end":378.153,"lines":["und mit ihm das Risiko für die Stadt","und ihre Bürgerinnen und Bürger."]},
-    {"scene":12,"start":391.4,"end":394.586,"lines":["Für die Zertifizierung ist bereits viel erreicht."]},
-    {"scene":12,"start":394.636,"end":400.577,"lines":["Die Referenzdokumente sind überarbeitet,","die Grundschutz-Checks aller Zielobjekte ausgewertet,"]},
-    {"scene":12,"start":400.627,"end":405.276,"lines":["Risikoanalyse und Realisierungsplan","liegen im Entwurf vor."]},
-    {"scene":12,"start":405.326,"end":408.156,"lines":["Für die Umsetzung sind fünfzehn Leitfäden,"]},
-    {"scene":12,"start":408.206,"end":412.6,"lines":["dreizehn Härtungslisten und eine","Entscheidungsvorlage vorbereitet."]},
-    {"scene":12,"start":412.65,"end":415.351,"lines":["Was zu tun ist, ist damit beschrieben."]},
-    {"scene":12,"start":415.401,"end":421.11,"lines":["Offen sind die Entscheidungen der Verwaltungsleitung,","Budget und Personal für die Umsetzung,"]},
-    {"scene":12,"start":421.16,"end":426.485,"lines":["die Übernahme der verbleibenden Risiken und die","Behebung der Abweichungen aus dem letzten Audit,"]},
-    {"scene":12,"start":426.535,"end":429.639,"lines":["rechtzeitig vor dem Überwachungsaudit."]}
+    {"scene":10,"start":315.433,"end":317.298,"lines":["Die Maßnahmen sind geplant,"]},
+    {"scene":10,"start":317.368,"end":323.425,"lines":["umsetzen lassen sie sich aber nur mit ausreichenden","Mitteln und qualifiziertem Personal."]},
+    {"scene":10,"start":323.688,"end":327.623,"lines":["Investitionen sind nötig","für den Ersatz veralteter Systeme,"]},
+    {"scene":10,"start":327.693,"end":332.302,"lines":["einen geschützten Zugang zur IT-Verwaltung","mit zweiter Bestätigung,"]},
+    {"scene":10,"start":332.372,"end":337.039,"lines":["eine zentrale Erkennung von Angriffen","und ein zweites Sicherungssystem."]},
+    {"scene":10,"start":337.109,"end":341.336,"lines":["Ebenso wichtig sind Fachkräfte:","Server müssen laufend gewartet,"]},
+    {"scene":10,"start":341.406,"end":346.954,"lines":["Updates eingespielt und Sicherheitseinstellungen","regelmäßig geprüft werden."]},
+    {"scene":10,"start":347.024,"end":354.25,"lines":["Eine Überwachung schützt nur, wenn jemand die","Meldungen auswertet und im Ernstfall sofort reagiert."]},
+    {"scene":11,"start":360.433,"end":362.938,"lines":["So stellt sich die Lage heute dar."]},
+    {"scene":11,"start":363.008,"end":367.858,"lines":["Alle gezeigten Schwachstellen wurden in der","aktuellen Sicherheitsprüfung festgestellt."]},
+    {"scene":11,"start":367.928,"end":371.98,"lines":["Ohne zusätzliche Mittel und Personal","bleibt dieser Zustand bestehen"]},
+    {"scene":11,"start":372.05,"end":377.186,"lines":["und mit ihm das Risiko für die Stadt","und ihre Bürgerinnen und Bürger."]},
+    {"scene":12,"start":390.433,"end":393.599,"lines":["Für die Zertifizierung ist bereits viel erreicht."]},
+    {"scene":12,"start":393.669,"end":399.59,"lines":["Die Referenzdokumente sind überarbeitet,","die Grundschutz-Checks aller Zielobjekte ausgewertet,"]},
+    {"scene":12,"start":399.66,"end":404.289,"lines":["Risikoanalyse und Realisierungsplan","liegen im Entwurf vor."]},
+    {"scene":12,"start":404.359,"end":407.169,"lines":["Für die Umsetzung sind fünfzehn Leitfäden,"]},
+    {"scene":12,"start":407.239,"end":411.613,"lines":["dreizehn Härtungslisten und eine","Entscheidungsvorlage vorbereitet."]},
+    {"scene":12,"start":411.683,"end":414.364,"lines":["Was zu tun ist, ist damit beschrieben."]},
+    {"scene":12,"start":414.434,"end":420.183,"lines":["Offen sind die Entscheidungen der Verwaltungsleitung,","Budget und Personal für die Umsetzung,"]},
+    {"scene":12,"start":420.253,"end":425.498,"lines":["die Übernahme der verbleibenden Risiken und die","Behebung der Abweichungen aus dem letzten Audit,"]},
+    {"scene":12,"start":425.568,"end":428.672,"lines":["rechtzeitig vor dem Überwachungsaudit."]}
   ],
 };
 /* TIMELINE-END */
@@ -1628,7 +1631,7 @@ const S1 = {
     const lineCol = C.zyan;
     let lines = '', badges = '', dots = '';
     this.syms.forEach(([key, t0], i) => {
-      const x = 960 + (i - 3) * 252, y = 118 + 34 * Math.pow((i - 3) / 3, 2);
+      const x = 855 + (i - 3) * 240, y = 118 + 34 * Math.pow((i - 3) / 3, 2);   // rechts frei für die Marke
       const B = [x, y + 56];
       const p1 = [R[0] + (x - R[0]) * 0.15, R[1] - 70], p2 = [x, B[1] + 70];
       let len = 0, prev = R;
@@ -2499,7 +2502,462 @@ function Flipchart(x, y, s, lt) {
 }
 // Platzhalter, bis die Szene gebaut ist (ruhige Fläche ohne Text)
 const SzeneLeer = n => ({ n, defs() { return ''; }, draw() { return { world: Rect(0, 0, W, H, C.flaeche) + Rect(0, 0, W, H, C.flaeche2, { opacity: 0.35 }), warn: '', ui: '', grade: GRADE.day }; } });
-const S8 = SzeneLeer(8), S9 = SzeneLeer(9), S10 = SzeneLeer(10), S11 = SzeneLeer(11), S12 = SzeneLeer(12);
+/* =====================================================================
+   NEUE SZENEN (Drehbuch V1_4): Bausteine
+   Büsten von vorn und hinten (Besprechung, Ratssaal, Pressekonferenz), Sprechblasen, Schlagzeilen, Rednerpult.
+   Alle Figuren sind allgemein gehalten: keine Porträtähnlichkeit, keine Namen, keine Amtskette.
+   ===================================================================== */
+// Büste von vorn; Ursprung = Mitte der Brustunterkante, Kopfmitte bei (0, −120), Kopfradius 31
+function Bust(o) {
+  const s = o.s ?? 1, skin = o.skin || C.skin1, jacket = o.jacket || '#3B4A57', shirt = o.shirt || '#FFFFFF', hair = o.hair || C.hairBrown, style = o.hairStyle || 'short';
+  let g = '';
+  if (style === 'long') g += Path('M-34,-126 Q-44,-168 0,-168 Q44,-168 34,-126 L42,-62 Q0,-54 -42,-62 Z', hair, OL(3));
+  g += Rect(-9, -100, 18, 24, shade(skin, 0.92), OL(3));
+  g += Path('M-64,0 L-64,-52 Q-64,-76 -38,-80 L-17,-84 Q0,-90 17,-84 L38,-80 Q64,-76 64,-52 L64,0 Z', jacket, OL(3));
+  g += Path('M-16,-84 L0,-58 L16,-84 Q0,-90 -16,-84 Z', shirt, OL(2));
+  g += Path('M-16,-84 L-36,-42 L-22,-38 L0,-58 Z', shade(jacket, 0.82), OL(2)) + Path('M16,-84 L36,-42 L22,-38 L0,-58 Z', shade(jacket, 0.82), OL(2));
+  if (o.tie) g += Path('M-4,-70 L4,-70 L7,-42 L0,-33 L-7,-42 Z', o.tie, OL(2));
+  g += Circ(-31, -119, 6.5, skin, OL(2.5)) + Circ(31, -119, 6.5, skin, OL(2.5));
+  g += Circ(0, -120, 31, skin, OL(3));
+  g += Ell(-11, -122, 3.2, 4.2, C.line) + Ell(11, -122, 3.2, 4.2, C.line);
+  g += Path('M-18,-133 Q-11,-137 -4,-133 M4,-133 Q11,-137 18,-133', 'none', { stroke: shade(hair, 0.85), 'stroke-width': 2.6, 'stroke-linecap': 'round' });
+  g += Path('M0,-119 Q5,-111 0,-108', 'none', { stroke: shade(skin, 0.7), 'stroke-width': 2, 'stroke-linecap': 'round' });
+  g += Path(o.mood === 'smile' ? 'M-8,-101 Q0,-94 8,-101' : 'M-8,-100 L8,-100', 'none', { stroke: C.line, 'stroke-width': 2.4, 'stroke-linecap': 'round' });
+  if (style !== 'bald') g += Path('M-33,-125 Q-38,-162 0,-162 Q38,-162 33,-125 Q28,-144 10,-149 Q-16,-145 -33,-125 Z', hair, OL(3));
+  else g += Path('M-33,-121 Q-36,-136 -29,-146 L-29,-121 Z M33,-121 Q36,-136 29,-146 L29,-121 Z', hair, OL(2.5));
+  if (style === 'long') g += Path('M-33,-125 L-42,-64 L-29,-62 L-27,-112 Z', hair, OL(2.5)) + Path('M33,-125 L42,-64 L29,-62 L27,-112 Z', hair, OL(2.5));
+  if (style === 'bun') g += Circ(0, -166, 13, hair, OL(3));
+  return G({ transform: `translate(${N(o.x)} ${N(o.y)}) scale(${N(s)})`, opacity: o.opacity }, g);
+}
+// Büste von hinten (Publikum, Journalisten); optional ein Arm mit Gerät (gear: 'camera' | 'phone' | 'mic' | 'pad')
+function BustBack(o) {
+  const s = o.s ?? 1, skin = o.skin || C.skin1, jacket = o.jacket || '#3B4A57', hair = o.hair || C.hairBrown, style = o.hairStyle || 'short';
+  let g = '';
+  if (o.gear) {
+    const T = { camera: [64, -196], phone: [58, -188], mic: [60, -200], pad: [34, -44] }[o.gear];
+    const sh = [50, -66], [e1, e2] = ik2(sh[0], sh[1], T[0], T[1], 70, 64), e = e1[0] > e2[0] ? e1 : e2;
+    g += Limb([sh, e, T], jacket, 21, 3) + Circ(T[0], T[1], 10, skin, OL(3));
+    const dev = {
+      camera: Rect(-4, -34, 76, 46, '#2E3439', { ...OL(3), rx: 7 }) + Rect(14, -42, 30, 12, '#3C444A', OL(2.5)) + Rect(8, -24, 48, 24, '#6E7B83', OL(2)),
+      phone: Rect(30, -50, 32, 62, '#23292D', { ...OL(3), rx: 6 }) + Circ(46, -40, 3.5, '#5B666B'),
+      mic: Line(T[0], T[1], T[0] - 30, T[1] - 26, '#2A2B2B', 7) + Ell(T[0] - 38, T[1] - 34, 15, 20, '#3A3F44', { ...OL(3), transform: `rotate(-40 ${T[0] - 38} ${T[1] - 34})` }),
+      pad: Rect(10, -68, 44, 58, '#FFFFFF', { ...OL(2.5), rx: 3 }) + Line(18, -54, 46, -54, '#B9C2C6', 2.5) + Line(18, -44, 46, -44, '#B9C2C6', 2.5) + Line(18, -34, 38, -34, '#B9C2C6', 2.5),
+    }[o.gear];
+    g += G({ transform: o.gear === 'mic' || o.gear === 'pad' ? '' : `translate(${T[0] - 34} ${T[1] + 20})` }, dev);
+  }
+  g += Ell(-31, -119, 5.5, 8, skin, OL(2.5)) + Ell(31, -119, 5.5, 8, skin, OL(2.5));
+  g += Rect(-9, -100, 18, 24, shade(skin, 0.92), OL(3));
+  g += Path('M-64,0 L-64,-52 Q-64,-76 -38,-80 L-17,-84 Q0,-90 17,-84 L38,-80 Q64,-76 64,-52 L64,0 Z', jacket, OL(3));
+  g += Line(0, -72, 0, -2, shade(jacket, 0.78), 2.2) + Path('M-18,-84 Q0,-74 18,-84', 'none', { stroke: shade(jacket, 0.78), 'stroke-width': 2.2 });
+  if (style === 'long') g += Path('M-33,-126 Q-43,-170 0,-170 Q43,-170 33,-126 L41,-64 Q0,-56 -41,-64 Z', hair, OL(3));
+  else g += Circ(0, -121, 31.5, hair, OL(3));
+  if (style === 'bun') g += Circ(0, -160, 13, hair, OL(3));
+  if (style === 'bald') g += Circ(0, -121, 31.5, skin, OL(3)) + Path('M-30,-112 Q-33,-124 -28,-134 M30,-112 Q33,-124 28,-134', 'none', { stroke: hair, 'stroke-width': 6, 'stroke-linecap': 'round' });
+  g += Path('M-14,-142 Q0,-150 14,-142', 'none', { stroke: shade(hair, 1.25), 'stroke-width': 3, 'stroke-linecap': 'round', opacity: 0.5 });
+  return G({ transform: `translate(${N(o.x)} ${N(o.y)}) scale(${N(s)})`, opacity: o.opacity }, g);
+}
+
+// Sprechblase (Figurenrede) mit Text aus TEXTE[key]; (x, y) = linke obere Ecke, Spitze zeigt auf (tx, ty)
+function Sprechblase(key, x, y, w, tx, ty, o = {}) {
+  const size = o.size || 32, pad = 22, lh = size * 1.28;
+  const lines = wrapLines(TEXTE[key], size, 700, w - 2 * pad);
+  const h = lines.length * lh + 2 * pad - (lh - size) + 6;
+  const bx = clamp(tx, x + 46, x + w - 46);
+  let g = Rect(x, y, w, h, '#FFFFFF', { ...OL(3), rx: 24 });
+  g += Path(`M${N(bx - 15)},${N(y + h - 1)} L${N(tx)},${N(ty)} L${N(bx + 17)},${N(y + h - 1)}`, '#FFFFFF', { ...OL(3) });
+  g += Rect(bx - 13, y + h - 5, 28, 8, '#FFFFFF');
+  lines.forEach((l, i) => { g += Txt(x + pad, y + pad + size * 0.82 + i * lh, l, { size, weight: 700, fill: C.text, k: key, i }); });
+  return { svg: g, h };
+}
+// Erfundene Zeitungsschlagzeile ohne reales Medienlogo: neutraler Kopfbalken, Schlagzeile, Spalten, Bildfläche
+function Schlagzeile(key, x, y, w, rot, op) {
+  const size = 31, lines = wrapLines(TEXTE[key], size, 700, w - 44);
+  const h = 50 + lines.length * size * 1.22 + 24 + 74;
+  let g = Rect(x, y, w, h, '#FFFFFF', { ...OL(2.5), rx: 8 }) + Rect(x, y, w, 26, '#3B4650', { rx: 8 }) + Rect(x, y + 14, w, 12, '#3B4650');
+  g += Rect(x + 16, y + 8, 84, 10, '#8E9AA0', { rx: 5 }) + Rect(w + x - 70, y + 8, 54, 10, '#8E9AA0', { rx: 5 });
+  lines.forEach((l, i) => { g += Txt(x + 22, y + 26 + 12 + size * 0.85 + i * size * 1.22, l, { size, weight: 700, fill: C.text, k: key, i }); });
+  const by = y + 50 + lines.length * size * 1.22 + 10;
+  g += Rect(x + 22, by, 96, 58, '#C9D3D8', OL(1.5)) + Path(`M${x + 22},${by + 58} L${x + 52},${by + 30} L${x + 76},${by + 46} L${x + 96},${by + 26} L${x + 118},${by + 58} Z`, '#9FB0B8');
+  for (let i = 0; i < 4; i++) g += Rect(x + 132, by + 4 + i * 14, w - 132 - 22 - (i % 2) * 40, 7, '#D7DDE0', { rx: 3.5 });
+  return G({ opacity: N(op), transform: `rotate(${N(rot)} ${N(x + w / 2)} ${N(y + h / 2)})`, filter: 'url(#fCardShadow)' }, g);
+}
+// Rednerpult mit Mikrofonen (Ursprung = Mitte der Unterkante)
+function Rednerpult(x, y, s = 1) {
+  let g = Path('M-118,0 L-96,-168 L96,-168 L118,0 Z', '#B58A57', OL(3)) + Path('M-110,-4 L-90,-160 L90,-160 L110,-4 Z', '#C79B66');
+  g += Rect(-104, -186, 208, 20, '#8E6A3F', { ...OL(3), rx: 4 });
+  g += Rect(-70, -140, 140, 96, '#B58A57', { ...OL(2.5), rx: 6 });                         // schlichtes Feld, ohne Zeichen
+  for (const [dx, h, lean] of [[-66, 78, -10], [62, 74, 10]]) {          // seitlich, damit das Gesicht frei bleibt
+    g += Path(`M${dx},-186 Q${dx + lean * 2},${-186 - h * 0.6} ${dx + lean * 3},${-186 - h}`, 'none', { stroke: '#2A2B2B', 'stroke-width': 4, 'stroke-linecap': 'round' });
+    g += Ell(dx + lean * 3, -186 - h - 8, 6.5, 12, '#3A3F44', OL(2.5));
+  }
+  return G({ transform: `translate(${N(x)} ${N(y)}) scale(${N(s)})` }, g);
+}
+// Kamerablitz: Stern mit weichem Schein (k = 0..1)
+function Blitz(x, y, k, r = 1) {
+  if (k <= 0.02) return '';
+  return G({ transform: `translate(${N(x)} ${N(y)}) scale(${N(r * (0.7 + 0.5 * k))})`, opacity: N(k) },
+    Circ(0, 0, 42, '#FFFFFF', { opacity: 0.35, filter: 'url(#fGlow)' }) + Path('M0,-50 L9,-15 L44,-24 L19,3 L40,34 L7,20 L-5,54 L-13,18 L-48,29 L-24,0 L-44,-28 L-11,-18 Z', '#FFFFFF'));
+}
+
+/* =====================================================================
+   SZENE 9 – VERANTWORTUNG DER LEITUNG (4:28–5:13)
+   Besprechungsraum der Verwaltungsspitze. Drei Tafeln erscheinen nacheinander, synchron zum Sprechertext;
+   danach drei Symbole zu „billigen, überwachen, schulen“: Dokument mit Freigabevermerk, Übersichtsbildschirm, Schulung.
+   Zeiten (lt) auf die Sprachaufnahme abgestimmt; ANKER hält Bild und Ton zusammen.
+   ===================================================================== */
+const S9L = {
+  // Entwurfszeiten: Tafeln bei „IT-Grundschutz“, „NIS-2-Richtlinie“ / „BSI-Gesetz“, „Informationssicherheitsgesetz NRW“; Symbole bei „billigen“, „überwachen“, „schulen“
+  tafeln: [{ key: 'tafel_1', t: 5.1 }, { key: 'tafel_2', t: 15.0 }, { key: 'tafel_3', t: 28.8 }],
+  symbole: [{ key: 'symbol_billigen', t: 41.8 }, { key: 'symbol_ueberwachen', t: 43.3 }, { key: 'symbol_schulen', t: 45.2 }],
+  symStart: 37.4,          // „Sie zeigen aber, was …“: Tafeln rücken nach oben, die drei Symbole erscheinen (noch ruhig)
+};
+// Raum: Fensterfront mit Blick auf die Stadt, langer Tisch, Personen der Verwaltungsspitze (allgemeine Figuren)
+function Besprechungsraum() {
+  let r = Rect(0, 0, W, H, '#E4E9EA') + Rect(0, 0, W, 90, '#F0F3F3') + Line(0, 90, W, 90, C.line, 2);
+  for (let i = 0; i < 5; i++) {                                         // Fensterfront hinten
+    const x = 60 + i * 370;
+    r += Rect(x, 150, 320, 400, '#CFE6F2', OL(3)) + Rect(x, 150, 320, 400, 'url(#s9-himmel)');
+    r += Rect(x + 30, 400, 70, 150, '#E7DCCD', OL(2)) + Rect(x + 120, 360, 90, 190, '#EFE6D8', OL(2)) + Rect(x + 230, 420, 60, 130, '#E2D2BC', OL(2));
+    for (let k = 0; k < 3; k++) r += Rect(x + 136, 380 + k * 50, 22, 26, C.winGlass, OL(1.5)) + Rect(x + 172, 380 + k * 50, 22, 26, C.winGlass, OL(1.5));
+    r += Line(x + 160, 150, x + 160, 550, '#8E9AA0', 6) + Rect(x - 8, 550, 336, 12, '#BFC6C9', OL(2));
+  }
+  r += Rect(0, 562, W, 518, '#C9C2B6') + Line(0, 562, W, 562, C.line, 2.5);
+  for (let k = 0; k < 5; k++) r += Line(0, 600 + k * k * 22, W, 600 + k * k * 22, '#BDB5A8', 2, { opacity: 0.7 });
+  return r;
+}
+function Konferenztisch(lt) {
+  let t = '';
+  const sitz = [[250, 800, 'Bust', { jacket: '#3B4A57', shirt: '#DDE7EE', hair: C.hairGrey, hairStyle: 'bald', skin: C.skin2, tie: '#6D8FB0' }],
+                [560, 800, 'Bust', { jacket: '#5C4B6B', shirt: '#FFFFFF', hair: C.hairAuburn, hairStyle: 'long', skin: C.skin1 }],
+                [1360, 800, 'Bust', { jacket: '#2F4F4F', shirt: '#F1EEE6', hair: C.hairDark, hairStyle: 'short', skin: C.skin4 }],
+                [1670, 800, 'Bust', { jacket: '#44505A', shirt: '#FFFFFF', hair: C.hairBlond, hairStyle: 'bun', skin: C.skin1 }]];
+  for (const [x, y, , o] of sitz) t += Rect(x - 56, y - 170, 112, 130, '#4C565B', { ...OL(3), rx: 18 }) + Bust({ x, y: y + 6 + Math.sin(lt * 0.9 + x) * 1.2, s: 0.95, ...o });
+  t += Path('M60,860 L1860,860 L1920,1000 L0,1000 Z', '#B58A57', OL(3)) + Rect(0, 1000, W, 24, '#8E6A3F', OL(3));
+  for (const x of [250, 560, 1360, 1670]) t += Rect(x - 60, 872, 120, 70, '#FFFFFF', { ...OL(2), rx: 3, transform: `rotate(${x % 3 - 1} ${x} 900)` }) + Line(x - 40, 892, x + 40, 892, '#C9CFD2', 3) + Line(x - 40, 908, x + 30, 908, '#C9CFD2', 3);
+  t += Rect(880, 874, 160, 18, '#E7EAEB', { ...OL(2), rx: 4 }) + Rect(900, 850, 26, 30, '#FFFFFF', { ...OL(2), rx: 3 }) + Rect(996, 846, 24, 34, '#9FC7DD', { ...OL(2), rx: 3 });
+  return t;
+}
+// Tafel mit Text aus TEXTE (Überschrift vor dem Doppelpunkt fett, Rest normal) – Text bleibt wortgleich
+function Tafel(key, x, y, w, op, dy) {
+  const full = TEXTE[key], i = full.indexOf(':');
+  const kopf = full.slice(0, i + 1), rest = full.slice(i + 2);
+  const kl = wrapLines(kopf, 38, 700, w - 90), rl = wrapLines(rest, 32, 400, w - 90);
+  const h = 44 + kl.length * 46 + 10 + rl.length * 40 + 30;
+  let g = Rect(x, y, w, h, '#FFFFFF', { rx: 18, opacity: 0.97 }) + Rect(x, y + 22, 9, h - 44, C.gruen, { rx: 4.5 });
+  // Kopf und Rest als ein Textelement je Zeile: Prüfung setzt die Zeilen wieder zum Wortlaut zusammen
+  const zeilen = [...kl, ...rl];
+  zeilen.forEach((l, k) => {
+    const istKopf = k < kl.length;
+    const yy = y + 44 + (istKopf ? 30 + k * 46 : kl.length * 46 + 10 + 26 + (k - kl.length) * 40);
+    g += Txt(x + 48, yy, l, { size: istKopf ? 38 : 32, weight: istKopf ? 700 : 400, fill: istKopf ? C.text : C.text2, k: key, i: k });
+  });
+  return { svg: G({ opacity: N(op), transform: `translate(0 ${N(dy)})`, filter: 'url(#fCardShadow)' }, g), h };
+}
+// Symbole: Dokument mit Freigabevermerk, Übersichtsbildschirm, Schulungssituation (Mitte 0,0; ca. 240 × 200)
+function SymbolBilligen(k) {
+  let g = Rect(-78, -104, 156, 200, '#FFFFFF', { ...OL(3), rx: 6 });
+  for (let i = 0; i < 6; i++) g += Rect(-56, -80 + i * 22, i === 5 ? 70 : 112, 8, '#D4DADD', { rx: 4 });
+  g += Line(-56, 62, 10, 62, C.line, 2.5);
+  const stamp = EASE.outBack(clamp(k * 1.4));
+  g += G({ transform: `translate(38 50) rotate(-12) scale(${N(Math.max(0.01, stamp))})`, opacity: N(clamp(k * 2)) },
+    Rect(-50, -30, 100, 60, 'none', { stroke: C.gruen, 'stroke-width': 5, rx: 10 }) + Path('M-26,-2 L-8,16 L28,-18', 'none', { stroke: C.gruen, 'stroke-width': 8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }));
+  return g;
+}
+function SymbolUeberwachen(k, lt) {
+  let g = Rect(-110, -96, 220, 150, C.monitor, { ...OL(3), rx: 10 }) + Rect(-98, -84, 196, 126, '#EAF5EE', { rx: 4 });
+  g += Rect(-14, 54, 28, 30, C.monitor, OL(2)) + Rect(-56, 82, 112, 12, C.monitor, { ...OL(2), rx: 4 });
+  const w = [0.45, 0.7, 0.55, 0.85, 0.65];
+  w.forEach((v, i) => { const hh = 70 * v * clamp(k * 1.6 - i * 0.12); g += Rect(-80 + i * 26, 30 - hh, 18, hh, i === 3 ? C.gruen : '#7FA9BC', { rx: 3 }); });
+  for (let i = 0; i < 3; i++) g += Circ(64, -58 + i * 30, 9, '#6EE08E', { ...OL(2), opacity: N(clamp(k * 2 - i * 0.3)) });
+  g += Path(`M-86,-40 ${[0, 1, 2, 3, 4, 5, 6].map(i => `L${-86 + i * 20},${N(-40 - 14 * Math.sin(lt * 1.6 + i))}`).join(' ')}`, 'none', { stroke: C.zyan, 'stroke-width': 3, opacity: N(k) });
+  return g;
+}
+function SymbolSchulen(k) {
+  let g = Rect(-120, -110, 150, 100, '#FFFFFF', { ...OL(3), rx: 4 }) + Line(-45, -10, -45, 40, C.line, 4);
+  g += Check(-86, -78, 12, clamp(k * 2)) + Rect(-66, -82, 76, 8, '#D4DADD', { rx: 4 }) + Check(-86, -44, 12, clamp(k * 2 - 0.5)) + Rect(-66, -48, 62, 8, '#D4DADD', { rx: 4 });
+  g += Person({ x: 72, y: 96, s: 0.42, dir: -1, top: '#2E8C87', pants: '#5B666B', hair: C.hairDark, hairStyle: 'bun', skin: C.skin2, arms: { f: { sh: 150, el: 10 } }, mood: 'neutral' });
+  g += Bust({ x: -94, y: 96, s: 0.36, jacket: '#3B4A57', hair: C.hairGrey, hairStyle: 'bald', skin: C.skin3 }) + Bust({ x: -4, y: 100, s: 0.36, jacket: '#5C4B6B', hair: C.hairBrown, hairStyle: 'long', skin: C.skin1 });
+  return g;
+}
+const S9 = {
+  n: 9,
+  defs() {
+    return `<linearGradient id="s9-himmel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9FD2F2"/><stop offset="1" stop-color="#E4F3FB"/></linearGradient>`
+      + `<g id="s9-raum">${Besprechungsraum()}</g>`;
+  },
+  draw(lt, dur, ltA) {
+    let world = Use('s9-raum');
+    // Kamera: ruhiger Schwenk zum Tisch
+    const z = lerp(1.06, 1.0, ez(lt, 0, 8, EASE.sine));
+    world = G({ transform: `translate(960 540) scale(${N(z)}) translate(-960 -560)` }, world + Konferenztisch(lt));
+    let ui = '';
+    // Tafeln: nacheinander einblenden, später gemeinsam nach oben, dann Symbole darunter
+    const up = ez(lt, S9L.symStart, S9L.symStart + 1.4);
+    const x0 = 310, w = 1300;                 // frei von der Marke oben rechts
+    let y = 120 - up * 30;
+    const scale = lerp(1, 0.78, up);
+    let tafeln = '';
+    S9L.tafeln.forEach((tf, i) => {
+      const op = ez(lt, tf.t - 0.2, tf.t + 0.6);
+      if (op <= 0.001) return;
+      const r = Tafel(tf.key, x0, 0, w, op, (1 - EASE.out(clamp(op))) * 24);
+      tafeln += G({ transform: `translate(0 ${N(y)})` }, r.svg);
+      y += r.h + 18;
+    });
+    ui += G({ transform: `translate(960 0) scale(${N(scale)}) translate(-960 ${N(up * 10)})` }, tafeln);
+    // Symbole: erscheinen bei „Sie zeigen aber …“ ruhig nebeneinander; jedes wird bei seinem Wort aktiv
+    const symY = 700;
+    S9L.symbole.forEach((sy, i) => {
+      const op = ez(lt, S9L.symStart + 0.5 + i * 0.35, S9L.symStart + 1.2 + i * 0.35);
+      if (op <= 0.001) return;
+      const akt = ez(lt, sy.t - 0.1, sy.t + 0.5);
+      const cx = 960 + (i - 1) * 470;
+      const inner = [SymbolBilligen, SymbolUeberwachen, SymbolSchulen][i](seg(lt, sy.t, sy.t + 1.2), lt);
+      const label = TEXTE[sy.key], lw = measure(label, 34, 700) + 44;
+      ui += G({ opacity: N(op), transform: `translate(${N(cx)} ${N(symY)}) scale(${N(1 + 0.04 * bump(lt, sy.t + 0.3, 0.5))}) translate(${N(-cx)} ${N(-symY + (1 - EASE.out(op)) * 30)})` },
+        G({ filter: 'url(#fCardShadow)' }, Rect(cx - 200, symY - 150, 400, 272, '#FFFFFF', { rx: 20, opacity: 0.97 }))
+        + G({ transform: `translate(${cx} ${symY - 30}) scale(0.72)`, opacity: N(0.45 + 0.55 * akt) }, inner)
+        + Rect(cx - lw / 2, symY + 72, lw, 50, mix('#8E9AA0', C.gruen, akt), { rx: 25 }) + Txt(cx, symY + 108, label, { size: 34, weight: 700, fill: '#FFFFFF', anchor: 'middle', k: sy.key, i: 0 }));
+    });
+    // Ausklang: sanft in die nächste Szene (Rücklauf)
+    return { world: world + Use('vignette'), warn: '', ui, grade: GRADE.day };
+  },
+};
+
+/* =====================================================================
+   SZENE 12 – WO WIR STEHEN (6:28–7:34)
+   Ruhige, helle Übersicht in drei Spalten, nacheinander aufgebaut, synchron zum Sprechertext.
+   Sachliche Symbole; kein Rot außer bei den offenen Punkten. Zum Schluss hebt sich die dritte Spalte hervor,
+   darunter die kleine Einblendung zu den offenen Anforderungen. Schlusstafel in den letzten 6 s.
+   ===================================================================== */
+const S12L = {
+  spalten: [
+    { key: 'erreicht', t: 0.6, icon: 'check', farbe: '#007D30', punkte: [3.7, 6.3, 9.7, 12.4] },
+    { key: 'vorbereitet', t: 14.4, icon: 'werkzeug', farbe: '#005972', punkte: [15.7, 17.3, 19.3, 20.4, 21.2] },
+    { key: 'offen', t: 24.5, icon: 'waage', farbe: '#C0392B', punkte: [25.4, 27.6, 30.3, 31.5, 32.1, 32.8, 36.9] },
+  ],
+  hervor: 39.2,            // dritte Spalte hebt sich hervor
+  hinweis: 40.0,           // kleine Einblendung darunter
+  x0: 84, w: 560, gap: 36, top: 196, maxBottom: 868,
+};
+function SpaltenIcon(kind, x, y, farbe) {
+  if (kind === 'check') return Circ(x, y, 26, '#FFFFFF', OL(2.5)) + Path(`M${x - 12},${y + 1} L${x - 3},${y + 10} L${x + 13},${y - 9}`, 'none', { stroke: farbe, 'stroke-width': 6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' });
+  if (kind === 'werkzeug') return Rect(x - 26, y - 12, 52, 32, '#FFFFFF', { ...OL(2.5), rx: 4 }) + Path(`M${x - 12},${y - 12} L${x - 12},${y - 20} L${x + 12},${y - 20} L${x + 12},${y - 12}`, 'none', { stroke: C.line, 'stroke-width': 3 }) + Line(x - 26, y, x + 26, y, farbe, 3) + Rect(x - 5, y - 4, 10, 8, farbe, { rx: 2 });
+  // Waage mit Kalenderblatt: Entscheidungen stehen an
+  return Line(x, y - 22, x, y + 16, C.line, 3) + Line(x - 24, y - 16, x + 24, y - 16, C.line, 3) + Path(`M${x - 32},${y + 2} L${x - 24},${y - 16} L${x - 16},${y + 2} Z`, '#FFFFFF', OL(2)) + Path(`M${x + 16},${y + 2} L${x + 24},${y - 16} L${x + 32},${y + 2} Z`, '#FFFFFF', OL(2)) + Rect(x - 12, y + 16, 24, 6, C.line, { rx: 2 });
+}
+// Markierung je Punkt: Häkchen (erreicht), Dokument (vorbereitet), offener Kreis in gedecktem Rot (offen)
+function PunktMarke(kind, x, y, u, farbe) {
+  if (u <= 0.01) return '';
+  const p = EASE.outBack(clamp(u));
+  if (kind === 'check') return G({ transform: `translate(${x} ${y}) scale(${N(p)})` }, Circ(0, 0, 13, C.hellgruen, OL(2)) + Path('M-6,0 L-2,5 L7,-5', 'none', { stroke: farbe, 'stroke-width': 3.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }));
+  if (kind === 'werkzeug') return G({ transform: `translate(${x} ${y}) scale(${N(p)})` }, Rect(-10, -13, 20, 26, '#FFFFFF', { ...OL(2), rx: 2 }) + Line(-5, -5, 5, -5, farbe, 2.2) + Line(-5, 1, 5, 1, farbe, 2.2) + Line(-5, 7, 2, 7, farbe, 2.2));
+  return G({ transform: `translate(${x} ${y}) scale(${N(p)})` }, Circ(0, 0, 12, '#FFFFFF', { stroke: farbe, 'stroke-width': 3.5 }) + Circ(0, 0, 4, farbe));
+}
+// Layout einmal berechnen (Schriftgröße so, dass die höchste Spalte passt)
+function s12Layout() {
+  if (S12L.cache) return S12L.cache;
+  for (let size = 29; size >= 22; size--) {
+    const lh = Math.round(size * 1.24), innerW = S12L.w - 96;
+    const spalten = S12L.spalten.map((sp, i) => {
+      const x = S12L.x0 + i * (S12L.w + S12L.gap);
+      let y = S12L.top + 124;
+      const punkte = sp.punkte.map((t, k) => {
+        const key = `${sp.key}_${k + 1}`, lines = wrapLines(TEXTE[key], size, 400, innerW);
+        const p = { key, t, lines, y };
+        y += lines.length * lh + Math.round(size * 0.62);
+        return p;
+      });
+      return { ...sp, x, punkte, bottom: y + 10 };
+    });
+    const bottom = Math.max(...spalten.map(s => s.bottom));
+    if (bottom <= S12L.maxBottom || size === 22) { S12L.cache = { size, lh, spalten, bottom }; return S12L.cache; }
+  }
+}
+function Schlusstafel(op) {
+  if (op <= 0.001) return '';
+  const t1 = TEXTE.schluss_titel, t2 = TEXTE.schluss_klein;
+  const m = markeBlock(W / 2, 0, { anchor: 'middle' });
+  const cw = Math.max(measure(t1, 70, 700), measure(t2, 30), m.breite) + 160, chh = 250 + m.hoehe + 20;
+  const cy = (H - chh) / 2 - 20;
+  let inner = Txt(W / 2, cy + 100, t1, { size: 70, weight: 700, fill: C.text, anchor: 'middle', k: 'schluss_titel', i: 0 })
+    + Txt(W / 2, cy + 170, t2, { size: 30, fill: C.text2, anchor: 'middle', k: 'schluss_klein', i: 0 })
+    + Rect(W / 2 - 60, cy + 198, 120, 6, C.gruen, { rx: 3 });
+  inner += G({ transform: `translate(0 ${N(cy + 232)})` }, markeBlock(W / 2, 0, { anchor: 'middle' }).g);
+  return G({ opacity: N(op), filter: 'url(#fCardShadow)' }, Rect((W - cw) / 2, cy, cw, chh, '#FFFFFF', { rx: 22, opacity: 0.97 }) + inner) + Confidential(op);
+}
+const S12 = {
+  n: 12,
+  defs() { return ''; },
+  draw(lt, dur, ltA) {
+    const L = s12Layout();
+    const endStart = dur - SCHLUSS_DAUER;
+    const endOp = ez(ltA, endStart, endStart + 0.6, EASE.sine);
+    const city = ez(ltA, endStart - 1.0, endStart + 0.2, EASE.sine);
+    let world = Rect(0, 0, W, H, C.flaeche) + Rect(0, 0, W, H, C.flaeche2, { opacity: 0.45 });
+    for (let i = 0; i < 9; i++) world += Circ(160 + i * 210, 1010 + (i % 2) * 30, 150, '#FFFFFF', { opacity: 0.25 });
+    let ui = '';
+    if (city < 1) {
+      const hv = ez(lt, S12L.hervor, S12L.hervor + 1.2);
+      L.spalten.forEach((sp, i) => {
+        const op = ez(lt, sp.t - 0.3, sp.t + 0.6);
+        if (op <= 0.001) return;
+        const dritte = i === 2;
+        const dim = dritte ? 1 : 1 - 0.35 * hv;
+        const sc = dritte ? 1 + 0.03 * hv : 1;
+        const cx = sp.x + S12L.w / 2, cy = (S12L.top + L.bottom) / 2;
+        let g = Rect(sp.x, S12L.top, S12L.w, L.bottom - S12L.top, '#FFFFFF', { rx: 20, opacity: 0.97 });
+        if (dritte && hv > 0) g += Rect(sp.x - 2, S12L.top - 2, S12L.w + 4, L.bottom - S12L.top + 4, 'none', { rx: 21, stroke: '#003D4F', 'stroke-width': N(4 * hv) });
+        g += Rect(sp.x, S12L.top, S12L.w, 92, i === 2 ? '#F9ECEA' : i === 1 ? '#E6F0F3' : '#E8F4EC', { rx: 20 }) + Rect(sp.x, S12L.top + 72, S12L.w, 20, i === 2 ? '#F9ECEA' : i === 1 ? '#E6F0F3' : '#E8F4EC');
+        g += SpaltenIcon(sp.icon, sp.x + 52, S12L.top + 46, sp.farbe);
+        g += Txt(sp.x + 96, S12L.top + 58, TEXTE[`spalte_${sp.key}`], { size: 34, weight: 700, fill: C.text, k: `spalte_${sp.key}`, i: 0 });
+        sp.punkte.forEach(p => {
+          const u = ez(lt, p.t - 0.15, p.t + 0.45);
+          if (u <= 0.001) return;
+          let pg = PunktMarke(sp.icon, sp.x + 44, p.y - L.size * 0.33, seg(lt, p.t - 0.1, p.t + 0.5), sp.farbe);
+          pg += TextBlock(p.key, sp.x + 72, p.y, { size: L.size, fill: C.text, lines: p.lines, lh: L.lh });
+          g += G({ opacity: N(u), transform: `translate(${N((1 - EASE.out(u)) * 18)} 0)` }, pg);
+        });
+        ui += G({ opacity: N(op * dim * (1 - city)), transform: `translate(${N(cx)} ${N(cy + (1 - EASE.out(op)) * 26)}) scale(${N(sc)}) translate(${N(-cx)} ${N(-cy)})`, filter: 'url(#fCardShadow)' }, g);
+      });
+      // kleine Einblendung darunter
+      const hop = ez(lt, S12L.hinweis, S12L.hinweis + 0.8) * (1 - city);
+      if (hop > 0.001) {
+        const lines = wrapLines(TEXTE.offene_anforderungen, 24, 400, 1640);
+        const y = L.bottom + 44;
+        ui += G({ opacity: N(hop) }, lines.map((l, k) => Txt(W / 2, y + k * 31, l, { size: 24, fill: C.text2, anchor: 'middle', k: 'offene_anforderungen', i: k })).join(''));
+      }
+    }
+    // Schluss: sonnige Innenstadt, darauf die Schlusstafel
+    if (city > 0.001) {
+      world += G({ opacity: N(city) }, S0.draw(6 + clamp(ltA - endStart + 1, 0, 8) * 0.4).world + Rect(0, 0, W, H, '#FFFFFF', { opacity: N(0.45 * endOp) }));
+      ui += Schlusstafel(endOp);
+    }
+    return { world, warn: '', ui, grade: GRADE.day };
+  },
+};
+
+/* =====================================================================
+   SZENE 8 – DIE VERANTWORTUNG DER VERWALTUNGSSPITZE (3:44–4:28)
+   Pressekonferenz im Foyer des Rathauses: der Oberbürgermeister als allgemeine Figur am Rednerpult (kein Porträt,
+   kein Name, keine Amtskette), Mikrofone, Kamerablitze, Journalistinnen und Journalisten. Die vier Pressefragen
+   erscheinen nacheinander als Sprechblasen (und als Untertitel); daneben erfundene Schlagzeilen ohne Medienlogos.
+   Danach: ein Schreiben an die Datenschutzaufsicht, ein voller Ratssaal.
+   ===================================================================== */
+const S8L = {
+  // Entwurfszeiten der Fragen (Beginn, Ende) – werden mit den Aufnahmen der Pressestimmen über ANKER nachgeführt
+  fragen: [[0.5, 2.3], [3.0, 5.2], [5.9, 11.8], [12.5, 15.4]],
+  frager: [0, 1, 2, 3],                      // Index der fragenden Person (Frage 1 und 3: Journalistin, 2 und 4: Journalist)
+  schlagzeilen: [2.0, 6.4, 12.0],
+  brief: [20.0, 24.6],                       // Schreiben an die Datenschutzaufsicht (ab „Der Vorfall muss …“)
+  ratssaal: 24.6,
+  bericht: 36.0,                             // „Sie sind in der aktuellen Sicherheitsprüfung dokumentiert.“
+  blitze: [0.9, 1.6, 3.4, 4.1, 6.3, 7.9, 9.2, 10.6, 12.9, 14.1, 15.0],
+};
+// Presse von hinten, abwechselnd Journalistin und Journalist (passend zu den Stimmen der Fragen 1–4)
+const S8Presse = [
+  { x: 1080, jacket: '#5C4B6B', hair: C.hairAuburn, hairStyle: 'long', skin: C.skin1, gear: 'pad' },
+  { x: 1310, jacket: '#3B4A57', hair: C.hairDark, hairStyle: 'short', skin: C.skin3, gear: 'phone' },
+  { x: 1540, jacket: '#2E6B66', hair: C.hairBlond, hairStyle: 'bun', skin: C.skin2, gear: 'mic' },
+  { x: 1760, jacket: '#4A4F55', hair: C.hairGrey, hairStyle: 'bald', skin: C.skin1, gear: 'camera' },
+];
+function Foyer() {
+  let f = Rect(0, 0, W, H, '#E9E4DA') + Rect(0, 0, W, 70, '#F3F0EA') + Line(0, 70, W, 70, C.line, 2);
+  for (let i = 0; i < 4; i++) { const x = 1040 + i * 230; f += Rect(x, 130, 180, 420, '#CFE6F2', OL(3)) + Rect(x, 130, 180, 420, 'url(#s9-himmel)') + Line(x + 90, 130, x + 90, 550, '#8E9AA0', 5); }
+  f += Rect(0, 560, W, 520, '#CFC7B9') + Line(0, 560, W, 560, C.line, 2.5);
+  for (let k = 0; k < 6; k++) f += Line(0, 590 + k * k * 18, W, 590 + k * k * 18, '#C2B9AA', 2, { opacity: 0.8 });
+  f += Rect(470, 170, 560, 390, '#DCE7E1', OL(3)) + Rect(470, 170, 560, 26, '#C9D8CF', OL(2));   // schlichte Rückwand ohne Zeichen
+  f += Tree(360, 562, 0.55, 91) + Rect(330, 520, 60, 42, '#9C7040', OL(2.5));
+  return f;
+}
+function Brief(u, lt) {
+  // Schreiben (Linien, kein Text), faltet sich in einen Umschlag und geht an eine Behörde (allgemeines Gebäude ohne Schild)
+  const fold = ez(u, 2.7, 3.3), fly = ez(u, 3.3, 4.2, EASE.inOut);   // falten bei „gemeldet werden“
+  let g = Rect(0, 0, W, H, '#EEF2F0');
+  g += G({ transform: `translate(${N(lerp(0, 520, fly))} ${N(lerp(0, -200, fly))}) scale(${N(lerp(1, 0.35, fly))})` },
+    G({ transform: `translate(700 540) scale(1 ${N(lerp(1, 0.55, fold))}) translate(-700 -540)`, opacity: N(1 - fold * 0.9) },
+      Rect(520, 230, 360, 470, '#FFFFFF', { ...OL(3), rx: 6 }) + [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(i => Rect(560, 300 + i * 36, i === 9 ? 160 : 280 - (i % 3) * 30, 10, '#D4DADD', { rx: 5 })).join('') + Line(560, 660, 700, 660, C.line, 2.5))
+    + G({ opacity: N(fold) }, Envelope(700, 540, 3.2, '#FFFFFF')));
+  // Behördengebäude rechts
+  let b = Rect(1300, 380, 420, 300, '#E7E1D6', OL(3)) + Path('M1270,382 L1510,250 L1750,382 Z', '#C9C1B3', OL(3));
+  for (let i = 0; i < 5; i++) b += Rect(1330 + i * 78, 420, 34, 230, '#F4F1EA', OL(2));
+  b += Rect(1270, 680, 480, 26, '#BDB5A8', OL(2.5));
+  g += G({ opacity: N(ez(u, 0.4, 1.2)) }, b);
+  g += GreenGlow(1510, 560, 120, bump(u, 4.4, 0.6) * 0.8);
+  return g;
+}
+function Ratssaal(u, lt) {
+  // voller Ratssaal: Sitzreihen im Halbrund (von hinten), vorn erhöht die Verwaltungsspitze
+  const z = lerp(1.0, 1.12, ez(u, 0, 15, EASE.sine));
+  let r = Rect(0, 0, W, H, '#E3DED4') + Rect(0, 0, W, 60, '#EFEBE3') + Line(0, 60, W, 60, C.line, 2);
+  for (let i = 0; i < 6; i++) r += Rect(120 + i * 300, 110, 200, 250, '#CFE6F2', OL(3)) + Rect(120 + i * 300, 110, 200, 250, 'url(#s9-himmel)');
+  r += Rect(0, 380, W, 700, '#C9BFAF') + Line(0, 380, W, 380, C.line, 2.5);
+  // Podium
+  r += Rect(560, 330, 800, 120, '#B58A57', OL(3)) + Rect(560, 330, 800, 18, '#8E6A3F', OL(2));
+  const spitze = [[700, C.skin2, C.hairGrey, 'bald', '#3B4A57'], [860, C.skin1, C.hairAuburn, 'long', '#5C4B6B'], [1060, C.skin3, C.hairDark, 'short', '#2F4F4F'], [1220, C.skin1, C.hairBlond, 'bun', '#44505A']];
+  for (const [x, skin, hair, hs, j] of spitze) r += Bust({ x, y: 340, s: 0.5, skin, hair, hairStyle: hs, jacket: j });
+  r += Path('M560,352 L1360,352 L1400,450 L520,450 Z', '#C79B66', OL(3));
+  // Bericht auf dem Podium (hebt sich bei „dokumentiert“ hervor)
+  const k = ez(u, S8L.bericht - S8L.ratssaal, S8L.bericht - S8L.ratssaal + 0.8);
+  r += GreenGlow(960, 380, 90, 0) + Circ(960, 384, 70, '#FFFFFF', { opacity: N(0.5 * k), filter: 'url(#fGlow)' });
+  r += Rect(912, 360, 96, 36, '#E8E2D4', { ...OL(2.5), rx: 3 }) + Rect(916, 352, 88, 10, '#D9CFB9', OL(2)) + Rect(930, 368, 60, 6, '#B9AF9A', { rx: 3 });
+  // Sitzreihen
+  const rng8 = rng(808), looks = ['#3B4A57', '#5C4B6B', '#2F4F4F', '#44505A', '#6D5B4B', '#2E6B66', '#4A4F55', '#6A5D7B'];
+  const hairs = [C.hairBrown, C.hairDark, C.hairGrey, C.hairBlond, C.hairAuburn], styles = ['short', 'long', 'bald', 'bun', 'short'], skins = [C.skin1, C.skin2, C.skin3, C.skin4];
+  for (let row = 0; row < 4; row++) {
+    const y = 560 + row * 150, n = 6 + row, s = 0.62 + row * 0.16;
+    r += Path(`M${-60},${y - 30 * s} Q960,${y - 110 - row * 10} 1980,${y - 30 * s} L1980,${y + 30} Q960,${y - 60 - row * 10} -60,${y + 30} Z`, '#A8805A', OL(3));
+    for (let i = 0; i < n; i++) {
+      const x = 960 + (i - (n - 1) / 2) * (1920 / n) * 0.98, yy = y + 70 * s + Math.abs(i - (n - 1) / 2) * 6;
+      r += BustBack({ x, y: yy, s, jacket: looks[Math.floor(rng8() * looks.length)], hair: hairs[Math.floor(rng8() * hairs.length)], hairStyle: styles[Math.floor(rng8() * styles.length)], skin: skins[Math.floor(rng8() * skins.length)] });
+    }
+  }
+  return G({ transform: `translate(960 400) scale(${N(z)}) translate(-960 -400)` }, r);
+}
+const S8 = {
+  n: 8,
+  defs() { return `<g id="s8-foyer">${Foyer()}</g>`; },
+  draw(lt, dur, ltA) {
+    let world = '', ui = '';
+    const zuBrief = ez(lt, S8L.brief[0] - 0.4, S8L.brief[0] + 0.5), zuSaal = ez(lt, S8L.ratssaal - 0.5, S8L.ratssaal + 0.5);
+    // 1) Pressekonferenz
+    if (zuBrief < 1) {
+      let f = Use('s8-foyer');
+      f += Bust({ x: 760, y: 610, s: 1.15, jacket: '#2B3A45', shirt: '#EEF3F6', tie: '#4E6B7C', hair: C.hairBrown, hairStyle: 'short', skin: C.skin2, mood: 'neutral' });
+      f += Rednerpult(760, 800, 1.1);
+      // Presse im Vordergrund (von hinten)
+      S8Presse.forEach((p, i) => { f += BustBack({ x: p.x, y: 1140 + Math.sin(lt * 1.1 + i) * 2, s: 1.3, ...p }); });
+      // Kamerablitze
+      // Kamerablitze: abwechselnd aus der Kamera und dem Telefon (Lage aus BustBack: Hand + Gerät, Maßstab 1,3)
+      const quellen = [[1760 + 59 * 1.3, 1140 - 212 * 1.3], [1310 + 70 * 1.3, 1140 - 200 * 1.3]];   // Kamera, Telefon
+      S8L.blitze.forEach((bt, i) => { const k = bump(lt, bt, 0.22); if (k > 0) { const [bx, by] = quellen[i % 2]; f += Blitz(bx, by, k, 0.7); } });
+      world += G({ opacity: N(1 - zuBrief) }, f);
+      // Schlagzeilen links (erfunden, ohne Medienlogos)
+      S8L.schlagzeilen.forEach((t0, i) => {
+        const op = ez(lt, t0, t0 + 0.7) * (1 - zuBrief);
+        if (op > 0.001) ui += Schlagzeile(`schlagzeile_${i + 1}`, 60 + i * 28, 150 + i * 150, 400, [-3, 2, -1.5][i], op);
+      });
+      // Sprechblasen: je Frage eine, über der fragenden Person
+      S8L.fragen.forEach(([a, b], i) => {
+        const op = fadeIO(lt, a - 0.15, a + 0.25, b + 0.3, b + 0.7) * (1 - zuBrief);
+        if (op <= 0.001) return;
+        const p = S8Presse[S8L.frager[i]];
+        const bw = 600, bx = clamp(p.x - bw + 80, 980, W - bw - 40);
+        const tmp = Sprechblase(`presse_${i + 1}`, 0, 0, bw, 0, 0);
+        const by = 840 - tmp.h - 40;
+        const sb = Sprechblase(`presse_${i + 1}`, bx, by, bw, p.x - 30, 900);
+        ui += G({ opacity: N(op), transform: `translate(0 ${N((1 - EASE.out(clamp(op))) * 14)})` }, sb.svg);
+      });
+    }
+    // 2) Schreiben an die Datenschutzaufsicht
+    if (zuBrief > 0.001 && zuSaal < 1) world += G({ opacity: N(zuBrief * (1 - zuSaal)) }, Brief(lt - S8L.brief[0], lt));
+    // 3) voller Ratssaal
+    if (zuSaal > 0.001) world += G({ opacity: N(zuSaal) }, Ratssaal(lt - S8L.ratssaal, lt));
+    return { world: world + Use('vignette'), warn: '', ui, grade: GRADE.s7 };
+  },
+};
+
+const S10 = SzeneLeer(10), S11 = SzeneLeer(11);
 
 /* =====================================================================
    11  SZENENVERZEICHNIS

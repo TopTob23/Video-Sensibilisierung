@@ -92,6 +92,7 @@ function zeilen(text) {
     let score = Math.abs(a.length - b.length);
     if (/[,;:–]$/.test(w[i - 1])) score -= 8;
     if (funktionswort(w[i - 1])) score += 12;
+    if (/[,;:]$/.test(w[i]) && i < w.length - 1) score += 10;   // kein einzelnes Wort vor einem Komma am Zeilenanfang
     if (b.length > a.length) score += 3;
     if (!best || score < best.score) best = { score, lines: [a, b] };
   }
@@ -106,7 +107,7 @@ function schneiden(w) {
   const schnitt = i => {                                     // Kosten für einen Schnitt nach dem i-ten Wort (i Wörter davor)
     const t = w[i - 1].w;
     if (/[,;:]$/.test(t) || t === '–') return 0;
-    return funktionswort(t) ? 2500 : 900;
+    return (funktionswort(t) ? 2500 : 900) + (i < n && /[,;:]$/.test(w[i].w) ? 600 : 0);
   };
   const best = Array(n + 1).fill(Infinity), von = Array(n + 1).fill(-1);
   best[0] = 0;
@@ -165,8 +166,10 @@ export function planen(db, anker = {}, optionen = {}) {
       for (let i = suchab; i + pw.length <= alleW.length; i++) {
         if (pw.every((p, q) => norm(alleW[i + q].x.w) === p)) { suchab = i + 1; return { entwurf, phrase, ref: alleW[i] }; }
       }
+      // fehlt noch eine Aufnahme dieser Szene (z. B. Pressefragen vor der Stimmenfreigabe), wird der Anker vorerst übersprungen
+      if (fehlend.length) { ergebnis.hinweise.push(`Szene ${n}: Anker „${phrase}“ übersprungen (Aufnahme fehlt noch)`); return null; }
       throw new Error(`Szene ${n}: Anker „${phrase}“ nicht im Sprechtext gefunden`);
-    });
+    }).filter(Boolean);
     for (const a of ankerTreffer) if (a.ref.k === 0 && (K.saetzeFesthalten || a.ref.satz.i === 0)) ziel.set(a.ref.satz.i, a.entwurf);
     const istFrage = s => s.teil.art === 'fragen';
     // Pressefragen: hintereinander; der Sprechertext beginnt laut Drehbuch später („ab 4:00“)
@@ -225,11 +228,14 @@ export function planen(db, anker = {}, optionen = {}) {
     for (let i = 1; i < S.anker.length; i++) if (S.anker[i][0] <= S.anker[i - 1][0] || S.anker[i][1] <= S.anker[i - 1][1]) throw new Error(`Szene ${n}: Anker nicht monoton (${JSON.stringify(S.anker.slice(i - 1, i + 1))})`);
 
     // Szenenlänge
-    let L = Math.max(nominal, Math.ceil(audioEnde + K.nachlauf - 1e-9));
-    if (S.anker.length) { const [dl, al] = S.anker[S.anker.length - 1]; L = Math.max(L, Math.ceil(al + (S.entwurf - dl) - 1e-9)); }
-    S.ende = start + L;
+    // auf ganze Bilder (1/30 s) runden; nach dem letzten Anker dürfen die Bilder bis zu 5 % schneller nachlaufen
+    const bild = x => Math.ceil(x * 30 - 1e-6) / 30;
+    let L = Math.max(nominal, bild(audioEnde + K.nachlauf));
+    if (S.anker.length) { const [dl, al] = S.anker[S.anker.length - 1]; L = Math.max(L, bild(al + (S.entwurf - dl) / 1.05)); }
+    L = Math.round(L * 30) / 30;
+    S.ende = Math.round((start + L) * 30) / 30;
     S.audioEnde = r3(audioEnde);
-    S.verlaengert = L > nominal ? L - nominal : 0;
+    S.verlaengert = L > nominal ? r3(L - nominal) : 0;
     if (S.anker.length) { const [dl, al] = S.anker[S.anker.length - 1]; const rd = S.entwurf - dl, ra = L - al; S.tail = ra < rd ? r3(rd / ra) : 1; }
 
     // Segmente für die Tonmischung (absolute Zeit)
@@ -248,13 +254,19 @@ export function planen(db, anker = {}, optionen = {}) {
       const wl = s.w.map(x => ({ w: x.w, s: x.a, e: x.b, sprech: x.sprech }));
       for (const g of schneiden(wl)) cueListe.push({ szene: n, wort: g });
     }
+    // Zeiten: Beginn kurz vor dem ersten Wort, Ende kurz nach dem letzten; zwischen zwei Untertiteln mindestens 2 Bilder Abstand.
+    // Folgen die Wörter dicht aufeinander, liegt die Grenze mittig in der Wortlücke.
+    const LUECKE = 0.07;
+    cueListe.forEach(c => { const buch = c.wort.filter(x => x.sprech); c.s = buch[0].s; c.e = buch[buch.length - 1].e; c.start = Math.max(0, c.s - K.cueVorlauf); });
     cueListe.forEach((c, i) => {
-      const buch = c.wort.filter(x => x.sprech);
-      c.start = Math.max(0, buch[0].s - K.cueVorlauf);
       const nxt = cueListe[i + 1];
-      const grenze = nxt ? (() => { const nb = nxt.wort.filter(x => x.sprech); return nb[0].s - K.cueVorlauf - 0.05; })() : L - 0.1;
-      c.end = Math.min(buch[buch.length - 1].e + K.cueNachhall, grenze);
-      if (c.end - c.start < K.cueMinDauer) c.end = Math.min(c.start + K.cueMinDauer, grenze);
+      if (!nxt) { c.end = Math.min(c.e + K.cueNachhall, L - 0.1); }
+      else if (nxt.start - c.e >= LUECKE) { c.end = Math.min(c.e + K.cueNachhall, nxt.start - LUECKE); }
+      else { const mitte = (c.e + nxt.s) / 2; c.end = mitte - LUECKE / 2; nxt.start = Math.max(nxt.start, mitte + LUECKE / 2); }
+    });
+    cueListe.forEach((c, i) => {
+      const nxt = cueListe[i + 1];
+      if (c.end - c.start < K.cueMinDauer) c.end = Math.min(c.start + K.cueMinDauer, nxt ? nxt.start - LUECKE : L - 0.1);
       c.text = c.wort.map(x => x.w).join(' ');
       c.lines = zeilen(c.text);
     });

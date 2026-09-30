@@ -33,12 +33,12 @@ if (neu === html && !html.includes(block)) throw new Error('Block TIMELINE nicht
 fs.writeFileSync(HTML, neu);
 
 // ---------------------------------------------------------------- Bericht
-const f = s => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, '0')}`;
+const f = s => `${Math.floor(s / 60)}:${(s % 60).toFixed(1).padStart(4, '0')}`;
 console.log('Szene  Drehbuch      Video          Länge  Sprechende  Verlängerung  Anker-Tempo (Bild/Ton)');
 for (const S of tl.szenen) {
   const sl = [];
   for (let i = 1; i < S.anker.length; i++) sl.push(((S.anker[i][0] - S.anker[i - 1][0]) / (S.anker[i][1] - S.anker[i - 1][1])).toFixed(2));
-  console.log(String(S.n).padStart(4), ' ', `${f(S.nominal[0])}–${f(S.nominal[1])}`.padEnd(12), `${f(S.start)}–${f(S.ende)}`.padEnd(13), String(S.ende - S.start).padStart(4) + ' s', String(S.audioEnde ?? '—').padStart(9), String(S.verlaengert ? '+' + S.verlaengert + ' s' : '–').padStart(12), '  ', sl.join(' '), S.fehlend.length ? `  (fehlt: ${S.fehlend.join(', ')})` : '');
+  console.log(String(S.n).padStart(4), ' ', `${f(S.nominal[0])}–${f(S.nominal[1])}`.padEnd(12), `${f(S.start)}–${f(S.ende)}`.padEnd(13), (S.ende - S.start).toFixed(2).padStart(6) + ' s', String(S.audioEnde ?? '—').padStart(9), String(S.verlaengert ? '+' + S.verlaengert + ' s' : '–').padStart(12), '  ', sl.join(' '), S.fehlend.length ? `  (fehlt: ${S.fehlend.join(', ')})` : '');
 }
 console.log(`Gesamtlänge ${f(tl.gesamt)} (${tl.gesamt} s), ${tl.cues.length} Untertitel`);
 for (const t of tl.hinweise) console.log('Hinweis:', t);

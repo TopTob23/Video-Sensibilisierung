@@ -65,7 +65,7 @@ console.log(`${offen.length} Teile zu erzeugen (${zeichen} Zeichen)${DRY ? ' –
 if (!DRY && offen.length) {
   if (!KEY) { console.error('ELEVENLABS_API_KEY ist nicht gesetzt.'); process.exit(2); }
   for (const t of offen) {
-    if (/herne/i.test(t.text)) throw new Error(`${t.id}: Der Ortsname darf nicht an die Sprachausgabe gehen (Vorgabe vom 30.09.2026)`);
+    if (/herne/i.test(t.text)) throw new Error(`${t.id}: Der Ortsname darf nicht an die Sprachausgabe gehen (Vorgabe des Auftraggebers)`);
     const r = await erzeugen(t);
     const a = r.alignment;
     if (!a || a.characters.join('') !== t.text) throw new Error(`${t.id}: Zeitmarken passen nicht zum gesendeten Text`);

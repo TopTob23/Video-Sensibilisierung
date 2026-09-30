@@ -42,7 +42,7 @@ export const REGELN = [
   { id: 'Zahl', re: /\b\d+\b/g, nach: m => zahlWort(+m) },
 ];
 
-// Ortsname: Die Stimme nennt Herne nicht; „Stadt Herne“ → „Stadt“, „in Herne“ → „in der Stadt“ (Vorgabe vom 30.09.2026).
+// Ortsname: Die Stimme nennt Herne nicht; „Stadt Herne“ → „Stadt“, „in Herne“ → „in der Stadt“ (Vorgabe des Auftraggebers).
 // Im Bild und in den Untertiteln bleibt der Name stehen. Jede andere Stellung von „Herne“ bricht ab, damit nichts unbemerkt gesprochen wird.
 const ORT = /^Herne([.,;:!?]*)$/;
 function ortsname(wort, vorher) {
