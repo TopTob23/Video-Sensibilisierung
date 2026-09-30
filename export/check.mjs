@@ -191,7 +191,9 @@ const cueMetrics = [];
       const anz = c.lines.join(' ').split(' ').length, ws = worte.slice(pos, pos + anz);
       pos += anz;
       if (ws.length !== anz || ws.map(x => x.w).join(' ') !== c.lines.join(' ')) { schlecht++; FEHLER(B, `Cue „${c.lines.join(' ').slice(0, 40)}…“ passt nicht zu den Wörtern der Sprachaufnahme`); continue; }
-      const vor = ws[0].a - c.start, nach = c.end - ws[ws.length - 1].b;
+      // gemessen an den gesprochenen Wörtern wie in der Planung (export/timeline.mjs): Satzzeichen wie „–“ tragen keine Sprechzeit
+      const sp = ws.filter(x => /[\p{L}\p{N}]/u.test(x.w));
+      const vor = sp[0].a - c.start, nach = c.end - sp[sp.length - 1].b;
       maxVor = Math.max(maxVor, vor);
       // bei dicht folgenden Wörtern liegt die Grenze mittig in der Wortlücke (± 1 Bild)
       if (vor < -0.05 || vor > 0.3 || nach < -0.05) { schlecht++; if (inScope(c.scene)) FEHLER(B, `Cue „${c.lines.join(' ').slice(0, 40)}…“ nicht synchron zur Stimme (Beginn ${vor.toFixed(2)} s vor dem ersten Wort, Ende ${nach.toFixed(2)} s nach dem letzten)`); }
