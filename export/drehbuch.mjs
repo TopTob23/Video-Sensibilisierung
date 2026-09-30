@@ -32,3 +32,35 @@ export function parseDrehbuch(file = findDrehbuch()) {
   });
   return { file, md, scenes, total: scenes[scenes.length - 1].end };
 }
+
+// Einblendetexte der Szenen 8–12 und die Markenzeile, wörtlich aus dem Drehbuch
+export function einblendungen(db) {
+  const md = db.md;
+  const szene = n => db.scenes.find(s => s.n === n).text;
+  const zitate = t => [...t.matchAll(/„([^“]*)“/g)].map(m => m[1]);
+  const feld = (t, label) => { const m = t.match(new RegExp(`\\*\\*${label}[^\\n]*?:\\*\\*\\s*([^\\n]*)`)); return m ? m[1] : null; };
+  const liste = (t, label) => {                                  // Aufzählung unter „- **Spalte „X“:**“ (Unterpunkte mit „  - “)
+    const i = t.indexOf(`**${label}:**`);
+    if (i < 0) return null;
+    const rest = t.slice(i).split('\n').slice(1);
+    const out = [];
+    for (const l of rest) { const m = l.match(/^\s{2,}- (.*)$/); if (!m) break; out.push(m[1].trim()); }
+    return out;
+  };
+  const s8 = szene(8), s9 = szene(9), s10 = szene(10), s11 = szene(11), s12 = szene(12);
+  const e = {};
+  e.schlagzeilen = zitate(s8.split('Schlagzeilen ohne reale Medienlogos:')[1].split('\n')[0]);
+  e.tafeln = zitate(s9.split('nacheinander:')[1].split('\n')[0].split('Dann drei Symbole')[0]);
+  e.symbole = zitate(s9.split('Dann drei Symbole')[1].split('\n')[0])[0].split(', ');
+  e.investitionen = feld(s10, 'Text-Einblendung „Investitionen“').split(' · ');
+  e.personal = feld(s10, 'Text-Einblendung „Personal“').split(' · ');
+  e.warnmarken = [...s11.matchAll(/^\s+(\d+)\. (.*)$/gm)].map(m => m[2].trim());
+  e.spalten = {
+    erreicht: { titel: 'Erreicht', punkte: liste(s12, 'Spalte „Erreicht“') },
+    vorbereitet: { titel: 'Vorbereitet', punkte: liste(s12, 'Spalte „Vorbereitet“') },
+    offen: { titel: 'Offen – nächste Schritte', punkte: liste(s12, 'Spalte „Offen – nächste Schritte“') },
+  };
+  e.offeneAnforderungen = zitate(feld(s12, 'Einblendung darunter \\(klein\\)'))[0];
+  e.marke = zitate(md.split('## Branding')[1].split('\n## ')[0])[0];
+  return e;
+}

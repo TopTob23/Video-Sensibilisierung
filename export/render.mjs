@@ -4,11 +4,13 @@
 // Aufruf:
 //   node export/render.mjs                         → komplettes Video + SRT in output/
 //   node export/render.mjs --ranges 0-12,56-88 --out output/muster/Muster.mp4 --nosrt
-// Optionen: --workers N (parallele Render-Prozesse, Standard 3), --crf Q (Qualität, Standard 18)
+// Optionen: --workers N (parallele Render-Prozesse, Standard 3), --crf Q (Qualität, Standard 18),
+//           --ohneton (ohne Sprachausgabe; sonst wird der Ton aus audio/timeline.json gemischt und als AAC 192 kbit/s eingebettet)
 import fs from 'fs';
 import path from 'path';
 import { spawn } from 'child_process';
 import { loadPlaywright, openVideo, renderAt, ROOT, BASENAME } from './lib.mjs';
+import { mischen } from './audio.mjs';
 
 const argv = process.argv.slice(2);
 const opt = (name, def) => { const i = argv.indexOf('--' + name); return i >= 0 ? (argv[i + 1] && !argv[i + 1].startsWith('--') ? argv[i + 1] : true) : def; };
@@ -18,6 +20,7 @@ const OUT = path.resolve(ROOT, opt('out', `output/${BASENAME}.mp4`));
 const SRT = OUT.replace(/\.mp4$/i, '.srt');
 const ranges = opt('ranges', null);
 const withSrt = !opt('nosrt', false);
+const withTon = !opt('ohneton', false) && fs.existsSync(path.join(ROOT, 'audio', 'timeline.json'));
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
 const tmpDir = path.join(path.dirname(OUT), '.segmente');
 fs.rmSync(tmpDir, { recursive: true, force: true });
@@ -85,7 +88,16 @@ if (errors.length) { console.error('Fehler in der Seite:\n' + errors.join('\n'))
 // Abschnitte ohne Neukodierung verbinden
 const listFile = path.join(tmpDir, 'liste.txt');
 fs.writeFileSync(listFile, fs.readdirSync(tmpDir).filter(f => f.endsWith('.mp4')).sort().map(f => `file '${path.join(tmpDir, f)}'`).join('\n'));
-await run('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', listFile, '-c', 'copy', '-movflags', '+faststart', OUT]);
+const stumm = path.join(tmpDir, 'video_ohne_ton.mp4');
+await run('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', listFile, '-c', 'copy', stumm]);
+if (withTon) {
+  const bereiche = ranges ? String(ranges).split(',').map(r => r.split('-').map(Number)) : null;
+  const ton = mischen({ ranges: bereiche, out: path.join(ROOT, 'output', '.ton', path.basename(OUT).replace(/\.mp4$/i, '') + '.wav'), log: m => console.log('  Ton: ' + m) });
+  console.log(`  Ton: ${ton.lufs} LUFS integriert, True Peak ${ton.truePeak} dBTP, ${ton.dauer.toFixed(2)} s`);
+  await run('ffmpeg', ['-y', '-loglevel', 'error', '-i', stumm, '-i', ton.datei, '-map', '0:v', '-map', '1:a', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-ar', '48000', '-movflags', '+faststart', OUT]);
+} else {
+  await run('ffmpeg', ['-y', '-loglevel', 'error', '-i', stumm, '-c', 'copy', '-movflags', '+faststart', OUT]);
+}
 fs.rmSync(tmpDir, { recursive: true, force: true });
 console.log(`✓ Video: ${path.relative(ROOT, OUT)} (${((Date.now() - t0) / 1000).toFixed(0)} s)`);
 

@@ -1,0 +1,5027 @@
+{
+ "drehbuch": "Drehbuch_Video_Angriffsszenario_Herne_V1_4.md",
+ "gesamt": 457,
+ "szenen": [
+  {
+   "n": 0,
+   "titel": "Titel",
+   "nominal": [
+    0,
+    12
+   ],
+   "start": 0,
+   "ende": 12,
+   "entwurf": 12,
+   "anker": [],
+   "tail": 1,
+   "teile": [],
+   "saetze": [],
+   "segmente": [],
+   "fehlend": []
+  },
+  {
+   "n": 1,
+   "titel": "Eine Stadt, die funktioniert",
+   "nominal": [
+    12,
+    32
+   ],
+   "start": 12,
+   "ende": 32,
+   "entwurf": 20,
+   "anker": [
+    [
+     1,
+     1
+    ],
+    [
+     5.2,
+     5.505
+    ],
+    [
+     9.8,
+     8.721
+    ]
+   ],
+   "tail": 1,
+   "teile": [
+    {
+     "id": "szene_01",
+     "datei": "audio/szene_01.mp3",
+     "stimme": "Alexander – Deep TV Narrator",
+     "rolle": "Erzähler",
+     "dauer": 12.669
+    }
+   ],
+   "saetze": [
+    {
+     "text": "Ausweise, Urkunden, Sozialleistungen, Kitaplätze, Baugenehmigungen und die Gehälter der Beschäftigten: Fast jede Leistung der Stadtverwaltung hängt heute von funktionierender IT ab.",
+     "teil": "szene_01",
+     "ziel": 1,
+     "beginn": 1,
+     "ende": 13.632,
+     "worte": [
+      [
+       "Ausweise,",
+       1,
+       1.871
+      ],
+      [
+       "Urkunden,",
+       2.045,
+       2.881
+      ],
+      [
+       "Sozialleistungen,",
+       3.032,
+       4.251
+      ],
+      [
+       "Kitaplätze,",
+       4.425,
+       5.331
+      ],
+      [
+       "Baugenehmigungen",
+       5.505,
+       6.445
+      ],
+      [
+       "und",
+       6.561,
+       6.747
+      ],
+      [
+       "die",
+       6.84,
+       6.933
+      ],
+      [
+       "Gehälter",
+       6.979,
+       7.351
+      ],
+      [
+       "der",
+       7.385,
+       7.467
+      ],
+      [
+       "Beschäftigten:",
+       7.513,
+       8.338
+      ],
+      [
+       "Fast",
+       8.721,
+       9.022
+      ],
+      [
+       "jede",
+       9.115,
+       9.336
+      ],
+      [
+       "Leistung",
+       9.406,
+       9.8
+      ],
+      [
+       "der",
+       9.847,
+       9.951
+      ],
+      [
+       "Stadtverwaltung",
+       10.009,
+       10.787
+      ],
+      [
+       "hängt",
+       10.834,
+       11.019
+      ],
+      [
+       "heute",
+       11.066,
+       11.356
+      ],
+      [
+       "von",
+       11.403,
+       11.588
+      ],
+      [
+       "funktionierender",
+       11.646,
+       12.482
+      ],
+      [
+       "IT",
+       12.552,
+       12.819
+      ],
+      [
+       "ab.",
+       13.028,
+       13.632
+      ]
+     ]
+    }
+   ],
+   "segmente": [
+    {
+     "id": "szene_01",
+     "datei": "audio/szene_01.mp3",
+     "von": 0,
+     "bis": 12.669,
+     "bei": 13,
+     "stimme": "Alexander – Deep TV Narrator"
+    }
+   ],
+   "fehlend": [],
+   "audioEnde": 13.632,
+   "verlaengert": 0
+  },
+  {
+   "n": 2,
+   "titel": "Der Einstieg",
+   "nominal": [
+    32,
+    56
+   ],
+   "start": 32,
+   "ende": 56,
+   "entwurf": 24,
+   "anker": [
+    [
+     1,
+     1
+    ],
+    [
+     5.2,
+     4.46
+    ],
+    [
+     9,
+     7.359
+    ],
+    [
+     13,
+     10.551
+    ],
+    [
+     18,
+     14.069
+    ]
+   ],
+   "tail": 1,
+   "teile": [
+    {
+     "id": "szene_02",
+     "datei": "audio/szene_02.mp3",
+     "stimme": "Alexander – Deep TV Narrator",
+     "rolle": "Erzähler",
+     "dauer": 16.614
+    }
+   ],
+   "saetze": [
+    {
+     "text": "Ein typischer Angriff beginnt mit einer gefälschten E-Mail, die wie eine gewöhnliche Rechnung aussieht.",
+     "teil": "szene_02",
+     "ziel": 1,
+     "beginn": 1,
+     "ende": 6.909,
+     "worte": [
+      [
+       "Ein",
+       1,
+       1.232
+      ],
+      [
+       "typischer",
+       1.302,
+       1.789
+      ],
+      [
+       "Angriff",
+       1.836,
+       2.219
+      ],
+      [
+       "beginnt",
+       2.312,
+       2.625
+      ],
+      [
+       "mit",
+       2.683,
+       2.811
+      ],
+      [
+       "einer",
+       2.858,
+       3.043
+      ],
+      [
+       "gefälschten",
+       3.09,
+       3.67
+      ],
+      [
+       "E-Mail,",
+       3.752,
+       4.309
+      ],
+      [
+       "die",
+       4.46,
+       4.622
+      ],
+      [
+       "wie",
+       4.68,
+       4.82
+      ],
+      [
+       "eine",
+       4.889,
+       5.133
+      ],
+      [
+       "gewöhnliche",
+       5.191,
+       5.83
+      ],
+      [
+       "Rechnung",
+       5.888,
+       6.248
+      ],
+      [
+       "aussieht.",
+       6.306,
+       6.909
+      ]
+     ]
+    },
+    {
+     "text": "Solche Nachrichten erreichen jede Verwaltung täglich, und einzelne Klicks lassen sich nie ganz verhindern.",
+     "teil": "szene_02",
+     "ziel": null,
+     "beginn": 7.359,
+     "ende": 13.558,
+     "worte": [
+      [
+       "Solche",
+       7.359,
+       7.695
+      ],
+      [
+       "Nachrichten",
+       7.753,
+       8.334
+      ],
+      [
+       "erreichen",
+       8.404,
+       8.856
+      ],
+      [
+       "jede",
+       8.938,
+       9.17
+      ],
+      [
+       "Verwaltung",
+       9.228,
+       9.704
+      ],
+      [
+       "täglich,",
+       9.739,
+       10.308
+      ],
+      [
+       "und",
+       10.551,
+       10.749
+      ],
+      [
+       "einzelne",
+       10.865,
+       11.329
+      ],
+      [
+       "Klicks",
+       11.387,
+       11.747
+      ],
+      [
+       "lassen",
+       11.921,
+       12.212
+      ],
+      [
+       "sich",
+       12.246,
+       12.397
+      ],
+      [
+       "nie",
+       12.467,
+       12.571
+      ],
+      [
+       "ganz",
+       12.63,
+       12.827
+      ],
+      [
+       "verhindern.",
+       12.862,
+       13.558
+      ]
+     ]
+    },
+    {
+     "text": "Entscheidend ist, wie weit ein Angreifer danach kommt.",
+     "teil": "szene_02",
+     "ziel": null,
+     "beginn": 14.069,
+     "ende": 17.645,
+     "worte": [
+      [
+       "Entscheidend",
+       14.069,
+       14.696
+      ],
+      [
+       "ist,",
+       14.777,
+       15.068
+      ],
+      [
+       "wie",
+       15.161,
+       15.393
+      ],
+      [
+       "weit",
+       15.474,
+       15.776
+      ],
+      [
+       "ein",
+       15.869,
+       16.02
+      ],
+      [
+       "Angreifer",
+       16.101,
+       16.623
+      ],
+      [
+       "danach",
+       16.67,
+       16.983
+      ],
+      [
+       "kommt.",
+       17.03,
+       17.645
+      ]
+     ]
+    }
+   ],
+   "segmente": [
+    {
+     "id": "szene_02",
+     "datei": "audio/szene_02.mp3",
+     "von": 0,
+     "bis": 6.007,
+     "bei": 33,
+     "stimme": "Alexander – Deep TV Narrator"
+    },
+    {
+     "id": "szene_02",
+     "datei": "audio/szene_02.mp3",
+     "von": 6.007,
+     "bis": 12.63,
+     "bei": 39.073,
+     "stimme": "Alexander – Deep TV Narrator"
+    },
+    {
+     "id": "szene_02",
+     "datei": "audio/szene_02.mp3",
+     "von": 12.63,
+     "bis": 16.614,
+     "bei": 45.696,
+     "stimme": "Alexander – Deep TV Narrator"
+    }
+   ],
+   "fehlend": [],
+   "audioEnde": 17.645,
+   "verlaengert": 0
+  },
+  {
+   "n": 3,
+   "titel": "Zugang zu zentralen Systemen",
+   "nominal": [
+    56,
+    88
+   ],
+   "start": 56,
+   "ende": 88,
+   "entwurf": 32,
+   "anker": [
+    [
+     1.6,
+     1.6
+    ],
+    [
+     10,
+     8.938
+    ],
+    [
+     12.6,
+     11.376
+    ],
+    [
+     17.4,
+     15.613
+    ],
+    [
+     23.8,
+     21.554
+    ],
+    [
+     26.2,
+     23.458
+    ]
+   ],
+   "tail": 1,
+   "teile": [
+    {
+     "id": "szene_03",
+     "datei": "audio/szene_03.mp3",
+     "stimme": "Alexander – Deep TV Narrator",
+     "rolle": "Erzähler",
+     "dauer": 24.007
+    }
+   ],
+   "saetze": [
+    {
+     "text": "In Herne lässt sich die IT nicht nur von wenigen, besonders geschützten Arbeitsplätzen aus verwalten.",
+     "teil": "szene_03",
+     "ziel": 1.6,
+     "beginn": 1.6,
+     "ende": 8.334,
+     "worte": [
+      [
+       "In",
+       1.6,
+       1.751
+      ],
+      [
+       "Herne",
+       1.786,
+       2.331
+      ],
+      [
+       "lässt",
+       2.506,
+       2.773
+      ],
+      [
+       "sich",
+       2.819,
+       2.982
+      ],
+      [
+       "die",
+       3.051,
+       3.191
+      ],
+      [
+       "IT",
+       3.307,
+       3.69
+      ],
+      [
+       "nicht",
+       4.015,
+       4.259
+      ],
+      [
+       "nur",
+       4.305,
+       4.398
+      ],
+      [
+       "von",
+       4.433,
+       4.584
+      ],
+      [
+       "wenigen,",
+       4.642,
+       5.269
+      ],
+      [
+       "besonders",
+       5.385,
+       5.849
+      ],
+      [
+       "geschützten",
+       5.919,
+       6.453
+      ],
+      [
+       "Arbeitsplätzen",
+       6.511,
+       7.196
+      ],
+      [
+       "aus",
+       7.254,
+       7.521
+      ],
+      [
+       "verwalten.",
+       7.637,
+       8.334
+      ]
+     ]
+    },
+    {
+     "text": "Intern reicht dafür ein Passwort, eine zweite Bestätigung bei der Anmeldung ist noch nicht eingeführt.",
+     "teil": "szene_03",
+     "ziel": null,
+     "beginn": 8.938,
+     "ende": 15.102,
+     "worte": [
+      [
+       "Intern",
+       8.938,
+       9.53
+      ],
+      [
+       "reicht",
+       9.646,
+       9.924
+      ],
+      [
+       "dafür",
+       9.948,
+       10.249
+      ],
+      [
+       "ein",
+       10.296,
+       10.412
+      ],
+      [
+       "Passwort,",
+       10.482,
+       11.132
+      ],
+      [
+       "eine",
+       11.376,
+       11.736
+      ],
+      [
+       "zweite",
+       11.817,
+       12.223
+      ],
+      [
+       "Bestätigung",
+       12.27,
+       12.896
+      ],
+      [
+       "bei",
+       12.989,
+       13.117
+      ],
+      [
+       "der",
+       13.164,
+       13.245
+      ],
+      [
+       "Anmeldung",
+       13.303,
+       13.779
+      ],
+      [
+       "ist",
+       13.837,
+       13.953
+      ],
+      [
+       "noch",
+       13.999,
+       14.139
+      ],
+      [
+       "nicht",
+       14.197,
+       14.371
+      ],
+      [
+       "eingeführt.",
+       14.429,
+       15.102
+      ]
+     ]
+    },
+    {
+     "text": "Zudem haben mehr Konten weitreichende Rechte, als für die jeweiligen Aufgaben nötig wäre.",
+     "teil": "szene_03",
+     "ziel": null,
+     "beginn": 15.613,
+     "ende": 21.104,
+     "worte": [
+      [
+       "Zudem",
+       15.613,
+       16.066
+      ],
+      [
+       "haben",
+       16.159,
+       16.449
+      ],
+      [
+       "mehr",
+       16.507,
+       16.716
+      ],
+      [
+       "Konten",
+       16.785,
+       17.227
+      ],
+      [
+       "weitreichende",
+       17.285,
+       17.97
+      ],
+      [
+       "Rechte,",
+       18.028,
+       18.504
+      ],
+      [
+       "als",
+       18.631,
+       18.875
+      ],
+      [
+       "für",
+       18.945,
+       19.084
+      ],
+      [
+       "die",
+       19.107,
+       19.189
+      ],
+      [
+       "jeweiligen",
+       19.247,
+       19.746
+      ],
+      [
+       "Aufgaben",
+       19.816,
+       20.28
+      ],
+      [
+       "nötig",
+       20.315,
+       20.628
+      ],
+      [
+       "wäre.",
+       20.663,
+       21.104
+      ]
+     ]
+    },
+    {
+     "text": "Wer ein solches Konto übernimmt, erreicht damit zentrale Systeme.",
+     "teil": "szene_03",
+     "ziel": null,
+     "beginn": 21.554,
+     "ende": 25.571,
+     "worte": [
+      [
+       "Wer",
+       21.554,
+       21.774
+      ],
+      [
+       "ein",
+       21.832,
+       21.983
+      ],
+      [
+       "solches",
+       22.03,
+       22.389
+      ],
+      [
+       "Konto",
+       22.459,
+       22.749
+      ],
+      [
+       "übernimmt,",
+       22.831,
+       23.376
+      ],
+      [
+       "erreicht",
+       23.458,
+       23.841
+      ],
+      [
+       "damit",
+       23.864,
+       24.131
+      ],
+      [
+       "zentrale",
+       24.177,
+       24.723
+      ],
+      [
+       "Systeme.",
+       24.758,
+       25.571
+      ]
+     ]
+    }
+   ],
+   "segmente": [
+    {
+     "id": "szene_03",
+     "datei": "audio/szene_03.mp3",
+     "von": 0,
+     "bis": 6.879,
+     "bei": 57.6,
+     "stimme": "Alexander – Deep TV Narrator"
+    },
+    {
+     "id": "szene_03",
+     "datei": "audio/szene_03.mp3",
+     "von": 6.879,
+     "bis": 13.631,
+     "bei": 64.479,
+     "stimme": "Alexander – Deep TV Narrator"
+    },
+    {
+     "id": "szene_03",
+     "datei": "audio/szene_03.mp3",
+     "von": 13.631,
+     "bis": 19.61,
+     "bei": 71.231,
+     "stimme": "Alexander – Deep TV Narrator"
+    },
+    {
+     "id": "szene_03",
+     "datei": "audio/szene_03.mp3",
+     "von": 19.61,
+     "bis": 24.007,
+     "bei": 77.218,
+     "stimme": "Alexander – Deep TV Narrator"
+    }
+   ],
+   "fehlend": [],
+   "audioEnde": 25.571,
+   "verlaengert": 0
+  },
+  {
+   "n": 4,
+   "titel": "Unbemerkt",
+   "nominal": [
+    88,
+    112
+   ],
+   "start": 88,
+   "ende": 112,
+   "entwurf": 24,
+   "anker": [
+    [
+     1,
+     1
+    ],
+    [
+     6.4,
+     5.293
+    ],
+    [
+     12.6,
+     10.294
+    ],
+    [
+     18.4,
+     15.089
+    ]
+   ],
+   "tail": 1,
+   "teile": [
+    {
+     "id": "szene_04",
+     "datei": "audio/szene_04.mp3",
+     "stimme": "Alexander – Deep TV Narrator",
+     "rolle": "Erzähler",
+     "dauer": 15.83
+    }
+   ],
+   "saetze": [
+    {
+     "text": "Verdächtige Vorgänge werden nicht zentral gesammelt und ausgewertet.",
+     "teil": "szene_04",
+     "ziel": 1,
+     "beginn": 1,
+     "ende": 4.843,
+     "worte": [
+      [
+       "Verdächtige",
+       1,
+       1.708
+      ],
+      [
+       "Vorgänge",
+       1.766,
+       2.219
+      ],
+      [
+       "werden",
+       2.265,
+       2.544
+      ],
+      [
+       "nicht",
+       2.591,
+       2.811
+      ],
+      [
+       "zentral",
+       2.846,
+       3.264
+      ],
+      [
+       "gesammelt",
+       3.334,
+       3.74
+      ],
+      [
+       "und",
+       3.81,
+       3.926
+      ],
+      [
+       "ausgewertet.",
+       4.007,
+       4.843
+      ]
+     ]
+    },
+    {
+     "text": "Ein Angreifer kann sich deshalb über Wochen im Netz bewegen, ohne aufzufallen.",
+     "teil": "szene_04",
+     "ziel": null,
+     "beginn": 5.293,
+     "ende": 9.844,
+     "worte": [
+      [
+       "Ein",
+       5.293,
+       5.467
+      ],
+      [
+       "Angreifer",
+       5.537,
+       6.071
+      ],
+      [
+       "kann",
+       6.117,
+       6.28
+      ],
+      [
+       "sich",
+       6.326,
+       6.466
+      ],
+      [
+       "deshalb",
+       6.524,
+       6.849
+      ],
+      [
+       "über",
+       6.918,
+       7.116
+      ],
+      [
+       "Wochen",
+       7.162,
+       7.464
+      ],
+      [
+       "im",
+       7.534,
+       7.615
+      ],
+      [
+       "Netz",
+       7.673,
+       7.87
+      ],
+      [
+       "bewegen,",
+       7.928,
+       8.509
+      ],
+      [
+       "ohne",
+       8.602,
+       8.869
+      ],
+      [
+       "aufzufallen.",
+       8.915,
+       9.844
+      ]
+     ]
+    },
+    {
+     "text": "Auch im Landkreis Anhalt-Bitterfeld begann der Angriff nach späteren Auswertungen Wochen vor seiner Entdeckung.",
+     "teil": "szene_04",
+     "ziel": null,
+     "beginn": 10.294,
+     "ende": 16.924,
+     "worte": [
+      [
+       "Auch",
+       10.294,
+       10.561
+      ],
+      [
+       "im",
+       10.631,
+       10.747
+      ],
+      [
+       "Landkreis",
+       10.817,
+       11.362
+      ],
+      [
+       "Anhalt-Bitterfeld",
+       11.444,
+       12.431
+      ],
+      [
+       "begann",
+       12.547,
+       12.883
+      ],
+      [
+       "der",
+       12.93,
+       13.046
+      ],
+      [
+       "Angriff",
+       13.115,
+       13.487
+      ],
+      [
+       "nach",
+       13.557,
+       13.719
+      ],
+      [
+       "späteren",
+       13.742,
+       14.23
+      ],
+      [
+       "Auswertungen",
+       14.288,
+       15.008
+      ],
+      [
+       "Wochen",
+       15.089,
+       15.449
+      ],
+      [
+       "vor",
+       15.53,
+       15.739
+      ],
+      [
+       "seiner",
+       15.809,
+       16.064
+      ],
+      [
+       "Entdeckung.",
+       16.099,
+       16.924
+      ]
+     ]
+    }
+   ],
+   "segmente": [
+    {
+     "id": "szene_04",
+     "datei": "audio/szene_04.mp3",
+     "von": 0,
+     "bis": 3.913,
+     "bei": 89,
+     "stimme": "Alexander – Deep TV Narrator"
+    },
+    {
+     "id": "szene_04",
+     "datei": "audio/szene_04.mp3",
+     "von": 3.913,
+     "bis": 9.074,
+     "bei": 93.038,
+     "stimme": "Alexander – Deep TV Narrator"
+    },
+    {
+     "id": "szene_04",
+     "datei": "audio/szene_04.mp3",
+     "von": 9.074,
+     "bis": 15.83,
+     "bei": 98.208,
+     "stimme": "Alexander – Deep TV Narrator"
+    }
+   ],
+   "fehlend": [],
+   "audioEnde": 16.924,
+   "verlaengert": 0
+  },
+  {
+   "n": 5,
+   "titel": "Ausbreitung",
+   "nominal": [
+    112,
+    138
+   ],
+   "start": 112,
+   "ende": 138,
+   "entwurf": 26,
+   "anker": [
+    [
+     1,
+     1
+    ],
+    [
+     8,
+     6.791
+    ],
+    [
+     13,
+     10.584
+    ],
+    [
+     18.4,
+     14.982
+    ]
+   ],
+   "tail": 1,
+   "teile": [
+    {
+     "id": "szene_05",
+     "datei": "audio/szene_05.mp3",
+     "stimme": "Alexander – Deep TV Narrator",
+     "rolle": "Erzähler",
+     "dauer": 17.92
+    }
+   ],
+   "saetze": [
+    {
+     "text": "Einige Systeme am Übergang zum Internet erhalten vom Hersteller keine Sicherheitsupdates mehr.",
+     "teil": "szene_05",
+     "ziel": 1,
+     "beginn": 1,
+     "ende": 6.341,
+     "worte": [
+      [
+       "Einige",
+       1,
+       1.418
+      ],
+      [
+       "Systeme",
+       1.464,
+       1.94
+      ],
+      [
+       "am",
+       1.975,
+       2.08
+      ],
+      [
+       "Übergang",
+       2.173,
+       2.579
+      ],
+      [
+       "zum",
+       2.637,
+       2.776
+      ],
+      [
+       "Internet",
+       2.834,
+       3.194
+      ],
+      [
+       "erhalten",
+       3.264,
+       3.682
+      ],
+      [
+       "vom",
+       3.74,
+       3.891
+      ],
+      [
+       "Hersteller",
+       3.961,
+       4.448
+      ],
+      [
+       "keine",
+       4.506,
+       4.785
+      ],
+      [
+       "Sicherheitsupdates",
+       4.831,
+       5.841
+      ],
+      [
+       "mehr.",
+       5.923,
+       6.341
+      ]
+     ]
+    },
+    {
+     "text": "Viele Server laufen ohne die empfohlenen Schutzeinstellungen.",
+     "teil": "szene_05",
+     "ziel": null,
+     "beginn": 6.791,
+     "ende": 10.134,
+     "worte": [
+      [
+       "Viele",
+       6.791,
+       7.116
+      ],
+      [
+       "Server",
+       7.185,
+       7.557
+      ],
+      [
+       "laufen",
+       7.615,
+       7.963
+      ],
+      [
+       "ohne",
+       8.045,
+       8.288
+      ],
+      [
+       "die",
+       8.335,
+       8.428
+      ],
+      [
+       "empfohlenen",
+       8.474,
+       9.008
+      ],
+      [
+       "Schutzeinstellungen.",
+       9.043,
+       10.134
+      ]
+     ]
+    },
+    {
+     "text": "Und die Trennung zwischen den Bereichen im Netz ist noch unvollständig.",
+     "teil": "szene_05",
+     "ziel": null,
+     "beginn": 10.584,
+     "ende": 14.532,
+     "worte": [
+      [
+       "Und",
+       10.584,
+       10.805
+      ],
+      [
+       "die",
+       10.921,
+       11.049
+      ],
+      [
+       "Trennung",
+       11.119,
+       11.513
+      ],
+      [
+       "zwischen",
+       11.571,
+       11.896
+      ],
+      [
+       "den",
+       11.931,
+       12.047
+      ],
+      [
+       "Bereichen",
+       12.094,
+       12.512
+      ],
+      [
+       "im",
+       12.57,
+       12.651
+      ],
+      [
+       "Netz",
+       12.709,
+       12.941
+      ],
+      [
+       "ist",
+       13.057,
+       13.232
+      ],
+      [
+       "noch",
+       13.29,
+       13.464
+      ],
+      [
+       "unvollständig.",
+       13.58,
+       14.532
+      ]
+     ]
+    },
+    {
+     "text": "Ein Angreifer kann sich deshalb leichter von einem System zum nächsten bewegen.",
+     "teil": "szene_05",
+     "ziel": null,
+     "beginn": 14.982,
+     "ende": 19.242,
+     "worte": [
+      [
+       "Ein",
+       14.982,
+       15.132
+      ],
+      [
+       "Angreifer",
+       15.225,
+       15.771
+      ],
+      [
+       "kann",
+       15.829,
+       15.992
+      ],
+      [
+       "sich",
+       16.026,
+       16.166
+      ],
+      [
+       "deshalb",
+       16.224,
+       16.56
+      ],
+      [
+       "leichter",
+       16.63,
+       16.967
+      ],
+      [
+       "von",
+       17.002,
+       17.141
+      ],
+      [
+       "einem",
+       17.199,
+       17.408
+      ],
+      [
+       "System",
+       17.466,
+       17.861
+      ],
+      [
+       "zum",
+       17.954,
+       18.116
+      ],
+      [
+       "nächsten",
+       18.174,
+       18.499
+      ],
+      [
+       "bewegen.",
+       18.534,
+       19.242
+      ]
+     ]
+    }
+   ],
+   "segmente": [
+    {
+     "id": "szene_05",
+     "datei": "audio/szene_05.mp3",
+     "von": 0,
+     "bis": 5.409,
+     "bei": 113,
+     "stimme": "Alexander – Deep TV Narrator"
+    },
+    {
+     "id": "szene_05",
+     "datei": "audio/szene_05.mp3",
+     "von": 5.409,
+     "bis": 9.305,
+     "bei": 118.476,
+     "stimme": "Alexander – Deep TV Narrator"
+    },
+    {
+     "id": "szene_05",
+     "datei": "audio/szene_05.mp3",
+     "von": 9.305,
+     "bis": 13.48,
+     "bei": 122.497,
+     "stimme": "Alexander – Deep TV Narrator"
+    },
+    {
+     "id": "szene_05",
+     "datei": "audio/szene_05.mp3",
+     "von": 13.48,
+     "bis": 17.92,
+     "bei": 126.843,
+     "stimme": "Alexander – Deep TV Narrator"
+    }
+   ],
+   "fehlend": [],
+   "audioEnde": 19.242,
+   "verlaengert": 0
+  },
+  {
+   "n": 6,
+   "titel": "Der Angriff wird sichtbar",
+   "nominal": [
+    138,
+    170
+   ],
+   "start": 138,
+   "ende": 170,
+   "entwurf": 32,
+   "anker": [
+    [
+     1,
+     1
+    ],
+    [
+     5,
+     3.705
+    ],
+    [
+     9.6,
+     7.444
+    ],
+    [
+     12.6,
+     9.879
+    ],
+    [
+     17.6,
+     13.745
+    ],
+    [
+     21,
+     16.915
+    ],
+    [
+     24.2,
+     19.887
+    ]
+   ],
+   "tail": 1,
+   "teile": [
+    {
+     "id": "szene_06",
+     "datei": "audio/szene_06.mp3",
+     "stimme": "Alexander – Deep TV Narrator",
+     "rolle": "Erzähler",
+     "dauer": 23.171
+    }
+   ],
+   "saetze": [
+    {
+     "text": "Erst im letzten Schritt wird der Angriff sichtbar: Die Daten werden verschlüsselt, Kopien sind bereits abgeflossen, es folgt eine Lösegeldforderung.",
+     "teil": "szene_06",
+     "ziel": 1,
+     "beginn": 1,
+     "ende": 9.429,
+     "worte": [
+      [
+       "Erst",
+       1,
+       1.29
+      ],
+      [
+       "im",
+       1.348,
+       1.43
+      ],
+      [
+       "letzten",
+       1.488,
+       1.813
+      ],
+      [
+       "Schritt",
+       1.859,
+       2.091
+      ],
+      [
+       "wird",
+       2.161,
+       2.289
+      ],
+      [
+       "der",
+       2.324,
+       2.44
+      ],
+      [
+       "Angriff",
+       2.509,
+       2.869
+      ],
+      [
+       "sichtbar:",
+       2.927,
+       3.531
+      ],
+      [
+       "Die",
+       3.705,
+       3.844
+      ],
+      [
+       "Daten",
+       3.902,
+       4.274
+      ],
+      [
+       "werden",
+       4.332,
+       4.599
+      ],
+      [
+       "verschlüsselt,",
+       4.657,
+       5.354
+      ],
+      [
+       "Kopien",
+       5.435,
+       5.899
+      ],
+      [
+       "sind",
+       5.969,
+       6.12
+      ],
+      [
+       "bereits",
+       6.178,
+       6.492
+      ],
+      [
+       "abgeflossen,",
+       6.55,
+       7.362
+      ],
+      [
+       "es",
+       7.444,
+       7.594
+      ],
+      [
+       "folgt",
+       7.664,
+       7.954
+      ],
+      [
+       "eine",
+       8.024,
+       8.233
+      ],
+      [
+       "Lösegeldforderung.",
+       8.279,
+       9.429
+      ]
+     ]
+    },
+    {
+     "text": "Für die Wiederherstellung kommt es dann auf die Rückfallebene an.",
+     "teil": "szene_06",
+     "ziel": null,
+     "beginn": 9.879,
+     "ende": 13.234,
+     "worte": [
+      [
+       "Für",
+       9.879,
+       10.053
+      ],
+      [
+       "die",
+       10.076,
+       10.158
+      ],
+      [
+       "Wiederherstellung",
+       10.204,
+       10.993
+      ],
+      [
+       "kommt",
+       11.052,
+       11.261
+      ],
+      [
+       "es",
+       11.295,
+       11.377
+      ],
+      [
+       "dann",
+       11.423,
+       11.632
+      ],
+      [
+       "auf",
+       11.702,
+       11.853
+      ],
+      [
+       "die",
+       11.922,
+       12.015
+      ],
+      [
+       "Rückfallebene",
+       12.062,
+       12.828
+      ],
+      [
+       "an.",
+       12.886,
+       13.234
+      ]
+     ]
+    },
+    {
+     "text": "Die Datensicherung läuft ohne zweites System, für Teile der IT fehlen Notfallpläne, und manche Unterlagen liegen auf genau den Systemen, die dann gesperrt sind.",
+     "teil": "szene_06",
+     "ziel": null,
+     "beginn": 13.745,
+     "ende": 24.252,
+     "worte": [
+      [
+       "Die",
+       13.745,
+       13.908
+      ],
+      [
+       "Datensicherung",
+       13.977,
+       14.895
+      ],
+      [
+       "läuft",
+       15.011,
+       15.266
+      ],
+      [
+       "ohne",
+       15.336,
+       15.568
+      ],
+      [
+       "zweites",
+       15.638,
+       16.021
+      ],
+      [
+       "System,",
+       16.044,
+       16.671
+      ],
+      [
+       "für",
+       16.915,
+       17.101
+      ],
+      [
+       "Teile",
+       17.17,
+       17.472
+      ],
+      [
+       "der",
+       17.519,
+       17.669
+      ],
+      [
+       "IT",
+       17.751,
+       18.041
+      ],
+      [
+       "fehlen",
+       18.424,
+       18.761
+      ],
+      [
+       "Notfallpläne,",
+       18.807,
+       19.713
+      ],
+      [
+       "und",
+       19.887,
+       20.038
+      ],
+      [
+       "manche",
+       20.131,
+       20.409
+      ],
+      [
+       "Unterlagen",
+       20.467,
+       20.99
+      ],
+      [
+       "liegen",
+       21.036,
+       21.269
+      ],
+      [
+       "auf",
+       21.315,
+       21.443
+      ],
+      [
+       "genau",
+       21.524,
+       21.826
+      ],
+      [
+       "den",
+       21.884,
+       22.058
+      ],
+      [
+       "Systemen,",
+       22.104,
+       22.72
+      ],
+      [
+       "die",
+       22.789,
+       22.94
+      ],
+      [
+       "dann",
+       22.975,
+       23.138
+      ],
+      [
+       "gesperrt",
+       23.196,
+       23.649
+      ],
+      [
+       "sind.",
+       23.695,
+       24.252
+      ]
+     ]
+    }
+   ],
+   "segmente": [
+    {
+     "id": "szene_06",
+     "datei": "audio/szene_06.mp3",
+     "von": 0,
+     "bis": 8.695,
+     "bei": 139,
+     "stimme": "Alexander – Deep TV Narrator"
+    },
+    {
+     "id": "szene_06",
+     "datei": "audio/szene_06.mp3",
+     "von": 8.695,
+     "bis": 12.259,
+     "bei": 147.82,
+     "stimme": "Alexander – Deep TV Narrator"
+    },
+    {
+     "id": "szene_06",
+     "datei": "audio/szene_06.mp3",
+     "von": 12.259,
+     "bis": 23.171,
+     "bei": 151.384,
+     "stimme": "Alexander – Deep TV Narrator"
+    }
+   ],
+   "fehlend": [],
+   "audioEnde": 24.252,
+   "verlaengert": 0
+  },
+  {
+   "n": 7,
+   "titel": "Die Folgen",
+   "nominal": [
+    170,
+    224
+   ],
+   "start": 170,
+   "ende": 224,
+   "entwurf": 54,
+   "anker": [
+    [
+     1,
+     1
+    ],
+    [
+     5.6,
+     5.249
+    ],
+    [
+     12.4,
+     12.053
+    ],
+    [
+     18,
+     17.855
+    ],
+    [
+     23.6,
+     22.159
+    ],
+    [
+     30.4,
+     29.821
+    ],
+    [
+     35.4,
+     34.616
+    ],
+    [
+     38.4,
+     36.694
+    ],
+    [
+     41.8,
+     39.667
+    ],
+    [
+     44.4,
+     41.443
+    ]
+   ],
+   "tail": 1,
+   "teile": [
+    {
+     "id": "szene_07",
+     "datei": "audio/szene_07.mp3",
+     "stimme": "Alexander – Deep TV Narrator",
+     "rolle": "Erzähler",
+     "dauer": 42.893
+    }
+   ],
+   "saetze": [
+    {
+     "text": "Vergleichbare Fälle zeigen, welche Folgen daraus entstehen.",
+     "teil": "szene_07",
+     "ziel": 1,
+     "beginn": 1,
+     "ende": 4.646,
+     "worte": [
+      [
+       "Vergleichbare",
+       1,
+       1.917
+      ],
+      [
+       "Fälle",
+       1.975,
+       2.219
+      ],
+      [
+       "zeigen,",
+       2.3,
+       2.823
+      ],
+      [
+       "welche",
+       2.939,
+       3.264
+      ],
+      [
+       "Folgen",
+       3.334,
+       3.694
+      ],
+      [
+       "daraus",
+       3.74,
+       4.03
+      ],
+      [
+       "entstehen.",
+       4.1,
+       4.646
+      ]
+     ]
+    },
+    {
+     "text": "Anhalt-Bitterfeld rief den Katastrophenfall aus und beendete ihn erst nach rund sieben Monaten; der Aufwand lag nach Angaben des Landkreises bei rund 2,5 Millionen Euro.",
+     "teil": "szene_07",
+     "ziel": null,
+     "beginn": 5.249,
+     "ende": 17.405,
+     "worte": [
+      [
+       "Anhalt-Bitterfeld",
+       5.249,
+       6.666
+      ],
+      [
+       "rief",
+       6.782,
+       7.026
+      ],
+      [
+       "den",
+       7.095,
+       7.223
+      ],
+      [
+       "Katastrophenfall",
+       7.281,
+       8.21
+      ],
+      [
+       "aus",
+       8.279,
+       8.605
+      ],
+      [
+       "und",
+       8.883,
+       9.127
+      ],
+      [
+       "beendete",
+       9.243,
+       9.766
+      ],
+      [
+       "ihn",
+       9.847,
+       9.951
+      ],
+      [
+       "erst",
+       10.033,
+       10.218
+      ],
+      [
+       "nach",
+       10.276,
+       10.451
+      ],
+      [
+       "rund",
+       10.474,
+       10.683
+      ],
+      [
+       "sieben",
+       10.752,
+       11.054
+      ],
+      [
+       "Monaten;",
+       11.089,
+       11.728
+      ],
+      [
+       "der",
+       12.053,
+       12.169
+      ],
+      [
+       "Aufwand",
+       12.227,
+       12.714
+      ],
+      [
+       "lag",
+       12.831,
+       13.074
+      ],
+      [
+       "nach",
+       13.144,
+       13.318
+      ],
+      [
+       "Angaben",
+       13.376,
+       13.91
+      ],
+      [
+       "des",
+       13.945,
+       14.073
+      ],
+      [
+       "Landkreises",
+       14.142,
+       14.746
+      ],
+      [
+       "bei",
+       14.827,
+       14.978
+      ],
+      [
+       "rund",
+       15.025,
+       15.222
+      ],
+      [
+       "2,5",
+       15.269,
+       16.325
+      ],
+      [
+       "Millionen",
+       16.395,
+       16.836
+      ],
+      [
+       "Euro.",
+       16.905,
+       17.405
+      ]
+     ]
+    },
+    {
+     "text": "Sozialleistungen konnten mindestens eine Woche nicht ausgezahlt werden.",
+     "teil": "szene_07",
+     "ziel": null,
+     "beginn": 17.855,
+     "ende": 21.709,
+     "worte": [
+      [
+       "Sozialleistungen",
+       17.855,
+       18.923
+      ],
+      [
+       "konnten",
+       19.004,
+       19.387
+      ],
+      [
+       "mindestens",
+       19.445,
+       19.921
+      ],
+      [
+       "eine",
+       19.98,
+       20.177
+      ],
+      [
+       "Woche",
+       20.212,
+       20.409
+      ],
+      [
+       "nicht",
+       20.444,
+       20.63
+      ],
+      [
+       "ausgezahlt",
+       20.688,
+       21.233
+      ],
+      [
+       "werden.",
+       21.268,
+       21.709
+      ]
+     ]
+    },
+    {
+     "text": "Nach dem Angriff auf die Südwestfalen-IT waren Online-Dienste für rund 1,7 Millionen Einwohner erst nach etwa neun Monaten wieder weitgehend verfügbar.",
+     "teil": "szene_07",
+     "ziel": null,
+     "beginn": 22.159,
+     "ende": 34.105,
+     "worte": [
+      [
+       "Nach",
+       22.159,
+       22.391
+      ],
+      [
+       "dem",
+       22.449,
+       22.6
+      ],
+      [
+       "Angriff",
+       22.669,
+       23.076
+      ],
+      [
+       "auf",
+       23.192,
+       23.401
+      ],
+      [
+       "die",
+       23.482,
+       23.656
+      ],
+      [
+       "Südwestfalen-IT",
+       23.703,
+       24.887
+      ],
+      [
+       "waren",
+       25.398,
+       25.769
+      ],
+      [
+       "Online-Dienste",
+       25.851,
+       26.733
+      ],
+      [
+       "für",
+       26.814,
+       27.046
+      ],
+      [
+       "rund",
+       27.07,
+       27.279
+      ],
+      [
+       "1,7",
+       27.371,
+       28.463
+      ],
+      [
+       "Millionen",
+       28.498,
+       28.916
+      ],
+      [
+       "Einwohner",
+       28.974,
+       29.496
+      ],
+      [
+       "erst",
+       29.821,
+       30.1
+      ],
+      [
+       "nach",
+       30.158,
+       30.332
+      ],
+      [
+       "etwa",
+       30.39,
+       30.785
+      ],
+      [
+       "neun",
+       30.959,
+       31.238
+      ],
+      [
+       "Monaten",
+       31.296,
+       31.865
+      ],
+      [
+       "wieder",
+       31.981,
+       32.399
+      ],
+      [
+       "weitgehend",
+       32.55,
+       33.153
+      ],
+      [
+       "verfügbar.",
+       33.211,
+       34.105
+      ]
+     ]
+    },
+    {
+     "text": "Für die Menschen in Herne hieße das: Urkunden und Zulassungen verzögern sich, Leistungen kommen später an, die Verwaltung ist kaum erreichbar.",
+     "teil": "szene_07",
+     "ziel": null,
+     "beginn": 34.616,
+     "ende": 43.881,
+     "worte": [
+      [
+       "Für",
+       34.616,
+       34.767
+      ],
+      [
+       "die",
+       34.79,
+       34.872
+      ],
+      [
+       "Menschen",
+       34.918,
+       35.232
+      ],
+      [
+       "in",
+       35.29,
+       35.336
+      ],
+      [
+       "Herne",
+       35.371,
+       35.742
+      ],
+      [
+       "hieße",
+       35.789,
+       35.998
+      ],
+      [
+       "das:",
+       36.044,
+       36.451
+      ],
+      [
+       "Urkunden",
+       36.694,
+       37.403
+      ],
+      [
+       "und",
+       37.484,
+       37.646
+      ],
+      [
+       "Zulassungen",
+       37.797,
+       38.459
+      ],
+      [
+       "verzögern",
+       38.517,
+       39.028
+      ],
+      [
+       "sich,",
+       39.086,
+       39.458
+      ],
+      [
+       "Leistungen",
+       39.667,
+       40.259
+      ],
+      [
+       "kommen",
+       40.328,
+       40.561
+      ],
+      [
+       "später",
+       40.595,
+       40.967
+      ],
+      [
+       "an,",
+       41.025,
+       41.327
+      ],
+      [
+       "die",
+       41.443,
+       41.559
+      ],
+      [
+       "Verwaltung",
+       41.605,
+       42.093
+      ],
+      [
+       "ist",
+       42.139,
+       42.267
+      ],
+      [
+       "kaum",
+       42.325,
+       42.569
+      ],
+      [
+       "erreichbar.",
+       42.627,
+       43.881
+      ]
+     ]
+    }
+   ],
+   "segmente": [
+    {
+     "id": "szene_07",
+     "datei": "audio/szene_07.mp3",
+     "von": 0,
+     "bis": 3.825,
+     "bei": 171,
+     "stimme": "Alexander – Deep TV Narrator"
+    },
+    {
+     "id": "szene_07",
+     "datei": "audio/szene_07.mp3",
+     "von": 3.825,
+     "bis": 16.502,
+     "bei": 174.825,
+     "stimme": "Alexander – Deep TV Narrator"
+    },
+    {
+     "id": "szene_07",
+     "datei": "audio/szene_07.mp3",
+     "von": 16.502,
+     "bis": 20.809,
+     "bei": 187.511,
+     "stimme": "Alexander – Deep TV Narrator"
+    },
+    {
+     "id": "szene_07",
+     "datei": "audio/szene_07.mp3",
+     "von": 20.809,
+     "bis": 33.244,
+     "bei": 191.826,
+     "stimme": "Alexander – Deep TV Narrator"
+    },
+    {
+     "id": "szene_07",
+     "datei": "audio/szene_07.mp3",
+     "von": 33.244,
+     "bis": 42.893,
+     "bei": 204.261,
+     "stimme": "Alexander – Deep TV Narrator"
+    }
+   ],
+   "fehlend": [],
+   "audioEnde": 43.881,
+   "verlaengert": 0
+  },
+  {
+   "n": 8,
+   "titel": "Die Verantwortung der Verwaltungsspitze",
+   "nominal": [
+    224,
+    268
+   ],
+   "start": 224,
+   "ende": 268,
+   "entwurf": 44,
+   "anker": [],
+   "tail": 1,
+   "teile": [
+    {
+     "id": "szene_08",
+     "datei": "audio/szene_08.mp3",
+     "stimme": "Alexander – Deep TV Narrator",
+     "rolle": "Erzähler",
+     "dauer": 22.936
+    }
+   ],
+   "saetze": [
+    {
+     "text": "Nach einem Angriff steht die Verwaltungsspitze in der Verantwortung.",
+     "teil": "szene_08",
+     "ziel": 16,
+     "beginn": 16,
+     "ende": 19.669,
+     "worte": [
+      [
+       "Nach",
+       16,
+       16.325
+      ],
+      [
+       "einem",
+       16.406,
+       16.65
+      ],
+      [
+       "Angriff",
+       16.72,
+       17.149
+      ],
+      [
+       "steht",
+       17.265,
+       17.509
+      ],
+      [
+       "die",
+       17.533,
+       17.614
+      ],
+      [
+       "Verwaltungsspitze",
+       17.672,
+       18.612
+      ],
+      [
+       "in",
+       18.659,
+       18.717
+      ],
+      [
+       "der",
+       18.752,
+       18.844
+      ],
+      [
+       "Verantwortung.",
+       18.902,
+       19.669
+      ]
+     ]
+    },
+    {
+     "text": "Der Vorfall muss der Datenschutzaufsicht gemeldet werden.",
+     "teil": "szene_08",
+     "ziel": null,
+     "beginn": 20.119,
+     "ende": 23.671,
+     "worte": [
+      [
+       "Der",
+       20.119,
+       20.316
+      ],
+      [
+       "Vorfall",
+       20.397,
+       20.943
+      ],
+      [
+       "muss",
+       21.059,
+       21.315
+      ],
+      [
+       "der",
+       21.373,
+       21.5
+      ],
+      [
+       "Datenschutzaufsicht",
+       21.57,
+       22.719
+      ],
+      [
+       "gemeldet",
+       22.778,
+       23.184
+      ],
+      [
+       "werden.",
+       23.219,
+       23.671
+      ]
+     ]
+    },
+    {
+     "text": "Das BSI warnt seit Jahren vor der hohen Bedrohungslage, die durch Künstliche Intelligenz weiter steigt.",
+     "teil": "szene_08",
+     "ziel": null,
+     "beginn": 24.121,
+     "ende": 31.063,
+     "worte": [
+      [
+       "Das",
+       24.121,
+       24.341
+      ],
+      [
+       "BSI",
+       24.457,
+       25.316
+      ],
+      [
+       "warnt",
+       25.433,
+       25.711
+      ],
+      [
+       "seit",
+       25.758,
+       25.955
+      ],
+      [
+       "Jahren",
+       26.025,
+       26.419
+      ],
+      [
+       "vor",
+       26.489,
+       26.698
+      ],
+      [
+       "der",
+       26.733,
+       26.849
+      ],
+      [
+       "hohen",
+       26.907,
+       27.174
+      ],
+      [
+       "Bedrohungslage,",
+       27.232,
+       28.196
+      ],
+      [
+       "die",
+       28.265,
+       28.405
+      ],
+      [
+       "durch",
+       28.44,
+       28.672
+      ],
+      [
+       "Künstliche",
+       28.741,
+       29.299
+      ],
+      [
+       "Intelligenz",
+       29.345,
+       30.007
+      ],
+      [
+       "weiter",
+       30.123,
+       30.471
+      ],
+      [
+       "steigt.",
+       30.518,
+       31.063
+      ]
+     ]
+    },
+    {
+     "text": "Die Frage, ob die Schwachstellen bekannt waren, wäre mit Ja zu beantworten: Sie sind in der aktuellen Sicherheitsprüfung dokumentiert.",
+     "teil": "szene_08",
+     "ziel": null,
+     "beginn": 31.513,
+     "ende": 39.153,
+     "worte": [
+      [
+       "Die",
+       31.513,
+       31.676
+      ],
+      [
+       "Frage,",
+       31.746,
+       32.21
+      ],
+      [
+       "ob",
+       32.245,
+       32.384
+      ],
+      [
+       "die",
+       32.454,
+       32.558
+      ],
+      [
+       "Schwachstellen",
+       32.593,
+       33.174
+      ],
+      [
+       "bekannt",
+       33.232,
+       33.557
+      ],
+      [
+       "waren,",
+       33.603,
+       34.01
+      ],
+      [
+       "wäre",
+       34.056,
+       34.335
+      ],
+      [
+       "mit",
+       34.37,
+       34.497
+      ],
+      [
+       "Ja",
+       34.578,
+       34.741
+      ],
+      [
+       "zu",
+       34.822,
+       34.915
+      ],
+      [
+       "beantworten:",
+       34.973,
+       35.693
+      ],
+      [
+       "Sie",
+       36.018,
+       36.169
+      ],
+      [
+       "sind",
+       36.204,
+       36.366
+      ],
+      [
+       "in",
+       36.424,
+       36.483
+      ],
+      [
+       "der",
+       36.517,
+       36.61
+      ],
+      [
+       "aktuellen",
+       36.668,
+       37.179
+      ],
+      [
+       "Sicherheitsprüfung",
+       37.237,
+       38.085
+      ],
+      [
+       "dokumentiert.",
+       38.131,
+       39.153
+      ]
+     ]
+    }
+   ],
+   "segmente": [
+    {
+     "id": "szene_08",
+     "datei": "audio/szene_08.mp3",
+     "von": 0,
+     "bis": 3.938,
+     "bei": 240,
+     "stimme": "Alexander – Deep TV Narrator"
+    },
+    {
+     "id": "szene_08",
+     "datei": "audio/szene_08.mp3",
+     "von": 3.938,
+     "bis": 7.626,
+     "bei": 244.063,
+     "stimme": "Alexander – Deep TV Narrator"
+    },
+    {
+     "id": "szene_08",
+     "datei": "audio/szene_08.mp3",
+     "von": 7.626,
+     "bis": 14.974,
+     "bei": 247.817,
+     "stimme": "Alexander – Deep TV Narrator"
+    },
+    {
+     "id": "szene_08",
+     "datei": "audio/szene_08.mp3",
+     "von": 14.974,
+     "bis": 22.936,
+     "bei": 255.232,
+     "stimme": "Alexander – Deep TV Narrator"
+    }
+   ],
+   "fehlend": [
+    "szene_08_frage_1",
+    "szene_08_frage_2",
+    "szene_08_frage_3",
+    "szene_08_frage_4"
+   ],
+   "audioEnde": 39.153,
+   "verlaengert": 0
+  },
+  {
+   "n": 9,
+   "titel": "Verantwortung der Leitung",
+   "nominal": [
+    268,
+    313
+   ],
+   "start": 268,
+   "ende": 316,
+   "entwurf": 45,
+   "anker": [],
+   "tail": 1,
+   "teile": [
+    {
+     "id": "szene_09",
+     "datei": "audio/szene_09.mp3",
+     "stimme": "Alexander – Deep TV Narrator",
+     "rolle": "Erzähler",
+     "dauer": 45.558
+    }
+   ],
+   "saetze": [
+    {
+     "text": "Informationssicherheit ist eine Aufgabe der Verwaltungsleitung.",
+     "teil": "szene_09",
+     "ziel": null,
+     "beginn": 0.5,
+     "ende": 4.482,
+     "worte": [
+      [
+       "Informationssicherheit",
+       0.5,
+       2.033
+      ],
+      [
+       "ist",
+       2.125,
+       2.311
+      ],
+      [
+       "eine",
+       2.381,
+       2.543
+      ],
+      [
+       "Aufgabe",
+       2.601,
+       3.112
+      ],
+      [
+       "der",
+       3.147,
+       3.252
+      ],
+      [
+       "Verwaltungsleitung.",
+       3.31,
+       4.482
+      ]
+     ]
+    },
+    {
+     "text": "Im IT-Grundschutz ist die Übernahme der Gesamtverantwortung durch die Leitung eine Basis-Anforderung, die im Überwachungsaudit vollständig geprüft wird.",
+     "teil": "szene_09",
+     "ziel": null,
+     "beginn": 5.086,
+     "ende": 14.455,
+     "worte": [
+      [
+       "Im",
+       5.086,
+       5.283
+      ],
+      [
+       "IT-Grundschutz",
+       5.434,
+       6.607
+      ],
+      [
+       "ist",
+       6.7,
+       6.851
+      ],
+      [
+       "die",
+       6.874,
+       6.955
+      ],
+      [
+       "Übernahme",
+       7.025,
+       7.501
+      ],
+      [
+       "der",
+       7.547,
+       7.64
+      ],
+      [
+       "Gesamtverantwortung",
+       7.687,
+       8.731
+      ],
+      [
+       "durch",
+       8.778,
+       8.952
+      ],
+      [
+       "die",
+       9.01,
+       9.091
+      ],
+      [
+       "Leitung",
+       9.149,
+       9.544
+      ],
+      [
+       "eine",
+       9.637,
+       9.881
+      ],
+      [
+       "Basis-Anforderung,",
+       9.939,
+       11.297
+      ],
+      [
+       "die",
+       11.471,
+       11.611
+      ],
+      [
+       "im",
+       11.657,
+       11.762
+      ],
+      [
+       "Überwachungsaudit",
+       11.831,
+       12.853
+      ],
+      [
+       "vollständig",
+       12.934,
+       13.619
+      ],
+      [
+       "geprüft",
+       13.654,
+       14.06
+      ],
+      [
+       "wird.",
+       14.095,
+       14.455
+      ]
+     ]
+    },
+    {
+     "text": "Die NIS-2-Richtlinie der EU schreibt dieselbe Verantwortung gesetzlich fest: seit Dezember 2025 im BSI-Gesetz, seit Januar 2026 im Informationssicherheitsgesetz NRW für die Landesverwaltung.",
+     "teil": "szene_09",
+     "ziel": null,
+     "beginn": 14.966,
+     "ende": 33.426,
+     "worte": [
+      [
+       "Die",
+       14.966,
+       15.186
+      ],
+      [
+       "NIS-2-Richtlinie",
+       15.314,
+       16.905
+      ],
+      [
+       "der",
+       16.986,
+       17.149
+      ],
+      [
+       "EU",
+       17.265,
+       17.857
+      ],
+      [
+       "schreibt",
+       18.031,
+       18.46
+      ],
+      [
+       "dieselbe",
+       18.542,
+       19.134
+      ],
+      [
+       "Verantwortung",
+       19.192,
+       19.9
+      ],
+      [
+       "gesetzlich",
+       19.935,
+       20.492
+      ],
+      [
+       "fest:",
+       20.539,
+       21.015
+      ],
+      [
+       "seit",
+       21.34,
+       21.642
+      ],
+      [
+       "Dezember",
+       21.676,
+       22.315
+      ],
+      [
+       "2025",
+       22.396,
+       24.173
+      ],
+      [
+       "im",
+       24.219,
+       24.335
+      ],
+      [
+       "BSI-Gesetz,",
+       24.393,
+       25.612
+      ],
+      [
+       "seit",
+       25.891,
+       26.169
+      ],
+      [
+       "Januar",
+       26.251,
+       26.773
+      ],
+      [
+       "2026",
+       26.854,
+       28.724
+      ],
+      [
+       "im",
+       28.793,
+       28.944
+      ],
+      [
+       "Informationssicherheitsgesetz",
+       29.026,
+       30.79
+      ],
+      [
+       "NRW",
+       30.906,
+       31.8
+      ],
+      [
+       "für",
+       31.882,
+       32.102
+      ],
+      [
+       "die",
+       32.125,
+       32.23
+      ],
+      [
+       "Landesverwaltung.",
+       32.288,
+       33.426
+      ]
+     ]
+    },
+    {
+     "text": "Für Kommunen gelten beide nicht unmittelbar.",
+     "teil": "szene_09",
+     "ziel": null,
+     "beginn": 34.03,
+     "ende": 36.99,
+     "worte": [
+      [
+       "Für",
+       34.03,
+       34.332
+      ],
+      [
+       "Kommunen",
+       34.401,
+       35.051
+      ],
+      [
+       "gelten",
+       35.202,
+       35.539
+      ],
+      [
+       "beide",
+       35.597,
+       35.841
+      ],
+      [
+       "nicht",
+       35.887,
+       36.096
+      ],
+      [
+       "unmittelbar.",
+       36.178,
+       36.99
+      ]
+     ]
+    },
+    {
+     "text": "Sie zeigen aber, was von einer Verwaltungsleitung erwartet wird: Maßnahmen billigen, ihre Umsetzung überwachen und sich regelmäßig schulen lassen.",
+     "teil": "szene_09",
+     "ziel": null,
+     "beginn": 37.44,
+     "ende": 46.217,
+     "worte": [
+      [
+       "Sie",
+       37.44,
+       37.591
+      ],
+      [
+       "zeigen",
+       37.661,
+       38.021
+      ],
+      [
+       "aber,",
+       38.09,
+       38.334
+      ],
+      [
+       "was",
+       38.357,
+       38.508
+      ],
+      [
+       "von",
+       38.566,
+       38.694
+      ],
+      [
+       "einer",
+       38.74,
+       38.938
+      ],
+      [
+       "Verwaltungsleitung",
+       38.984,
+       39.948
+      ],
+      [
+       "erwartet",
+       40.006,
+       40.389
+      ],
+      [
+       "wird:",
+       40.424,
+       40.807
+      ],
+      [
+       "Maßnahmen",
+       41.086,
+       41.713
+      ],
+      [
+       "billigen,",
+       41.771,
+       42.363
+      ],
+      [
+       "ihre",
+       42.479,
+       42.699
+      ],
+      [
+       "Umsetzung",
+       42.746,
+       43.268
+      ],
+      [
+       "überwachen",
+       43.326,
+       43.907
+      ],
+      [
+       "und",
+       44.023,
+       44.209
+      ],
+      [
+       "sich",
+       44.255,
+       44.441
+      ],
+      [
+       "regelmäßig",
+       44.522,
+       45.138
+      ],
+      [
+       "schulen",
+       45.161,
+       45.521
+      ],
+      [
+       "lassen.",
+       45.579,
+       46.217
+      ]
+     ]
+    }
+   ],
+   "segmente": [
+    {
+     "id": "szene_09",
+     "datei": "audio/szene_09.mp3",
+     "von": 0,
+     "bis": 4.152,
+     "bei": 268.5,
+     "stimme": "Alexander – Deep TV Narrator"
+    },
+    {
+     "id": "szene_09",
+     "datei": "audio/szene_09.mp3",
+     "von": 4.152,
+     "bis": 14.076,
+     "bei": 272.652,
+     "stimme": "Alexander – Deep TV Narrator"
+    },
+    {
+     "id": "szene_09",
+     "datei": "audio/szene_09.mp3",
+     "von": 14.076,
+     "bis": 33.087,
+     "bei": 282.576,
+     "stimme": "Alexander – Deep TV Narrator"
+    },
+    {
+     "id": "szene_09",
+     "datei": "audio/szene_09.mp3",
+     "von": 33.087,
+     "bis": 36.688,
+     "bei": 301.587,
+     "stimme": "Alexander – Deep TV Narrator"
+    },
+    {
+     "id": "szene_09",
+     "datei": "audio/szene_09.mp3",
+     "von": 36.688,
+     "bis": 45.558,
+     "bei": 305.394,
+     "stimme": "Alexander – Deep TV Narrator"
+    }
+   ],
+   "fehlend": [],
+   "audioEnde": 46.217,
+   "verlaengert": 3
+  },
+  {
+   "n": 10,
+   "titel": "Was es braucht",
+   "nominal": [
+    313,
+    358
+   ],
+   "start": 316,
+   "ende": 361,
+   "entwurf": 45,
+   "anker": [],
+   "tail": 1,
+   "teile": [
+    {
+     "id": "szene_10",
+     "datei": "audio/szene_10.mp3",
+     "stimme": "Alexander – Deep TV Narrator",
+     "rolle": "Erzähler",
+     "dauer": 38.296
+    }
+   ],
+   "saetze": [
+    {
+     "text": "Die Maßnahmen sind geplant, umsetzen lassen sie sich aber nur mit ausreichenden Mitteln und qualifiziertem Personal.",
+     "teil": "szene_10",
+     "ziel": null,
+     "beginn": 0.5,
+     "ende": 7.942,
+     "worte": [
+      [
+       "Die",
+       0.5,
+       0.674
+      ],
+      [
+       "Maßnahmen",
+       0.732,
+       1.289
+      ],
+      [
+       "sind",
+       1.336,
+       1.487
+      ],
+      [
+       "geplant,",
+       1.557,
+       2.241
+      ],
+      [
+       "umsetzen",
+       2.358,
+       3.031
+      ],
+      [
+       "lassen",
+       3.159,
+       3.449
+      ],
+      [
+       "sie",
+       3.507,
+       3.611
+      ],
+      [
+       "sich",
+       3.658,
+       3.844
+      ],
+      [
+       "aber",
+       3.913,
+       4.099
+      ],
+      [
+       "nur",
+       4.146,
+       4.355
+      ],
+      [
+       "mit",
+       4.401,
+       4.552
+      ],
+      [
+       "ausreichenden",
+       4.633,
+       5.376
+      ],
+      [
+       "Mitteln",
+       5.423,
+       5.817
+      ],
+      [
+       "und",
+       5.933,
+       6.142
+      ],
+      [
+       "qualifiziertem",
+       6.27,
+       7.164
+      ],
+      [
+       "Personal.",
+       7.222,
+       7.942
+      ]
+     ]
+    },
+    {
+     "text": "Investitionen sind nötig für den Ersatz veralteter Systeme, einen geschützten Zugang zur IT-Verwaltung mit zweiter Bestätigung, eine zentrale Erkennung von Angriffen und ein zweites Sicherungssystem.",
+     "teil": "szene_10",
+     "ziel": null,
+     "beginn": 8.755,
+     "ende": 21.665,
+     "worte": [
+      [
+       "Investitionen",
+       8.755,
+       9.8
+      ],
+      [
+       "sind",
+       9.846,
+       10.009
+      ],
+      [
+       "nötig",
+       10.09,
+       10.438
+      ],
+      [
+       "für",
+       10.461,
+       10.566
+      ],
+      [
+       "den",
+       10.589,
+       10.705
+      ],
+      [
+       "Ersatz",
+       10.763,
+       11.112
+      ],
+      [
+       "veralteter",
+       11.181,
+       11.785
+      ],
+      [
+       "Systeme,",
+       11.831,
+       12.516
+      ],
+      [
+       "einen",
+       12.76,
+       13.039
+      ],
+      [
+       "geschützten",
+       13.097,
+       13.642
+      ],
+      [
+       "Zugang",
+       13.689,
+       14.107
+      ],
+      [
+       "zur",
+       14.188,
+       14.432
+      ],
+      [
+       "IT-Verwaltung",
+       14.525,
+       15.721
+      ],
+      [
+       "mit",
+       15.837,
+       16.011
+      ],
+      [
+       "zweiter",
+       16.034,
+       16.383
+      ],
+      [
+       "Bestätigung,",
+       16.429,
+       17.195
+      ],
+      [
+       "eine",
+       17.439,
+       17.66
+      ],
+      [
+       "zentrale",
+       17.741,
+       18.298
+      ],
+      [
+       "Erkennung",
+       18.356,
+       18.763
+      ],
+      [
+       "von",
+       18.821,
+       18.972
+      ],
+      [
+       "Angriffen",
+       19.041,
+       19.552
+      ],
+      [
+       "und",
+       19.668,
+       19.854
+      ],
+      [
+       "ein",
+       19.947,
+       20.063
+      ],
+      [
+       "zweites",
+       20.109,
+       20.551
+      ],
+      [
+       "Sicherungssystem.",
+       20.597,
+       21.665
+      ]
+     ]
+    },
+    {
+     "text": "Ebenso wichtig sind Fachkräfte: Server müssen laufend gewartet, Updates eingespielt und Sicherheitseinstellungen regelmäßig geprüft werden.",
+     "teil": "szene_10",
+     "ziel": null,
+     "beginn": 22.176,
+     "ende": 31.487,
+     "worte": [
+      [
+       "Ebenso",
+       22.176,
+       22.605
+      ],
+      [
+       "wichtig",
+       22.687,
+       23.023
+      ],
+      [
+       "sind",
+       23.047,
+       23.209
+      ],
+      [
+       "Fachkräfte:",
+       23.279,
+       24.08
+      ],
+      [
+       "Server",
+       24.289,
+       24.777
+      ],
+      [
+       "müssen",
+       24.846,
+       25.136
+      ],
+      [
+       "laufend",
+       25.194,
+       25.543
+      ],
+      [
+       "gewartet,",
+       25.612,
+       26.309
+      ],
+      [
+       "Updates",
+       26.367,
+       27.006
+      ],
+      [
+       "eingespielt",
+       27.122,
+       27.83
+      ],
+      [
+       "und",
+       28.004,
+       28.26
+      ],
+      [
+       "Sicherheitseinstellungen",
+       28.376,
+       29.629
+      ],
+      [
+       "regelmäßig",
+       29.804,
+       30.547
+      ],
+      [
+       "geprüft",
+       30.57,
+       30.976
+      ],
+      [
+       "werden.",
+       31.011,
+       31.487
+      ]
+     ]
+    },
+    {
+     "text": "Eine Überwachung schützt nur, wenn jemand die Meldungen auswertet und im Ernstfall sofort reagiert.",
+     "teil": "szene_10",
+     "ziel": null,
+     "beginn": 32.091,
+     "ende": 38.767,
+     "worte": [
+      [
+       "Eine",
+       32.091,
+       32.323
+      ],
+      [
+       "Überwachung",
+       32.37,
+       32.939
+      ],
+      [
+       "schützt",
+       32.997,
+       33.31
+      ],
+      [
+       "nur,",
+       33.38,
+       33.809
+      ],
+      [
+       "wenn",
+       33.925,
+       34.088
+      ],
+      [
+       "jemand",
+       34.158,
+       34.459
+      ],
+      [
+       "die",
+       34.576,
+       34.715
+      ],
+      [
+       "Meldungen",
+       34.761,
+       35.191
+      ],
+      [
+       "auswertet",
+       35.249,
+       35.864
+      ],
+      [
+       "und",
+       36.038,
+       36.213
+      ],
+      [
+       "im",
+       36.282,
+       36.375
+      ],
+      [
+       "Ernstfall",
+       36.456,
+       36.99
+      ],
+      [
+       "sofort",
+       37.141,
+       37.664
+      ],
+      [
+       "reagiert.",
+       37.838,
+       38.767
+      ]
+     ]
+    }
+   ],
+   "segmente": [
+    {
+     "id": "szene_10",
+     "datei": "audio/szene_10.mp3",
+     "von": 0,
+     "bis": 7.714,
+     "bei": 316.5,
+     "stimme": "Alexander – Deep TV Narrator"
+    },
+    {
+     "id": "szene_10",
+     "datei": "audio/szene_10.mp3",
+     "von": 7.714,
+     "bis": 21.305,
+     "bei": 324.214,
+     "stimme": "Alexander – Deep TV Narrator"
+    },
+    {
+     "id": "szene_10",
+     "datei": "audio/szene_10.mp3",
+     "von": 21.305,
+     "bis": 31.457,
+     "bei": 337.805,
+     "stimme": "Alexander – Deep TV Narrator"
+    },
+    {
+     "id": "szene_10",
+     "datei": "audio/szene_10.mp3",
+     "von": 31.457,
+     "bis": 38.296,
+     "bei": 347.957,
+     "stimme": "Alexander – Deep TV Narrator"
+    }
+   ],
+   "fehlend": [],
+   "audioEnde": 38.767,
+   "verlaengert": 0
+  },
+  {
+   "n": 11,
+   "titel": "Stand heute",
+   "nominal": [
+    358,
+    388
+   ],
+   "start": 361,
+   "ende": 391,
+   "entwurf": 30,
+   "anker": [],
+   "tail": 1,
+   "teile": [
+    {
+     "id": "szene_11",
+     "datei": "audio/szene_11.mp3",
+     "stimme": "Alexander – Deep TV Narrator",
+     "rolle": "Erzähler",
+     "dauer": 16.065
+    }
+   ],
+   "saetze": [
+    {
+     "text": "So stellt sich die Lage heute dar.",
+     "teil": "szene_11",
+     "ziel": null,
+     "beginn": 0.5,
+     "ende": 2.625,
+     "worte": [
+      [
+       "So",
+       0.5,
+       0.767
+      ],
+      [
+       "stellt",
+       0.825,
+       1.115
+      ],
+      [
+       "sich",
+       1.162,
+       1.313
+      ],
+      [
+       "die",
+       1.359,
+       1.452
+      ],
+      [
+       "Lage",
+       1.522,
+       1.835
+      ],
+      [
+       "heute",
+       1.882,
+       2.137
+      ],
+      [
+       "dar.",
+       2.195,
+       2.625
+      ]
+     ]
+    },
+    {
+     "text": "Alle gezeigten Schwachstellen wurden in der aktuellen Sicherheitsprüfung festgestellt.",
+     "teil": "szene_11",
+     "ziel": null,
+     "beginn": 3.075,
+     "ende": 7.545,
+     "worte": [
+      [
+       "Alle",
+       3.075,
+       3.354
+      ],
+      [
+       "gezeigten",
+       3.4,
+       3.923
+      ],
+      [
+       "Schwachstellen",
+       3.981,
+       4.619
+      ],
+      [
+       "wurden",
+       4.689,
+       4.991
+      ],
+      [
+       "in",
+       5.049,
+       5.13
+      ],
+      [
+       "der",
+       5.177,
+       5.281
+      ],
+      [
+       "aktuellen",
+       5.339,
+       5.838
+      ],
+      [
+       "Sicherheitsprüfung",
+       5.885,
+       6.698
+      ],
+      [
+       "festgestellt.",
+       6.744,
+       7.545
+      ]
+     ]
+    },
+    {
+     "text": "Ohne zusätzliche Mittel und Personal bleibt dieser Zustand bestehen und mit ihm das Risiko für die Stadt und ihre Bürgerinnen und Bürger.",
+     "teil": "szene_11",
+     "ziel": null,
+     "beginn": 7.995,
+     "ende": 16.703,
+     "worte": [
+      [
+       "Ohne",
+       7.995,
+       8.262
+      ],
+      [
+       "zusätzliche",
+       8.332,
+       8.982
+      ],
+      [
+       "Mittel",
+       9.04,
+       9.284
+      ],
+      [
+       "und",
+       9.354,
+       9.447
+      ],
+      [
+       "Personal",
+       9.505,
+       10.039
+      ],
+      [
+       "bleibt",
+       10.12,
+       10.41
+      ],
+      [
+       "dieser",
+       10.445,
+       10.735
+      ],
+      [
+       "Zustand",
+       10.793,
+       11.246
+      ],
+      [
+       "bestehen",
+       11.293,
+       11.838
+      ],
+      [
+       "und",
+       12.117,
+       12.268
+      ],
+      [
+       "mit",
+       12.337,
+       12.465
+      ],
+      [
+       "ihm",
+       12.535,
+       12.651
+      ],
+      [
+       "das",
+       12.709,
+       12.848
+      ],
+      [
+       "Risiko",
+       12.93,
+       13.382
+      ],
+      [
+       "für",
+       13.44,
+       13.556
+      ],
+      [
+       "die",
+       13.58,
+       13.673
+      ],
+      [
+       "Stadt",
+       13.731,
+       14.044
+      ],
+      [
+       "und",
+       14.253,
+       14.474
+      ],
+      [
+       "ihre",
+       14.567,
+       14.776
+      ],
+      [
+       "Bürgerinnen",
+       14.822,
+       15.449
+      ],
+      [
+       "und",
+       15.728,
+       15.902
+      ],
+      [
+       "Bürger.",
+       15.971,
+       16.703
+      ]
+     ]
+    }
+   ],
+   "segmente": [
+    {
+     "id": "szene_11",
+     "datei": "audio/szene_11.mp3",
+     "von": 0,
+     "bis": 2.264,
+     "bei": 361.5,
+     "stimme": "Alexander – Deep TV Narrator"
+    },
+    {
+     "id": "szene_11",
+     "datei": "audio/szene_11.mp3",
+     "von": 2.264,
+     "bis": 7.153,
+     "bei": 363.936,
+     "stimme": "Alexander – Deep TV Narrator"
+    },
+    {
+     "id": "szene_11",
+     "datei": "audio/szene_11.mp3",
+     "von": 7.153,
+     "bis": 16.065,
+     "bei": 368.834,
+     "stimme": "Alexander – Deep TV Narrator"
+    }
+   ],
+   "fehlend": [],
+   "audioEnde": 16.703,
+   "verlaengert": 0
+  },
+  {
+   "n": 12,
+   "titel": "Wo wir stehen",
+   "nominal": [
+    388,
+    454
+   ],
+   "start": 391,
+   "ende": 457,
+   "entwurf": 66,
+   "anker": [],
+   "tail": 1,
+   "teile": [
+    {
+     "id": "szene_12",
+     "datei": "audio/szene_12.mp3",
+     "stimme": "Alexander – Deep TV Narrator",
+     "rolle": "Erzähler",
+     "dauer": 37.329
+    }
+   ],
+   "saetze": [
+    {
+     "text": "Für die Zertifizierung ist bereits viel erreicht.",
+     "teil": "szene_12",
+     "ziel": null,
+     "beginn": 0.5,
+     "ende": 3.286,
+     "worte": [
+      [
+       "Für",
+       0.5,
+       0.721
+      ],
+      [
+       "die",
+       0.744,
+       0.825
+      ],
+      [
+       "Zertifizierung",
+       0.895,
+       1.765
+      ],
+      [
+       "ist",
+       1.824,
+       1.963
+      ],
+      [
+       "bereits",
+       2.021,
+       2.381
+      ],
+      [
+       "viel",
+       2.45,
+       2.671
+      ],
+      [
+       "erreicht.",
+       2.741,
+       3.286
+      ]
+     ]
+    },
+    {
+     "text": "Die Referenzdokumente sind überarbeitet, die Grundschutz-Checks aller Zielobjekte ausgewertet, Risikoanalyse und Realisierungsplan liegen im Entwurf vor.",
+     "teil": "szene_12",
+     "ziel": null,
+     "beginn": 3.736,
+     "ende": 13.976,
+     "worte": [
+      [
+       "Die",
+       3.736,
+       3.957
+      ],
+      [
+       "Referenzdokumente",
+       4.015,
+       5.071
+      ],
+      [
+       "sind",
+       5.118,
+       5.257
+      ],
+      [
+       "überarbeitet,",
+       5.315,
+       6.093
+      ],
+      [
+       "die",
+       6.267,
+       6.476
+      ],
+      [
+       "Grundschutz-Checks",
+       6.546,
+       7.521
+      ],
+      [
+       "aller",
+       7.602,
+       7.846
+      ],
+      [
+       "Zielobjekte",
+       7.904,
+       8.601
+      ],
+      [
+       "ausgewertet,",
+       8.67,
+       9.518
+      ],
+      [
+       "Risikoanalyse",
+       9.727,
+       10.9
+      ],
+      [
+       "und",
+       11.016,
+       11.318
+      ],
+      [
+       "Realisierungsplan",
+       11.434,
+       12.56
+      ],
+      [
+       "liegen",
+       12.629,
+       12.873
+      ],
+      [
+       "im",
+       12.931,
+       13.013
+      ],
+      [
+       "Entwurf",
+       13.082,
+       13.489
+      ],
+      [
+       "vor.",
+       13.512,
+       13.976
+      ]
+     ]
+    },
+    {
+     "text": "Für die Umsetzung sind fünfzehn Leitfäden, dreizehn Härtungslisten und eine Entscheidungsvorlage vorbereitet.",
+     "teil": "szene_12",
+     "ziel": null,
+     "beginn": 14.426,
+     "ende": 21.3,
+     "worte": [
+      [
+       "Für",
+       14.426,
+       14.589
+      ],
+      [
+       "die",
+       14.612,
+       14.682
+      ],
+      [
+       "Umsetzung",
+       14.74,
+       15.355
+      ],
+      [
+       "sind",
+       15.413,
+       15.622
+      ],
+      [
+       "fünfzehn",
+       15.68,
+       16.215
+      ],
+      [
+       "Leitfäden,",
+       16.284,
+       17.132
+      ],
+      [
+       "dreizehn",
+       17.306,
+       17.875
+      ],
+      [
+       "Härtungslisten",
+       17.944,
+       18.862
+      ],
+      [
+       "und",
+       19.105,
+       19.268
+      ],
+      [
+       "eine",
+       19.349,
+       19.535
+      ],
+      [
+       "Entscheidungsvorlage",
+       19.57,
+       20.557
+      ],
+      [
+       "vorbereitet.",
+       20.603,
+       21.3
+      ]
+     ]
+    },
+    {
+     "text": "Was zu tun ist, ist damit beschrieben.",
+     "teil": "szene_12",
+     "ziel": null,
+     "beginn": 21.75,
+     "ende": 23.991,
+     "worte": [
+      [
+       "Was",
+       21.75,
+       21.97
+      ],
+      [
+       "zu",
+       22.028,
+       22.133
+      ],
+      [
+       "tun",
+       22.191,
+       22.4
+      ],
+      [
+       "ist,",
+       22.47,
+       22.772
+      ],
+      [
+       "ist",
+       22.864,
+       23.05
+      ],
+      [
+       "damit",
+       23.073,
+       23.306
+      ],
+      [
+       "beschrieben.",
+       23.352,
+       23.991
+      ]
+     ]
+    },
+    {
+     "text": "Offen sind die Entscheidungen der Verwaltungsleitung, Budget und Personal für die Umsetzung, die Übernahme der verbleibenden Risiken und die Behebung der Abweichungen aus dem letzten Audit, rechtzeitig vor dem Überwachungsaudit.",
+     "teil": "szene_12",
+     "ziel": null,
+     "beginn": 24.501,
+     "ende": 38.189,
+     "worte": [
+      [
+       "Offen",
+       24.501,
+       24.873
+      ],
+      [
+       "sind",
+       24.943,
+       25.128
+      ],
+      [
+       "die",
+       25.244,
+       25.349
+      ],
+      [
+       "Entscheidungen",
+       25.395,
+       25.999
+      ],
+      [
+       "der",
+       26.034,
+       26.162
+      ],
+      [
+       "Verwaltungsleitung,",
+       26.231,
+       27.404
+      ],
+      [
+       "Budget",
+       27.578,
+       28.077
+      ],
+      [
+       "und",
+       28.17,
+       28.356
+      ],
+      [
+       "Personal",
+       28.449,
+       28.96
+      ],
+      [
+       "für",
+       29.018,
+       29.145
+      ],
+      [
+       "die",
+       29.169,
+       29.238
+      ],
+      [
+       "Umsetzung,",
+       29.296,
+       30.109
+      ],
+      [
+       "die",
+       30.26,
+       30.41
+      ],
+      [
+       "Übernahme",
+       30.503,
+       31.049
+      ],
+      [
+       "der",
+       31.084,
+       31.188
+      ],
+      [
+       "verbleibenden",
+       31.246,
+       31.815
+      ],
+      [
+       "Risiken",
+       31.885,
+       32.407
+      ],
+      [
+       "und",
+       32.523,
+       32.686
+      ],
+      [
+       "die",
+       32.802,
+       32.895
+      ],
+      [
+       "Behebung",
+       32.941,
+       33.417
+      ],
+      [
+       "der",
+       33.464,
+       33.545
+      ],
+      [
+       "Abweichungen",
+       33.592,
+       34.172
+      ],
+      [
+       "aus",
+       34.23,
+       34.358
+      ],
+      [
+       "dem",
+       34.404,
+       34.52
+      ],
+      [
+       "letzten",
+       34.567,
+       34.88
+      ],
+      [
+       "Audit,",
+       34.927,
+       35.391
+      ],
+      [
+       "rechtzeitig",
+       35.635,
+       36.378
+      ],
+      [
+       "vor",
+       36.424,
+       36.657
+      ],
+      [
+       "dem",
+       36.703,
+       36.819
+      ],
+      [
+       "Überwachungsaudit.",
+       36.889,
+       38.189
+      ]
+     ]
+    }
+   ],
+   "segmente": [
+    {
+     "id": "szene_12",
+     "datei": "audio/szene_12.mp3",
+     "von": 0,
+     "bis": 2.988,
+     "bei": 391.5,
+     "stimme": "Alexander – Deep TV Narrator"
+    },
+    {
+     "id": "szene_12",
+     "datei": "audio/szene_12.mp3",
+     "von": 2.988,
+     "bis": 13.321,
+     "bei": 394.694,
+     "stimme": "Alexander – Deep TV Narrator"
+    },
+    {
+     "id": "szene_12",
+     "datei": "audio/szene_12.mp3",
+     "von": 13.321,
+     "bis": 20.562,
+     "bei": 405.152,
+     "stimme": "Alexander – Deep TV Narrator"
+    },
+    {
+     "id": "szene_12",
+     "datei": "audio/szene_12.mp3",
+     "von": 20.562,
+     "bis": 23.202,
+     "bei": 412.46,
+     "stimme": "Alexander – Deep TV Narrator"
+    },
+    {
+     "id": "szene_12",
+     "datei": "audio/szene_12.mp3",
+     "von": 23.202,
+     "bis": 37.329,
+     "bei": 415.1,
+     "stimme": "Alexander – Deep TV Narrator"
+    }
+   ],
+   "fehlend": [],
+   "audioEnde": 38.189,
+   "verlaengert": 0
+  }
+ ],
+ "cues": [
+  {
+   "szene": 1,
+   "start": 12.9,
+   "end": 17.355,
+   "lines": [
+    "Ausweise, Urkunden, Sozialleistungen, Kitaplätze,"
+   ]
+  },
+  {
+   "szene": 1,
+   "start": 17.405,
+   "end": 20.571,
+   "lines": [
+    "Baugenehmigungen und die Gehälter der Beschäftigten:"
+   ]
+  },
+  {
+   "szene": 1,
+   "start": 20.621,
+   "end": 26.082,
+   "lines": [
+    "Fast jede Leistung der Stadtverwaltung",
+    "hängt heute von funktionierender IT ab."
+   ]
+  },
+  {
+   "szene": 2,
+   "start": 32.9,
+   "end": 36.31,
+   "lines": [
+    "Ein typischer Angriff beginnt",
+    "mit einer gefälschten E-Mail,"
+   ]
+  },
+  {
+   "szene": 2,
+   "start": 36.36,
+   "end": 39.209,
+   "lines": [
+    "die wie eine gewöhnliche Rechnung aussieht."
+   ]
+  },
+  {
+   "szene": 2,
+   "start": 39.259,
+   "end": 42.401,
+   "lines": [
+    "Solche Nachrichten erreichen",
+    "jede Verwaltung täglich,"
+   ]
+  },
+  {
+   "szene": 2,
+   "start": 42.451,
+   "end": 45.919,
+   "lines": [
+    "und einzelne Klicks lassen sich nie ganz verhindern."
+   ]
+  },
+  {
+   "szene": 2,
+   "start": 45.969,
+   "end": 50.095,
+   "lines": [
+    "Entscheidend ist, wie weit",
+    "ein Angreifer danach kommt."
+   ]
+  },
+  {
+   "szene": 3,
+   "start": 57.5,
+   "end": 61.235,
+   "lines": [
+    "In Herne lässt sich die IT nicht nur von wenigen,"
+   ]
+  },
+  {
+   "szene": 3,
+   "start": 61.285,
+   "end": 64.784,
+   "lines": [
+    "besonders geschützten Arbeitsplätzen aus verwalten."
+   ]
+  },
+  {
+   "szene": 3,
+   "start": 64.838,
+   "end": 67.226,
+   "lines": [
+    "Intern reicht dafür ein Passwort,"
+   ]
+  },
+  {
+   "szene": 3,
+   "start": 67.276,
+   "end": 71.463,
+   "lines": [
+    "eine zweite Bestätigung bei der Anmeldung",
+    "ist noch nicht eingeführt."
+   ]
+  },
+  {
+   "szene": 3,
+   "start": 71.513,
+   "end": 77.404,
+   "lines": [
+    "Zudem haben mehr Konten weitreichende Rechte,",
+    "als für die jeweiligen Aufgaben nötig wäre."
+   ]
+  },
+  {
+   "szene": 3,
+   "start": 77.454,
+   "end": 82.021,
+   "lines": [
+    "Wer ein solches Konto übernimmt,",
+    "erreicht damit zentrale Systeme."
+   ]
+  },
+  {
+   "szene": 4,
+   "start": 88.9,
+   "end": 93.143,
+   "lines": [
+    "Verdächtige Vorgänge werden nicht zentral",
+    "gesammelt und ausgewertet."
+   ]
+  },
+  {
+   "szene": 4,
+   "start": 93.193,
+   "end": 98.144,
+   "lines": [
+    "Ein Angreifer kann sich deshalb über Wochen",
+    "im Netz bewegen, ohne aufzufallen."
+   ]
+  },
+  {
+   "szene": 4,
+   "start": 98.194,
+   "end": 101.407,
+   "lines": [
+    "Auch im Landkreis Anhalt-Bitterfeld",
+    "begann der Angriff"
+   ]
+  },
+  {
+   "szene": 4,
+   "start": 101.457,
+   "end": 105.374,
+   "lines": [
+    "nach späteren Auswertungen",
+    "Wochen vor seiner Entdeckung."
+   ]
+  },
+  {
+   "szene": 5,
+   "start": 112.9,
+   "end": 118.641,
+   "lines": [
+    "Einige Systeme am Übergang zum Internet erhalten",
+    "vom Hersteller keine Sicherheitsupdates mehr."
+   ]
+  },
+  {
+   "szene": 5,
+   "start": 118.691,
+   "end": 122.434,
+   "lines": [
+    "Viele Server laufen ohne die",
+    "empfohlenen Schutzeinstellungen."
+   ]
+  },
+  {
+   "szene": 5,
+   "start": 122.484,
+   "end": 126.832,
+   "lines": [
+    "Und die Trennung zwischen den Bereichen",
+    "im Netz ist noch unvollständig."
+   ]
+  },
+  {
+   "szene": 5,
+   "start": 126.882,
+   "end": 131.692,
+   "lines": [
+    "Ein Angreifer kann sich deshalb leichter",
+    "von einem System zum nächsten bewegen."
+   ]
+  },
+  {
+   "szene": 6,
+   "start": 138.9,
+   "end": 143.285,
+   "lines": [
+    "Erst im letzten Schritt wird der Angriff",
+    "sichtbar: Die Daten werden verschlüsselt,"
+   ]
+  },
+  {
+   "szene": 6,
+   "start": 143.335,
+   "end": 147.729,
+   "lines": [
+    "Kopien sind bereits abgeflossen,",
+    "es folgt eine Lösegeldforderung."
+   ]
+  },
+  {
+   "szene": 6,
+   "start": 147.779,
+   "end": 151.595,
+   "lines": [
+    "Für die Wiederherstellung kommt",
+    "es dann auf die Rückfallebene an."
+   ]
+  },
+  {
+   "szene": 6,
+   "start": 151.645,
+   "end": 157.737,
+   "lines": [
+    "Die Datensicherung läuft ohne zweites System,",
+    "für Teile der IT fehlen Notfallpläne,"
+   ]
+  },
+  {
+   "szene": 6,
+   "start": 157.787,
+   "end": 162.702,
+   "lines": [
+    "und manche Unterlagen liegen auf genau",
+    "den Systemen, die dann gesperrt sind."
+   ]
+  },
+  {
+   "szene": 7,
+   "start": 170.9,
+   "end": 175.096,
+   "lines": [
+    "Vergleichbare Fälle zeigen,",
+    "welche Folgen daraus entstehen."
+   ]
+  },
+  {
+   "szene": 7,
+   "start": 175.149,
+   "end": 181.903,
+   "lines": [
+    "Anhalt-Bitterfeld rief den Katastrophenfall",
+    "aus und beendete ihn erst nach rund sieben Monaten;"
+   ]
+  },
+  {
+   "szene": 7,
+   "start": 181.953,
+   "end": 187.705,
+   "lines": [
+    "der Aufwand lag nach Angaben des Landkreises",
+    "bei rund 2,5 Millionen Euro."
+   ]
+  },
+  {
+   "szene": 7,
+   "start": 187.755,
+   "end": 192.009,
+   "lines": [
+    "Sozialleistungen konnten mindestens",
+    "eine Woche nicht ausgezahlt werden."
+   ]
+  },
+  {
+   "szene": 7,
+   "start": 192.059,
+   "end": 198.348,
+   "lines": [
+    "Nach dem Angriff auf die Südwestfalen-IT",
+    "waren Online-Dienste für rund 1,7"
+   ]
+  },
+  {
+   "szene": 7,
+   "start": 198.398,
+   "end": 204.466,
+   "lines": [
+    "Millionen Einwohner erst nach etwa neun",
+    "Monaten wieder weitgehend verfügbar."
+   ]
+  },
+  {
+   "szene": 7,
+   "start": 204.516,
+   "end": 209.517,
+   "lines": [
+    "Für die Menschen in Herne hieße das:",
+    "Urkunden und Zulassungen verzögern sich,"
+   ]
+  },
+  {
+   "szene": 7,
+   "start": 209.567,
+   "end": 214.331,
+   "lines": [
+    "Leistungen kommen später an, die",
+    "Verwaltung ist kaum erreichbar."
+   ]
+  },
+  {
+   "szene": 8,
+   "start": 239.9,
+   "end": 243.969,
+   "lines": [
+    "Nach einem Angriff steht",
+    "die Verwaltungsspitze in der Verantwortung."
+   ]
+  },
+  {
+   "szene": 8,
+   "start": 244.019,
+   "end": 247.971,
+   "lines": [
+    "Der Vorfall muss der Datenschutzaufsicht",
+    "gemeldet werden."
+   ]
+  },
+  {
+   "szene": 8,
+   "start": 248.021,
+   "end": 252.115,
+   "lines": [
+    "Das BSI warnt seit Jahren",
+    "vor der hohen Bedrohungslage,"
+   ]
+  },
+  {
+   "szene": 8,
+   "start": 252.165,
+   "end": 255.363,
+   "lines": [
+    "die durch Künstliche Intelligenz weiter steigt."
+   ]
+  },
+  {
+   "szene": 8,
+   "start": 255.413,
+   "end": 259.868,
+   "lines": [
+    "Die Frage, ob die Schwachstellen bekannt",
+    "waren, wäre mit Ja zu beantworten:"
+   ]
+  },
+  {
+   "szene": 8,
+   "start": 259.918,
+   "end": 263.603,
+   "lines": [
+    "Sie sind in der aktuellen",
+    "Sicherheitsprüfung dokumentiert."
+   ]
+  },
+  {
+   "szene": 9,
+   "start": 268.4,
+   "end": 272.932,
+   "lines": [
+    "Informationssicherheit ist eine",
+    "Aufgabe der Verwaltungsleitung."
+   ]
+  },
+  {
+   "szene": 9,
+   "start": 272.986,
+   "end": 277.487,
+   "lines": [
+    "Im IT-Grundschutz ist die Übernahme",
+    "der Gesamtverantwortung durch die Leitung"
+   ]
+  },
+  {
+   "szene": 9,
+   "start": 277.537,
+   "end": 282.816,
+   "lines": [
+    "eine Basis-Anforderung,",
+    "die im Überwachungsaudit vollständig geprüft wird."
+   ]
+  },
+  {
+   "szene": 9,
+   "start": 282.866,
+   "end": 289.19,
+   "lines": [
+    "Die NIS-2-Richtlinie der EU schreibt",
+    "dieselbe Verantwortung gesetzlich fest:"
+   ]
+  },
+  {
+   "szene": 9,
+   "start": 289.24,
+   "end": 293.741,
+   "lines": [
+    "seit Dezember 2025 im BSI-Gesetz,"
+   ]
+  },
+  {
+   "szene": 9,
+   "start": 293.791,
+   "end": 301.876,
+   "lines": [
+    "seit Januar 2026 im Informationssicherheitsgesetz",
+    "NRW für die Landesverwaltung."
+   ]
+  },
+  {
+   "szene": 9,
+   "start": 301.93,
+   "end": 305.29,
+   "lines": [
+    "Für Kommunen gelten beide nicht unmittelbar."
+   ]
+  },
+  {
+   "szene": 9,
+   "start": 305.34,
+   "end": 308.936,
+   "lines": [
+    "Sie zeigen aber, was von einer",
+    "Verwaltungsleitung erwartet wird:"
+   ]
+  },
+  {
+   "szene": 9,
+   "start": 308.986,
+   "end": 314.667,
+   "lines": [
+    "Maßnahmen billigen, ihre Umsetzung überwachen",
+    "und sich regelmäßig schulen lassen."
+   ]
+  },
+  {
+   "szene": 10,
+   "start": 316.4,
+   "end": 318.208,
+   "lines": [
+    "Die Maßnahmen sind geplant,"
+   ]
+  },
+  {
+   "szene": 10,
+   "start": 318.258,
+   "end": 324.392,
+   "lines": [
+    "umsetzen lassen sie sich aber nur mit ausreichenden",
+    "Mitteln und qualifiziertem Personal."
+   ]
+  },
+  {
+   "szene": 10,
+   "start": 324.655,
+   "end": 328.61,
+   "lines": [
+    "Investitionen sind nötig",
+    "für den Ersatz veralteter Systeme,"
+   ]
+  },
+  {
+   "szene": 10,
+   "start": 328.66,
+   "end": 333.289,
+   "lines": [
+    "einen geschützten Zugang zur IT-Verwaltung",
+    "mit zweiter Bestätigung,"
+   ]
+  },
+  {
+   "szene": 10,
+   "start": 333.339,
+   "end": 338.026,
+   "lines": [
+    "eine zentrale Erkennung von Angriffen",
+    "und ein zweites Sicherungssystem."
+   ]
+  },
+  {
+   "szene": 10,
+   "start": 338.076,
+   "end": 342.217,
+   "lines": [
+    "Ebenso wichtig sind Fachkräfte:",
+    "Server müssen laufend gewartet,"
+   ]
+  },
+  {
+   "szene": 10,
+   "start": 342.267,
+   "end": 347.937,
+   "lines": [
+    "Updates eingespielt und Sicherheitseinstellungen",
+    "regelmäßig geprüft werden."
+   ]
+  },
+  {
+   "szene": 10,
+   "start": 347.991,
+   "end": 355.217,
+   "lines": [
+    "Eine Überwachung schützt nur, wenn jemand die",
+    "Meldungen auswertet und im Ernstfall sofort reagiert."
+   ]
+  },
+  {
+   "szene": 11,
+   "start": 361.4,
+   "end": 363.925,
+   "lines": [
+    "So stellt sich die Lage heute dar."
+   ]
+  },
+  {
+   "szene": 11,
+   "start": 363.975,
+   "end": 368.845,
+   "lines": [
+    "Alle gezeigten Schwachstellen wurden in der",
+    "aktuellen Sicherheitsprüfung festgestellt."
+   ]
+  },
+  {
+   "szene": 11,
+   "start": 368.895,
+   "end": 372.967,
+   "lines": [
+    "Ohne zusätzliche Mittel und Personal",
+    "bleibt dieser Zustand bestehen"
+   ]
+  },
+  {
+   "szene": 11,
+   "start": 373.017,
+   "end": 378.153,
+   "lines": [
+    "und mit ihm das Risiko für die Stadt",
+    "und ihre Bürgerinnen und Bürger."
+   ]
+  },
+  {
+   "szene": 12,
+   "start": 391.4,
+   "end": 394.586,
+   "lines": [
+    "Für die Zertifizierung ist bereits viel erreicht."
+   ]
+  },
+  {
+   "szene": 12,
+   "start": 394.636,
+   "end": 400.577,
+   "lines": [
+    "Die Referenzdokumente sind überarbeitet,",
+    "die Grundschutz-Checks aller Zielobjekte ausgewertet,"
+   ]
+  },
+  {
+   "szene": 12,
+   "start": 400.627,
+   "end": 405.276,
+   "lines": [
+    "Risikoanalyse und Realisierungsplan",
+    "liegen im Entwurf vor."
+   ]
+  },
+  {
+   "szene": 12,
+   "start": 405.326,
+   "end": 408.156,
+   "lines": [
+    "Für die Umsetzung sind fünfzehn Leitfäden,"
+   ]
+  },
+  {
+   "szene": 12,
+   "start": 408.206,
+   "end": 412.6,
+   "lines": [
+    "dreizehn Härtungslisten und eine",
+    "Entscheidungsvorlage vorbereitet."
+   ]
+  },
+  {
+   "szene": 12,
+   "start": 412.65,
+   "end": 415.351,
+   "lines": [
+    "Was zu tun ist, ist damit beschrieben."
+   ]
+  },
+  {
+   "szene": 12,
+   "start": 415.401,
+   "end": 421.11,
+   "lines": [
+    "Offen sind die Entscheidungen der Verwaltungsleitung,",
+    "Budget und Personal für die Umsetzung,"
+   ]
+  },
+  {
+   "szene": 12,
+   "start": 421.16,
+   "end": 426.485,
+   "lines": [
+    "die Übernahme der verbleibenden Risiken und die",
+    "Behebung der Abweichungen aus dem letzten Audit,"
+   ]
+  },
+  {
+   "szene": 12,
+   "start": 426.535,
+   "end": 429.639,
+   "lines": [
+    "rechtzeitig vor dem Überwachungsaudit."
+   ]
+  }
+ ]
+}

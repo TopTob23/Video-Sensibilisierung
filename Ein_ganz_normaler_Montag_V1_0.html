@@ -51,7 +51,7 @@
     <button id="bBackF" title="1 Bild zurück (←)">−1 Bild</button>
     <button id="bNextF" title="1 Bild vor (→)">+1 Bild</button>
     <button id="bNextS" title="1 Sekunde vor (Umschalt + →)">+1 s</button>
-    <input id="scrub" type="range" min="0" max="258" step="0.0333333" value="0" aria-label="Zeitleiste">
+    <input id="scrub" type="range" min="0" max="454" step="0.0333333" value="0" aria-label="Zeitleiste">
     <span id="tc">00:00:00</span>
     <span id="sceneName"></span>
     <div id="sceneBtns"></div>
@@ -66,22 +66,169 @@
    ===================================================================== */
 const W = 1920, H = 1080, FPS = 30;
 
-// Szenenzeiten und -titel laut Drehbuch V1.2 (Summe 4:18)
-const SCENES = [
-  { n: 0, title: "Titel", start: 0, end: 12 },
-  { n: 1, title: "Eine Stadt, die funktioniert", start: 12, end: 32 },
-  { n: 2, title: "Der Einstieg", start: 32, end: 56 },
-  { n: 3, title: "Zugang zu zentralen Systemen", start: 56, end: 88 },
-  { n: 4, title: "Unbemerkt", start: 88, end: 112 },
-  { n: 5, title: "Ausbreitung", start: 112, end: 138 },
-  { n: 6, title: "Der Angriff wird sichtbar", start: 138, end: 170 },
-  { n: 7, title: "Die Folgen", start: 170, end: 224 },
-  { n: 8, title: "Maßnahmen", start: 224, end: 258 },
+// Szenen laut Drehbuch V1_4: Titel und Richtzeiten [s]. Die tatsächlichen Zeiten stehen in TIMELINE
+// (erzeugt von export/sync.mjs aus den Längen der Sprachaufnahmen); Szenen werden nur länger, nie kürzer.
+const SZENEN = [
+  { n: 0, title: "Titel", nominal: [0, 12] },
+  { n: 1, title: "Eine Stadt, die funktioniert", nominal: [12, 32] },
+  { n: 2, title: "Der Einstieg", nominal: [32, 56] },
+  { n: 3, title: "Zugang zu zentralen Systemen", nominal: [56, 88] },
+  { n: 4, title: "Unbemerkt", nominal: [88, 112] },
+  { n: 5, title: "Ausbreitung", nominal: [112, 138] },
+  { n: 6, title: "Der Angriff wird sichtbar", nominal: [138, 170] },
+  { n: 7, title: "Die Folgen", nominal: [170, 224] },
+  { n: 8, title: "Die Verantwortung der Verwaltungsspitze", nominal: [224, 268] },
+  { n: 9, title: "Verantwortung der Leitung", nominal: [268, 313] },
+  { n: 10, title: "Was es braucht", nominal: [313, 358] },
+  { n: 11, title: "Stand heute", nominal: [358, 388] },
+  { n: 12, title: "Wo wir stehen", nominal: [388, 454] },
 ];
-const TOTAL = 258;          // Sekunden
 const XFADE = 1.0;          // weiche Überblendung zwischen Szenen (Sekunden)
+const SCHLUSS_DAUER = 6;    // Schlusstafel: die letzten Sekunden der letzten Szene
 
-// Sprechertext wörtlich aus dem Drehbuch V1.2 (Quelle für Untertitel, SRT und Prüfung)
+/* LOGO-BEGIN (erzeugt von export/embed-logo.mjs aus SITS_Logo.png) */
+const LOGO = { w: 152, h: 88, uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJgAAABYCAYAAAAJKj6VAAAWfmNhQlgAABZ+anVtYgAAAB5qdW1kYzJwYQARABCAAACqADibcQNjMnBhAAAAFlhqdW1iAAAAR2p1bWRjMm1hABEAEIAAAKoAOJtxA3VybjpjMnBhOjUyNzNlZmY0LWIyMDQtNDUyZi1hOWQ3LTY3MTU4NDJjM2YwZQAAAAOTanVtYgAAAClqdW1kYzJhcwARABCAAACqADibcQNjMnBhLmFzc2VydGlvbnMAAAAAuGp1bWIAAABEanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5pbmdyZWRpZW50LnYzAAAAABhjMnNoWkSyuOyxL/+wYL6oFdm9AwAAAGxjYm9yo2lkYzpmb3JtYXRpaW1hZ2UvcG5namluc3RhbmNlSUR4LHhtcDppaWQ6ZjBhODcxMmEtNWYxYy00YTY2LTg3NWUtZWQ1Yjg3NzBjZWYwbHJlbGF0aW9uc2hpcGhwYXJlbnRPZgAAAeJqdW1iAAAAQWp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuYWN0aW9ucy52MgAAAAAYYzJzaC0Hlf3N/REQryXV65n6YKUAAAGZY2JvcqJnYWN0aW9uc4KiZmFjdGlvbmtjMnBhLm9wZW5lZGpwYXJhbWV0ZXJzoWtpbmdyZWRpZW50c4GiY3VybHgtc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5pbmdyZWRpZW50LnYzZGhhc2hYIPwUiTAVugdr2J6mlt4yeeTAc0v+qiGJo/te3E5c8FMwpGZhY3Rpb254HWNvbS5hbnRocm9waWMuY2xhdWRlLnByb3ZpZGVkanBhcmFtZXRlcnOheB9jb20uYW50aHJvcGljLm9yaWdpbi1jb25maWRlbmNlZ3Vua25vd25rZGVzY3JpcHRpb254ZkNsYXVkZSBwcm92aWRlZCB0aGlzIGZpbGUgYXQgdGhlIHJlcXVlc3Qgb2YgYSB1c2VyIGFuZCBtYXkgaGF2ZSBjcmVhdGVkIG9yIG1vZGlmaWVkIHRoZSBmaWxlIGNvbnRlbnRzLm1zb2Z0d2FyZUFnZW50oWRuYW1lZkNsYXVkZXJhbGxBY3Rpb25zSW5jbHVkZWT1AAAAyGp1bWIAAABAanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5oYXNoLmRhdGEAAAAAGGMyc2jfiHolsieh8PL74hgwALX7AAAAgGNib3KlY2FsZ2ZzaGEyNTZjcGFkTQAAAAAAAAAAAAAAAABkaGFzaFggp8liyQQeddtJfW8tVqKzDSEeF/YaXkIyaLwonmE7ai9kbmFtZW5qdW1iZiBtYW5pZmVzdGpleGNsdXNpb25zgaJlc3RhcnQYIWZsZW5ndGgZFooAAAI+anVtYgAAACdqdW1kYzJjbAARABCAAACqADibcQNjMnBhLmNsYWltLnYyAAAAAg9jYm9ypWNhbGdmc2hhMjU2aXNpZ25hdHVyZXhNc2VsZiNqdW1iZj0vYzJwYS91cm46YzJwYTo1MjczZWZmNC1iMjA0LTQ1MmYtYTlkNy02NzE1ODQyYzNmMGUvYzJwYS5zaWduYXR1cmVqaW5zdGFuY2VJRHgseG1wOmlpZDpmZWRhM2RiYi01NGYyLTQ3ZDgtYWE0My1kNzFlODEzYmEyZWFyY3JlYXRlZF9hc3NlcnRpb25zg6JjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFgg/BSJMBW6B2vYnqaW3jJ55MBzS/6qIYmj+17cTlzwUzCiY3VybHgqc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5hY3Rpb25zLnYyZGhhc2hYIDVfqNDvl1RlOlsZoWogMJYyBriyVlUSezoQdbE6Y/sdomN1cmx4KXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaGFzaC5kYXRhZGhhc2hYIPlTCLp30/cy1bzyyW25y1BmgIjc3t6oV+FwvxwAKr+YdGNsYWltX2dlbmVyYXRvcl9pbmZvo2RuYW1lb0FudGhyb3BpYyBGaWxlc2d2ZXJzaW9uZTEuMC4wa3NwZWNWZXJzaW9uZTIuNC4wAAAQOGp1bWIAAAAoanVtZGMyY3MAEQAQgAAAqgA4m3EDYzJwYS5zaWduYXR1cmUAAAAQCGNib3LShFkCEqIBJhghWQIKMIICBjCCAY2gAwIBAgIUQOWgCu7COdC+uIP6BkIFPWdVEwAwCgYIKoZIzj0EAwMwSTEXMBUGA1UEChMOQW50aHJvcGljLCBQQkMxLjAsBgNVBAMTJUFudGhyb3BpYyBDb250ZW50IENyZWRlbnRpYWxzIFJvb3QgQ0EwHhcNMjYwODA3MTg0MzU2WhcNMjgwODA2MTk0MzU2WjBEMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEpMCcGA1UEAxMgQW50aHJvcGljIENsYXVkZSBDb250ZW50IFNpZ25pbmcwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAASYegpry1AYBRTVNL1CpTlbROnY3dey+UrsF9C3phYrATN3ZHf93Mo8RQN0KOUuOn19P4oWNFWe5n2/She9N7eTo1gwVjAOBgNVHQ8BAf8EBAMCB4AwFQYDVR0lBA4wDAYKKwYBBAGD6F4CATAMBgNVHRMBAf8EAjAAMB8GA1UdIwQYMBaAFM5R4gSBTmRbI/jjxM+aPpzB11zCMAoGCCqGSM49BAMDA2cAMGQCMDFzHRSeAXrSy1WOzkbhPZ6Km2wGTmZ/2gK18k8BQGXyqz88Rdrz6CTX9flAnYNVxgIwcF9c3fVhqmJKpi+UhasNUMko69cyX6STPfta3Q8EjyzDjzoyrol46FP6VFHhvUcJoWNwYWRZDZ4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA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' };
+/* LOGO-END */
+
+// Bild-Ton-Anker: [Entwurfszeit in der Szene (s), erste Wörter im Sprechertext]. Die Bilder sind gegen diese Zeiten entworfen;
+// export/sync.mjs sucht die Wörter in der Sprachaufnahme, und die Bilder folgen der Stimme (stückweise lineare Zeitverzerrung).
+/* ANKER-BEGIN */
+const ANKER = {
+  1: [[1, "Ausweise, Urkunden, Sozialleistungen,"], [5.2, "Baugenehmigungen und die"], [9.8, "Fast jede Leistung"]],
+  2: [[1, "Ein typischer Angriff"], [5.2, "die wie eine"], [9, "Solche Nachrichten erreichen"], [13, "und einzelne Klicks"], [18, "Entscheidend ist, wie"]],
+  3: [[1.6, "In Herne lässt"], [10, "Intern reicht dafür"], [12.6, "eine zweite Bestätigung"], [17.4, "Zudem haben mehr"], [23.8, "Wer ein solches"], [26.2, "erreicht damit zentrale"]],
+  4: [[1, "Verdächtige Vorgänge werden"], [6.4, "Ein Angreifer kann"], [12.6, "Auch im Landkreis"], [18.4, "Wochen vor seiner"]],
+  5: [[1, "Einige Systeme am"], [8, "Viele Server laufen"], [13, "Und die Trennung"], [18.4, "Ein Angreifer kann"]],
+  6: [[1, "Erst im letzten"], [5, "Die Daten werden"], [9.6, "es folgt eine"], [12.6, "Für die Wiederherstellung"], [17.6, "Die Datensicherung läuft"], [21, "für Teile der"], [24.2, "und manche Unterlagen"]],
+  7: [[1, "Vergleichbare Fälle zeigen,"], [5.6, "Anhalt-Bitterfeld rief den"], [12.4, "der Aufwand lag"], [18, "Sozialleistungen konnten mindestens"], [23.6, "Nach dem Angriff"], [30.4, "erst nach etwa"], [35.4, "Für die Menschen"], [38.4, "Urkunden und Zulassungen"], [41.8, "Leistungen kommen später"], [44.4, "die Verwaltung ist"]],
+  8: [], 9: [], 10: [], 11: [], 12: [],
+};
+/* ANKER-END */
+
+/* TIMELINE-BEGIN (erzeugt von export/sync.mjs aus den Audiodateien – nicht von Hand ändern) */
+const TIMELINE = {
+  szenen: {
+    0: {"start":0,"end":12,"entwurf":12,"anker":[],"tail":1},
+    1: {"start":12,"end":32,"entwurf":20,"anker":[[1,1],[5.2,5.505],[9.8,8.721]],"tail":1},
+    2: {"start":32,"end":56,"entwurf":24,"anker":[[1,1],[5.2,4.46],[9,7.359],[13,10.551],[18,14.069]],"tail":1},
+    3: {"start":56,"end":88,"entwurf":32,"anker":[[1.6,1.6],[10,8.938],[12.6,11.376],[17.4,15.613],[23.8,21.554],[26.2,23.458]],"tail":1},
+    4: {"start":88,"end":112,"entwurf":24,"anker":[[1,1],[6.4,5.293],[12.6,10.294],[18.4,15.089]],"tail":1},
+    5: {"start":112,"end":138,"entwurf":26,"anker":[[1,1],[8,6.791],[13,10.584],[18.4,14.982]],"tail":1},
+    6: {"start":138,"end":170,"entwurf":32,"anker":[[1,1],[5,3.705],[9.6,7.444],[12.6,9.879],[17.6,13.745],[21,16.915],[24.2,19.887]],"tail":1},
+    7: {"start":170,"end":224,"entwurf":54,"anker":[[1,1],[5.6,5.249],[12.4,12.053],[18,17.855],[23.6,22.159],[30.4,29.821],[35.4,34.616],[38.4,36.694],[41.8,39.667],[44.4,41.443]],"tail":1},
+    8: {"start":224,"end":268,"entwurf":44,"anker":[],"tail":1},
+    9: {"start":268,"end":316,"entwurf":45,"anker":[],"tail":1},
+    10: {"start":316,"end":361,"entwurf":45,"anker":[],"tail":1},
+    11: {"start":361,"end":391,"entwurf":30,"anker":[],"tail":1},
+    12: {"start":391,"end":457,"entwurf":66,"anker":[],"tail":1}
+  },
+  cues: [
+    {"scene":1,"start":12.9,"end":17.355,"lines":["Ausweise, Urkunden, Sozialleistungen, Kitaplätze,"]},
+    {"scene":1,"start":17.405,"end":20.571,"lines":["Baugenehmigungen und die Gehälter der Beschäftigten:"]},
+    {"scene":1,"start":20.621,"end":26.082,"lines":["Fast jede Leistung der Stadtverwaltung","hängt heute von funktionierender IT ab."]},
+    {"scene":2,"start":32.9,"end":36.31,"lines":["Ein typischer Angriff beginnt","mit einer gefälschten E-Mail,"]},
+    {"scene":2,"start":36.36,"end":39.209,"lines":["die wie eine gewöhnliche Rechnung aussieht."]},
+    {"scene":2,"start":39.259,"end":42.401,"lines":["Solche Nachrichten erreichen","jede Verwaltung täglich,"]},
+    {"scene":2,"start":42.451,"end":45.919,"lines":["und einzelne Klicks lassen sich nie ganz verhindern."]},
+    {"scene":2,"start":45.969,"end":50.095,"lines":["Entscheidend ist, wie weit","ein Angreifer danach kommt."]},
+    {"scene":3,"start":57.5,"end":61.235,"lines":["In Herne lässt sich die IT nicht nur von wenigen,"]},
+    {"scene":3,"start":61.285,"end":64.784,"lines":["besonders geschützten Arbeitsplätzen aus verwalten."]},
+    {"scene":3,"start":64.838,"end":67.226,"lines":["Intern reicht dafür ein Passwort,"]},
+    {"scene":3,"start":67.276,"end":71.463,"lines":["eine zweite Bestätigung bei der Anmeldung","ist noch nicht eingeführt."]},
+    {"scene":3,"start":71.513,"end":77.404,"lines":["Zudem haben mehr Konten weitreichende Rechte,","als für die jeweiligen Aufgaben nötig wäre."]},
+    {"scene":3,"start":77.454,"end":82.021,"lines":["Wer ein solches Konto übernimmt,","erreicht damit zentrale Systeme."]},
+    {"scene":4,"start":88.9,"end":93.143,"lines":["Verdächtige Vorgänge werden nicht zentral","gesammelt und ausgewertet."]},
+    {"scene":4,"start":93.193,"end":98.144,"lines":["Ein Angreifer kann sich deshalb über Wochen","im Netz bewegen, ohne aufzufallen."]},
+    {"scene":4,"start":98.194,"end":101.407,"lines":["Auch im Landkreis Anhalt-Bitterfeld","begann der Angriff"]},
+    {"scene":4,"start":101.457,"end":105.374,"lines":["nach späteren Auswertungen","Wochen vor seiner Entdeckung."]},
+    {"scene":5,"start":112.9,"end":118.641,"lines":["Einige Systeme am Übergang zum Internet erhalten","vom Hersteller keine Sicherheitsupdates mehr."]},
+    {"scene":5,"start":118.691,"end":122.434,"lines":["Viele Server laufen ohne die","empfohlenen Schutzeinstellungen."]},
+    {"scene":5,"start":122.484,"end":126.832,"lines":["Und die Trennung zwischen den Bereichen","im Netz ist noch unvollständig."]},
+    {"scene":5,"start":126.882,"end":131.692,"lines":["Ein Angreifer kann sich deshalb leichter","von einem System zum nächsten bewegen."]},
+    {"scene":6,"start":138.9,"end":143.285,"lines":["Erst im letzten Schritt wird der Angriff","sichtbar: Die Daten werden verschlüsselt,"]},
+    {"scene":6,"start":143.335,"end":147.729,"lines":["Kopien sind bereits abgeflossen,","es folgt eine Lösegeldforderung."]},
+    {"scene":6,"start":147.779,"end":151.595,"lines":["Für die Wiederherstellung kommt","es dann auf die Rückfallebene an."]},
+    {"scene":6,"start":151.645,"end":157.737,"lines":["Die Datensicherung läuft ohne zweites System,","für Teile der IT fehlen Notfallpläne,"]},
+    {"scene":6,"start":157.787,"end":162.702,"lines":["und manche Unterlagen liegen auf genau","den Systemen, die dann gesperrt sind."]},
+    {"scene":7,"start":170.9,"end":175.096,"lines":["Vergleichbare Fälle zeigen,","welche Folgen daraus entstehen."]},
+    {"scene":7,"start":175.149,"end":181.903,"lines":["Anhalt-Bitterfeld rief den Katastrophenfall","aus und beendete ihn erst nach rund sieben Monaten;"]},
+    {"scene":7,"start":181.953,"end":187.705,"lines":["der Aufwand lag nach Angaben des Landkreises","bei rund 2,5 Millionen Euro."]},
+    {"scene":7,"start":187.755,"end":192.009,"lines":["Sozialleistungen konnten mindestens","eine Woche nicht ausgezahlt werden."]},
+    {"scene":7,"start":192.059,"end":198.348,"lines":["Nach dem Angriff auf die Südwestfalen-IT","waren Online-Dienste für rund 1,7"]},
+    {"scene":7,"start":198.398,"end":204.466,"lines":["Millionen Einwohner erst nach etwa neun","Monaten wieder weitgehend verfügbar."]},
+    {"scene":7,"start":204.516,"end":209.517,"lines":["Für die Menschen in Herne hieße das:","Urkunden und Zulassungen verzögern sich,"]},
+    {"scene":7,"start":209.567,"end":214.331,"lines":["Leistungen kommen später an, die","Verwaltung ist kaum erreichbar."]},
+    {"scene":8,"start":239.9,"end":243.969,"lines":["Nach einem Angriff steht","die Verwaltungsspitze in der Verantwortung."]},
+    {"scene":8,"start":244.019,"end":247.971,"lines":["Der Vorfall muss der Datenschutzaufsicht","gemeldet werden."]},
+    {"scene":8,"start":248.021,"end":252.115,"lines":["Das BSI warnt seit Jahren","vor der hohen Bedrohungslage,"]},
+    {"scene":8,"start":252.165,"end":255.363,"lines":["die durch Künstliche Intelligenz weiter steigt."]},
+    {"scene":8,"start":255.413,"end":259.868,"lines":["Die Frage, ob die Schwachstellen bekannt","waren, wäre mit Ja zu beantworten:"]},
+    {"scene":8,"start":259.918,"end":263.603,"lines":["Sie sind in der aktuellen","Sicherheitsprüfung dokumentiert."]},
+    {"scene":9,"start":268.4,"end":272.932,"lines":["Informationssicherheit ist eine","Aufgabe der Verwaltungsleitung."]},
+    {"scene":9,"start":272.986,"end":277.487,"lines":["Im IT-Grundschutz ist die Übernahme","der Gesamtverantwortung durch die Leitung"]},
+    {"scene":9,"start":277.537,"end":282.816,"lines":["eine Basis-Anforderung,","die im Überwachungsaudit vollständig geprüft wird."]},
+    {"scene":9,"start":282.866,"end":289.19,"lines":["Die NIS-2-Richtlinie der EU schreibt","dieselbe Verantwortung gesetzlich fest:"]},
+    {"scene":9,"start":289.24,"end":293.741,"lines":["seit Dezember 2025 im BSI-Gesetz,"]},
+    {"scene":9,"start":293.791,"end":301.876,"lines":["seit Januar 2026 im Informationssicherheitsgesetz","NRW für die Landesverwaltung."]},
+    {"scene":9,"start":301.93,"end":305.29,"lines":["Für Kommunen gelten beide nicht unmittelbar."]},
+    {"scene":9,"start":305.34,"end":308.936,"lines":["Sie zeigen aber, was von einer","Verwaltungsleitung erwartet wird:"]},
+    {"scene":9,"start":308.986,"end":314.667,"lines":["Maßnahmen billigen, ihre Umsetzung überwachen","und sich regelmäßig schulen lassen."]},
+    {"scene":10,"start":316.4,"end":318.208,"lines":["Die Maßnahmen sind geplant,"]},
+    {"scene":10,"start":318.258,"end":324.392,"lines":["umsetzen lassen sie sich aber nur mit ausreichenden","Mitteln und qualifiziertem Personal."]},
+    {"scene":10,"start":324.655,"end":328.61,"lines":["Investitionen sind nötig","für den Ersatz veralteter Systeme,"]},
+    {"scene":10,"start":328.66,"end":333.289,"lines":["einen geschützten Zugang zur IT-Verwaltung","mit zweiter Bestätigung,"]},
+    {"scene":10,"start":333.339,"end":338.026,"lines":["eine zentrale Erkennung von Angriffen","und ein zweites Sicherungssystem."]},
+    {"scene":10,"start":338.076,"end":342.217,"lines":["Ebenso wichtig sind Fachkräfte:","Server müssen laufend gewartet,"]},
+    {"scene":10,"start":342.267,"end":347.937,"lines":["Updates eingespielt und Sicherheitseinstellungen","regelmäßig geprüft werden."]},
+    {"scene":10,"start":347.991,"end":355.217,"lines":["Eine Überwachung schützt nur, wenn jemand die","Meldungen auswertet und im Ernstfall sofort reagiert."]},
+    {"scene":11,"start":361.4,"end":363.925,"lines":["So stellt sich die Lage heute dar."]},
+    {"scene":11,"start":363.975,"end":368.845,"lines":["Alle gezeigten Schwachstellen wurden in der","aktuellen Sicherheitsprüfung festgestellt."]},
+    {"scene":11,"start":368.895,"end":372.967,"lines":["Ohne zusätzliche Mittel und Personal","bleibt dieser Zustand bestehen"]},
+    {"scene":11,"start":373.017,"end":378.153,"lines":["und mit ihm das Risiko für die Stadt","und ihre Bürgerinnen und Bürger."]},
+    {"scene":12,"start":391.4,"end":394.586,"lines":["Für die Zertifizierung ist bereits viel erreicht."]},
+    {"scene":12,"start":394.636,"end":400.577,"lines":["Die Referenzdokumente sind überarbeitet,","die Grundschutz-Checks aller Zielobjekte ausgewertet,"]},
+    {"scene":12,"start":400.627,"end":405.276,"lines":["Risikoanalyse und Realisierungsplan","liegen im Entwurf vor."]},
+    {"scene":12,"start":405.326,"end":408.156,"lines":["Für die Umsetzung sind fünfzehn Leitfäden,"]},
+    {"scene":12,"start":408.206,"end":412.6,"lines":["dreizehn Härtungslisten und eine","Entscheidungsvorlage vorbereitet."]},
+    {"scene":12,"start":412.65,"end":415.351,"lines":["Was zu tun ist, ist damit beschrieben."]},
+    {"scene":12,"start":415.401,"end":421.11,"lines":["Offen sind die Entscheidungen der Verwaltungsleitung,","Budget und Personal für die Umsetzung,"]},
+    {"scene":12,"start":421.16,"end":426.485,"lines":["die Übernahme der verbleibenden Risiken und die","Behebung der Abweichungen aus dem letzten Audit,"]},
+    {"scene":12,"start":426.535,"end":429.639,"lines":["rechtzeitig vor dem Überwachungsaudit."]}
+  ],
+};
+/* TIMELINE-END */
+
+const SCENES = SZENEN.map(z => {
+  const t = TIMELINE && TIMELINE.szenen[z.n];
+  return { n: z.n, title: z.title, start: t ? t.start : z.nominal[0], end: t ? t.end : z.nominal[1], entwurf: t ? t.entwurf : z.nominal[1] - z.nominal[0], anker: t ? t.anker : [], tail: t ? t.tail : 1 };
+});
+const TOTAL = SCENES[SCENES.length - 1].end;   // Sekunden
+
+// Bild-Ton-Abgleich: tatsächliche Szenenzeit x → Entwurfszeit (vor dem ersten Anker in Echtzeit, dazwischen linear, danach mit Steigung tail)
+function toDesign(sc, x) {
+  const P = sc.anker;
+  if (!P || !P.length) return x;
+  if (x <= P[0][1]) return P[0][0] + (x - P[0][1]);
+  for (let i = 1; i < P.length; i++) if (x <= P[i][1]) return P[i - 1][0] + (P[i][0] - P[i - 1][0]) * (x - P[i - 1][1]) / (P[i][1] - P[i - 1][1]);
+  const L = P[P.length - 1];
+  return L[0] + (x - L[1]) * sc.tail;
+}
+// Entwurfszeit d in Szene n → absolute Zeit im Video
+function toActual(n, d) {
+  const sc = SCENES.find(z => z.n === n), P = sc.anker;
+  let x = d;
+  if (P && P.length) {
+    if (d <= P[0][0]) x = P[0][1] + (d - P[0][0]);
+    else {
+      x = null;
+      for (let i = 1; i < P.length; i++) if (d <= P[i][0]) { x = P[i - 1][1] + (P[i][1] - P[i - 1][1]) * (d - P[i - 1][0]) / (P[i][0] - P[i - 1][0]); break; }
+      if (x === null) { const L = P[P.length - 1]; x = L[1] + (d - L[0]) / sc.tail; }
+    }
+  }
+  return sc.start + x;
+}
+
+// Sprechertext wörtlich aus dem Drehbuch V1_4 (Quelle für Untertitel, SRT und Prüfung)
 const SPRECHERTEXT = {
   1: "Ausweise, Urkunden, Sozialleistungen, Kitaplätze, Baugenehmigungen und die Gehälter der Beschäftigten: Fast jede Leistung der Stadtverwaltung hängt heute von funktionierender IT ab.",
   2: "Ein typischer Angriff beginnt mit einer gefälschten E-Mail, die wie eine gewöhnliche Rechnung aussieht. Solche Nachrichten erreichen jede Verwaltung täglich, und einzelne Klicks lassen sich nie ganz verhindern. Entscheidend ist, wie weit ein Angreifer danach kommt.",
@@ -90,10 +237,16 @@ const SPRECHERTEXT = {
   5: "Einige Systeme am Übergang zum Internet erhalten vom Hersteller keine Sicherheitsupdates mehr. Viele Server laufen ohne die empfohlenen Schutzeinstellungen. Und die Trennung zwischen den Bereichen im Netz ist noch unvollständig. Ein Angreifer kann sich deshalb leichter von einem System zum nächsten bewegen.",
   6: "Erst im letzten Schritt wird der Angriff sichtbar: Die Daten werden verschlüsselt, Kopien sind bereits abgeflossen, es folgt eine Lösegeldforderung. Für die Wiederherstellung kommt es dann auf die Rückfallebene an. Die Datensicherung läuft ohne zweites System, für Teile der IT fehlen Notfallpläne, und manche Unterlagen liegen auf genau den Systemen, die dann gesperrt sind.",
   7: "Vergleichbare Fälle zeigen, welche Folgen daraus entstehen. Anhalt-Bitterfeld rief den Katastrophenfall aus und beendete ihn erst nach rund sieben Monaten; der Aufwand lag nach Angaben des Landkreises bei rund 2,5 Millionen Euro. Sozialleistungen konnten mindestens eine Woche nicht ausgezahlt werden. Nach dem Angriff auf die Südwestfalen-IT waren Online-Dienste für rund 1,7 Millionen Einwohner erst nach etwa neun Monaten wieder weitgehend verfügbar. Für die Menschen in Herne hieße das: Urkunden und Zulassungen verzögern sich, Leistungen kommen später an, die Verwaltung ist kaum erreichbar.",
-  8: "Die Schwachstellen sind bekannt, die Maßnahmen geplant: ein geschützter Zugang zur IT-Verwaltung mit zweiter Bestätigung, Rechte nach Aufgaben, einheitlich abgesicherte Server, der Ersatz veralteter Systeme, eine zentrale Erkennung von Angriffen und eine geübte Notfallvorsorge. Für mehrere dieser Schritte braucht es Entscheidungen der Verwaltungsführung.",
+  8: "Nach einem Angriff steht die Verwaltungsspitze in der Verantwortung. Der Vorfall muss der Datenschutzaufsicht gemeldet werden. Das BSI warnt seit Jahren vor der hohen Bedrohungslage, die durch Künstliche Intelligenz weiter steigt. Die Frage, ob die Schwachstellen bekannt waren, wäre mit Ja zu beantworten: Sie sind in der aktuellen Sicherheitsprüfung dokumentiert.",
+  9: "Informationssicherheit ist eine Aufgabe der Verwaltungsleitung. Im IT-Grundschutz ist die Übernahme der Gesamtverantwortung durch die Leitung eine Basis-Anforderung, die im Überwachungsaudit vollständig geprüft wird. Die NIS-2-Richtlinie der EU schreibt dieselbe Verantwortung gesetzlich fest: seit Dezember 2025 im BSI-Gesetz, seit Januar 2026 im Informationssicherheitsgesetz NRW für die Landesverwaltung. Für Kommunen gelten beide nicht unmittelbar. Sie zeigen aber, was von einer Verwaltungsleitung erwartet wird: Maßnahmen billigen, ihre Umsetzung überwachen und sich regelmäßig schulen lassen.",
+  10: "Die Maßnahmen sind geplant, umsetzen lassen sie sich aber nur mit ausreichenden Mitteln und qualifiziertem Personal. Investitionen sind nötig für den Ersatz veralteter Systeme, einen geschützten Zugang zur IT-Verwaltung mit zweiter Bestätigung, eine zentrale Erkennung von Angriffen und ein zweites Sicherungssystem. Ebenso wichtig sind Fachkräfte: Server müssen laufend gewartet, Updates eingespielt und Sicherheitseinstellungen regelmäßig geprüft werden. Eine Überwachung schützt nur, wenn jemand die Meldungen auswertet und im Ernstfall sofort reagiert.",
+  11: "So stellt sich die Lage heute dar. Alle gezeigten Schwachstellen wurden in der aktuellen Sicherheitsprüfung festgestellt. Ohne zusätzliche Mittel und Personal bleibt dieser Zustand bestehen und mit ihm das Risiko für die Stadt und ihre Bürgerinnen und Bürger.",
+  12: "Für die Zertifizierung ist bereits viel erreicht. Die Referenzdokumente sind überarbeitet, die Grundschutz-Checks aller Zielobjekte ausgewertet, Risikoanalyse und Realisierungsplan liegen im Entwurf vor. Für die Umsetzung sind fünfzehn Leitfäden, dreizehn Härtungslisten und eine Entscheidungsvorlage vorbereitet. Was zu tun ist, ist damit beschrieben. Offen sind die Entscheidungen der Verwaltungsleitung, Budget und Personal für die Umsetzung, die Übernahme der verbleibenden Risiken und die Behebung der Abweichungen aus dem letzten Audit, rechtzeitig vor dem Überwachungsaudit.",
 };
+// Fragen der Presse (Szene 8), wörtlich aus dem Drehbuch V1_4; erscheinen als Sprechblasen und als Untertitel
+const PRESSEFRAGEN = ["Wie konnte es dazu kommen?", "Waren die Schwachstellen bekannt?", "Warum wurde nicht gehandelt, obwohl die Bedrohung – auch durch KI – seit Jahren bekannt ist?", "Was passiert mit den Daten der Bürgerinnen und Bürger?"];
 
-// Alle sichtbaren Texte wörtlich aus dem Drehbuch V1.2 (Einblendungen, Beschriftungen, Kacheln)
+// Alle sichtbaren Texte wörtlich aus dem Drehbuch V1_4 (Einblendungen, Beschriftungen, Kacheln, Marke)
 const TEXTE = {
   titel: "Ein ganz normaler Montag",
   unterzeile: "Was ein Cyberangriff für Herne bedeuten würde",
@@ -127,19 +280,72 @@ const TEXTE = {
   vignette_kindergeld: "Kindergeld wartet",
   vignette_wohngeld: "Wohngeld wartet",
   buergerbuero: "Bürgerbüro",
-  massnahmen_titel: "Maßnahmen",
-  massnahme_1: "Geschützter Zugang zur IT-Verwaltung mit zweiter Bestätigung",
-  massnahme_2: "Rechte nach Aufgaben",
-  massnahme_3: "Server einheitlich absichern",
-  massnahme_4: "Veraltete Systeme ersetzen",
-  massnahme_5: "Angriffe zentral erkennen",
-  massnahme_6: "Notfallvorsorge aufbauen und üben",
   schluss_titel: "Gemeinsam für ein sicheres Herne",
   schluss_klein: "Stadt Herne · Informationssicherheit · Stand September 2026",
   woche_1: "Woche 1",
   woche_2: "Woche 2",
   woche_3: "Woche 3",
   woche_4: "Woche 4",
+  presse_1: "Wie konnte es dazu kommen?",
+  presse_2: "Waren die Schwachstellen bekannt?",
+  presse_3: "Warum wurde nicht gehandelt, obwohl die Bedrohung – auch durch KI – seit Jahren bekannt ist?",
+  presse_4: "Was passiert mit den Daten der Bürgerinnen und Bürger?",
+  schlagzeile_1: "Cyberangriff legt Stadtverwaltung lahm",
+  schlagzeile_2: "Bürgerdaten im Netz aufgetaucht",
+  schlagzeile_3: "Waren die Mängel bekannt?",
+  tafel_1: "IT-Grundschutz: Gesamtverantwortung der Leitung",
+  tafel_2: "NIS-2 / BSI-Gesetz: Informationssicherheit als Leitungsaufgabe",
+  tafel_3: "InfoSiG NRW: NIS-2 für die Landesverwaltung",
+  symbol_billigen: "billigen",
+  symbol_ueberwachen: "überwachen",
+  symbol_schulen: "schulen",
+  spalte_investitionen: "Investitionen",
+  spalte_personal: "Personal",
+  invest_1: "Ersatz veralteter Systeme",
+  invest_2: "Geschützter Zugang zur IT-Verwaltung mit zweiter Bestätigung",
+  invest_3: "Zentrale Erkennung von Angriffen",
+  invest_4: "Zweites Sicherungssystem",
+  personal_1: "Rechte nach Aufgaben neu ordnen",
+  personal_2: "Server einheitlich absichern und warten",
+  personal_3: "Updates und Sicherheitsprüfungen",
+  personal_4: "Meldungen auswerten und reagieren",
+  personal_5: "Notfälle üben",
+  warn_1: "IT-Verwaltung aus der normalen Arbeitsumgebung",
+  warn_2: "Intern keine zweite Bestätigung bei der Anmeldung",
+  warn_3: "Zu viele Konten mit weitreichenden Rechten",
+  warn_4: "Systeme ohne Sicherheitsupdates",
+  warn_5: "Server ohne empfohlene Schutzeinstellungen",
+  warn_6: "Trennung im Netz unvollständig",
+  warn_7: "Übertragung nicht durchgängig verschlüsselt",
+  warn_8: "Keine zentrale Erkennung von Angriffen",
+  warn_9: "Keine systematische Suche nach Schwachstellen",
+  warn_10: "Datensicherung ohne zweites System",
+  warn_11: "Notfallpläne fehlen teilweise",
+  warn_12: "Dokumentation lückenhaft, teils auf den Systemen selbst",
+  warn_13: "Verbindliche Regeln fehlen teilweise",
+  warn_14: "USB-Anschlüsse nicht kontrolliert",
+  warn_15: "Änderungen nicht durchgängig nachvollziehbar",
+  spalte_erreicht: "Erreicht",
+  erreicht_1: "Strukturanalyse, Schutzbedarfsfeststellung und Modellierung überarbeitet",
+  erreicht_2: "Grundschutz-Checks aller Zielobjekte ausgewertet",
+  erreicht_3: "Risikoanalyse und Realisierungsplan mit 32 Arbeitspaketen im Entwurf",
+  erreicht_4: "Richtlinien im Entwurf, internes Auditprogramm aufgestellt",
+  spalte_vorbereitet: "Vorbereitet",
+  vorbereitet_1: "15 Umsetzungsleitfäden mit Schritt-für-Schritt-Anweisungen",
+  vorbereitet_2: "13 Härtungslisten für die Server",
+  vorbereitet_3: "Entscheidungsvorlage mit 22 Entscheidungen",
+  vorbereitet_4: "Prüfschema für den technischen Review",
+  vorbereitet_5: "Bereinigungsliste für die Grundschutz-Checks",
+  spalte_offen: "Offen – nächste Schritte",
+  offen_1: "Entscheidungen der Verwaltungsleitung, zwölf davon vor dem Überwachungsaudit",
+  offen_2: "Budget und Personal für die Umsetzung",
+  offen_3: "Übernahme der verbleibenden Risiken durch die Leitung",
+  offen_4: "Richtlinien in Kraft setzen",
+  offen_5: "Maßnahmen umsetzen und technisch prüfen",
+  offen_6: "77 Abweichungen aus dem Audit 2025 beheben",
+  offen_7: "Überwachungsaudit",
+  offene_anforderungen: "Offene Anforderungen laut Realisierungsplan: 966 Standard-Teilanforderungen; 264 Basis-Teilanforderungen bisher nur durch Musterantworten belegt.",
+  marke_zeile: "Unser zuverlässiger Partner für IT- und Informationssicherheit",
 };
 
 // Bildbestandteile außerhalb des Drehbuchs: laut Auftrag erlaubt (Regel 3) bzw. Verkehrszeichen
@@ -149,64 +355,8 @@ const TEXTE_AUSNAHMEN = {
   haltestelle: 'H',                                 // Haltestellenzeichen
 };
 
-// Untertitel-Cues: Zeiten absolut (s), Zeilen wortgleich aus SPRECHERTEXT (max. 2 Zeilen)
-const CUES = [
-  // Szene 1 – Eine Stadt, die funktioniert (0:12–0:32)
-  { scene: 1, start: 13.0, end: 17.0, lines: ["Ausweise, Urkunden, Sozialleistungen, Kitaplätze,"] },
-  { scene: 1, start: 17.2, end: 21.4, lines: ["Baugenehmigungen und die Gehälter der Beschäftigten:"] },
-  { scene: 1, start: 21.8, end: 28.2, lines: ["Fast jede Leistung der Stadtverwaltung", "hängt heute von funktionierender IT ab."] },
-  // Szene 2 – Der Einstieg (0:32–0:56)
-  { scene: 2, start: 33.0, end: 37.0, lines: ["Ein typischer Angriff beginnt", "mit einer gefälschten E-Mail,"] },
-  { scene: 2, start: 37.2, end: 40.2, lines: ["die wie eine gewöhnliche Rechnung aussieht."] },
-  { scene: 2, start: 41.0, end: 44.8, lines: ["Solche Nachrichten erreichen", "jede Verwaltung täglich,"] },
-  { scene: 2, start: 45.0, end: 49.0, lines: ["und einzelne Klicks lassen sich", "nie ganz verhindern."] },
-  { scene: 2, start: 50.0, end: 54.4, lines: ["Entscheidend ist, wie weit", "ein Angreifer danach kommt."] },
-  // Szene 3 – Zugang zu zentralen Systemen (0:56–1:28); „erreicht damit zentrale Systeme“ fällt auf die Schlüsseldrehung am Serverraum
-  { scene: 3, start: 57.6, end: 65.4, lines: ["In Herne lässt sich die IT nicht nur von wenigen,", "besonders geschützten Arbeitsplätzen aus verwalten."] },
-  { scene: 3, start: 66.0, end: 68.4, lines: ["Intern reicht dafür ein Passwort,"] },
-  { scene: 3, start: 68.6, end: 73.2, lines: ["eine zweite Bestätigung bei der Anmeldung", "ist noch nicht eingeführt."] },
-  { scene: 3, start: 73.4, end: 79.4, lines: ["Zudem haben mehr Konten weitreichende Rechte,", "als für die jeweiligen Aufgaben nötig wäre."] },
-  { scene: 3, start: 79.8, end: 82.0, lines: ["Wer ein solches Konto übernimmt,"] },
-  { scene: 3, start: 82.2, end: 84.8, lines: ["erreicht damit zentrale Systeme."] },
-  // Szene 4 – Unbemerkt (1:28–1:52)
-  { scene: 4, start: 89.0, end: 94.0, lines: ["Verdächtige Vorgänge werden nicht zentral", "gesammelt und ausgewertet."] },
-  { scene: 4, start: 94.4, end: 100.0, lines: ["Ein Angreifer kann sich deshalb über Wochen", "im Netz bewegen, ohne aufzufallen."] },
-  { scene: 4, start: 100.6, end: 106.2, lines: ["Auch im Landkreis Anhalt-Bitterfeld begann", "der Angriff nach späteren Auswertungen"] },
-  { scene: 4, start: 106.4, end: 109.0, lines: ["Wochen vor seiner Entdeckung."] },
-  // Szene 5 – Ausbreitung (1:52–2:18)
-  { scene: 5, start: 113.0, end: 119.4, lines: ["Einige Systeme am Übergang zum Internet erhalten", "vom Hersteller keine Sicherheitsupdates mehr."] },
-  { scene: 5, start: 120.0, end: 124.4, lines: ["Viele Server laufen ohne", "die empfohlenen Schutzeinstellungen."] },
-  { scene: 5, start: 125.0, end: 130.0, lines: ["Und die Trennung zwischen den Bereichen", "im Netz ist noch unvollständig."] },
-  { scene: 5, start: 130.4, end: 136.0, lines: ["Ein Angreifer kann sich deshalb leichter", "von einem System zum nächsten bewegen."] },
-  // Szene 6 – Der Angriff wird sichtbar (2:18–2:50)
-  { scene: 6, start: 139.0, end: 142.6, lines: ["Erst im letzten Schritt wird der Angriff sichtbar:"] },
-  { scene: 6, start: 143.0, end: 147.4, lines: ["Die Daten werden verschlüsselt,", "Kopien sind bereits abgeflossen,"] },
-  { scene: 6, start: 147.6, end: 150.0, lines: ["es folgt eine Lösegeldforderung."] },
-  { scene: 6, start: 150.6, end: 155.2, lines: ["Für die Wiederherstellung kommt es dann", "auf die Rückfallebene an."] },
-  { scene: 6, start: 155.6, end: 158.8, lines: ["Die Datensicherung läuft ohne zweites System,"] },
-  { scene: 6, start: 159.0, end: 161.8, lines: ["für Teile der IT fehlen Notfallpläne,"] },
-  { scene: 6, start: 162.2, end: 167.6, lines: ["und manche Unterlagen liegen auf genau", "den Systemen, die dann gesperrt sind."] },
-  // Szene 7 – Die Folgen (2:50–3:44)
-  { scene: 7, start: 171.0, end: 175.2, lines: ["Vergleichbare Fälle zeigen,", "welche Folgen daraus entstehen."] },
-  { scene: 7, start: 175.6, end: 182.2, lines: ["Anhalt-Bitterfeld rief den Katastrophenfall aus", "und beendete ihn erst nach rund sieben Monaten;"] },
-  { scene: 7, start: 182.4, end: 187.4, lines: ["der Aufwand lag nach Angaben des Landkreises", "bei rund 2,5 Millionen Euro."] },
-  { scene: 7, start: 188.0, end: 193.0, lines: ["Sozialleistungen konnten mindestens", "eine Woche nicht ausgezahlt werden."] },
-  { scene: 7, start: 193.6, end: 200.2, lines: ["Nach dem Angriff auf die Südwestfalen-IT waren", "Online-Dienste für rund 1,7 Millionen Einwohner"] },
-  { scene: 7, start: 200.4, end: 204.4, lines: ["erst nach etwa neun Monaten", "wieder weitgehend verfügbar."] },
-  { scene: 7, start: 205.4, end: 208.0, lines: ["Für die Menschen in Herne hieße das:"] },
-  { scene: 7, start: 208.4, end: 211.4, lines: ["Urkunden und Zulassungen verzögern sich,"] },
-  { scene: 7, start: 211.8, end: 214.0, lines: ["Leistungen kommen später an,"] },
-  { scene: 7, start: 214.4, end: 217.0, lines: ["die Verwaltung ist kaum erreichbar."] },
-  // Szene 8 – Maßnahmen (3:44–4:18); Schlusstafel ab 4:12 ohne Sprechertext
-  { scene: 8, start: 225.0, end: 228.8, lines: ["Die Schwachstellen sind bekannt,", "die Maßnahmen geplant:"] },
-  { scene: 8, start: 229.2, end: 233.8, lines: ["ein geschützter Zugang zur IT-Verwaltung", "mit zweiter Bestätigung,"] },
-  { scene: 8, start: 234.0, end: 235.8, lines: ["Rechte nach Aufgaben,"] },
-  { scene: 8, start: 236.0, end: 238.4, lines: ["einheitlich abgesicherte Server,"] },
-  { scene: 8, start: 238.6, end: 240.8, lines: ["der Ersatz veralteter Systeme,"] },
-  { scene: 8, start: 241.0, end: 243.6, lines: ["eine zentrale Erkennung von Angriffen"] },
-  { scene: 8, start: 243.8, end: 246.2, lines: ["und eine geübte Notfallvorsorge."] },
-  { scene: 8, start: 246.6, end: 252.0, lines: ["Für mehrere dieser Schritte braucht es", "Entscheidungen der Verwaltungsführung."] },
-];
+// Untertitel: Zeiten und Zeilen aus den Zeitmarken der Sprachaufnahme (TIMELINE), Zeilen wortgleich aus SPRECHERTEXT bzw. PRESSEFRAGEN
+const CUES = TIMELINE ? TIMELINE.cues : [];
 
 // Synchronpunkte Bild ↔ Sprechertext (Prüfung in check.mjs)
 const SYNC = [];
@@ -733,6 +883,33 @@ function SubtitleSVG(t) {
   return G({ opacity: a }, s);
 }
 
+
+// SITS-Marke oben rechts: Logo in Originalgröße (nicht skaliert), darunter die Zeile; verschwindet mit der Schlusstafel
+// (dort steht das Logo mit derselben Zeile mittig unter dem Stadt-Herne-Text).
+const MARKE = { rechts: 1896, oben: 24, pad: 10, schrift: 14, lh: 17, maxB: 232 };
+function markeBlock(x, y, o = {}) {           // Logo mit der Zeile darunter; x = rechte Kante (anchor end) bzw. Mitte (anchor middle)
+  const mitte = o.anchor === 'middle';
+  const lines = wrapLines(TEXTE.marke_zeile, MARKE.schrift, 400, MARKE.maxB);
+  const lx = mitte ? x - LOGO.w / 2 : x - LOGO.w;
+  let g = `<image href="${LOGO.uri}" x="${N(lx)}" y="${N(y)}" width="${LOGO.w}" height="${LOGO.h}"/>`;
+  lines.forEach((l, i) => { g += Txt(x, y + LOGO.h + 8 + MARKE.schrift + i * MARKE.lh, l, { size: MARKE.schrift, fill: C.text2, anchor: mitte ? 'middle' : 'end', k: 'marke_zeile', i }); });
+  return { g, breite: Math.max(LOGO.w, ...lines.map(l => measure(l, MARKE.schrift))), hoehe: LOGO.h + 8 + MARKE.schrift + (lines.length - 1) * MARKE.lh + 5 };
+}
+function markeRahmen() {                      // Lage der Marke auf dem Bild (für Prüfung und Layout)
+  const lines = wrapLines(TEXTE.marke_zeile, MARKE.schrift, 400, MARKE.maxB);
+  const b = Math.max(LOGO.w, ...lines.map(l => measure(l, MARKE.schrift))) + 2 * MARKE.pad;
+  const h = LOGO.h + 8 + MARKE.schrift + (lines.length - 1) * MARKE.lh + 5 + 2 * MARKE.pad;
+  return { x: MARKE.rechts + MARKE.pad - b, y: MARKE.oben - MARKE.pad, w: b, h };
+}
+function BrandSVG(t) {
+  const start = TOTAL - SCHLUSS_DAUER;
+  const op = 1 - ez(t, start - 0.4, start + 0.2);
+  if (op < 0.01) return '';
+  const r = markeRahmen();
+  const m = markeBlock(MARKE.rechts, MARKE.oben);
+  return G({ opacity: N(op) }, Rect(r.x, r.y, r.w, r.h, '#FFFFFF', { rx: 12, opacity: 0.88 }) + m.g);
+}
+
 /* =====================================================================
    8  FARBSTIMMUNG (je Szene): Sättigung, Helligkeit, Kontrast, kühle Tönung
    ===================================================================== */
@@ -1117,7 +1294,7 @@ const S3L = {
   doorW: 180, doorH: 370,
 };
 const deskHook = i => [S3L.desks[i] + 130 + 92, 546];
-SYNC.push({ label: 'Szene 3: Schlüssel dreht im Schloss des Serverraums', t: 56 + S3L.doors[2].unlock, phrase: 'erreicht damit zentrale Systeme' });
+SYNC.push({ label: 'Szene 3: Schlüssel dreht im Schloss des Serverraums', szene: 3, entwurf: S3L.doors[2].unlock, t: toActual(3, S3L.doors[2].unlock), phrase: 'erreicht damit zentrale Systeme' });
 function Desk(x, lt, i, keyOn, glow) {
   const fy = 815, top = 664;
   let s = '';
@@ -1433,16 +1610,17 @@ const S1 = {
       base += Rect(996, 742, 908, 338, '#6CCBF2', { opacity: N(0.08 + 0.08 * (0.5 + 0.5 * Math.sin(lt * 1.5))) });
       r += G({ opacity: N(reveal) }, base);
     }
+    let leute = '';
     if (reveal < 0.999) {
-      let pz = Use('s1-plaza');
+      r += G({ opacity: N(1 - reveal) }, Use('s1-plaza'));
       const ppl = [[700, 690, 0.42, 1, 20, '#3D6A8C', C.skin1], [1040, 668, 0.36, -1, 16, '#7A5C8E', C.skin3], [1300, 700, 0.44, 1, 18, '#4F6B33', C.skin2], [1720, 676, 0.38, -1, 17, '#B3563F', C.skin4], [2050, 720, 0.46, -1, 21, '#2B3A45', C.skin1]];
       ppl.sort((a, b) => a[1] - b[1]).forEach(([x0, y0, sc, dir, v, col, skin], i) => {
-        pz += Person({ x: x0 + dir * v * (lt + 12), y: y0, s: sc, dir, walk: 1, phase: stepPhase(v * (lt + 12), sc) + i, top: col, pants: i % 2 ? C.black : C.jeans, hair: i % 2 ? C.hairDark : C.hairBrown, skin });
+        leute += Person({ x: x0 + dir * v * (lt + 12), y: y0, s: sc, dir, walk: 1, phase: stepPhase(v * (lt + 12), sc) + i, top: col, pants: i % 2 ? C.black : C.jeans, hair: i % 2 ? C.hairDark : C.hairBrown, skin });
       });
-      r += G({ opacity: N(1 - reveal) }, pz);
     }
     r += Rect(260, 604, 2400, 24, '#D6C8B5', OL(2));
     r += Use('s1-rathaus') + Use('s1-green');
+    if (leute) r += G({ opacity: N(1 - reveal) }, leute);   // Passanten stehen vollständig vor dem Gebäude (Tiefensortierung), nicht dahinter
     w += G({ transform: `translate(${N(ox)} ${N(oy)}) scale(${N(k)})` }, r);
 
     // Linien und Symbole (Bildschirmkoordinaten)
@@ -2319,120 +2497,14 @@ function Flipchart(x, y, s, lt) {
   for (let i = 0; i < 3; i++) f += Check(-34, -58 + i * 40, 10, ez(lt, 0.6 + i * 0.5, 0.9 + i * 0.5)) + Rect(-16, -62 + i * 40, 58, 8, '#C9CFD2', { rx: 4 });
   return G({ transform: TR(x, y, s) }, f);
 }
-const S8 = {
-  n: 8,
-  items: [5.2, 10.0, 12.0, 14.6, 17.0, 19.8],     // Listenpunkt erscheint, wenn er gesprochen wird
-  stage: [[5.0, 9.8], [9.8, 11.9], [11.9, 14.5], [14.5, 16.9], [16.9, 19.7], [19.7, 23.3]],
-  defs() { return ''; },
-  mini(k, lt, u) {
-    // u = Zeit seit Beginn des Gegenbilds
-    let m = '';
-    if (k === 0) {        // gesicherter Eingang mit zweitem Schloss; offene Generalschlüssel verschwinden
-      for (let i = 0; i < 3; i++) {
-        const x = 90 + i * 130, y = 640;
-        m += Rect(x, y, 110, 10, C.deskTop, OL(2)) + Rect(x + 8, y + 10, 8, 80, C.deskSide) + Rect(x + 94, y + 10, 8, 80, C.deskSide) + Rect(x + 30, y - 58, 56, 40, C.monitor, { ...OL(2), rx: 3 }) + Rect(x + 34, y - 54, 48, 32, C.screen);
-        m += G({ opacity: N(1 - ez(u, 0.3 + i * 0.25, 0.9 + i * 0.25)) }, Key(x + 94, y - 60, 0.42, Math.sin(lt * 1.4 + i) * 5));
-      }
-      m += SecureDoor(640, 790, 250, 470, { second: ez(u, 1.0, 1.7, EASE.outBack), ok1: ez(u, 2.2, 2.6), ok2: ez(u, 2.9, 3.3) });
-      m += Check(1020, 330, 30, ez(u, 3.4, 3.8));
-    } else if (k === 1) { // jeder bekommt nur die Schlüssel, die er braucht
-      const cols = [C.zyan, '#8CC152', C.gold];
-      for (let i = 0; i < 3; i++) {
-        const x = 110 + i * 360;
-        m += SecureDoor(x, 700, 170, 340, { leaf: mix(cols[i], '#FFFFFF', 0.55) }) + Rect(x - 14, 346, 198, 12, cols[i], { rx: 4 });
-        const pOut = {};
-        m += Person({ x: x + 80, y: 880, s: 0.85, dir: 1, top: ['#6D8FB0', '#B77A8C', '#8FA36A'][i], pants: C.black, hair: [C.hairDark, C.hairAuburn, C.hairGrey][i], hairStyle: ['short', 'long', 'bald'][i], skin: [C.skin3, C.skin1, C.skin2][i], arms: { f: { sh: 60, el: 30 } }, out: pOut });
-        if (pOut.handF) m += Key(pOut.handF[0] + 6, pOut.handF[1] - 6, 0.5, -30, { gold: cols[i] });
-        m += Check(x + 85, 300, 24, ez(u, 0.5 + i * 0.35, 0.8 + i * 0.35));
-      }
-    } else if (k === 2) { // Schlösser an allen Türen, einheitlich eingebaut
-      for (let i = 0; i < 4; i++) m += OfficeDoor(90 + i * 270, 770, 180, 380, 0, { lock: 'none', newLock: ez(u, 0.3 + i * 0.35, 0.7 + i * 0.35, EASE.outBack), leaf: '#9E927F' }) + Check(180 + i * 270, 340, 22, ez(u, 0.6 + i * 0.35, 0.9 + i * 0.35));
-    } else if (k === 3) { // neue Eingangstür
-      m += G({ transform: 'translate(590 470) scale(0.95) translate(-960 -560)' }, BackEntrance(lt, { renew: ez(u, 0.4, 1.4), day: true }));
-      m += Check(900, 250, 30, ez(u, 1.5, 1.9));
-    } else if (k === 4) { // Alarmanlage leuchtet grün, mit Leitstelle verbunden
-      const on = ez(u, 0.3, 0.9);
-      m += Rect(40, 60, 1130, 820, '#DDE3E1');
-      m += G({ transform: 'translate(170 250) scale(1.6)' }, AlarmPanel(0, 0, 1, on, lt));
-      m += CeilingCam(560, 200, 1.5, on);
-      m += Path('M258,522 L258,560 L800,560', 'none', { stroke: '#4F5B61', 'stroke-width': 6 });
-      const pu = (lt * 0.8) % 1;
-      if (on > 0.5) m += Circ(lerp(258, 800, pu), 560, 7, '#6EE08E');
-      m += Leitstelle(900, 560, 1.3, on);
-    } else {             // zweites Sicherungssystem, Notfallordner im zweiten Gebäude, Team übt
-      m += BackupUnit(70, 330, 0.85, 1) + G({ opacity: N(ez(u, 0.2, 0.8)) }, BackupUnit(240, 330, 0.85, 1)) + GreenGlow(312, 460, 60, bump(u, 1.0, 0.6));
-      m += G({ transform: 'translate(520 300)' }, Rect(0, 0, 170, 130, '#E7DCCD', OL(3)) + Path('M-14,4 L85,-56 L184,4 Z', C.roofRed, OL(3)) + Rect(64, 60, 42, 70, '#9C7040', OL(2.5)));
-      const fu = ez(u, 0.5, 1.5);
-      const fx = lerp(880, 605, fu), fy = lerp(620, 350, fu) - 90 * Math.sin(fu * Math.PI);
-      m += G({ transform: TR(fx, fy, 0.8, -10 * fu) }, Rect(-60, -22, 120, 44, '#C9A04A', { ...OL(2.5), rx: 4 }) + Rect(-52, -15, 104, 30, '#FFFFFF', OL(1.5)) + Txt(0, 8, TEXTE.notfallplan, { size: 20, weight: 700, fill: C.text, anchor: 'middle', k: 'notfallplan', i: 0 }));
-      m += Rect(780, 640, 300, 16, '#B98548', OL(2.5)) + Rect(800, 656, 14, 110, '#9C7040') + Rect(1046, 656, 14, 110, '#9C7040');
-      m += Rect(850, 610, 120, 30, '#C9A04A', { ...OL(2), rx: 3 });
-      m += Person({ x: 760, y: 860, s: 0.9, dir: 1, top: '#2E8C87', pants: '#5B666B', hair: C.hairDark, hairStyle: 'bun', skin: C.skin2, arms: { f: { sh: 110, el: 10 } } });
-      m += Person({ x: 1000, y: 860, s: 0.9, dir: -1, top: '#4F6B33', jacket: '#4F6B33', pants: C.jeans, hair: C.hairBrown, skin: C.skin1 });
-      m += Person({ x: 1110, y: 880, s: 0.92, dir: -1, top: '#F4B844', pants: C.jeans, hair: C.hairBrown, hairStyle: 'ponytail', skin: C.skin3 });
-      m += Flipchart(660, 610, 1.0, u);
-    }
-    return m;
-  },
-  draw(lt) {
-    let world = '', warn = '', ui = '';
-    const grade = gradeMix(GRADE.s5, GRADE.day, ez(lt, 0.5, 23.5, EASE.sine));
-    // 1) Rücklauf im Gebäudeschnitt; bleibt stehen, bis die Bühne deckend darüberliegt
-    const toStage = ez(lt, 4.2, 5.2, EASE.sine);
-    const city = ez(lt, 22.8, 23.8, EASE.sine);
-    if (toStage < 1) {
-      const cam = 'translate(960 510) scale(1.0) translate(-960 -500)';
-      world += G({ transform: cam }, Rect(-200, -200, 2400, 1500, '#2F3942') + CrossSection(26, { closeAll: ez(lt, 1.6, 3.6) }));
-      warn += G({ opacity: N(1 - toStage), transform: cam }, WaveFill(26, { backFn: t0 => ez(lt, 0.4 + (23.7 - t0) * 0.45, 1.2 + (23.7 - t0) * 0.45) }));
-    }
-    // 2) Gegenbilder auf der Bühne links, Einblendung „Maßnahmen“ rechts (bleibt stehen, bis die Innenstadt deckend darüberliegt)
-    const stageOp = toStage;
-    if (stageOp > 0.001 && city < 1) {
-      let st = Rect(0, 0, W, H, '#EEF2F0') + Rect(40, 60, 1130, 820, '#F7F9F8', { ...OL(3), rx: 22 });
-      let minis = '';
-      this.stage.forEach(([a, b], k) => {
-        const op = fadeIO(lt, a - 0.25, a + 0.2, b - 0.2, b + 0.25);
-        if (op > 0.001) minis += G({ opacity: N(op) }, this.mini(k, lt, lt - a));
-      });
-      st += `<clipPath id="s8-stage"><rect x="40" y="60" width="1130" height="820" rx="22"/></clipPath>` + G({ 'clip-path': 'url(#s8-stage)' }, minis);
-      world += G({ opacity: N(stageOp) }, st);
-    }
-    // 3) sonnige Innenstadt
-    if (city > 0.001) world += G({ opacity: N(city) }, S0.draw(Math.min(11.5, 6 + (lt - 23) * 0.5)).world);
-    // Einblendung „Maßnahmen“ (bleibt bis zur Schlusstafel)
-    const panelOp = ez(lt, 4.8, 5.3) * (1 - ez(lt, 27.4, 28.0, EASE.sine));
-    if (panelOp > 0.001) {
-      const px = 1200, py = 60, pw = 680, ph = 820;
-      let pnl = Rect(px, py, pw, ph, '#FFFFFF', { rx: 20, opacity: 0.96 }) + Rect(px, py + 26, 9, ph - 52, C.gruen, { rx: 4.5 });
-      pnl += Txt(px + 50, py + 82, TEXTE.massnahmen_titel, { size: 46, weight: 700, fill: C.text, k: 'massnahmen_titel', i: 0 });
-      let y = py + 160;
-      this.items.forEach((t0, i) => {
-        const key = `massnahme_${i + 1}`;
-        const lines = blockLines(key, 31, 400, pw - 150);
-        const a = ez(lt, t0, t0 + 0.5, EASE.out);
-        pnl += G({ opacity: N(a), transform: `translate(${N((1 - a) * 24)} 0)` }, Check(px + 66, y - 10, 22, 1) + TextBlock(key, px + 104, y, { size: 31, fill: C.text, lines, lh: 40 }));
-        y += lines.length * 40 + 36;
-      });
-      ui += G({ opacity: N(panelOp), filter: 'url(#fCardShadow)' }, pnl);
-    }
-    // 4) Schlusstafel 4:12–4:18
-    const endOp = ez(lt, 28.0, 28.6, EASE.sine);
-    if (endOp > 0.001) {
-      world += Rect(0, 0, W, H, '#FFFFFF', { opacity: N(0.45 * endOp) });
-      const t1 = TEXTE.schluss_titel, t2 = TEXTE.schluss_klein;
-      const cw = Math.max(measure(t1, 70, 700), measure(t2, 30)) + 160, chh = 230;
-      const inner = Txt(W / 2, 470, t1, { size: 70, weight: 700, fill: C.text, anchor: 'middle', k: 'schluss_titel', i: 0 }) + Txt(W / 2, 540, t2, { size: 30, fill: C.text2, anchor: 'middle', k: 'schluss_klein', i: 0 }) + Rect(W / 2 - 60, 568, 120, 6, C.gruen, { rx: 3 });
-      ui += G({ opacity: N(endOp), filter: 'url(#fCardShadow)' }, Rect((W - cw) / 2, 370, cw, chh, '#FFFFFF', { rx: 22, opacity: 0.96 }) + inner);
-      ui += Confidential(endOp);
-    }
-    return { world: world + (city < 1 ? G({ opacity: N(1 - city) }, Use('vignette')) : ''), warn, ui, grade };
-  },
-};
+// Platzhalter, bis die Szene gebaut ist (ruhige Fläche ohne Text)
+const SzeneLeer = n => ({ n, defs() { return ''; }, draw() { return { world: Rect(0, 0, W, H, C.flaeche) + Rect(0, 0, W, H, C.flaeche2, { opacity: 0.35 }), warn: '', ui: '', grade: GRADE.day }; } });
+const S8 = SzeneLeer(8), S9 = SzeneLeer(9), S10 = SzeneLeer(10), S11 = SzeneLeer(11), S12 = SzeneLeer(12);
 
 /* =====================================================================
    11  SZENENVERZEICHNIS
    ===================================================================== */
-const IMPL = { 0: S0, 1: S1, 2: S2, 3: S3, 4: S4, 5: S5, 6: S6, 7: S7, 8: S8 };
+const IMPL = { 0: S0, 1: S1, 2: S2, 3: S3, 4: S4, 5: S5, 6: S6, 7: S7, 8: S8, 9: S9, 10: S10, 11: S11, 12: S12 };
 const SCENE_OBJ = SCENES.map(sc => IMPL[sc.n]);
 
 /* =====================================================================
@@ -2450,6 +2522,8 @@ function makeSlot() {
   return { root, world, tint, warn, ui, cache: {} };
 }
 const SLOTS = [makeSlot(), makeSlot()];
+const brandLayer = (() => { const e = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); e.setAttribute('class', 'layer brand'); e.setAttribute('viewBox', `0 0 ${W} ${H}`); e.setAttribute('width', W); e.setAttribute('height', H); stage.appendChild(e); return e; })();
+const brandCache = { v: null };
 const subLayer = (() => { const e = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); e.setAttribute('class', 'layer sub'); e.setAttribute('viewBox', `0 0 ${W} ${H}`); e.setAttribute('width', W); e.setAttribute('height', H); stage.appendChild(e); return e; })();
 const subCache = { v: null };
 function setHTML(el, cache, key, html) { if (cache[key] !== html) { el.innerHTML = html; cache[key] = html; } }
@@ -2478,8 +2552,9 @@ function render(t) {
       return;
     }
     const sc = SCENES[idx];
-    const lt = t - sc.start;
-    const out = SCENE_OBJ[idx].draw(lt, sc.end - sc.start);
+    const ltA = t - sc.start;                 // tatsächliche Szenenzeit
+    const lt = toDesign(sc, ltA);             // Entwurfszeit der Bilder (folgen der Stimme)
+    const out = SCENE_OBJ[idx].draw(lt, sc.end - sc.start, ltA);
     // Überblendung: die spätere Szene blendet über die frühere
     let alpha = 1;
     if (k === 1) alpha = EASE.inOut(seg(t, sc.start - XFADE / 2, sc.start + XFADE / 2));
@@ -2493,6 +2568,7 @@ function render(t) {
     setStyle(slot.tint, slot.cache, 'tb', 'background', g.tint);
     setStyle(slot.tint, slot.cache, 'to', 'opacity', String(g.ta));
   });
+  setHTML(brandLayer, brandCache, 'v', BrandSVG(t));
   setHTML(subLayer, subCache, 'v', SubtitleSVG(t));
   return t;
 }
@@ -2567,14 +2643,15 @@ function setupPlayer() {
     else if (e.key === 'ArrowRight') seek(player.t + (e.shiftKey ? 1 : 1 / FPS));
     else if (e.key === 'ArrowLeft') seek(player.t - (e.shiftKey ? 1 : 1 / FPS));
     else if (e.key === 'Home') seek(0);
-    else if (/^[0-8]$/.test(e.key)) seek(SCENES[+e.key].start);
+    else if (/^[0-9]$/.test(e.key)) seek(SCENES[+e.key].start);
+    else if (e.key === 'PageDown' || e.key === 'PageUp') { const i = SCENES.findIndex(x => player.t >= x.start && player.t < x.end); seek(SCENES[Math.max(0, Math.min(SCENES.length - 1, i + (e.key === 'PageDown' ? 1 : -1)))].start); }
   });
   window.addEventListener('resize', fit);
   fit(); seek(0);
 }
 
 // Export-Schnittstelle
-window.VIDEO = { W, H, FPS, TOTAL, SCENES, CUES, SPRECHERTEXT, TEXTE, TEXTE_AUSNAHMEN, SYNC, frames: Math.round(TOTAL * FPS) };
+window.VIDEO = { W, H, FPS, TOTAL, SCENES, SZENEN, ANKER, TIMELINE, CUES, SPRECHERTEXT, PRESSEFRAGEN, TEXTE, TEXTE_AUSNAHMEN, SYNC, LOGO, MARKE, toActual, toDesign, SCHLUSS_DAUER, frames: Math.round(TOTAL * FPS) };
 window.renderFrame = t => render(t);
 (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => {
   init();

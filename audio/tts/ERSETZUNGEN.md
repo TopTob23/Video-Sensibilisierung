@@ -7,8 +7,10 @@ Grundlage: Drehbuch_Video_Angriffsszenario_Herne_V1_4.md. Die Untertitel bleiben
 | Drehbuch | Sprachtext | Regel | Szene (Anzahl) |
 |---|---|---|---|
 | IT | I-T | IT | 1, 3, 6 |
+| In Herne | In der Stadt | Ortsname | 3 |
 | 1,7 | eins Komma sieben | Dezimalzahl | 7 |
 | 2,5 | zwei Komma fünf | Dezimalzahl | 7 |
+| in Herne | in der Stadt | Ortsname | 7 |
 | Südwestfalen-IT | Südwestfalen-I-T | IT | 7 |
 | BSI | B-S-I | BSI | 8 |
 | KI | K-I | KI | 8 |
@@ -21,12 +23,13 @@ Grundlage: Drehbuch_Video_Angriffsszenario_Herne_V1_4.md. Die Untertitel bleiben
 | NRW | N-R-W | NRW | 9 |
 | IT-Verwaltung | I-T-Verwaltung | IT | 10 |
 
-Insgesamt 14 verschiedene Wörter, 16 Stellen.
+Insgesamt 16 verschiedene Wörter, 18 Stellen.
 
 ## Regeln
 
 | Regel | Ersetzung |
 |---|---|
+| Ortsname | „Stadt Herne“ → „Stadt“, „in Herne“ → „in der Stadt“ (die Stimme nennt den Ortsnamen nicht; Bild und Untertitel zeigen ihn) |
 | NIS-2 | Nis-zwei |
 | BSI | B-S-I |
 | NRW | N-R-W |

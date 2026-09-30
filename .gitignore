@@ -1,3 +1,4 @@
 node_modules/
 output/.segmente/
 output/**/.segmente/
+output/.ton/
