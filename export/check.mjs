@@ -13,8 +13,9 @@ import { execFileSync, spawnSync } from 'child_process';
 import { pathToFileURL } from 'url';
 import { loadPlaywright, openVideo, renderAt, ROOT, BASENAME, HTML } from './lib.mjs';
 import { findDrehbuch, parseDrehbuch } from './drehbuch.mjs';
-import { sprachtexte } from './tts-text.mjs';
-import { ERZAEHLER, EINSTELLUNGEN, MODELL, fragenStimmen } from './tts-lib.mjs';
+import { ERZAEHLER, EINSTELLUNGEN, MODELL, fragenStimmen, teile } from './tts-lib.mjs';
+import { ERGAENZUNGEN, ergaenzungenFuer } from './ergaenzungen.mjs';
+import { KONFIG } from './timeline.mjs';
 
 const argv = process.argv.slice(2);
 const opt = (name, def) => { const i = argv.indexOf('--' + name); return i >= 0 ? (argv[i + 1] && !argv[i + 1].startsWith('--') ? argv[i + 1] : true) : def; };
@@ -67,26 +68,43 @@ const browser = await chromium.launch();
 const { page, errors } = await openVideo(browser);
 const V = await page.evaluate(() => window.VIDEO);
 const inScope = n => !SCOPE || SCOPE.includes(n);
+// Entwurfszeit d in Szene sc → absolute Videozeit (wie toActual in der HTML-Datei; Funktionen kommen nicht aus der Seite mit)
+const toActual = (sc, d) => {
+  const P = sc.anker || [];
+  let x = d;
+  if (P.length) {
+    if (d <= P[0][0]) x = P[0][1] + (d - P[0][0]);
+    else { x = null; for (let i = 1; i < P.length; i++) if (d <= P[i][0]) { x = P[i - 1][1] + (P[i][1] - P[i - 1][1]) * (d - P[i - 1][0]) / (P[i][0] - P[i - 1][0]); break; } if (x === null) { const L = P[P.length - 1]; x = L[1] + (d - L[0]) / sc.tail; } }
+  }
+  return sc.start + x;
+};
 const sceneOf = t => V.SCENES.find(s => t >= s.start && t < s.end) || V.SCENES[V.SCENES.length - 1];
 
 // ================================================================ A  Szenen und Zeiten
-// Zeiten laut Drehbuch sind Richtwerte; sie dürfen sich durch die Sprachausgabe verschieben. Szenen werden nur länger, nie kürzer.
+// Zeiten laut Drehbuch sind Richtwerte. Eine Szene dauert so lange, bis die Stimme fertig ist (plus Nachlauf) und das Bild
+// seinen letzten Vorgang samt Haltezeit gezeigt hat (BILDENDE); stehende Bilder ohne Sprache werden nicht künstlich verlängert.
 {
   const B = 'Szenen und Zeiten';
   let ok = true;
+  const TLS = TL ? Object.fromEntries(TL.szenen.map(S => [S.n, S])) : {};
   if (dScenes.length !== V.SCENES.length) { FEHLER(B, `Anzahl Szenen: Drehbuch ${dScenes.length}, Video ${V.SCENES.length}`); ok = false; }
   for (const d of dScenes) {
     const v = V.SCENES.find(s => s.n === d.n);
     if (!v) { FEHLER(B, `Szene ${d.n} fehlt im Video`); ok = false; continue; }
     if (v.title !== d.title) { FEHLER(B, `Szene ${d.n}: Titel „${v.title}“ ≠ „${d.title}“`); ok = false; }
     const lv = v.end - v.start, ld = d.end - d.start;
-    if (lv < ld - 1e-6) { FEHLER(B, `Szene ${d.n}: ${lv.toFixed(2)} s, kürzer als im Drehbuch (${ld} s)`); ok = false; }
-    else if (lv > ld + 1e-6) INFO(B, `Szene ${d.n} „${d.title}“: ${fmt(v.start)}–${fmt(v.end)} statt ${fmt(d.start)}–${fmt(d.end)}, ${(lv - ld).toFixed(2)} s länger wegen der Sprachaufnahme`);
-    else if (Math.abs(v.start - d.start) > 1e-6) INFO(B, `Szene ${d.n} „${d.title}“: verschoben auf ${fmt(v.start)}–${fmt(v.end)}, Länge wie Drehbuch`);
+    const S = TLS[d.n], be = V.BILDENDE && V.BILDENDE[d.n];
+    // Bild vollständig: Die Szene dauert mindestens bis zur Entwurfszeit „Bild fertig“ plus Haltezeit
+    if (be) {
+      const fertig = toActual(v, be[0]) - v.start + be[1];
+      if (lv + 1e-3 < fertig - 1 / 30) { FEHLER(B, `Szene ${d.n}: endet nach ${lv.toFixed(2)} s, das Bild ist erst nach ${fertig.toFixed(2)} s fertig`); ok = false; }
+    } else { FEHLER(B, `Szene ${d.n}: kein Bildende (BILDENDE) festgelegt`); ok = false; }
+    if (Math.abs(lv - ld) > 1e-6) INFO(B, `Szene ${d.n} „${d.title}“: ${fmt(v.start)}–${fmt(v.end)} (${lv.toFixed(2)} s) statt ${fmt(d.start)}–${fmt(d.end)} (${ld} s), ${lv > ld ? '+' : '−'}${Math.abs(lv - ld).toFixed(2)} s${S && S.audioEnde ? ` · Sprechende ${S.audioEnde.toFixed(2)} s, Bild fertig ${S.bildende ? S.bildende.ist.toFixed(2) + ' s' : '–'}` : ''}`);
   }
   for (let i = 1; i < V.SCENES.length; i++) if (Math.abs(V.SCENES[i].start - V.SCENES[i - 1].end) > 1e-6) { FEHLER(B, `Lücke/Überlappung zwischen Szene ${V.SCENES[i - 1].n} und ${V.SCENES[i].n}`); ok = false; }
   if (V.frames !== Math.round(V.TOTAL * V.FPS)) { FEHLER(B, `Bildanzahl ${V.frames} passt nicht zu ${V.TOTAL} s`); ok = false; }
-  if (ok) OK(B, `${dScenes.length} Szenen, Titel und Reihenfolge wie Drehbuch, keine Szene kürzer als im Drehbuch; Gesamtdauer ${fmt(V.TOTAL)} (${V.frames} Bilder bei ${V.FPS} fps; Richtwert Drehbuch ${fmt(dScenes[dScenes.length - 1].end)})`);
+  if (V.SCHLUSS_DAUER !== KONFIG.schlussDauer) { FEHLER(B, `Schlusstafel: HTML ${V.SCHLUSS_DAUER} s, Zeitplan ${KONFIG.schlussDauer} s`); ok = false; }
+  if (ok) OK(B, `${dScenes.length} Szenen, Titel und Reihenfolge wie Drehbuch; jede Szene zeigt ihr Bild vollständig (Bildende + Haltezeit); Gesamtdauer ${fmt(V.TOTAL)} (${V.frames} Bilder bei ${V.FPS} fps; Richtwert Drehbuch ${fmt(dScenes[dScenes.length - 1].end)}, Drehbuchzeiten sind Richtwerte)`);
 }
 
 // ================================================================ B  Sprechertext
@@ -101,6 +119,18 @@ const sceneOf = t => V.SCENES.find(s => t >= s.start && t < s.end) || V.SCENES[V
     const same = JSON.stringify(V.PRESSEFRAGEN || []) === JSON.stringify(dPress);
     (same ? OK : FEHLER)(B, `Pressefragen (Szene 8): ${same ? `${dPress.length} Fragen wortgleich` : 'weichen vom Drehbuch ab'}`);
   }
+  // Ergänzungen auf Wunsch des Auftraggebers (export/ergaenzungen.mjs): nur ganze, ruhige Sätze ohne Zahlen, Fragen oder Ortsnamen
+  for (const e of ERGAENZUNGEN) {
+    const probs = [];
+    if (!dScenes.some(d => d.n === e.szene)) probs.push('Szene gibt es nicht');
+    if (!['vor', 'nach', 'schluss'].includes(e.stelle)) probs.push(`unbekannte Stelle „${e.stelle}“`);
+    if (/\d/.test(e.text)) probs.push('enthält Ziffern');
+    if (/\?/.test(e.text)) probs.push('enthält eine Frage');
+    if (/herne/i.test(e.text)) probs.push('nennt den Ortsnamen');
+    if (!/[.]$/.test(e.text)) probs.push('endet nicht mit einem Satz');
+    if (probs.length) FEHLER(B, `Ergänzung Szene ${e.szene}: ${probs.join(', ')}`);
+    else INFO(B, `Ergänzung Szene ${e.szene} (${e.stelle === 'vor' ? 'vor dem Sprechertext' : e.stelle === 'nach' ? 'nach dem Sprechertext' : 'Schlusssatz auf der Schlusstafel'}): „${e.text}“ – ${e.grund}; Grundlage: ${e.grundlage}`);
+  }
 }
 
 // ================================================================ C  Untertitel (Cues)
@@ -108,15 +138,18 @@ const cueMetrics = [];
 {
   const B = 'Untertitel';
   const cues = V.CUES.map((c, i) => ({ ...c, i }));
-  for (const n of Object.keys(dSpeech).map(Number)) {
+  // erwarteter Text je Szene: Pressefragen, Ergänzung vor, Sprechertext (Drehbuch), Ergänzung nach, Schlusssatz
+  const sollText = n => { const dsc = DB.scenes.find(s => s.n === n); return [...(dsc && dsc.press.length ? dsc.press : []), ...ergaenzungenFuer(n, 'vor'), dSpeech[n], ...ergaenzungenFuer(n, 'nach'), ...ergaenzungenFuer(n, 'schluss')].filter(Boolean).join(' '); };
+  for (const n of dScenes.map(d => d.n).filter(n => sollText(n))) {
     const sc = V.SCENES.find(s => s.n === n);
     const cs = cues.filter(c => c.scene === n);
     if (!cs.length) { (inScope(n) ? FEHLER : INFO)(B, `Szene ${n}: noch keine Untertitel`); continue; }
     const joined = cs.map(c => c.lines.join(' ')).join(' ');
     const dsc = DB.scenes.find(s => s.n === n);
-    const soll = [...(dsc && dsc.press.length ? dsc.press : []), dSpeech[n]].join(' ');
-    if (joined === soll) OK(B, `Szene ${n}: ${cs.length} Untertitel, zusammen wortgleich und vollständig${dsc && dsc.press.length ? ' (Pressefragen und Sprechertext)' : ''}`);
-    else FEHLER(B, `Szene ${n}: Untertitel ergeben nicht den Sprechertext${dsc && dsc.press.length ? ' mit den Pressefragen' : ''}`);
+    const soll = sollText(n);
+    const erg = ['vor', 'nach', 'schluss'].some(st => ergaenzungenFuer(n, st).length);
+    if (joined === soll) OK(B, `Szene ${n}: ${cs.length} Untertitel, zusammen wortgleich und vollständig${dsc && dsc.press.length ? ' (Pressefragen und Sprechertext)' : ''}${erg ? (dSpeech[n] ? ' (Drehbuch + freigegebene Ergänzung)' : ' (freigegebene Ergänzung)') : ''}`);
+    else FEHLER(B, `Szene ${n}: Untertitel ergeben nicht den Sprechertext${dsc && dsc.press.length ? ' mit den Pressefragen' : ''}${erg ? ' und den Ergänzungen' : ''}`);
     cs.forEach((c, k) => {
       const dur = c.end - c.start, chars = c.lines.join(' ').length, cps = chars / dur;
       cueMetrics.push({ n, i: c.i, start: c.start, end: c.end, dur, chars, cps, lines: c.lines });
@@ -244,11 +277,12 @@ const visibleTexts = new Map();   // Schlüssel → { text, von, bis, quelle }
   let samples = 0;
   const timedSeen = {};
   const ueberdeckt = new Map();
+  const vermerkUeberdeckt = new Map();
   for (const [a, b] of ranges) {
     for (let t = a; t < b - 1e-6; t += STEP) {
       const tt = Math.round(t * V.FPS) / V.FPS;
       await renderAt(page, tt);
-      const { els, marke } = await page.evaluate(() => {
+      const { els, marke, rahmen } = await page.evaluate(() => {
         const opOf = e => { let op = 1, n = e; while (n && n.id !== 'stage') { const cs = getComputedStyle(n); if (cs.display === 'none') return 0; op *= parseFloat(cs.opacity || '1'); n = n.parentElement; } return op; };
         const brand = document.querySelector('#stage svg.brand');
         const img = brand && brand.querySelector('image');
@@ -257,7 +291,8 @@ const visibleTexts = new Map();   // Schlüssel → { text, von, bis, quelle }
           const r = e.getBoundingClientRect();
           return { k: e.dataset.k || null, i: +(e.dataset.i || 0), text: e.textContent, op: opOf(e), marke: !!e.closest('svg.brand'), box: [r.x, r.y, r.width, r.height] };
         });
-        return { els, marke };
+        const rahmen = [...document.querySelectorAll('#stage rect[data-rahmen]')].map(e => { const r = e.getBoundingClientRect(); return { k: e.dataset.rahmen, op: opOf(e), box: [r.x, r.y, r.width, r.height] }; });
+        return { els, marke, rahmen };
       });
       checkGroup(els, tt);
       // Marke oben rechts darf Titelkarte, Einblendungen und Untertitel nicht überdecken
@@ -272,6 +307,12 @@ const visibleTexts = new Map();   // Schlüssel → { text, von, bis, quelle }
           }
         }
       }
+      // Untertitelband und Vertraulich-Vermerk: mindestens 8 px Abstand (gemessen an den Rahmen im Bild)
+      const bänder = rahmen.filter(r => r.k === 'sub' && r.op > 0.05), verm = rahmen.filter(r => r.k === 'vertraulich' && r.op > 0.05);
+      for (const b of bänder) for (const v of verm) {
+        const [x, y, w, h] = b.box, [vx, vy, vw, vh] = v.box, A = 8;
+        if (x - A < vx + vw && x + w + A > vx && y - A < vy + vh && y + h + A > vy) vermerkUeberdeckt.set((els.find(e => e.k === 'sub') || { text: '' }).text, tt);
+      }
       for (const tm of timed) { const vis = Math.max(0, ...els.filter(e => e.k === tm.key).map(e => e.op)); (timedSeen[tm.key] = timedSeen[tm.key] || []).push([tt, vis]); }
       samples++;
     }
@@ -283,7 +324,7 @@ const visibleTexts = new Map();   // Schlüssel → { text, von, bis, quelle }
   for (const tm of timed) {
     const d = dScenes.find(x => tm.from >= x.start && tm.from < x.end), v = d && V.SCENES.find(x => x.n === d.n);
     if (d && v) {
-      const len = tm.to - tm.from, amEnde = Math.abs(tm.to - d.end) < 1e-6;
+      const len = tm.to - tm.from, amEnde = tm.key === 'schluss_titel';   // Schlusstafel am Videoende, alles andere ab Szenenbeginn
       const von = amEnde ? v.end - len : v.start + (tm.from - d.start);
       if (Math.abs(von - tm.from) > 1e-6) INFO(B, `Einblendung „${tm.key}“: laut Drehbuch ${fmt(tm.from)}–${fmt(tm.to)}, im Video ${fmt(von)}–${fmt(von + len)} (Szene ${d.n} verschoben)`);
       tm.from = von; tm.to = von + len;
@@ -300,6 +341,8 @@ const visibleTexts = new Map();   // Schlüssel → { text, von, bis, quelle }
   // Marke: Überdeckung
   for (const u of ueberdeckt.values()) (u.bild ? WARN : FEHLER)('Marke', `Marke oben rechts überdeckt ${u.bild ? 'den Bildtext' : 'die Einblendung'} „${u.text}“ (${u.k}) bei ${fmt(u.t)}`);
   if (!ueberdeckt.size) OK('Marke', `Marke oben rechts überdeckt an keinem der ${samples} Zeitpunkte eine Titelkarte, Einblendung oder einen Untertitel`);
+  for (const [text, t] of vermerkUeberdeckt) FEHLER('Untertitel', `Untertitel „${text.slice(0, 40)}…“ berührt bei ${fmt(t)} den Vertraulich-Vermerk`);
+  if (!vermerkUeberdeckt.size) OK('Untertitel', `Untertitel und Vertraulich-Vermerk (Titelkarte, Schlusstafel) berühren sich an keinem der ${samples} Zeitpunkte`);
   // „Woche 5“ darf nicht mehr vorkommen (V1.2: Kalenderblätter nur bis Woche 4)
   const html = fs.readFileSync(HTML, 'utf8');
   if (/Woche 5/.test(html)) FEHLER(B, '„Woche 5“ kommt im Video vor (V1.2: nur bis Woche 4)'); else OK(B, '„Woche 5“ kommt nicht vor (V1.2: Kalenderblätter bis Woche 4)');
@@ -350,7 +393,7 @@ const visibleTexts = new Map();   // Schlüssel → { text, von, bis, quelle }
     const tdir = path.join(ROOT, 'audio', 'tts'), adir = path.join(ROOT, 'audio');
     const quellen = [];
     if (fs.existsSync(tdir)) for (const f of fs.readdirSync(tdir).filter(f => f.endsWith('.txt'))) quellen.push([`audio/tts/${f}`, fs.readFileSync(path.join(tdir, f), 'utf8')]);
-    if (fs.existsSync(adir)) for (const f of fs.readdirSync(adir).filter(f => /^szene_.*\.json$/.test(f))) quellen.push([`audio/${f}`, JSON.parse(fs.readFileSync(path.join(adir, f), 'utf8')).text]);
+    if (fs.existsSync(adir)) for (const f of fs.readdirSync(adir).filter(f => /^szene_.*\.json$/.test(f))) { const j = JSON.parse(fs.readFileSync(path.join(adir, f), 'utf8')); quellen.push([`audio/${f}`, [j.text, j.kontext?.vorher, j.kontext?.nachher].filter(Boolean).join('\n')]); }
     const tHits = quellen.flatMap(([f, t]) => scan(f, t, true).map(h => ({ ...h, f })));
     if (tHits.length) tHits.forEach(h => FEHLER(B, `Sprechtext ${h.f}: ${h.typ} „${h.wort}“`)); else OK(B, `Sprechtexte für die Sprachausgabe (${quellen.length} Dateien): keine Treffer`);
     const ort = quellen.filter(([, t]) => /herne/i.test(t));
@@ -358,7 +401,7 @@ const visibleTexts = new Map();   // Schlüssel → { text, von, bis, quelle }
     else OK(B, `Ortsname kommt in keinem Text für die Sprachausgabe vor (Vorgabe des Auftraggebers)`);
   }
   // Code: Treffer mit Einordnung
-  const files = [HTML, ...fs.readdirSync(path.join(ROOT, 'export')).filter(f => f.endsWith('.mjs')).map(f => path.join(ROOT, 'export', f)), path.join(ROOT, 'package.json')];
+  const files = [HTML, ...fs.readdirSync(path.join(ROOT, 'export')).filter(f => /\.(mjs|py)$/.test(f)).map(f => path.join(ROOT, 'export', f)), path.join(ROOT, 'package.json')];
   const known = [
     [/^URL$/, /w3\.org\/2000\/svg/, 'SVG-Namensraum (technisch notwendig, nicht im Bild)'],
     [/^URL$/, /api\.elevenlabs\.io/, 'Schnittstelle der Sprachausgabe (nur im Skript, nicht im Bild)'],
@@ -430,7 +473,7 @@ const visibleTexts = new Map();   // Schlüssel → { text, von, bis, quelle }
         kbitSprache = Math.round(bytes * 8 / sp.reduce((q, [x, y]) => q + y - x, 0) / 1000);
       }
       const okA = a.codec_name === 'aac' && +a.sample_rate === 48000 && +a.channels === 2 && (kbitSprache ?? kbit) >= 180 && (kbitSprache ?? kbit) <= 200;
-      (okA ? OK : FEHLER)(B, `MP4 Ton: ${a.codec_name}, ${a.sample_rate} Hz, ${a.channels} Kanäle, ${kbitSprache !== null ? `${kbitSprache} kbit/s während der Sprache (Soll 192), ${kbit} kbit/s im Mittel über das ganze Video wegen der Pausen` : `${kbit} kbit/s (Soll 192)`}`);
+      (okA ? OK : FEHLER)(B, `MP4 Ton: ${a.codec_name}, ${a.sample_rate} Hz, ${a.channels} Kanäle, ${kbitSprache !== null ? `${kbitSprache} kbit/s während der Sprache (Soll 192), ${kbit} kbit/s im Mittel über das ganze Video` : `${kbit} kbit/s (Soll 192)`}`);
       (Math.abs(ad - vd) <= 0.05 ? OK : FEHLER)(B, `Länge Ton ${ad.toFixed(3)} s, Länge Bild ${vd.toFixed(3)} s (Abweichung ${(ad - vd).toFixed(3)} s)`);
       const r = spawnSync('ffmpeg', ['-hide_banner', '-nostats', '-i', MP4, '-map', '0:a', '-af', 'ebur128=peak=true', '-f', 'null', '-'], { encoding: 'utf8', maxBuffer: 1 << 28 });
       const z = (r.stderr || '').slice((r.stderr || '').lastIndexOf('Summary:'));
@@ -445,36 +488,105 @@ const visibleTexts = new Map();   // Schlüssel → { text, von, bis, quelle }
   const B = 'Ton';
   if (!TL) INFO(B, 'Noch keine Sprachaufnahmen (audio/timeline.json fehlt)');
   else {
-    // Aufnahmen aktuell: gesendeter Text = heutiger Sprachtext, Stimme und Einstellungen wie vorgegeben
-    const soll = new Map();
-    for (const e of sprachtexte(DB)) e.teile.forEach((t, i) => soll.set(e.art === 'fragen' ? `szene_${String(e.szene).padStart(2, '0')}_frage_${i + 1}` : `szene_${String(e.szene).padStart(2, '0')}`, t));
+    // Aufnahmen aktuell: gesendeter Text und Kontext = heutiger Stand, Stimme und Einstellungen wie vorgegeben
     const st = fragenStimmen();
+    const alle = teile(DB);
     let aktuell = 0, fehlt = [];
-    for (const [id, t] of soll) {
-      const jf = path.join(ROOT, 'audio', id + '.json');
-      if (!fs.existsSync(jf) || !fs.existsSync(path.join(ROOT, 'audio', id + '.mp3'))) { fehlt.push(id); continue; }
+    for (const t of alle) {
+      const jf = path.join(ROOT, 'audio', t.id + '.json');
+      if (!fs.existsSync(jf) || !fs.existsSync(path.join(ROOT, 'audio', t.id + '.mp3'))) { fehlt.push(t.id); continue; }
       const j = JSON.parse(fs.readFileSync(jf, 'utf8'));
-      const stimmeSoll = t.stimme === 'Erzähler' ? ERZAEHLER.id : st && st[t.stimme] && st[t.stimme].id;
+      const stimmeSoll = t.rolle === 'Erzähler' ? ERZAEHLER.id : st && st[t.rolle] && st[t.rolle].id;
       const probs = [];
       if (j.text !== t.text) probs.push('Text veraltet');
+      if (JSON.stringify(j.kontext || null) !== JSON.stringify(t.kontext || null)) probs.push('Kontext (Text davor/danach) veraltet');
       if (j.stimme.id !== stimmeSoll) probs.push('andere Stimme');
       if (j.modell !== MODELL || JSON.stringify(j.einstellungen) !== JSON.stringify(EINSTELLUNGEN)) probs.push('Modell/Einstellungen abweichend');
-      if (probs.length) FEHLER(B, `${id}: ${probs.join(', ')}`); else aktuell++;
+      if (probs.length) FEHLER(B, `${t.id}: ${probs.join(', ')}`); else aktuell++;
     }
     const szFehlt = fehlt.map(id => +id.slice(6, 8));
     if (fehlt.length) (szFehlt.some(n => inScope(n)) && !SCOPE ? FEHLER : INFO)(B, `Noch keine Aufnahme für: ${fehlt.join(', ')}${st ? '' : ' (Stimmen der Pressefragen noch nicht freigegeben)'}`);
-    OK(B, `${aktuell} Aufnahmen aktuell: Text wie Sprachtext, Stimme ${ERZAEHLER.name} (${MODELL}; stability ${EINSTELLUNGEN.stability}, similarity_boost ${EINSTELLUNGEN.similarity_boost}, style ${EINSTELLUNGEN.style}, speaker boost an, Geschwindigkeit ${EINSTELLUNGEN.speed})${st ? `; Pressefragen: ${st.A.name} / ${st.B.name}` : ''}`);
-    // Pausen und Tempo: 0,5 s am Szenenanfang, 0,8 s am Ende verlängerter Szenen, nie beschleunigt
+    const mitKontext = alle.filter(t => t.kontext).length;
+    OK(B, `${aktuell} Aufnahmen aktuell: Text wie Sprachtext, Stimme ${ERZAEHLER.name} (${MODELL}; stability ${EINSTELLUNGEN.stability}, similarity_boost ${EINSTELLUNGEN.similarity_boost}, style ${EINSTELLUNGEN.style}, speaker boost an, Geschwindigkeit ${EINSTELLUNGEN.speed})${st ? `; Pressefragen: ${st.A.name} / ${st.B.name}` : ''}; ${mitKontext} Erzählerteile mit dem gesprochenen Text davor/danach als Kontext`);
+    // Sprechfluss: jeder Erzählerteil läuft als durchgehende Aufnahme (ein Segment, keine eingefügten Pausen)
+    const zerteilt = [];
+    for (const S of TL.szenen) for (const tp of S.teile || []) if (tp.art !== 'fragen' && S.segmente.filter(g => g.id === tp.id).length !== 1) zerteilt.push(tp.id);
+    (zerteilt.length ? FEHLER : OK)(B, zerteilt.length ? `Erzählerteile zerschnitten: ${zerteilt.join(', ')}` : 'Sprechfluss: jeder Erzählerteil läuft als durchgehende Aufnahme mit seinen natürlichen Pausen (keine eingefügten Pausen, nichts zerschnitten)');
+    // Pausen: Sprechbeginn nach Szenenbeginn, Nachlauf bis Szenenende, Pausen zwischen den Szenen
     let pOK = true;
+    const pausen = [];
+    let letztes = null;
     for (const S of TL.szenen) {
-      if (!S.saetze.length || !inScope(S.n)) continue;
-      const erst = Math.min(...S.saetze.map(x => x.beginn)), letzt = Math.max(...S.saetze.map(x => x.ende)), L = S.ende - S.start;
-      if (erst < 0.5 - 0.01) { pOK = false; FEHLER(B, `Szene ${S.n}: Sprechbeginn ${erst.toFixed(2)} s nach Szenenbeginn (Soll ≥ 0,5 s)`); }
-      if (L - letzt < 0.8 - 0.01) { pOK = false; FEHLER(B, `Szene ${S.n}: nach dem letzten Wort nur ${(L - letzt).toFixed(2)} s bis Szenenende (Soll ≥ 0,8 s)`); }
-      if (S.verlaengert && L - letzt > 0.8 + 1 / 30 + 0.01 && S.tail === 1) WARN(B, `Szene ${S.n}: verlängert, aber ${(L - letzt).toFixed(2)} s Pause am Ende (Soll 0,8 s)`);
+      if (!S.saetze.length) continue;
+      const haupt = S.saetze.filter(x => x.art !== 'schluss');
+      const erst = Math.min(...haupt.map(x => x.beginn)), letzt = Math.max(...haupt.map(x => x.ende)), L = S.ende - S.start;
+      if (letztes !== null) pausen.push({ n: S.n, p: S.start + erst - letztes });
+      letztes = S.start + Math.max(...S.saetze.map(x => x.ende));
+      if (!inScope(S.n)) continue;
+      const minVor = S.n === 0 ? 1.0 : KONFIG.vorlaufMin;
+      if (erst < minVor - 0.01) { pOK = false; FEHLER(B, `Szene ${S.n}: Sprechbeginn ${erst.toFixed(2)} s nach Szenenbeginn (Soll ≥ ${minVor} s)`); }
+      const bisEnde = (S.schlusstafel ?? L) - letzt;
+      if (bisEnde < KONFIG.nachlauf - 0.01) { pOK = false; FEHLER(B, `Szene ${S.n}: nach dem letzten Wort nur ${bisEnde.toFixed(2)} s bis ${S.schlusstafel ? 'zur Schlusstafel' : 'Szenenende'} (Soll ≥ ${KONFIG.nachlauf} s)`); }
+      const schluss = S.saetze.filter(x => x.art === 'schluss');
+      if (schluss.length) {
+        const sa = Math.min(...schluss.map(x => x.beginn)), se = Math.max(...schluss.map(x => x.ende));
+        if (Math.abs(sa - (S.schlusstafel + KONFIG.schlussVorlauf)) > 0.02 || L - se < 1.5) { pOK = false; FEHLER(B, `Szene ${S.n}: Schlusssatz ${sa.toFixed(2)}–${se.toFixed(2)} s liegt nicht auf der Schlusstafel (${S.schlusstafel} s bis ${L.toFixed(2)} s)`); }
+        else OK(B, `Schlusssatz auf der Schlusstafel: beginnt ${KONFIG.schlussVorlauf} s nach dem Einblenden, endet ${(L - se).toFixed(1)} s vor dem Videoende`);
+      }
+      // Pausen innerhalb der Szene (zwischen Sprechteilen, z. B. nach den Pressefragen)
+      const reihe = [...S.saetze].sort((a, b) => a.beginn - b.beginn);
+      for (let i = 1; i < reihe.length; i++) {
+        const g = reihe[i].beginn - reihe[i - 1].ende;
+        if (reihe[i].art === 'schluss') continue;
+        if (g > 2.0) { pOK = false; FEHLER(B, `Szene ${S.n}: ${g.toFixed(2)} s Pause vor „${reihe[i].text.slice(0, 30)}…“ (Soll ≤ 2 s innerhalb einer Szene)`); }
+      }
     }
+    for (const x of pausen) if (x.p > 8) { pOK = false; FEHLER(B, `Pause vor Szene ${x.n}: ${x.p.toFixed(2)} s ohne Sprache (Soll ≤ 8 s)`); } else if (x.p > 5) WARN(B, `Pause vor Szene ${x.n}: ${x.p.toFixed(2)} s ohne Sprache`);
     if (EINSTELLUNGEN.speed !== 1.0) { pOK = false; FEHLER(B, 'Stimme beschleunigt (speed ≠ 1,0)'); }
-    if (pOK) OK(B, 'Pausen: Sprechbeginn ≥ 0,5 s nach Szenenbeginn, ≥ 0,8 s nach dem letzten Wort bis Szenenende; Stimme nicht beschleunigt (Geschwindigkeit 1,0, keine Zeitstreckung in der Mischung)');
+    if (pOK) OK(B, `Pausen: Sprechbeginn ≥ ${KONFIG.vorlaufMin} s nach Szenenbeginn (Titel ≥ 1 s), ≥ ${KONFIG.nachlauf} s nach dem letzten Wort; zwischen den Szenen ${Math.min(...pausen.map(x => x.p)).toFixed(1)}–${Math.max(...pausen.map(x => x.p)).toFixed(1)} s (${pausen.map(x => `vor ${x.n}: ${x.p.toFixed(1)}`).join(', ')}); Stimme nicht beschleunigt`);
+  }
+}
+
+// ================================================================ L  Musik
+{
+  const B = 'Musik';
+  const mj = path.join(ROOT, 'output', '.ton', 'Musik.json'), stempel = path.join(ROOT, 'output', '.ton', 'Musik.stempel');
+  if (!TL) INFO(B, 'Noch keine Zeitachse – Musik nicht geprüft');
+  else if (!fs.existsSync(mj)) INFO(B, 'Musik noch nicht erzeugt (entsteht beim Export über export/audio.mjs)');
+  else {
+    const m = JSON.parse(fs.readFileSync(mj, 'utf8'));
+    const crypto = await import('crypto');
+    const soll = crypto.createHash('sha1').update(fs.readFileSync(TLFILE)).update(fs.readFileSync(path.join(ROOT, 'export', 'musik.py'))).digest('hex');
+    const aktuell = fs.existsSync(stempel) && fs.readFileSync(stempel, 'utf8') === soll;
+    (aktuell ? OK : FEHLER)(B, aktuell ? 'Musik passt zur aktuellen Zeitachse und Komposition (export/musik.py, eigene Komposition, synthetisch erzeugt – keine Rechte Dritter)' : 'Musik ist veraltet (Zeitachse oder Komposition geändert) – Export neu starten');
+    // Abschnitte: je Szene einer, dazu die Schlusstafel; jeder beginnt auf einer Szenengrenze
+    const grenzen = new Set(V.SCENES.map(sc => sc.start.toFixed(2)));
+    grenzen.add((V.TOTAL - V.SCHLUSS_DAUER).toFixed(2));
+    const falsch = m.abschnitte.filter(a => ![...grenzen].some(g => Math.abs(+g - a.von) < 0.02));
+    (m.abschnitte.length === V.SCENES.length + 1 && !falsch.length ? OK : FEHLER)(B, `${m.abschnitte.length} Abschnitte, jeder beginnt auf einem Szenenwechsel bzw. mit der Schlusstafel: ${m.abschnitte.map(a => `${a.name} (${a.name === 'Schlusstafel' ? 'Schlussakkord' : Math.round(a.bpm) + ' BPM'})`).join(' · ')}`);
+    // Pegel: in Pausen hörbar, unter der Stimme deutlich zurück
+    const abstand = -16 - m.sprache_lufs;
+    (m.pause_lufs >= -28 && m.pause_lufs <= -22 ? OK : FEHLER)(B, `Musik in Sprechpausen ${m.pause_lufs} LUFS (Soll −28 … −22)`);
+    (abstand >= 17 ? OK : FEHLER)(B, `Musik unter der Stimme ${m.sprache_lufs} LUFS, ${abstand.toFixed(1)} LU unter der Sprache (−16 LUFS; Soll ≥ 17 LU), Absenkung ${m.absenkung_db} dB`);
+    // Endprodukt: keine Tonlöcher (Musik trägt durch alle Pausen), Musik in den Szenenpausen tatsächlich zu hören
+    if (fs.existsSync(MP4)) {
+      const r = spawnSync('ffmpeg', ['-hide_banner', '-nostats', '-i', MP4, '-map', '0:a', '-af', 'silencedetect=noise=-60dB:d=0.4', '-f', 'null', '-'], { encoding: 'utf8', maxBuffer: 1 << 26 });
+      const loecher = [...(r.stderr || '').matchAll(/silence_start: ([\d.]+)/g)].map(x => +x[1]).filter(t => t > 0.3 && t < V.TOTAL - 1.0);
+      (loecher.length ? FEHLER : OK)(B, loecher.length ? `Tonlöcher (Stille > 0,4 s) bei ${loecher.map(fmt).join(', ')}` : 'Endprodukt ohne Tonlöcher: Musik trägt durch alle Pausen (keine Stille > 0,4 s unter −60 dBFS außer am Anfang und beim Ausblenden)');
+      const e = spawnSync('ffmpeg', ['-hide_banner', '-nostats', '-v', 'verbose', '-i', MP4, '-map', '0:a', '-af', 'ebur128=framelog=verbose', '-f', 'null', '-'], { encoding: 'utf8', maxBuffer: 1 << 28 });   // Einzelwerte nur mit -v verbose
+      const Mw = [...(e.stderr || '').matchAll(/t:\s*([\d.]+)\s+TARGET.*?M:\s*(-?[\d.inf]+)/g)].map(x => [+x[1], +x[2]]);
+      const mitten = [];
+      let le = null;
+      for (const S of TL.szenen) {
+        if (!S.saetze.length) continue;
+        const erst = S.start + Math.min(...S.saetze.map(x => x.beginn));
+        if (le !== null && erst - le >= 1.8) mitten.push((le + erst) / 2);
+        le = S.start + Math.max(...S.saetze.map(x => x.ende));
+      }
+      const werte = mitten.map(t => { const k = Mw.reduce((b, x) => Math.abs(x[0] - t - 0.2) < Math.abs(b[0] - t - 0.2) ? x : b, Mw[0]); return k ? k[1] : -Infinity; });
+      const leise = werte.filter(v => v < -36), laut = werte.filter(v => v > -18);
+      (mitten.length && !leise.length && !laut.length ? OK : FEHLER)(B, `Musik in ${mitten.length} Szenenpausen hörbar: momentan ${Math.min(...werte).toFixed(1)} bis ${Math.max(...werte).toFixed(1)} LUFS (Soll −36 … −18)`);
+    }
   }
 }
 

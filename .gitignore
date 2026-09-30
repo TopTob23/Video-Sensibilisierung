@@ -2,3 +2,10 @@ node_modules/
 output/.segmente/
 output/**/.segmente/
 output/.ton/
+# Fertige Videos, Muster und Standbilder werden erzeugt und direkt übergeben, nicht versioniert:
+# große Binärdateien bleiben sonst dauerhaft in der Historie, und das Video ist vertraulich.
+output/*.mp4
+output/muster/
+output/pruefung/standbilder/
+output/pruefung/*.png
+__pycache__/

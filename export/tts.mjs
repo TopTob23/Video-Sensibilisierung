@@ -1,6 +1,8 @@
 // Sprachausgabe mit ElevenLabs: ein Aufruf je Sprechteil über text-to-speech/{voice_id}/with-timestamps.
 // Ergebnis je Teil: audio/<id>.mp3 (unverändert wie geliefert) und audio/<id>.json (Text, Stimme, Zeichen-Zeitmarken).
-// Szene 8 hat mehrere Teile: die vier Pressefragen (zwei Stimmen im Wechsel) und den Sprechertext.
+// Szene 8 hat mehrere Teile: die vier Pressefragen (zwei Stimmen im Wechsel) und den Sprechertext; Szene 12 zusätzlich den Schlusssatz.
+// Der Erzähler bekommt den gesprochenen Text davor und danach als Kontext mit (previous_text / next_text), damit
+// Satzanfänge und -enden wie in einer durchgehenden Aufnahme klingen. Kosten entstehen nur für den eigenen Text.
 //
 // Aufruf:  node export/tts.mjs                    → alle Szenen (bereits erzeugte Teile werden übersprungen)
 //          node export/tts.mjs --scenes 1,9,12    → nur diese Szenen
@@ -31,7 +33,8 @@ fs.mkdirSync(DIR, { recursive: true });
 
 async function erzeugen(t) {
   const url = `https://api.elevenlabs.io/v1/text-to-speech/${t.stimme.id}/with-timestamps?output_format=mp3_44100_128`;
-  const body = JSON.stringify({ text: t.text, model_id: MODELL, voice_settings: EINSTELLUNGEN, seed: seedFor(t) });
+  const body = JSON.stringify({ text: t.text, model_id: MODELL, voice_settings: EINSTELLUNGEN, seed: seedFor(t),
+    ...(t.kontext?.vorher ? { previous_text: t.kontext.vorher } : {}), ...(t.kontext?.nachher ? { next_text: t.kontext.nachher } : {}) });
   for (let versuch = 1; versuch <= 4; versuch++) {
     let res;
     try {
@@ -65,7 +68,7 @@ console.log(`${offen.length} Teile zu erzeugen (${zeichen} Zeichen)${DRY ? ' –
 if (!DRY && offen.length) {
   if (!KEY) { console.error('ELEVENLABS_API_KEY ist nicht gesetzt.'); process.exit(2); }
   for (const t of offen) {
-    if (/herne/i.test(t.text)) throw new Error(`${t.id}: Der Ortsname darf nicht an die Sprachausgabe gehen (Vorgabe des Auftraggebers)`);
+    if (/herne/i.test([t.text, t.kontext?.vorher, t.kontext?.nachher].join(' '))) throw new Error(`${t.id}: Der Ortsname darf nicht an die Sprachausgabe gehen (Vorgabe des Auftraggebers)`);
     const r = await erzeugen(t);
     const a = r.alignment;
     if (!a || a.characters.join('') !== t.text) throw new Error(`${t.id}: Zeitmarken passen nicht zum gesendeten Text`);
@@ -73,7 +76,7 @@ if (!DRY && offen.length) {
     const r3 = x => Math.round(x * 1000) / 1000;
     fs.writeFileSync(path.join(DIR, t.id + '.json'), JSON.stringify({
       schluessel: schluessel(t), id: t.id, szene: t.szene, rolle: t.rolle, stimme: t.stimme, modell: MODELL, einstellungen: EINSTELLUNGEN, seed: seedFor(t),
-      text: t.text, quelle: t.quelle,
+      text: t.text, quelle: t.quelle, ...(t.kontext ? { kontext: t.kontext } : {}),
       zeichen: a.characters.length, start: a.character_start_times_seconds.map(r3), ende: a.character_end_times_seconds.map(r3),
     }));
     console.log(`✓ ${t.id}: ${t.text.length} Zeichen, ${dauer(path.join(DIR, t.id + '.mp3')).toFixed(2)} s, Sprechende laut Zeitmarken ${r3(a.character_end_times_seconds.at(-1))} s`);

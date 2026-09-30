@@ -1,14 +1,16 @@
 // Sprachtexte für die Sprachausgabe.
-// Die Untertitel bleiben wortgleich mit dem Drehbuch; hier entsteht nur der Text für die Stimme:
+// Die Untertitel bleiben wortgleich mit dem Drehbuch (plus den freigegebenen Ergänzungen aus ergaenzungen.mjs);
+// hier entsteht nur der Text für die Stimme:
 // Abkürzungen und Zahlen werden ausgeschrieben. Jedes Drehbuch-Wort wird einzeln umgesetzt, damit die
 // Zeitmarken der Stimme später den Untertitelwörtern zugeordnet werden können (Wort → gesprochene Form → Zeichenbereich).
 //
-// Aufruf: node export/tts-text.mjs   → schreibt audio/tts/szene_XX.txt und audio/tts/ERSETZUNGEN.md
+// Aufruf: node export/tts-text.mjs   → schreibt audio/tts/szene_XX.txt, audio/tts/ERSETZUNGEN.md und audio/tts/ERGAENZUNGEN.md
 import fs from 'fs';
 import path from 'path';
 import { pathToFileURL } from 'url';
 import { ROOT } from './lib.mjs';
 import { findDrehbuch, parseDrehbuch } from './drehbuch.mjs';
+import { ERGAENZUNGEN, ergaenzungenFuer } from './ergaenzungen.mjs';
 
 // ---------------------------------------------------------------- Zahlen als Wort (0–9999)
 const EINER = ['null', 'ein', 'zwei', 'drei', 'vier', 'fünf', 'sechs', 'sieben', 'acht', 'neun', 'zehn', 'elf', 'zwölf', 'dreizehn', 'vierzehn', 'fünfzehn', 'sechzehn', 'siebzehn', 'achtzehn', 'neunzehn'];
@@ -83,13 +85,27 @@ export function sprechen(text) {
 const pad = n => String(n).padStart(2, '0');
 export const STIMME_FRAGEN = ['A', 'B'];   // abwechselnd: A = weiblich, B = männlich
 
+// Reihenfolge je Szene: Pressefragen, Erzähler (Ergänzung vor + Drehbuch + Ergänzung nach), Schlusssatz (eigener Teil)
 export function sprachtexte(db) {
   const liste = [];
   for (const s of db.scenes) {
     if (s.press.length) liste.push({ szene: s.n, art: 'fragen', datei: `szene_${pad(s.n)}_fragen.txt`, teile: s.press.map((q, i) => ({ stimme: STIMME_FRAGEN[i % 2], ...sprechen(q), quelle: q })) });
-    if (s.speech) liste.push({ szene: s.n, art: 'erzaehler', datei: `szene_${pad(s.n)}.txt`, teile: [{ stimme: 'Erzähler', ...sprechen(s.speech), quelle: s.speech }] });
+    const text = [...ergaenzungenFuer(s.n, 'vor'), s.speech, ...ergaenzungenFuer(s.n, 'nach')].filter(Boolean).join(' ');
+    if (text) liste.push({ szene: s.n, art: 'erzaehler', datei: `szene_${pad(s.n)}.txt`, teile: [{ stimme: 'Erzähler', ...sprechen(text), quelle: text }] });
+    const schluss = ergaenzungenFuer(s.n, 'schluss').join(' ');
+    if (schluss) liste.push({ szene: s.n, art: 'schluss', datei: `szene_${pad(s.n)}_schluss.txt`, teile: [{ stimme: 'Erzähler', ...sprechen(schluss), quelle: schluss }] });
   }
   return liste;
+}
+
+export function ergaenzungenMarkdown(db) {
+  const wo = { vor: 'vor dem Sprechertext', nach: 'nach dem Sprechertext', schluss: 'auf der Schlusstafel (eigener Sprechteil)' };
+  let md = `# Ergänzungen zum Sprechertext\n\nAuf Wunsch des Auftraggebers (Rückmeldung zum fertigen Video) spricht die Stimme zusätzlich zum Drehbuch (${path.basename(db.file)}) diese Sätze. `
+    + 'Sie erscheinen auch in den Untertiteln. Der Drehbuchtext bleibt wortgleich; check.mjs lässt nur diese Ergänzungen an dieser Stelle zu.\n\n';
+  md += '| Szene | Stelle | Text | Grund | Grundlage im Drehbuch |\n|---|---|---|---|---|\n';
+  for (const e of ERGAENZUNGEN) md += `| ${e.szene} | ${wo[e.stelle]} | ${e.text} | ${e.grund} | ${e.grundlage} |\n`;
+  md += '\nRegeln: Inhalt nur aus dem Drehbuch abgeleitet, keine neuen Zahlen, Fälle oder Belege; Sprachregeln des Drehbuchs; die Stimme nennt den Ortsnamen nicht.\n';
+  return md;
 }
 
 const tokVorher = (e, t, tok) => { const i = t.tokens.indexOf(tok); return i > 0 ? t.tokens[i - 1].wort : ''; };
@@ -139,6 +155,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   for (const f of fs.readdirSync(dir)) if (/^szene_\d+.*\.txt$/.test(f)) fs.rmSync(path.join(dir, f));
   for (const e of liste) fs.writeFileSync(path.join(dir, e.datei), dateiInhalt(e));
   fs.writeFileSync(path.join(dir, 'ERSETZUNGEN.md'), ersetzungenMarkdown(liste, db));
+  fs.writeFileSync(path.join(dir, 'ERGAENZUNGEN.md'), ergaenzungenMarkdown(db));
   const zeichen = liste.reduce((a, e) => a + e.teile.reduce((x, t) => x + t.text.length, 0), 0);
-  console.log(`${liste.length} Sprachtexte (${zeichen} Zeichen) nach audio/tts/, Ersetzungsliste in audio/tts/ERSETZUNGEN.md`);
+  console.log(`${liste.length} Sprachtexte (${zeichen} Zeichen) nach audio/tts/, Ersetzungsliste in audio/tts/ERSETZUNGEN.md, Ergänzungen in audio/tts/ERGAENZUNGEN.md`);
 }
