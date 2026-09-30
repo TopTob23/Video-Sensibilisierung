@@ -3,13 +3,14 @@
 Vertraulich – nur zur internen Verwendung.
 
 Erklärvideo für die Verwaltungsführung der Stadt Herne, 1920 × 1080, 30 fps, mit Sprachausgabe, Hintergrundmusik und eingebrannten Untertiteln.
-Grundlage ist das Drehbuch `Drehbuch_Video_Angriffsszenario_Herne_V1_4.md` (13 Szenen, ca. 7:34, mit Sprachausgabe). Die Stilreferenz
+Grundlage ist das Drehbuch `Drehbuch_Video_Angriffsszenario_Herne_V1_5.md` (13 Szenen, Richtwert ca. 7:34, mit Sprachausgabe). Die Stilreferenz
 `referenz/Stilreferenz_Herne_Flat_Vector.png` dient nur als Vorlage und ist nicht Teil des Videos.
 
-> **Stand:** Fertig nach Drehbuch V1_4, überarbeitet nach der ersten Rückmeldung: Begrüßung statt Stille am Anfang, Übergang in
-> Szene 1, Schlusssatz; neue Sprachaufnahme mit durchgehendem Sprechfluss; Pausen zwischen den Szenen 1,5–4,4 s statt bis zu 14 s;
-> Hintergrundmusik (eigene Komposition). 13 Szenen, 6:25 (Drehbuchzeiten sind Richtwerte), Ton AAC 192 kbit/s, −16 LUFS,
-> True Peak ≤ −1 dBTP. Erzähler „Alexander“, Pressefragen „Carla Blum“ und „Dan“ im Wechsel.
+> **Stand:** Fertig nach Drehbuch V1_5: Begrüßung statt Stille am Anfang, Übergang in Szene 1, Schlusssatz; durchgehender
+> Sprechfluss; Pausen zwischen den Szenen 1,5–4,4 s; Hintergrundmusik (eigene Komposition). Szene 9 nennt vier Erwartungen an die
+> Verwaltungsleitung (prüfen und billigen, überwachen, schulen, Risiken verantworten – mit Unterschrift unter die ISMS-Dokumente),
+> Szene 12 zeigt unter „Vorbereitet“, wer als Nächstes was tut. 13 Szenen, 6:32 (Drehbuchzeiten sind Richtwerte), Ton AAC
+> 192 kbit/s, −16 LUFS, True Peak ≤ −1 dBTP. Erzähler „Alexander“, Pressefragen „Carla Blum“ und „Dan“ im Wechsel.
 
 ## Dateien
 
@@ -47,11 +48,12 @@ Die HTML-Datei im Browser öffnen. Bedienung:
 Voraussetzungen: Node.js ab Version 18, `npm install`, `npx playwright install chromium`, ffmpeg im Suchpfad und Python 3 mit numpy und scipy (Musik).
 
 ```bash
-npm run check                 # Prüfung gegen das neueste Drehbuch im Projektordner (derzeit V1_4)
+npm run check                 # Prüfung gegen das neueste Drehbuch im Projektordner (derzeit V1_5)
 npm run check -- --stills     # zusätzlich Standbilder bei 25/50/75 % je Szene und Kontaktbogen
 npm run export                # MP4 und SRT nach output/
 npm run tts:text              # Sprachtexte und Ersetzungsliste nach audio/tts/
-node export/tts.mjs           # Sprachausgabe für geänderte Texte (braucht ELEVENLABS_API_KEY)
+node export/tts.mjs           # Sprachausgabe für geänderte Texte (braucht ELEVENLABS_API_KEY); freigegebene Aufnahmen bleiben,
+                              # wenn sich nur der Text davor/danach ändert (--kontext erzwingt auch diese)
 node export/sync.mjs          # Zeitplan aus den Aufnahmen in die HTML-Datei übernehmen
 node export/audio.mjs         # nur die Tonmischung (Sprache + Musik) nach output/.ton/
 ```
@@ -75,7 +77,7 @@ Die Musik entsteht beim Export automatisch neu, sobald sich Zeitplan oder Kompos
   -enden wie in einem durchgehenden Vortrag betont werden.
 - **Ergänzungen zum Sprechertext:** Begrüßung unter der Titelkarte, „Im Rathaus beginnt ein ganz normaler Montag.“ vor Szene 1
   und „Vielen Dank für Ihre Aufmerksamkeit.“ auf der Schlusstafel (`export/ergaenzungen.mjs`, Liste in `audio/tts/ERGAENZUNGEN.md`).
-  Inhalt nur aus dem Drehbuch abgeleitet; der Drehbuchtext selbst bleibt wortgleich.
+  Inhalt aus dem Drehbuch abgeleitet und seit V1_5 dort als Sprecherzeilen festgehalten.
 - **Musik:** eigene Komposition (`export/musik.py`), keine fremden Aufnahmen: F-Dur/d-Moll, je Szene ein Abschnitt, der auf dem
   Szenenwechsel beginnt – ruhig am Anfang, angespannt ab dem Einstieg, Höhepunkt, wenn der Angriff sichtbar wird, zuversichtlich
   zum Schluss. Unter der Stimme etwa 19 LU leiser als die Sprache, in den Pausen zwischen den Szenen hörbar.

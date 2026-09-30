@@ -39,6 +39,7 @@ export const REGELN = [
   { id: 'NRW', re: /\bNRW\b/g, nach: 'N-R-W' },
   { id: 'EU', re: /\bEU\b/g, nach: 'E-U' },
   { id: 'KI', re: /\bKI\b/g, nach: 'K-I' },
+  { id: 'ISMS', re: /\bISMS\b/g, nach: 'I-S-M-S' },
   { id: 'IT', re: /\bIT\b/g, nach: 'I-T' },
   { id: 'Dezimalzahl', re: /\b\d+,\d+\b/g, nach: m => { const [a, b] = m.split(','); return `${zahlWort(+a)} Komma ${[...b].map(d => ZIFFER[+d]).join(' ')}`; } },
   { id: 'Zahl', re: /\b\d+\b/g, nach: m => zahlWort(+m) },
@@ -135,7 +136,7 @@ export function ersetzungenMarkdown(liste, db) {
   md += `\nInsgesamt ${z.length} verschiedene Wörter, ${z.reduce((a, r) => a + [...r.szenen.values()].reduce((x, y) => x + y, 0), 0)} Stellen.\n`;
   md += '\n## Regeln\n\n| Regel | Ersetzung |\n|---|---|\n';
   md += '| Ortsname | „Stadt Herne“ → „Stadt“, „in Herne“ → „in der Stadt“ (die Stimme nennt den Ortsnamen nicht; Bild und Untertitel zeigen ihn) |\n';
-  md += '| NIS-2 | Nis-zwei |\n| BSI | B-S-I |\n| NRW | N-R-W |\n| EU | E-U |\n| KI | K-I |\n| IT | I-T |\n| Dezimalzahl | Ganzzahl als Wort, „Komma“, Ziffern einzeln (2,5 → zwei Komma fünf) |\n| Zahl | ausgeschrieben (2025 → zweitausendfünfundzwanzig) |\n';
+  md += '| NIS-2 | Nis-zwei |\n| BSI | B-S-I |\n| NRW | N-R-W |\n| EU | E-U |\n| KI | K-I |\n| ISMS | I-S-M-S |\n| IT | I-T |\n| Dezimalzahl | Ganzzahl als Wort, „Komma“, Ziffern einzeln (2,5 → zwei Komma fünf) |\n| Zahl | ausgeschrieben (2025 → zweitausendfünfundzwanzig) |\n';
   md += '\nEine Sicherung bricht ab, wenn im Sprachtext noch eine Ziffer oder ein Buchstabenkürzel steht, das keine Regel abdeckt.\n';
   md += '\n## Nicht ersetzt\n\n- „7:30 Uhr“ steht nur als Einblendung (Szene 6), nicht im Sprechertext.\n- „E-Mail“, „Sicherheitsupdates“, „Grundschutz-Checks“, „Audit“ und „Budget“ bleiben unverändert; sie werden beim Hörtest geprüft.\n';
   return md;

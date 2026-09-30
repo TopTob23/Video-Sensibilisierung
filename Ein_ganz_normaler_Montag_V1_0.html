@@ -66,7 +66,7 @@
    ===================================================================== */
 const W = 1920, H = 1080, FPS = 30;
 
-// Szenen laut Drehbuch V1_4: Titel und Richtzeiten [s]. Die tatsächlichen Zeiten stehen in TIMELINE
+// Szenen laut Drehbuch V1_5: Titel und Richtzeiten [s]. Die tatsächlichen Zeiten stehen in TIMELINE
 // (erzeugt von export/sync.mjs aus den Längen der Sprachaufnahmen); Szenen werden nur länger, nie kürzer.
 const SZENEN = [
   { n: 0, title: "Titel", nominal: [0, 12] },
@@ -102,7 +102,7 @@ const ANKER = {
   6: [[1, "Erst im letzten"], [5, "Die Daten werden"], [9.6, "es folgt eine"], [12.6, "Für die Wiederherstellung"], [17.6, "Die Datensicherung läuft"], [21, "für Teile der"], [24.2, "und manche Unterlagen"]],
   7: [[1, "Vergleichbare Fälle zeigen,"], [5.6, "Anhalt-Bitterfeld rief den"], [12.4, "der Aufwand lag"], [18, "Sozialleistungen konnten mindestens"], [23.6, "Nach dem Angriff"], [30.4, "erst nach etwa"], [35.4, "Für die Menschen"], [38.4, "Urkunden und Zulassungen"], [41.8, "Leistungen kommen später"], [44.4, "die Verwaltung ist"]],
   8: [[0.5, "Wie konnte es"], [2.9, "Waren die Schwachstellen"], [5.4, "Warum wurde nicht"], [12.1, "Was passiert mit"], [16.0, "Nach einem Angriff"], [20.1, "Der Vorfall muss"], [24.1, "Das BSI warnt"], [31.5, "Die Frage, ob"], [36.0, "Sie sind in"]],
-  9: [[5.1, "Im IT-Grundschutz ist"], [15.0, "Die NIS-2-Richtlinie der"], [28.8, "im Informationssicherheitsgesetz NRW"], [37.4, "Sie zeigen aber,"], [41.1, "Maßnahmen billigen, ihre"], [43.3, "überwachen und sich"], [45.2, "schulen lassen."]],
+  9: [[5.1, "Im IT-Grundschutz ist"], [15.0, "Die NIS-2-Richtlinie der"], [28.8, "im Informationssicherheitsgesetz NRW"], [37.4, "Sie zeigen aber,"], [42.0, "prüfen und billigen,"], [44.3, "überwachen, sich regelmäßig"], [46.2, "schulen lassen und"], [47.6, "Risiken kennen und"], [50.5, "Unterschrift unter die"]],
   10: [[0.5, "Die Maßnahmen sind"], [8.8, "Investitionen sind nötig"], [10.8, "Ersatz veralteter Systeme,"], [12.8, "einen geschützten Zugang"], [17.4, "eine zentrale Erkennung"], [19.9, "ein zweites Sicherungssystem."], [22.2, "Ebenso wichtig sind"], [24.3, "Server müssen laufend"], [26.4, "Updates eingespielt und"], [28.4, "Sicherheitseinstellungen regelmäßig geprüft"], [32.1, "Eine Überwachung schützt"], [34.2, "jemand die Meldungen"], [36.0, "und im Ernstfall"], [37.8, "reagiert."]],
   11: [[0.5, "So stellt sich"], [3.1, "Alle gezeigten Schwachstellen"], [8.0, "Ohne zusätzliche Mittel"], [13.7, "Stadt und ihre"]],
   12: [[0.5, "Für die Zertifizierung"], [3.7, "Die Referenzdokumente sind"], [6.3, "die Grundschutz-Checks aller"], [9.7, "Risikoanalyse und Realisierungsplan"], [14.4, "Für die Umsetzung"], [15.7, "fünfzehn Leitfäden, dreizehn"], [17.3, "dreizehn Härtungslisten und"], [19.3, "eine Entscheidungsvorlage vorbereitet."], [21.8, "Was zu tun"], [24.5, "Offen sind die"], [25.4, "Entscheidungen der Verwaltungsleitung,"], [27.6, "Budget und Personal"], [30.3, "die Übernahme der"], [32.8, "die Behebung der"], [36.9, "Überwachungsaudit."]],
@@ -116,7 +116,7 @@ const ANKER = {
 // Szene 12 lässt Zeit zum Lesen der hervorgehobenen Spalte und der Einblendung, bevor die Schlusstafel kommt.
 const BILDENDE = {
   0: [12.0, 0], 1: [14.8, 0.6], 2: [22.2, 0.6], 3: [28.0, 0.6], 4: [22.9, 0.6], 5: [21.8, 0.6], 6: [27.4, 0.6],
-  7: [48.4, 1.0], 8: [39.7, 0.6], 9: [41.3, 0.6], 10: [40.2, 0.6], 11: [16.9, 3.0], 12: [40.8, 4.5],
+  7: [48.4, 1.0], 8: [39.7, 0.6], 9: [52.0, 0.6], 10: [40.2, 0.6], 11: [16.9, 3.0], 12: [40.8, 4.5],
 };
 /* BILDENDE-END */
 
@@ -132,10 +132,10 @@ const TIMELINE = {
     6: {"start":116.9,"end":142.4,"entwurf":32,"anker":[[1,1],[5,4.042],[9.6,7.908],[12.6,10.671],[17.6,14.212],[21,16.882],[24.2,19.715]],"tail":1},
     7: {"start":142.4,"end":186.73333333333332,"entwurf":54,"anker":[[1,1],[5.6,5.214],[12.4,11.356],[18,17.01],[23.6,21.492],[30.4,28.435],[35.4,32.255],[38.4,34.577],[41.8,37.525],[44.4,39.325]],"tail":1},
     8: {"start":186.73333333333332,"end":227.43333333333334,"entwurf":44,"anker":[[0.5,0.5],[2.9,2.918],[5.4,5.383],[12.1,12.12],[16,16],[20.1,19.959],[24.1,23.988],[31.5,30.965],[36,35.853]],"tail":1},
-    9: {"start":227.43333333333334,"end":273.3,"entwurf":45,"anker":[[5.1,4.854],[15,14.758],[28.8,27.436],[37.4,35.226],[41.1,39.15],[43.3,41.368],[45.2,43.306]],"tail":1},
-    10: {"start":273.3,"end":313.6666666666667,"entwurf":45,"anker":[[0.5,0.5],[8.8,8.557],[10.8,10.763],[12.8,12.818],[17.4,17.288],[19.9,20.214],[22.2,22.49],[24.3,24.44],[26.4,26.46],[28.4,28.527],[32.1,31.963],[34.2,33.948],[36,35.794],[37.8,37.362]],"tail":1},
-    11: {"start":313.6666666666667,"end":333.6,"entwurf":30,"anker":[[0.5,0.5],[3.1,2.659],[8,7.478],[13.7,13.701]],"tail":1},
-    12: {"start":333.6,"end":384.56666666666666,"entwurf":66,"anker":[[0.5,0.5],[3.7,3.948],[6.3,6.502],[9.7,9.776],[14.4,14.455],[15.7,15.662],[17.3,17.148],[19.3,19.169],[21.8,21.874],[24.5,24.579],[25.4,25.31],[27.6,27.597],[30.3,30.082],[32.8,32.496],[36.9,36.537]],"tail":1}
+    9: {"start":227.43333333333334,"end":280.26666666666665,"entwurf":45,"anker":[[5.1,4.854],[15,14.758],[28.8,27.436],[37.4,35.296],[42,39.928],[44.3,42.18],[46.2,44.108],[47.6,45.501],[50.5,48.426]],"tail":1},
+    10: {"start":280.26666666666665,"end":320.6333333333333,"entwurf":45,"anker":[[0.5,0.5],[8.8,8.557],[10.8,10.763],[12.8,12.818],[17.4,17.288],[19.9,20.214],[22.2,22.49],[24.3,24.44],[26.4,26.46],[28.4,28.527],[32.1,31.963],[34.2,33.948],[36,35.794],[37.8,37.362]],"tail":1},
+    11: {"start":320.6333333333333,"end":340.56666666666666,"entwurf":30,"anker":[[0.5,0.5],[3.1,2.659],[8,7.478],[13.7,13.701]],"tail":1},
+    12: {"start":340.56666666666666,"end":391.53333333333336,"entwurf":66,"anker":[[0.5,0.5],[3.7,3.948],[6.3,6.502],[9.7,9.776],[14.4,14.455],[15.7,15.662],[17.3,17.148],[19.3,19.169],[21.8,21.874],[24.5,24.579],[25.4,25.31],[27.6,27.597],[30.3,30.082],[32.8,32.496],[36.9,36.537]],"tail":1}
   },
   cues: [
     {"scene":0,"start":1.4,"end":6.856,"lines":["Guten Tag. Dieses Video zeigt an einem erfundenen,","aber realistischen Ablauf,"]},
@@ -191,32 +191,33 @@ const TIMELINE = {
     {"scene":9,"start":236.827,"end":242.021,"lines":["eine Basis-Anforderung,","die im Überwachungsaudit vollständig geprüft wird."]},
     {"scene":9,"start":242.091,"end":247.57,"lines":["Die NIS-2-Richtlinie der EU schreibt","dieselbe Verantwortung gesetzlich fest:"]},
     {"scene":9,"start":247.64,"end":252.075,"lines":["seit Dezember 2025 im BSI-Gesetz,"]},
-    {"scene":9,"start":252.145,"end":259.343,"lines":["seit Januar 2026 im Informationssicherheitsgesetz","NRW für die Landesverwaltung."]},
-    {"scene":9,"start":259.413,"end":262.489,"lines":["Für Kommunen gelten beide nicht unmittelbar."]},
-    {"scene":9,"start":262.559,"end":266.413,"lines":["Sie zeigen aber, was von einer","Verwaltungsleitung erwartet wird:"]},
-    {"scene":9,"start":266.483,"end":272.733,"lines":["Maßnahmen billigen, ihre Umsetzung überwachen","und sich regelmäßig schulen lassen."]},
-    {"scene":10,"start":273.7,"end":275.681,"lines":["Die Maßnahmen sind geplant,"]},
-    {"scene":10,"start":275.751,"end":281.687,"lines":["umsetzen lassen sie sich aber nur mit ausreichenden","Mitteln und qualifiziertem Personal."]},
-    {"scene":10,"start":281.757,"end":285.948,"lines":["Investitionen sind nötig","für den Ersatz veralteter Systeme,"]},
-    {"scene":10,"start":286.018,"end":290.418,"lines":["einen geschützten Zugang zur IT-Verwaltung","mit zweiter Bestätigung,"]},
-    {"scene":10,"start":290.488,"end":295.62,"lines":["eine zentrale Erkennung von Angriffen","und ein zweites Sicherungssystem."]},
-    {"scene":10,"start":295.69,"end":299.696,"lines":["Ebenso wichtig sind Fachkräfte:","Server müssen laufend gewartet,"]},
-    {"scene":10,"start":299.766,"end":305.093,"lines":["Updates eingespielt und Sicherheitseinstellungen","regelmäßig geprüft werden."]},
-    {"scene":10,"start":305.163,"end":312.284,"lines":["Eine Überwachung schützt nur, wenn jemand die","Meldungen auswertet und im Ernstfall sofort reagiert."]},
-    {"scene":11,"start":314.067,"end":316.156,"lines":["So stellt sich die Lage heute dar."]},
-    {"scene":11,"start":316.226,"end":320.975,"lines":["Alle gezeigten Schwachstellen wurden in der","aktuellen Sicherheitsprüfung festgestellt."]},
-    {"scene":11,"start":321.045,"end":325.352,"lines":["Ohne zusätzliche Mittel und Personal","bleibt dieser Zustand bestehen"]},
-    {"scene":11,"start":325.422,"end":330.175,"lines":["und mit ihm das Risiko für die Stadt","und ihre Bürgerinnen und Bürger."]},
-    {"scene":12,"start":334,"end":337.378,"lines":["Für die Zertifizierung ist bereits viel erreicht."]},
-    {"scene":12,"start":337.448,"end":343.206,"lines":["Die Referenzdokumente sind überarbeitet,","die Grundschutz-Checks aller Zielobjekte ausgewertet,"]},
-    {"scene":12,"start":343.276,"end":347.885,"lines":["Risikoanalyse und Realisierungsplan","liegen im Entwurf vor."]},
-    {"scene":12,"start":347.955,"end":350.65,"lines":["Für die Umsetzung sind fünfzehn Leitfäden,"]},
-    {"scene":12,"start":350.72,"end":355.304,"lines":["dreizehn Härtungslisten und eine","Entscheidungsvorlage vorbereitet."]},
-    {"scene":12,"start":355.374,"end":358.009,"lines":["Was zu tun ist, ist damit beschrieben."]},
-    {"scene":12,"start":358.079,"end":363.512,"lines":["Offen sind die Entscheidungen der Verwaltungsleitung,","Budget und Personal für die Umsetzung,"]},
-    {"scene":12,"start":363.582,"end":368.899,"lines":["die Übernahme der verbleibenden Risiken und die","Behebung der Abweichungen aus dem letzten Audit,"]},
-    {"scene":12,"start":368.969,"end":372.073,"lines":["rechtzeitig vor dem Überwachungsaudit."]},
-    {"scene":12,"start":379.267,"end":381.86,"lines":["Vielen Dank für Ihre Aufmerksamkeit."]}
+    {"scene":9,"start":252.145,"end":259.401,"lines":["seit Januar 2026 im Informationssicherheitsgesetz","NRW für die Landesverwaltung."]},
+    {"scene":9,"start":259.471,"end":262.559,"lines":["Für Kommunen gelten beide nicht unmittelbar."]},
+    {"scene":9,"start":262.629,"end":268.642,"lines":["Sie zeigen aber, was von einer Verwaltungsleitung","erwartet wird: Maßnahmen prüfen und billigen,"]},
+    {"scene":9,"start":268.712,"end":275.086,"lines":["ihre Umsetzung überwachen, sich regelmäßig schulen","lassen und die Risiken kennen und verantworten –"]},
+    {"scene":9,"start":275.156,"end":279.7,"lines":["mit ihrer Unterschrift unter die ISMS-Dokumente."]},
+    {"scene":10,"start":280.667,"end":282.648,"lines":["Die Maßnahmen sind geplant,"]},
+    {"scene":10,"start":282.718,"end":288.654,"lines":["umsetzen lassen sie sich aber nur mit ausreichenden","Mitteln und qualifiziertem Personal."]},
+    {"scene":10,"start":288.724,"end":292.915,"lines":["Investitionen sind nötig","für den Ersatz veralteter Systeme,"]},
+    {"scene":10,"start":292.985,"end":297.385,"lines":["einen geschützten Zugang zur IT-Verwaltung","mit zweiter Bestätigung,"]},
+    {"scene":10,"start":297.455,"end":302.587,"lines":["eine zentrale Erkennung von Angriffen","und ein zweites Sicherungssystem."]},
+    {"scene":10,"start":302.657,"end":306.663,"lines":["Ebenso wichtig sind Fachkräfte:","Server müssen laufend gewartet,"]},
+    {"scene":10,"start":306.733,"end":312.06,"lines":["Updates eingespielt und Sicherheitseinstellungen","regelmäßig geprüft werden."]},
+    {"scene":10,"start":312.13,"end":319.251,"lines":["Eine Überwachung schützt nur, wenn jemand die","Meldungen auswertet und im Ernstfall sofort reagiert."]},
+    {"scene":11,"start":321.033,"end":323.122,"lines":["So stellt sich die Lage heute dar."]},
+    {"scene":11,"start":323.192,"end":327.941,"lines":["Alle gezeigten Schwachstellen wurden in der","aktuellen Sicherheitsprüfung festgestellt."]},
+    {"scene":11,"start":328.011,"end":332.318,"lines":["Ohne zusätzliche Mittel und Personal","bleibt dieser Zustand bestehen"]},
+    {"scene":11,"start":332.388,"end":337.141,"lines":["und mit ihm das Risiko für die Stadt","und ihre Bürgerinnen und Bürger."]},
+    {"scene":12,"start":340.967,"end":344.345,"lines":["Für die Zertifizierung ist bereits viel erreicht."]},
+    {"scene":12,"start":344.415,"end":350.173,"lines":["Die Referenzdokumente sind überarbeitet,","die Grundschutz-Checks aller Zielobjekte ausgewertet,"]},
+    {"scene":12,"start":350.243,"end":354.852,"lines":["Risikoanalyse und Realisierungsplan","liegen im Entwurf vor."]},
+    {"scene":12,"start":354.922,"end":357.616,"lines":["Für die Umsetzung sind fünfzehn Leitfäden,"]},
+    {"scene":12,"start":357.686,"end":362.271,"lines":["dreizehn Härtungslisten und eine","Entscheidungsvorlage vorbereitet."]},
+    {"scene":12,"start":362.341,"end":364.976,"lines":["Was zu tun ist, ist damit beschrieben."]},
+    {"scene":12,"start":365.046,"end":370.479,"lines":["Offen sind die Entscheidungen der Verwaltungsleitung,","Budget und Personal für die Umsetzung,"]},
+    {"scene":12,"start":370.549,"end":375.866,"lines":["die Übernahme der verbleibenden Risiken und die","Behebung der Abweichungen aus dem letzten Audit,"]},
+    {"scene":12,"start":375.936,"end":379.04,"lines":["rechtzeitig vor dem Überwachungsaudit."]},
+    {"scene":12,"start":386.234,"end":388.827,"lines":["Vielen Dank für Ihre Aufmerksamkeit."]}
   ],
 };
 /* TIMELINE-END */
@@ -251,7 +252,7 @@ function toActual(n, d) {
   return sc.start + x;
 }
 
-// Sprechertext wörtlich aus dem Drehbuch V1_4 (Quelle für Untertitel, SRT und Prüfung)
+// Sprechertext wörtlich aus dem Drehbuch V1_5 (Quelle für Untertitel, SRT und Prüfung)
 const SPRECHERTEXT = {
   1: "Ausweise, Urkunden, Sozialleistungen, Kitaplätze, Baugenehmigungen und die Gehälter der Beschäftigten: Fast jede Leistung der Stadtverwaltung hängt heute von funktionierender IT ab.",
   2: "Ein typischer Angriff beginnt mit einer gefälschten E-Mail, die wie eine gewöhnliche Rechnung aussieht. Solche Nachrichten erreichen jede Verwaltung täglich, und einzelne Klicks lassen sich nie ganz verhindern. Entscheidend ist, wie weit ein Angreifer danach kommt.",
@@ -261,15 +262,15 @@ const SPRECHERTEXT = {
   6: "Erst im letzten Schritt wird der Angriff sichtbar: Die Daten werden verschlüsselt, Kopien sind bereits abgeflossen, es folgt eine Lösegeldforderung. Für die Wiederherstellung kommt es dann auf die Rückfallebene an. Die Datensicherung läuft ohne zweites System, für Teile der IT fehlen Notfallpläne, und manche Unterlagen liegen auf genau den Systemen, die dann gesperrt sind.",
   7: "Vergleichbare Fälle zeigen, welche Folgen daraus entstehen. Anhalt-Bitterfeld rief den Katastrophenfall aus und beendete ihn erst nach rund sieben Monaten; der Aufwand lag nach Angaben des Landkreises bei rund 2,5 Millionen Euro. Sozialleistungen konnten mindestens eine Woche nicht ausgezahlt werden. Nach dem Angriff auf die Südwestfalen-IT waren Online-Dienste für rund 1,7 Millionen Einwohner erst nach etwa neun Monaten wieder weitgehend verfügbar. Für die Menschen in Herne hieße das: Urkunden und Zulassungen verzögern sich, Leistungen kommen später an, die Verwaltung ist kaum erreichbar.",
   8: "Nach einem Angriff steht die Verwaltungsspitze in der Verantwortung. Der Vorfall muss der Datenschutzaufsicht gemeldet werden. Das BSI warnt seit Jahren vor der hohen Bedrohungslage, die durch Künstliche Intelligenz weiter steigt. Die Frage, ob die Schwachstellen bekannt waren, wäre mit Ja zu beantworten: Sie sind in der aktuellen Sicherheitsprüfung dokumentiert.",
-  9: "Informationssicherheit ist eine Aufgabe der Verwaltungsleitung. Im IT-Grundschutz ist die Übernahme der Gesamtverantwortung durch die Leitung eine Basis-Anforderung, die im Überwachungsaudit vollständig geprüft wird. Die NIS-2-Richtlinie der EU schreibt dieselbe Verantwortung gesetzlich fest: seit Dezember 2025 im BSI-Gesetz, seit Januar 2026 im Informationssicherheitsgesetz NRW für die Landesverwaltung. Für Kommunen gelten beide nicht unmittelbar. Sie zeigen aber, was von einer Verwaltungsleitung erwartet wird: Maßnahmen billigen, ihre Umsetzung überwachen und sich regelmäßig schulen lassen.",
+  9: "Informationssicherheit ist eine Aufgabe der Verwaltungsleitung. Im IT-Grundschutz ist die Übernahme der Gesamtverantwortung durch die Leitung eine Basis-Anforderung, die im Überwachungsaudit vollständig geprüft wird. Die NIS-2-Richtlinie der EU schreibt dieselbe Verantwortung gesetzlich fest: seit Dezember 2025 im BSI-Gesetz, seit Januar 2026 im Informationssicherheitsgesetz NRW für die Landesverwaltung. Für Kommunen gelten beide nicht unmittelbar. Sie zeigen aber, was von einer Verwaltungsleitung erwartet wird: Maßnahmen prüfen und billigen, ihre Umsetzung überwachen, sich regelmäßig schulen lassen und die Risiken kennen und verantworten – mit ihrer Unterschrift unter die ISMS-Dokumente.",
   10: "Die Maßnahmen sind geplant, umsetzen lassen sie sich aber nur mit ausreichenden Mitteln und qualifiziertem Personal. Investitionen sind nötig für den Ersatz veralteter Systeme, einen geschützten Zugang zur IT-Verwaltung mit zweiter Bestätigung, eine zentrale Erkennung von Angriffen und ein zweites Sicherungssystem. Ebenso wichtig sind Fachkräfte: Server müssen laufend gewartet, Updates eingespielt und Sicherheitseinstellungen regelmäßig geprüft werden. Eine Überwachung schützt nur, wenn jemand die Meldungen auswertet und im Ernstfall sofort reagiert.",
   11: "So stellt sich die Lage heute dar. Alle gezeigten Schwachstellen wurden in der aktuellen Sicherheitsprüfung festgestellt. Ohne zusätzliche Mittel und Personal bleibt dieser Zustand bestehen und mit ihm das Risiko für die Stadt und ihre Bürgerinnen und Bürger.",
   12: "Für die Zertifizierung ist bereits viel erreicht. Die Referenzdokumente sind überarbeitet, die Grundschutz-Checks aller Zielobjekte ausgewertet, Risikoanalyse und Realisierungsplan liegen im Entwurf vor. Für die Umsetzung sind fünfzehn Leitfäden, dreizehn Härtungslisten und eine Entscheidungsvorlage vorbereitet. Was zu tun ist, ist damit beschrieben. Offen sind die Entscheidungen der Verwaltungsleitung, Budget und Personal für die Umsetzung, die Übernahme der verbleibenden Risiken und die Behebung der Abweichungen aus dem letzten Audit, rechtzeitig vor dem Überwachungsaudit.",
 };
-// Fragen der Presse (Szene 8), wörtlich aus dem Drehbuch V1_4; erscheinen als Sprechblasen und als Untertitel
+// Fragen der Presse (Szene 8), wörtlich aus dem Drehbuch V1_5; erscheinen als Sprechblasen und als Untertitel
 const PRESSEFRAGEN = ["Wie konnte es dazu kommen?", "Waren die Schwachstellen bekannt?", "Warum wurde nicht gehandelt, obwohl die Bedrohung – auch durch KI – seit Jahren bekannt ist?", "Was passiert mit den Daten der Bürgerinnen und Bürger?"];
 
-// Alle sichtbaren Texte wörtlich aus dem Drehbuch V1_4 (Einblendungen, Beschriftungen, Kacheln, Marke)
+// Alle sichtbaren Texte wörtlich aus dem Drehbuch V1_5 (Einblendungen, Beschriftungen, Kacheln, Marke)
 const TEXTE = {
   titel: "Ein ganz normaler Montag",
   unterzeile: "Was ein Cyberangriff für Herne bedeuten würde",
@@ -319,9 +320,10 @@ const TEXTE = {
   tafel_1: "IT-Grundschutz: Gesamtverantwortung der Leitung",
   tafel_2: "NIS-2 / BSI-Gesetz: Informationssicherheit als Leitungsaufgabe",
   tafel_3: "InfoSiG NRW: NIS-2 für die Landesverwaltung",
-  symbol_billigen: "billigen",
+  symbol_billigen: "prüfen und billigen",
   symbol_ueberwachen: "überwachen",
   symbol_schulen: "schulen",
+  symbol_verantworten: "Risiken verantworten",
   spalte_investitionen: "Investitionen",
   spalte_personal: "Personal",
   invest_1: "Ersatz veralteter Systeme",
@@ -359,6 +361,12 @@ const TEXTE = {
   vorbereitet_3: "Entscheidungsvorlage mit 22 Entscheidungen",
   vorbereitet_4: "Prüfschema für den technischen Review",
   vorbereitet_5: "Bereinigungsliste für die Grundschutz-Checks",
+  // wer als Nächstes was tut (je Punkt in „Vorbereitet“, klein darunter)
+  rolle_1: "IT-Betrieb: umsetzen",
+  rolle_2: "IT-Betrieb: Server härten",
+  rolle_3: "Verwaltungsleitung: prüfen und billigen",
+  rolle_4: "ISB: Umsetzung prüfen",
+  rolle_5: "ISB: Checks bereinigen",
   spalte_offen: "Offen – nächste Schritte",
   offen_1: "Entscheidungen der Verwaltungsleitung, zwölf davon vor dem Überwachungsaudit",
   offen_2: "Budget und Personal für die Umsetzung",
@@ -2622,14 +2630,17 @@ function Blitz(x, y, k, r = 1) {
 /* =====================================================================
    SZENE 9 – VERANTWORTUNG DER LEITUNG (4:28–5:13)
    Besprechungsraum der Verwaltungsspitze. Drei Tafeln erscheinen nacheinander, synchron zum Sprechertext;
-   danach drei Symbole zu „billigen, überwachen, schulen“: Dokument mit Freigabevermerk, Übersichtsbildschirm, Schulung.
+   danach vier Symbole zu „prüfen und billigen, überwachen, schulen, Risiken verantworten“: Dokument mit Freigabevermerk,
+   Übersichtsbildschirm, Schulung, Dokument mit Unterschrift.
    Zeiten (lt) auf die Sprachaufnahme abgestimmt; ANKER hält Bild und Ton zusammen.
    ===================================================================== */
 const S9L = {
-  // Entwurfszeiten: Tafeln bei „IT-Grundschutz“, „NIS-2-Richtlinie“ / „BSI-Gesetz“, „Informationssicherheitsgesetz NRW“; Symbole bei „billigen“, „überwachen“, „schulen“
+  // Entwurfszeiten: Tafeln bei „IT-Grundschutz“, „NIS-2-Richtlinie“ / „BSI-Gesetz“, „Informationssicherheitsgesetz NRW“;
+  // Symbole bei „prüfen“, „überwachen“, „schulen“, „Risiken“ – die Unterschrift zieht sich bei „Unterschrift“ (anim)
   tafeln: [{ key: 'tafel_1', t: 5.1 }, { key: 'tafel_2', t: 15.0 }, { key: 'tafel_3', t: 28.8 }],
-  symbole: [{ key: 'symbol_billigen', t: 41.8 }, { key: 'symbol_ueberwachen', t: 43.3 }, { key: 'symbol_schulen', t: 45.2 }],
-  symStart: 37.4,          // „Sie zeigen aber, was …“: Tafeln rücken nach oben, die drei Symbole erscheinen (noch ruhig)
+  symbole: [{ key: 'symbol_billigen', t: 42.0 }, { key: 'symbol_ueberwachen', t: 44.3 }, { key: 'symbol_schulen', t: 46.2 }, { key: 'symbol_verantworten', t: 47.6, anim: 50.5 }],
+  symStart: 37.4,          // „Sie zeigen aber, was …“: Tafeln rücken nach oben, die vier Symbole erscheinen (noch ruhig)
+  karte: 410, abstand: 440, // Symbolkarten: Breite und Mittenabstand (vier nebeneinander, frei von den Rändern)
 };
 // Raum: Fensterfront mit Blick auf die Stadt, langer Tisch, Personen der Verwaltungsspitze (allgemeine Figuren)
 function Besprechungsraum() {
@@ -2673,7 +2684,7 @@ function Tafel(key, x, y, w, op, dy) {
   });
   return { svg: G({ opacity: N(op), transform: `translate(0 ${N(dy)})`, filter: 'url(#fCardShadow)' }, g), h };
 }
-// Symbole: Dokument mit Freigabevermerk, Übersichtsbildschirm, Schulungssituation (Mitte 0,0; ca. 240 × 200)
+// Symbole: Dokument mit Freigabevermerk, Übersichtsbildschirm, Schulungssituation, Dokument mit Unterschrift (Mitte 0,0; ca. 240 × 200)
 function SymbolBilligen(k) {
   let g = Rect(-78, -104, 156, 200, '#FFFFFF', { ...OL(3), rx: 6 });
   for (let i = 0; i < 6; i++) g += Rect(-56, -80 + i * 22, i === 5 ? 70 : 112, 8, '#D4DADD', { rx: 4 });
@@ -2697,6 +2708,20 @@ function SymbolSchulen(k) {
   g += Check(-86, -78, 12, clamp(k * 2)) + Rect(-66, -82, 76, 8, '#D4DADD', { rx: 4 }) + Check(-86, -44, 12, clamp(k * 2 - 0.5)) + Rect(-66, -48, 62, 8, '#D4DADD', { rx: 4 });
   g += Person({ x: 72, y: 96, s: 0.42, dir: -1, top: '#2E8C87', pants: '#5B666B', hair: C.hairDark, hairStyle: 'bun', skin: C.skin2, arms: { f: { sh: 150, el: 10 } }, mood: 'neutral' });
   g += Bust({ x: -94, y: 96, s: 0.36, jacket: '#3B4A57', hair: C.hairGrey, hairStyle: 'bald', skin: C.skin3 }) + Bust({ x: -4, y: 100, s: 0.36, jacket: '#5C4B6B', hair: C.hairBrown, hairStyle: 'long', skin: C.skin1 });
+  return g;
+}
+// Risiken verantworten: Dokument mit Warnzeichen; bei „Unterschrift“ zieht der Füller die Unterschrift auf der Linie
+function SymbolVerantworten(k) {
+  let g = Rect(-78, -104, 156, 200, '#FFFFFF', { ...OL(3), rx: 6 });
+  g += Path('M-58,-60 L-40,-92 L-22,-60 Z', '#FFFFFF', { stroke: C.warn, 'stroke-width': 4, 'stroke-linejoin': 'round' }) + Line(-40, -83, -40, -71, C.warn, 4) + Circ(-40, -65, 2.4, C.warn);
+  for (let i = 0; i < 3; i++) g += Rect(-10, -88 + i * 13, i === 2 ? 44 : 64, 7, '#D4DADD', { rx: 3.5 });
+  for (let i = 0; i < 3; i++) g += Rect(-56, -38 + i * 22, i === 2 ? 78 : 112, 8, '#D4DADD', { rx: 4 });
+  g += Line(-56, 70, 56, 70, C.line, 2.5);
+  const p = EASE.inOut(clamp(k * 1.25));
+  g += Path('M-50,60 C-42,34 -34,74 -24,52 S-8,42 0,58 S16,36 24,54 S38,62 50,46', 'none', { stroke: '#1F4E8C', 'stroke-width': 4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke-dasharray': 240, 'stroke-dashoffset': N(240 * (1 - p)) });
+  const fx = -50 + 100 * p, fy = 52 - 8 * Math.sin(p * 9.4);
+  const penOp = clamp(k * 6) * (1 - clamp((k - 0.85) * 8));
+  if (penOp > 0.01) g += G({ transform: `translate(${N(fx)} ${N(fy)}) rotate(32)`, opacity: N(penOp) }, Rect(-7, -64, 14, 58, '#2F3B45', { ...OL(2), rx: 6 }) + Path('M-7,-6 L0,10 L7,-6 Z', '#C9A227', OL(1.5)));
   return g;
 }
 const S9 = {
@@ -2726,18 +2751,19 @@ const S9 = {
     });
     ui += G({ transform: `translate(960 0) scale(${N(scale)}) translate(-960 ${N(up * 10)})` }, tafeln);
     // Symbole: erscheinen bei „Sie zeigen aber …“ ruhig nebeneinander; jedes wird bei seinem Wort aktiv
-    const symY = 700;
+    const symY = 700, n = S9L.symbole.length, kw = S9L.karte;
     S9L.symbole.forEach((sy, i) => {
-      const op = ez(lt, S9L.symStart + 0.5 + i * 0.35, S9L.symStart + 1.2 + i * 0.35);
+      const op = ez(lt, S9L.symStart + 0.5 + i * 0.3, S9L.symStart + 1.2 + i * 0.3);
       if (op <= 0.001) return;
       const akt = ez(lt, sy.t - 0.1, sy.t + 0.5);
-      const cx = 960 + (i - 1) * 470;
-      const inner = [SymbolBilligen, SymbolUeberwachen, SymbolSchulen][i](seg(lt, sy.t, sy.t + 1.2), lt);
-      const label = TEXTE[sy.key], lw = measure(label, 34, 700) + 44;
+      const cx = 960 + (i - (n - 1) / 2) * S9L.abstand;
+      const a0 = sy.anim ?? sy.t;
+      const inner = [SymbolBilligen, SymbolUeberwachen, SymbolSchulen, SymbolVerantworten][i](seg(lt, a0, a0 + 1.2), lt);
+      const label = TEXTE[sy.key], lw = measure(label, 31, 700) + 40;
       ui += G({ opacity: N(op), transform: `translate(${N(cx)} ${N(symY)}) scale(${N(1 + 0.04 * bump(lt, sy.t + 0.3, 0.5))}) translate(${N(-cx)} ${N(-symY + (1 - EASE.out(op)) * 30)})` },
-        G({ filter: 'url(#fCardShadow)' }, Rect(cx - 200, symY - 150, 400, 272, '#FFFFFF', { rx: 20, opacity: 0.97 }))
+        G({ filter: 'url(#fCardShadow)' }, Rect(cx - kw / 2, symY - 150, kw, 272, '#FFFFFF', { rx: 20, opacity: 0.97 }))
         + G({ transform: `translate(${cx} ${symY - 30}) scale(0.72)`, opacity: N(0.45 + 0.55 * akt) }, inner)
-        + Rect(cx - lw / 2, symY + 72, lw, 50, mix('#8E9AA0', C.gruen, akt), { rx: 25 }) + Txt(cx, symY + 108, label, { size: 34, weight: 700, fill: '#FFFFFF', anchor: 'middle', k: sy.key, i: 0 }));
+        + Rect(cx - lw / 2, symY + 74, lw, 46, mix('#8E9AA0', C.gruen, akt), { rx: 23 }) + Txt(cx, symY + 107, label, { size: 31, weight: 700, fill: '#FFFFFF', anchor: 'middle', k: sy.key, i: 0 }));
     });
     // Ausklang: sanft in die nächste Szene (Rücklauf)
     return { world: world + Use('vignette'), warn: '', ui, grade: GRADE.day };
@@ -2784,8 +2810,9 @@ function s12Layout() {
       let y = S12L.top + 124;
       const punkte = sp.punkte.map((t, k) => {
         const key = `${sp.key}_${k + 1}`, lines = wrapLines(TEXTE[key], size, 400, innerW);
-        const p = { key, t, lines, y };
-        y += lines.length * lh + Math.round(size * 0.62);
+        const rolle = sp.key === 'vorbereitet' && TEXTE[`rolle_${k + 1}`] ? `rolle_${k + 1}` : null;   // wer als Nächstes was tut
+        const p = { key, t, lines, y, rolle, ry: y + lines.length * lh + Math.round(size * 0.1) };
+        y += lines.length * lh + (rolle ? Math.round(size * 1.05) : 0) + Math.round(size * 0.62);
         return p;
       });
       return { ...sp, x, punkte, bottom: y + 10 };
@@ -2836,6 +2863,12 @@ const S12 = {
           if (u <= 0.001) return;
           let pg = PunktMarke(sp.icon, sp.x + 44, p.y - L.size * 0.33, seg(lt, p.t - 0.1, p.t + 0.5), sp.farbe);
           pg += TextBlock(p.key, sp.x + 72, p.y, { size: L.size, fill: C.text, lines: p.lines, lh: L.lh });
+          if (p.rolle) {                               // Rollenzeile: kleiner Pfeil, dann „Rolle: Aufgabe“ in der Spaltenfarbe
+            const rs = Math.round(L.size * 0.84), ay = p.ry - rs * 0.36;
+            pg += Path(`M${sp.x + 74},${N(ay - 9)} L${sp.x + 74},${N(ay)} L${sp.x + 92},${N(ay)}`, 'none', { stroke: sp.farbe, 'stroke-width': 2.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' })
+              + Path(`M${sp.x + 86},${N(ay - 5)} L${sp.x + 93},${N(ay)} L${sp.x + 86},${N(ay + 5)}`, 'none', { stroke: sp.farbe, 'stroke-width': 2.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' })
+              + Txt(sp.x + 102, p.ry, TEXTE[p.rolle], { size: rs, weight: 600, fill: sp.farbe, k: p.rolle, i: 0 });
+          }
           g += G({ opacity: N(u), transform: `translate(${N((1 - EASE.out(u)) * 18)} 0)` }, pg);
         });
         ui += G({ opacity: N(op * dim * (1 - city)), transform: `translate(${N(cx)} ${N(cy + (1 - EASE.out(op)) * 26)}) scale(${N(sc)}) translate(${N(-cx)} ${N(-cy)})`, filter: 'url(#fCardShadow)' }, g);

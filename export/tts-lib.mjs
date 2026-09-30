@@ -58,4 +58,7 @@ export function teile(db) {
 }
 
 export const seedFor = t => 4000 + t.szene * 10 + t.index + (t.art === 'schluss' ? 5 : 0);
+// Inhalt einer vorhandenen Aufnahme gleich? (Text, Stimme, Modell, Einstellungen, Startwert – der Kontext zählt nicht)
+export const inhaltGleich = (j, t) => j.text === t.text && j.stimme && t.stimme && j.stimme.id === t.stimme.id && j.modell === MODELL
+  && JSON.stringify(j.einstellungen) === JSON.stringify(EINSTELLUNGEN) && j.seed === seedFor(t);
 export const schluessel = t => crypto.createHash('sha1').update(JSON.stringify({ text: t.text, voice: t.stimme.id, model: MODELL, s: EINSTELLUNGEN, seed: seedFor(t), kontext: t.kontext })).digest('hex');

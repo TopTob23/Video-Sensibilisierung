@@ -1,8 +1,8 @@
 # Prüfbericht „Ein ganz normaler Montag“
 
-Drehbuch: Drehbuch_Video_Angriffsszenario_Herne_V1_4.md · Video: Ein_ganz_normaler_Montag_V1_0.html · Umfang: alle Szenen
+Drehbuch: Drehbuch_Video_Angriffsszenario_Herne_V1_5.md · Video: Ein_ganz_normaler_Montag_V1_0.html · Umfang: alle Szenen
 
-**Ergebnis:** 0 Fehler · 10 Warnungen · 62 bestandene Prüfungen · 30 Hinweise
+**Ergebnis:** 0 Fehler · 10 Warnungen · 65 bestandene Prüfungen · 28 Hinweise
 
 ## Szenen und Zeiten
 
@@ -15,11 +15,11 @@ Drehbuch: Drehbuch_Video_Angriffsszenario_Herne_V1_4.md · Video: Ein_ganz_norma
 - ℹ️ Szene 6 „Der Angriff wird sichtbar“: 1:56.9–2:22.4 (25.50 s) statt 2:18.0–2:50.0 (32 s), −6.50 s · Sprechende 24.50 s, Bild fertig 23.52 s
 - ℹ️ Szene 7 „Die Folgen“: 2:22.4–3:06.7 (44.33 s) statt 2:50.0–3:44.0 (54 s), −9.67 s · Sprechende 41.87 s, Bild fertig 44.33 s
 - ℹ️ Szene 8 „Die Verantwortung der Verwaltungsspitze“: 3:06.7–3:47.4 (40.70 s) statt 3:44.0–4:28.0 (44 s), −3.30 s · Sprechende 39.68 s, Bild fertig 40.15 s
-- ℹ️ Szene 9 „Verantwortung der Leitung“: 3:47.4–4:33.3 (45.87 s) statt 4:28.0–5:13.0 (45 s), +0.87 s · Sprechende 44.85 s, Bild fertig 39.95 s
-- ℹ️ Szene 10 „Was es braucht“: 4:33.3–5:13.7 (40.37 s) statt 5:13.0–5:58.0 (45 s), −4.63 s · Sprechende 38.53 s, Bild fertig 40.36 s
-- ℹ️ Szene 11 „Stand heute“: 5:13.7–5:33.6 (19.93 s) statt 5:58.0–6:28.0 (30 s), −10.07 s · Sprechende 16.06 s, Bild fertig 19.90 s
-- ℹ️ Szene 12 „Wo wir stehen“: 5:33.6–6:24.6 (50.97 s) statt 6:28.0–7:34.0 (66 s), −15.03 s · Sprechende 38.02 s, Bild fertig 44.94 s
-- ✅ 13 Szenen, Titel und Reihenfolge wie Drehbuch; jede Szene zeigt ihr Bild vollständig (Bildende + Haltezeit); Gesamtdauer 6:24.6 (11537 Bilder bei 30 fps; Richtwert Drehbuch 7:34.0, Drehbuchzeiten sind Richtwerte)
+- ℹ️ Szene 9 „Verantwortung der Leitung“: 3:47.4–4:40.3 (52.83 s) statt 4:28.0–5:13.0 (45 s), +7.83 s · Sprechende 51.82 s, Bild fertig 50.53 s
+- ℹ️ Szene 10 „Was es braucht“: 4:40.3–5:20.6 (40.37 s) statt 5:13.0–5:58.0 (45 s), −4.63 s · Sprechende 38.53 s, Bild fertig 40.36 s
+- ℹ️ Szene 11 „Stand heute“: 5:20.6–5:40.6 (19.93 s) statt 5:58.0–6:28.0 (30 s), −10.07 s · Sprechende 16.06 s, Bild fertig 19.90 s
+- ℹ️ Szene 12 „Wo wir stehen“: 5:40.6–6:31.5 (50.97 s) statt 6:28.0–7:34.0 (66 s), −15.03 s · Sprechende 38.02 s, Bild fertig 44.94 s
+- ✅ 13 Szenen, Titel und Reihenfolge wie Drehbuch; jede Szene zeigt ihr Bild vollständig (Bildende + Haltezeit); Gesamtdauer 6:31.5 (11746 Bilder bei 30 fps; Richtwert Drehbuch 7:34.0, Drehbuchzeiten sind Richtwerte)
 
 ## Sprechertext
 
@@ -31,14 +31,14 @@ Drehbuch: Drehbuch_Video_Angriffsszenario_Herne_V1_4.md · Video: Ein_ganz_norma
 - ✅ Szene 6: wortgleich (375 Zeichen)
 - ✅ Szene 7: wortgleich (596 Zeichen)
 - ✅ Szene 8: wortgleich (365 Zeichen)
-- ✅ Szene 9: wortgleich (599 Zeichen)
+- ✅ Szene 9: wortgleich (697 Zeichen)
 - ✅ Szene 10: wortgleich (556 Zeichen)
 - ✅ Szene 11: wortgleich (259 Zeichen)
 - ✅ Szene 12: wortgleich (581 Zeichen)
 - ✅ Pressefragen (Szene 8): 4 Fragen wortgleich
-- ℹ️ Ergänzung Szene 0 (vor dem Sprechertext): „Guten Tag. Dieses Video zeigt an einem erfundenen, aber realistischen Ablauf, was ein Cyberangriff für die Stadt bedeuten würde und welche Entscheidungen jetzt anstehen.“ – Begrüßung statt zwölf Sekunden Stille unter der Titelkarte; Grundlage: Unterzeile der Titelkarte („Was ein Cyberangriff für Herne bedeuten würde“), Leitgedanke („Ein erfundener, aber realistischer Angriffsverlauf“, „welche Entscheidungen jetzt anstehen“)
-- ℹ️ Ergänzung Szene 1 (vor dem Sprechertext): „Im Rathaus beginnt ein ganz normaler Montag.“ – Übergang: Der Sprechertext setzt sonst unvermittelt mit der Aufzählung „Ausweise, …“ ein; Grundlage: Titel („Ein ganz normaler Montag“), Bild der Szene 1 (Rathaus)
-- ℹ️ Ergänzung Szene 12 (Schlusssatz auf der Schlusstafel): „Vielen Dank für Ihre Aufmerksamkeit.“ – Abschluss auf der Schlusstafel als Gegenstück zur Begrüßung; Grundlage: Grußformel, kein inhaltlicher Zusatz
+- ✅ Ergänzung Szene 0 (im Drehbuch festgehalten, vor dem Sprechertext): „Guten Tag. Dieses Video zeigt an einem erfundenen, aber realistischen Ablauf, was ein Cyberangriff für die Stadt bedeuten würde und welche Entscheidungen jetzt anstehen.“ – Begrüßung statt zwölf Sekunden Stille unter der Titelkarte; Grundlage: Unterzeile der Titelkarte („Was ein Cyberangriff für Herne bedeuten würde“), Leitgedanke („Ein erfundener, aber realistischer Angriffsverlauf“, „welche Entscheidungen jetzt anstehen“)
+- ✅ Ergänzung Szene 1 (im Drehbuch festgehalten, vor dem Sprechertext): „Im Rathaus beginnt ein ganz normaler Montag.“ – Übergang: Der Sprechertext setzt sonst unvermittelt mit der Aufzählung „Ausweise, …“ ein; Grundlage: Titel („Ein ganz normaler Montag“), Bild der Szene 1 (Rathaus)
+- ✅ Ergänzung Szene 12 (im Drehbuch festgehalten, Schlusssatz auf der Schlusstafel): „Vielen Dank für Ihre Aufmerksamkeit.“ – Abschluss auf der Schlusstafel als Gegenstück zur Begrüßung; Grundlage: Grußformel, kein inhaltlicher Zusatz
 
 ## Untertitel
 
@@ -59,15 +59,15 @@ Drehbuch: Drehbuch_Video_Angriffsszenario_Herne_V1_4.md · Video: Ein_ganz_norma
 - ✅ Szene 8: 10 Untertitel, zusammen wortgleich und vollständig (Pressefragen und Sprechertext)
 - ⚠️ Cue 43: Lesetempo 17.5 Zeichen/s (> 17, folgt dem Sprechtempo)
 - ⚠️ Cue 46: Lesetempo 17.7 Zeichen/s (> 17, folgt dem Sprechtempo)
-- ✅ Szene 9: 9 Untertitel, zusammen wortgleich und vollständig
+- ✅ Szene 9: 10 Untertitel, zusammen wortgleich und vollständig
 - ✅ Szene 10: 8 Untertitel, zusammen wortgleich und vollständig
 - ✅ Szene 11: 4 Untertitel, zusammen wortgleich und vollständig
-- ⚠️ Cue 67: Lesetempo 18.1 Zeichen/s (> 17, folgt dem Sprechtempo)
+- ⚠️ Cue 68: Lesetempo 18.1 Zeichen/s (> 17, folgt dem Sprechtempo)
 - ✅ Szene 12: 10 Untertitel, zusammen wortgleich und vollständig (Drehbuch + freigegebene Ergänzung)
-- ⚠️ Cue 77: Lesetempo 18.1 Zeichen/s (> 17, folgt dem Sprechtempo)
-- ✅ 79 von 79 Untertiteln zur Cue-Mitte korrekt angezeigt, vollständig im Bild, max. 2 Zeilen
-- ✅ alle 79 Untertitel synchron zur Stimme: Beginn höchstens 0.10 s vor dem ersten Wort, Ende nach dem letzten Wort; SRT und Bild aus denselben Zeitmarken
-- ✅ Untertitel und Vertraulich-Vermerk (Titelkarte, Schlusstafel) berühren sich an keinem der 1927 Zeitpunkte
+- ⚠️ Cue 78: Lesetempo 18.1 Zeichen/s (> 17, folgt dem Sprechtempo)
+- ✅ 80 von 80 Untertiteln zur Cue-Mitte korrekt angezeigt, vollständig im Bild, max. 2 Zeilen
+- ✅ alle 80 Untertitel synchron zur Stimme: Beginn höchstens 0.10 s vor dem ersten Wort, Ende nach dem letzten Wort; SRT und Bild aus denselben Zeitmarken
+- ✅ Untertitel und Vertraulich-Vermerk (Titelkarte, Schlusstafel) berühren sich an keinem der 1962 Zeitpunkte
 
 ## Synchronpunkte
 
@@ -79,19 +79,19 @@ Drehbuch: Drehbuch_Video_Angriffsszenario_Herne_V1_4.md · Video: Ein_ganz_norma
 - ℹ️ „Woche 2“ (woche_2) abgeleitet aus Bildbeschreibung „Woche 1, 2, 3, 4“
 - ℹ️ „Woche 3“ (woche_3) abgeleitet aus Bildbeschreibung „Woche 1, 2, 3, 4“
 - ℹ️ „Woche 4“ (woche_4) abgeleitet aus Bildbeschreibung „Woche 1, 2, 3, 4“
-- ✅ 94 Einträge im Textverzeichnis wörtlich im Drehbuch enthalten
+- ✅ 100 Einträge im Textverzeichnis wörtlich im Drehbuch enthalten
 - ℹ️ Bildbestandteil „GEMEINSAM FÜR EIN LEBENSWERTES HERNE“ – Auftrag Regel 3: Spruch an der Fassade wie in der Stilreferenz
 - ℹ️ Bildbestandteil „Stadt Herne“ – Auftrag Regel 3: Text „Stadt Herne“
 - ℹ️ Bildbestandteil „H“ – Haltestellenzeichen (Verkehrszeichen, kein Text)
-- ✅ 1927 Zeitpunkte abgetastet (alle 0.2 s): jeder Text trägt eine Kennung und ist wortgleich
+- ✅ 1962 Zeitpunkte abgetastet (alle 0.2 s): jeder Text trägt eine Kennung und ist wortgleich
 - ✅ Einblendung „hinweis“ sichtbar 0:06.0–0:12.0 wie im Drehbuch
-- ℹ️ Einblendung „schluss_titel“: laut Drehbuch 7:28.0–7:34.0, im Video 6:18.6–6:24.6 (Szene 12 verschoben)
-- ✅ Einblendung „schluss_titel“ sichtbar 6:18.6–6:24.6 wie im Drehbuch
+- ℹ️ Einblendung „schluss_titel“: laut Drehbuch 7:28.0–7:34.0, im Video 6:25.5–6:31.5 (Szene 12 verschoben)
+- ✅ Einblendung „schluss_titel“ sichtbar 6:25.5–6:31.5 wie im Drehbuch
 - ✅ „Woche 5“ kommt nicht vor (V1.2: Kalenderblätter bis Woche 4)
 
 ## Marke
 
-- ✅ Marke oben rechts überdeckt an keinem der 1927 Zeitpunkte eine Titelkarte, Einblendung oder einen Untertitel
+- ✅ Marke oben rechts überdeckt an keinem der 1962 Zeitpunkte eine Titelkarte, Einblendung oder einen Untertitel
 - ✅ Logo als Data-URI eingebettet, einzige Bilddatei, Originalgröße 152 × 88 px (nicht hochskaliert)
 - ✅ Logo oben rechts in Originalgröße mit der Zeile „Unser zuverlässiger Partner für IT- und Informationssicherheit“ sichtbar in allen Szenen
 - ✅ Schlusstafel: Logo oben rechts ausgeblendet; Logo mittig unter dem Stadt-Herne-Text mit der Zeile „Unser zuverlässiger Partner für IT- und Informationssicherheit“
@@ -115,15 +115,16 @@ Drehbuch: Drehbuch_Video_Angriffsszenario_Herne_V1_4.md · Video: Ein_ganz_norma
 
 ## Dauer und Dateien
 
-- ℹ️ Szene 0 0:00.0–0:13.6 (13.57 s) · Szene 1 0:13.6–0:31.6 (18.00 s) · Szene 2 0:31.6–0:50.1 (18.57 s) · Szene 3 0:50.1–1:16.5 (26.33 s) · Szene 4 1:16.5–1:36.9 (20.40 s) · Szene 5 1:36.9–1:56.9 (20.03 s) · Szene 6 1:56.9–2:22.4 (25.50 s) · Szene 7 2:22.4–3:06.7 (44.33 s) · Szene 8 3:06.7–3:47.4 (40.70 s) · Szene 9 3:47.4–4:33.3 (45.87 s) · Szene 10 4:33.3–5:13.7 (40.37 s) · Szene 11 5:13.7–5:33.6 (19.93 s) · Szene 12 5:33.6–6:24.6 (50.97 s)
-- ✅ SRT: 79 Einträge, Text und Zeiten identisch mit den eingebrannten Untertiteln
-- ✅ MP4 Bild: h264 High, 1920×1080, yuv420p, 30/1 fps, 11537 Bilder (Soll 11537), 384.567 s, 71.1 MB
-- ✅ MP4 Ton: aac, 48000 Hz, 2 Kanäle, 198 kbit/s während der Sprache (Soll 192), 198 kbit/s im Mittel über das ganze Video
-- ✅ Länge Ton 384.566 s, Länge Bild 384.567 s (Abweichung -0.001 s)
-- ✅ Lautheit -16.2 LUFS integriert (Soll −16), True Peak -1.9 dBTP (Soll ≤ −1)
+- ℹ️ Szene 0 0:00.0–0:13.6 (13.57 s) · Szene 1 0:13.6–0:31.6 (18.00 s) · Szene 2 0:31.6–0:50.1 (18.57 s) · Szene 3 0:50.1–1:16.5 (26.33 s) · Szene 4 1:16.5–1:36.9 (20.40 s) · Szene 5 1:36.9–1:56.9 (20.03 s) · Szene 6 1:56.9–2:22.4 (25.50 s) · Szene 7 2:22.4–3:06.7 (44.33 s) · Szene 8 3:06.7–3:47.4 (40.70 s) · Szene 9 3:47.4–4:40.3 (52.83 s) · Szene 10 4:40.3–5:20.6 (40.37 s) · Szene 11 5:20.6–5:40.6 (19.93 s) · Szene 12 5:40.6–6:31.5 (50.97 s)
+- ✅ SRT: 80 Einträge, Text und Zeiten identisch mit den eingebrannten Untertiteln
+- ✅ MP4 Bild: h264 High, 1920×1080, yuv420p, 30/1 fps, 11746 Bilder (Soll 11746), 391.533 s, 72.4 MB
+- ✅ MP4 Ton: aac, 48000 Hz, 2 Kanäle, 198 kbit/s während der Sprache (Soll 192), 197 kbit/s im Mittel über das ganze Video
+- ✅ Länge Ton 391.533 s, Länge Bild 391.533 s (Abweichung -0.000 s)
+- ✅ Lautheit -16.2 LUFS integriert (Soll −16), True Peak -1.3 dBTP (Soll ≤ −1)
 
 ## Ton
 
+- ℹ️ szene_10: aufgenommen mit dem damaligen Text davor/danach; Aufnahme bleibt (nur der Kontext hat sich geändert)
 - ✅ 18 Aufnahmen aktuell: Text wie Sprachtext, Stimme Alexander – Deep TV Narrator (eleven_multilingual_v2; stability 0.6, similarity_boost 0.75, style 0, speaker boost an, Geschwindigkeit 1); Pressefragen: Carla Blum – Confident and Informative / Dan – Radio Host & Moderator; 14 Erzählerteile mit dem gesprochenen Text davor/danach als Kontext
 - ✅ Sprechfluss: jeder Erzählerteil läuft als durchgehende Aufnahme mit seinen natürlichen Pausen (keine eingefügten Pausen, nichts zerschnitten)
 - ✅ Schlusssatz auf der Schlusstafel: beginnt 0.8 s nach dem Einblenden, endet 3.2 s vor dem Videoende
@@ -132,11 +133,11 @@ Drehbuch: Drehbuch_Video_Angriffsszenario_Herne_V1_4.md · Video: Ein_ganz_norma
 ## Musik
 
 - ✅ Musik passt zur aktuellen Zeitachse und Komposition (export/musik.py, eigene Komposition, synthetisch erzeugt – keine Rechte Dritter)
-- ✅ 14 Abschnitte, jeder beginnt auf einem Szenenwechsel bzw. mit der Schlusstafel: Titel (89 BPM) · Alltag (80 BPM) · Einstieg (78 BPM) · Zugang (82 BPM) · Unbemerkt (82 BPM) · Ausbreitung (84 BPM) · Sichtbar (75 BPM) · Folgen (81 BPM) · Presse (83 BPM) · Leitung (79 BPM) · Was es braucht (77 BPM) · Stand heute (84 BPM) · Ausblick (80 BPM) · Schlusstafel (Schlussakkord)
-- ✅ Musik in Sprechpausen -25.82 LUFS (Soll −28 … −22)
+- ✅ 14 Abschnitte, jeder beginnt auf einem Szenenwechsel bzw. mit der Schlusstafel: Titel (89 BPM) · Alltag (80 BPM) · Einstieg (78 BPM) · Zugang (82 BPM) · Unbemerkt (82 BPM) · Ausbreitung (84 BPM) · Sichtbar (75 BPM) · Folgen (81 BPM) · Presse (83 BPM) · Leitung (82 BPM) · Was es braucht (77 BPM) · Stand heute (84 BPM) · Ausblick (80 BPM) · Schlusstafel (Schlussakkord)
+- ✅ Musik in Sprechpausen -25.83 LUFS (Soll −28 … −22)
 - ✅ Musik unter der Stimme -35.5 LUFS, 19.5 LU unter der Sprache (−16 LUFS; Soll ≥ 17 LU), Absenkung -10 dB
 - ✅ Endprodukt ohne Tonlöcher: Musik trägt durch alle Pausen (keine Stille > 0,4 s unter −60 dBFS außer am Anfang und beim Ausblenden)
-- ✅ Musik in 9 Szenenpausen hörbar: momentan -29.9 bis -23.2 LUFS (Soll −36 … −18)
+- ✅ Musik in 9 Szenenpausen hörbar: momentan -29.9 bis -23.3 LUFS (Soll −36 … −18)
 
 ## Technik
 
@@ -199,32 +200,33 @@ Drehbuch: Drehbuch_Video_Angriffsszenario_Herne_V1_4.md · Video: Ein_ganz_norma
 | 51 | 9 | 3:56.8 | 4:02.0 | 5.2 s | 74 | 14.2 | eine Basis-Anforderung, / die im Überwachungsaudit vollständig geprüft wird. |
 | 52 | 9 | 4:02.1 | 4:07.6 | 5.5 s | 76 | 13.9 | Die NIS-2-Richtlinie der EU schreibt / dieselbe Verantwortung gesetzlich fest: |
 | 53 | 9 | 4:07.6 | 4:12.1 | 4.4 s | 33 | 7.4 | seit Dezember 2025 im BSI-Gesetz, |
-| 54 | 9 | 4:12.1 | 4:19.3 | 7.2 s | 79 | 11.0 | seit Januar 2026 im Informationssicherheitsgesetz / NRW für die Landesverwaltung. |
-| 55 | 9 | 4:19.4 | 4:22.5 | 3.1 s | 44 | 14.3 | Für Kommunen gelten beide nicht unmittelbar. |
-| 56 | 9 | 4:22.6 | 4:26.4 | 3.9 s | 64 | 16.6 | Sie zeigen aber, was von einer / Verwaltungsleitung erwartet wird: |
-| 57 | 9 | 4:26.5 | 4:32.7 | 6.3 s | 81 | 13.0 | Maßnahmen billigen, ihre Umsetzung überwachen / und sich regelmäßig schulen lassen. |
-| 58 | 10 | 4:33.7 | 4:35.7 | 2.0 s | 27 | 13.6 | Die Maßnahmen sind geplant, |
-| 59 | 10 | 4:35.8 | 4:41.7 | 5.9 s | 88 | 14.8 | umsetzen lassen sie sich aber nur mit ausreichenden / Mitteln und qualifiziertem Personal. |
-| 60 | 10 | 4:41.8 | 4:45.9 | 4.2 s | 59 | 14.1 | Investitionen sind nötig / für den Ersatz veralteter Systeme, |
-| 61 | 10 | 4:46.0 | 4:50.4 | 4.4 s | 67 | 15.2 | einen geschützten Zugang zur IT-Verwaltung / mit zweiter Bestätigung, |
-| 62 | 10 | 4:50.5 | 4:55.6 | 5.1 s | 71 | 13.8 | eine zentrale Erkennung von Angriffen / und ein zweites Sicherungssystem. |
-| 63 | 10 | 4:55.7 | 4:59.7 | 4.0 s | 63 | 15.7 | Ebenso wichtig sind Fachkräfte: / Server müssen laufend gewartet, |
-| 64 | 10 | 4:59.8 | 5:05.1 | 5.3 s | 75 | 14.1 | Updates eingespielt und Sicherheitseinstellungen / regelmäßig geprüft werden. |
-| 65 | 10 | 5:05.2 | 5:12.3 | 7.1 s | 99 | 13.9 | Eine Überwachung schützt nur, wenn jemand die / Meldungen auswertet und im Ernstfall sofort reagiert. |
-| 66 | 11 | 5:14.1 | 5:16.2 | 2.1 s | 34 | 16.3 | So stellt sich die Lage heute dar. |
-| 67 | 11 | 5:16.2 | 5:21.0 | 4.7 s | 86 | 18.1 | Alle gezeigten Schwachstellen wurden in der / aktuellen Sicherheitsprüfung festgestellt. |
-| 68 | 11 | 5:21.0 | 5:25.4 | 4.3 s | 67 | 15.6 | Ohne zusätzliche Mittel und Personal / bleibt dieser Zustand bestehen |
-| 69 | 11 | 5:25.4 | 5:30.2 | 4.8 s | 69 | 14.5 | und mit ihm das Risiko für die Stadt / und ihre Bürgerinnen und Bürger. |
-| 70 | 12 | 5:34.0 | 5:37.4 | 3.4 s | 49 | 14.5 | Für die Zertifizierung ist bereits viel erreicht. |
-| 71 | 12 | 5:37.4 | 5:43.2 | 5.8 s | 94 | 16.3 | Die Referenzdokumente sind überarbeitet, / die Grundschutz-Checks aller Zielobjekte ausgewertet, |
-| 72 | 12 | 5:43.3 | 5:47.9 | 4.6 s | 58 | 12.6 | Risikoanalyse und Realisierungsplan / liegen im Entwurf vor. |
-| 73 | 12 | 5:48.0 | 5:50.6 | 2.7 s | 42 | 15.6 | Für die Umsetzung sind fünfzehn Leitfäden, |
-| 74 | 12 | 5:50.7 | 5:55.3 | 4.6 s | 66 | 14.4 | dreizehn Härtungslisten und eine / Entscheidungsvorlage vorbereitet. |
-| 75 | 12 | 5:55.4 | 5:58.0 | 2.6 s | 38 | 14.4 | Was zu tun ist, ist damit beschrieben. |
-| 76 | 12 | 5:58.1 | 6:03.5 | 5.4 s | 92 | 16.9 | Offen sind die Entscheidungen der Verwaltungsleitung, / Budget und Personal für die Umsetzung, |
-| 77 | 12 | 6:03.6 | 6:08.9 | 5.3 s | 96 | 18.1 | die Übernahme der verbleibenden Risiken und die / Behebung der Abweichungen aus dem letzten Audit, |
-| 78 | 12 | 6:09.0 | 6:12.1 | 3.1 s | 38 | 12.2 | rechtzeitig vor dem Überwachungsaudit. |
-| 79 | 12 | 6:19.3 | 6:21.9 | 2.6 s | 36 | 13.9 | Vielen Dank für Ihre Aufmerksamkeit. |
+| 54 | 9 | 4:12.1 | 4:19.4 | 7.3 s | 79 | 10.9 | seit Januar 2026 im Informationssicherheitsgesetz / NRW für die Landesverwaltung. |
+| 55 | 9 | 4:19.5 | 4:22.6 | 3.1 s | 44 | 14.2 | Für Kommunen gelten beide nicht unmittelbar. |
+| 56 | 9 | 4:22.6 | 4:28.6 | 6.0 s | 95 | 15.8 | Sie zeigen aber, was von einer Verwaltungsleitung / erwartet wird: Maßnahmen prüfen und billigen, |
+| 57 | 9 | 4:28.7 | 4:35.1 | 6.4 s | 99 | 15.5 | ihre Umsetzung überwachen, sich regelmäßig schulen / lassen und die Risiken kennen und verantworten – |
+| 58 | 9 | 4:35.2 | 4:39.7 | 4.5 s | 48 | 10.6 | mit ihrer Unterschrift unter die ISMS-Dokumente. |
+| 59 | 10 | 4:40.7 | 4:42.6 | 2.0 s | 27 | 13.6 | Die Maßnahmen sind geplant, |
+| 60 | 10 | 4:42.7 | 4:48.7 | 5.9 s | 88 | 14.8 | umsetzen lassen sie sich aber nur mit ausreichenden / Mitteln und qualifiziertem Personal. |
+| 61 | 10 | 4:48.7 | 4:52.9 | 4.2 s | 59 | 14.1 | Investitionen sind nötig / für den Ersatz veralteter Systeme, |
+| 62 | 10 | 4:53.0 | 4:57.4 | 4.4 s | 67 | 15.2 | einen geschützten Zugang zur IT-Verwaltung / mit zweiter Bestätigung, |
+| 63 | 10 | 4:57.5 | 5:02.6 | 5.1 s | 71 | 13.8 | eine zentrale Erkennung von Angriffen / und ein zweites Sicherungssystem. |
+| 64 | 10 | 5:02.7 | 5:06.7 | 4.0 s | 63 | 15.7 | Ebenso wichtig sind Fachkräfte: / Server müssen laufend gewartet, |
+| 65 | 10 | 5:06.7 | 5:12.1 | 5.3 s | 75 | 14.1 | Updates eingespielt und Sicherheitseinstellungen / regelmäßig geprüft werden. |
+| 66 | 10 | 5:12.1 | 5:19.3 | 7.1 s | 99 | 13.9 | Eine Überwachung schützt nur, wenn jemand die / Meldungen auswertet und im Ernstfall sofort reagiert. |
+| 67 | 11 | 5:21.0 | 5:23.1 | 2.1 s | 34 | 16.3 | So stellt sich die Lage heute dar. |
+| 68 | 11 | 5:23.2 | 5:27.9 | 4.7 s | 86 | 18.1 | Alle gezeigten Schwachstellen wurden in der / aktuellen Sicherheitsprüfung festgestellt. |
+| 69 | 11 | 5:28.0 | 5:32.3 | 4.3 s | 67 | 15.6 | Ohne zusätzliche Mittel und Personal / bleibt dieser Zustand bestehen |
+| 70 | 11 | 5:32.4 | 5:37.1 | 4.8 s | 69 | 14.5 | und mit ihm das Risiko für die Stadt / und ihre Bürgerinnen und Bürger. |
+| 71 | 12 | 5:41.0 | 5:44.3 | 3.4 s | 49 | 14.5 | Für die Zertifizierung ist bereits viel erreicht. |
+| 72 | 12 | 5:44.4 | 5:50.2 | 5.8 s | 94 | 16.3 | Die Referenzdokumente sind überarbeitet, / die Grundschutz-Checks aller Zielobjekte ausgewertet, |
+| 73 | 12 | 5:50.2 | 5:54.9 | 4.6 s | 58 | 12.6 | Risikoanalyse und Realisierungsplan / liegen im Entwurf vor. |
+| 74 | 12 | 5:54.9 | 5:57.6 | 2.7 s | 42 | 15.6 | Für die Umsetzung sind fünfzehn Leitfäden, |
+| 75 | 12 | 5:57.7 | 6:02.3 | 4.6 s | 66 | 14.4 | dreizehn Härtungslisten und eine / Entscheidungsvorlage vorbereitet. |
+| 76 | 12 | 6:02.3 | 6:05.0 | 2.6 s | 38 | 14.4 | Was zu tun ist, ist damit beschrieben. |
+| 77 | 12 | 6:05.0 | 6:10.5 | 5.4 s | 92 | 16.9 | Offen sind die Entscheidungen der Verwaltungsleitung, / Budget und Personal für die Umsetzung, |
+| 78 | 12 | 6:10.5 | 6:15.9 | 5.3 s | 96 | 18.1 | die Übernahme der verbleibenden Risiken und die / Behebung der Abweichungen aus dem letzten Audit, |
+| 79 | 12 | 6:15.9 | 6:19.0 | 3.1 s | 38 | 12.2 | rechtzeitig vor dem Überwachungsaudit. |
+| 80 | 12 | 6:26.2 | 6:28.8 | 2.6 s | 36 | 13.9 | Vielen Dank für Ihre Aufmerksamkeit. |
 
 ## Sichtbare Texte (Abtastung)
 
@@ -233,8 +235,8 @@ Drehbuch: Drehbuch_Video_Angriffsszenario_Herne_V1_4.md · Video: Ein_ganz_norma
 | fassade | GEMEINSAM FÜR EIN LEBENSWERTES HERNE | Bildbestandteil (Szene 0, 1, 8) |
 | stele | Stadt Herne | Bildbestandteil (Szene 0, 1, 8) |
 | haltestelle | H | Bildbestandteil (Szene 0, 1, 8) |
-| marke_zeile | Unser zuverlässiger Partner für IT- und Informationssicherheit | 0:00.0–6:24.4 |
-| vertraulich | Vertraulich – nur zur internen Verwendung | 0:00.6–0:14.0, 6:18.8–6:24.4 |
+| marke_zeile | Unser zuverlässiger Partner für IT- und Informationssicherheit | 0:00.0–6:31.4 |
+| vertraulich | Vertraulich – nur zur internen Verwendung | 0:00.6–0:14.0, 6:25.8–6:31.4 |
 | titel | Ein ganz normaler Montag | 0:00.8–0:05.6 |
 | unterzeile | Was ein Cyberangriff für Herne bedeuten würde | 0:01.4–0:05.6 |
 | hinweis | Erfundener Ablauf auf Grundlage der aktuellen Sicherheitsprüfung. Ohne technische Einzelheiten. | 0:06.2–0:11.8 |
@@ -253,7 +255,7 @@ Drehbuch: Drehbuch_Video_Angriffsszenario_Herne_V1_4.md · Video: Ein_ganz_norma
 | woche_2 | Woche 2 | 1:22.5–1:26.7 |
 | woche_3 | Woche 3 | 1:25.3–1:29.3 |
 | woche_4 | Woche 4 | 1:28.1–1:37.3 |
-| notfallplan | Notfallplan | 1:56.7–2:22.8, 4:39.1–4:41.9, 5:12.5–5:14.1 |
+| notfallplan | Notfallplan | 1:56.7–2:22.8, 4:46.1–4:48.9, 5:19.5–5:21.0 |
 | uhrzeit | Montagmorgen, 7:30 Uhr | 1:57.5–2:00.7 |
 | kachel_technik_titel | Technik | 2:24.6–2:54.8 |
 | kachel_technik_text | Neuaufbau aller Systeme, Wochen bis Monate. | 2:24.8–2:54.8 |
@@ -277,58 +279,64 @@ Drehbuch: Drehbuch_Video_Angriffsszenario_Herne_V1_4.md · Video: Ein_ganz_norma
 | schlagzeile_2 | Bürgerdaten im Netz aufgetaucht | 3:13.3–3:26.7 |
 | schlagzeile_3 | Waren die Mängel bekannt? | 3:18.9–3:26.7 |
 | presse_4 | Was passiert mit den Daten der Bürgerinnen und Bürger? | 3:18.9–3:22.1 |
-| tafel_1 | IT-Grundschutz: Gesamtverantwortung der Leitung | 3:52.4–4:33.7 |
-| tafel_2 | NIS-2 / BSI-Gesetz: Informationssicherheit als Leitungsaufgabe | 4:02.2–4:33.7 |
-| tafel_3 | InfoSiG NRW: NIS-2 für die Landesverwaltung | 4:15.0–4:33.7 |
-| symbol_billigen | billigen | 4:23.4–4:33.7 |
-| symbol_ueberwachen | überwachen | 4:23.8–4:33.7 |
-| symbol_schulen | schulen | 4:24.2–4:33.7 |
-| spalte_investitionen | Investitionen | 4:41.7–5:14.1 |
-| invest_1 | Ersatz veralteter Systeme | 4:44.1–5:14.1 |
-| invest_2 | Geschützter Zugang zur IT-Verwaltung mit zweiter Bestätigung | 4:46.3–5:14.1 |
-| invest_3 | Zentrale Erkennung von Angriffen | 4:50.7–5:14.1 |
-| invest_4 | Zweites Sicherungssystem | 4:53.7–5:14.1 |
-| spalte_personal | Personal | 4:55.9–5:14.1 |
-| personal_1 | Rechte nach Aufgaben neu ordnen | 4:56.5–5:14.1 |
-| personal_2 | Server einheitlich absichern und warten | 4:57.9–5:14.1 |
-| personal_3 | Updates und Sicherheitsprüfungen | 4:59.9–5:14.1 |
-| personal_4 | Meldungen auswerten und reagieren | 5:07.1–5:14.1 |
-| personal_5 | Notfälle üben | 5:12.5–5:14.1 |
-| warn_1 | IT-Verwaltung aus der normalen Arbeitsumgebung | 5:19.5–5:34.0 |
-| warn_2 | Intern keine zweite Bestätigung bei der Anmeldung | 5:20.1–5:34.0 |
-| warn_3 | Zu viele Konten mit weitreichenden Rechten | 5:20.9–5:34.0 |
-| warn_4 | Systeme ohne Sicherheitsupdates | 5:21.7–5:34.0 |
-| warn_5 | Server ohne empfohlene Schutzeinstellungen | 5:22.5–5:34.0 |
-| warn_6 | Trennung im Netz unvollständig | 5:23.3–5:34.0 |
-| warn_7 | Übertragung nicht durchgängig verschlüsselt | 5:24.1–5:34.0 |
-| warn_8 | Keine zentrale Erkennung von Angriffen | 5:24.9–5:34.0 |
-| warn_9 | Keine systematische Suche nach Schwachstellen | 5:25.7–5:34.0 |
-| warn_10 | Datensicherung ohne zweites System | 5:26.5–5:34.0 |
-| warn_11 | Notfallpläne fehlen teilweise | 5:27.3–5:34.0 |
-| warn_12 | Dokumentation lückenhaft, teils auf den Systemen selbst | 5:28.1–5:34.0 |
-| warn_13 | Verbindliche Regeln fehlen teilweise | 5:28.9–5:34.0 |
-| warn_14 | USB-Anschlüsse nicht kontrolliert | 5:29.7–5:34.0 |
-| warn_15 | Änderungen nicht durchgängig nachvollziehbar | 5:30.5–5:34.0 |
-| spalte_erreicht | Erreicht | 5:34.2–6:18.4 |
-| erreicht_1 | Strukturanalyse, Schutzbedarfsfeststellung und Modellierung überarbeitet | 5:37.6–6:18.4 |
-| erreicht_2 | Grundschutz-Checks aller Zielobjekte ausgewertet | 5:40.2–6:18.4 |
-| erreicht_3 | Risikoanalyse und Realisierungsplan mit 32 Arbeitspaketen im Entwurf | 5:43.4–6:18.4 |
-| erreicht_4 | Richtlinien im Entwurf, internes Auditprogramm aufgestellt | 5:46.2–6:18.4 |
-| spalte_vorbereitet | Vorbereitet | 5:48.0–6:18.4 |
-| vorbereitet_1 | 15 Umsetzungsleitfäden mit Schritt-für-Schritt-Anweisungen | 5:49.4–6:18.4 |
-| vorbereitet_2 | 13 Härtungslisten für die Server | 5:50.8–6:18.4 |
-| vorbereitet_3 | Entscheidungsvorlage mit 22 Entscheidungen | 5:52.8–6:18.4 |
-| vorbereitet_4 | Prüfschema für den technischen Review | 5:54.0–6:18.4 |
-| vorbereitet_5 | Bereinigungsliste für die Grundschutz-Checks | 5:55.0–6:18.4 |
-| spalte_offen | Offen – nächste Schritte | 5:58.2–6:18.4 |
-| offen_1 | Entscheidungen der Verwaltungsleitung, zwölf davon vor dem Überwachungsaudit | 5:59.0–6:18.4 |
-| offen_2 | Budget und Personal für die Umsetzung | 6:01.2–6:18.4 |
-| offen_3 | Übernahme der verbleibenden Risiken durch die Leitung | 6:03.8–6:18.4 |
-| offen_4 | Richtlinien in Kraft setzen | 6:05.0–6:18.4 |
-| offen_5 | Maßnahmen umsetzen und technisch prüfen | 6:05.6–6:18.4 |
-| offen_6 | 77 Abweichungen aus dem Audit 2025 beheben | 6:06.2–6:18.4 |
-| offen_7 | Überwachungsaudit | 6:10.2–6:18.4 |
-| offene_anforderungen | Offene Anforderungen laut Realisierungsplan: 966 Standard-Teilanforderungen; 264 Basis-Teilanforderungen bisher nur durch Musterantworten belegt. | 6:13.6–6:18.4 |
-| schluss_titel | Gemeinsam für ein sicheres Herne | 6:18.8–6:24.4 |
-| schluss_klein | Stadt Herne · Informationssicherheit · Stand September 2026 | 6:18.8–6:24.4 |
+| tafel_1 | IT-Grundschutz: Gesamtverantwortung der Leitung | 3:52.4–4:40.7 |
+| tafel_2 | NIS-2 / BSI-Gesetz: Informationssicherheit als Leitungsaufgabe | 4:02.2–4:40.7 |
+| tafel_3 | InfoSiG NRW: NIS-2 für die Landesverwaltung | 4:15.0–4:40.7 |
+| symbol_billigen | prüfen und billigen | 4:23.4–4:40.7 |
+| symbol_ueberwachen | überwachen | 4:23.8–4:40.7 |
+| symbol_schulen | schulen | 4:24.0–4:40.7 |
+| symbol_verantworten | Risiken verantworten | 4:24.4–4:40.7 |
+| spalte_investitionen | Investitionen | 4:48.7–5:21.0 |
+| invest_1 | Ersatz veralteter Systeme | 4:51.1–5:21.0 |
+| invest_2 | Geschützter Zugang zur IT-Verwaltung mit zweiter Bestätigung | 4:53.3–5:21.0 |
+| invest_3 | Zentrale Erkennung von Angriffen | 4:57.7–5:21.0 |
+| invest_4 | Zweites Sicherungssystem | 5:00.7–5:21.0 |
+| spalte_personal | Personal | 5:02.9–5:21.0 |
+| personal_1 | Rechte nach Aufgaben neu ordnen | 5:03.5–5:21.0 |
+| personal_2 | Server einheitlich absichern und warten | 5:04.9–5:21.0 |
+| personal_3 | Updates und Sicherheitsprüfungen | 5:06.9–5:21.0 |
+| personal_4 | Meldungen auswerten und reagieren | 5:14.1–5:21.0 |
+| personal_5 | Notfälle üben | 5:19.5–5:21.0 |
+| warn_1 | IT-Verwaltung aus der normalen Arbeitsumgebung | 5:26.4–5:41.0 |
+| warn_2 | Intern keine zweite Bestätigung bei der Anmeldung | 5:27.0–5:41.0 |
+| warn_3 | Zu viele Konten mit weitreichenden Rechten | 5:27.8–5:41.0 |
+| warn_4 | Systeme ohne Sicherheitsupdates | 5:28.6–5:41.0 |
+| warn_5 | Server ohne empfohlene Schutzeinstellungen | 5:29.4–5:41.0 |
+| warn_6 | Trennung im Netz unvollständig | 5:30.2–5:41.0 |
+| warn_7 | Übertragung nicht durchgängig verschlüsselt | 5:31.0–5:41.0 |
+| warn_8 | Keine zentrale Erkennung von Angriffen | 5:31.8–5:41.0 |
+| warn_9 | Keine systematische Suche nach Schwachstellen | 5:32.6–5:41.0 |
+| warn_10 | Datensicherung ohne zweites System | 5:33.4–5:41.0 |
+| warn_11 | Notfallpläne fehlen teilweise | 5:34.2–5:41.0 |
+| warn_12 | Dokumentation lückenhaft, teils auf den Systemen selbst | 5:35.0–5:41.0 |
+| warn_13 | Verbindliche Regeln fehlen teilweise | 5:35.8–5:41.0 |
+| warn_14 | USB-Anschlüsse nicht kontrolliert | 5:36.6–5:41.0 |
+| warn_15 | Änderungen nicht durchgängig nachvollziehbar | 5:37.4–5:41.0 |
+| spalte_erreicht | Erreicht | 5:41.2–6:25.4 |
+| erreicht_1 | Strukturanalyse, Schutzbedarfsfeststellung und Modellierung überarbeitet | 5:44.6–6:25.4 |
+| erreicht_2 | Grundschutz-Checks aller Zielobjekte ausgewertet | 5:47.2–6:25.4 |
+| erreicht_3 | Risikoanalyse und Realisierungsplan mit 32 Arbeitspaketen im Entwurf | 5:50.4–6:25.4 |
+| erreicht_4 | Richtlinien im Entwurf, internes Auditprogramm aufgestellt | 5:53.2–6:25.4 |
+| spalte_vorbereitet | Vorbereitet | 5:55.0–6:25.4 |
+| vorbereitet_1 | 15 Umsetzungsleitfäden mit Schritt-für-Schritt-Anweisungen | 5:56.4–6:25.4 |
+| rolle_1 | IT-Betrieb: umsetzen | 5:56.4–6:25.4 |
+| vorbereitet_2 | 13 Härtungslisten für die Server | 5:57.8–6:25.4 |
+| rolle_2 | IT-Betrieb: Server härten | 5:57.8–6:25.4 |
+| vorbereitet_3 | Entscheidungsvorlage mit 22 Entscheidungen | 5:59.8–6:25.4 |
+| rolle_3 | Verwaltungsleitung: prüfen und billigen | 5:59.8–6:25.4 |
+| vorbereitet_4 | Prüfschema für den technischen Review | 6:01.0–6:25.4 |
+| rolle_4 | ISB: Umsetzung prüfen | 6:01.0–6:25.4 |
+| vorbereitet_5 | Bereinigungsliste für die Grundschutz-Checks | 6:02.0–6:25.4 |
+| rolle_5 | ISB: Checks bereinigen | 6:02.0–6:25.4 |
+| spalte_offen | Offen – nächste Schritte | 6:05.2–6:25.4 |
+| offen_1 | Entscheidungen der Verwaltungsleitung, zwölf davon vor dem Überwachungsaudit | 6:06.0–6:25.4 |
+| offen_2 | Budget und Personal für die Umsetzung | 6:08.2–6:25.4 |
+| offen_3 | Übernahme der verbleibenden Risiken durch die Leitung | 6:10.8–6:25.4 |
+| offen_4 | Richtlinien in Kraft setzen | 6:12.0–6:25.4 |
+| offen_5 | Maßnahmen umsetzen und technisch prüfen | 6:12.6–6:25.4 |
+| offen_6 | 77 Abweichungen aus dem Audit 2025 beheben | 6:13.2–6:25.4 |
+| offen_7 | Überwachungsaudit | 6:17.2–6:25.4 |
+| offene_anforderungen | Offene Anforderungen laut Realisierungsplan: 966 Standard-Teilanforderungen; 264 Basis-Teilanforderungen bisher nur durch Musterantworten belegt. | 6:20.6–6:25.4 |
+| schluss_titel | Gemeinsam für ein sicheres Herne | 6:25.8–6:31.4 |
+| schluss_klein | Stadt Herne · Informationssicherheit · Stand September 2026 | 6:25.8–6:31.4 |
 

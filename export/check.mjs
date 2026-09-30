@@ -1,4 +1,4 @@
-// Prüfung des Videos gegen das Drehbuch (Standard: die neueste Drehbuch-Datei im Projektordner, derzeit V1_4).
+// Prüfung des Videos gegen das Drehbuch (Standard: die neueste Drehbuch-Datei im Projektordner, derzeit V1_5).
 //
 // Aufruf:
 //   node export/check.mjs                      → Gesamtprüfung aller Szenen
@@ -128,8 +128,9 @@ const sceneOf = t => V.SCENES.find(s => t >= s.start && t < s.end) || V.SCENES[V
     if (/\?/.test(e.text)) probs.push('enthält eine Frage');
     if (/herne/i.test(e.text)) probs.push('nennt den Ortsnamen');
     if (!/[.]$/.test(e.text)) probs.push('endet nicht mit einem Satz');
+    if (!mdNorm.includes(norm(e.text))) probs.push('steht nicht im Drehbuch');
     if (probs.length) FEHLER(B, `Ergänzung Szene ${e.szene}: ${probs.join(', ')}`);
-    else INFO(B, `Ergänzung Szene ${e.szene} (${e.stelle === 'vor' ? 'vor dem Sprechertext' : e.stelle === 'nach' ? 'nach dem Sprechertext' : 'Schlusssatz auf der Schlusstafel'}): „${e.text}“ – ${e.grund}; Grundlage: ${e.grundlage}`);
+    else OK(B, `Ergänzung Szene ${e.szene} (im Drehbuch festgehalten, ${e.stelle === 'vor' ? 'vor dem Sprechertext' : e.stelle === 'nach' ? 'nach dem Sprechertext' : 'Schlusssatz auf der Schlusstafel'}): „${e.text}“ – ${e.grund}; Grundlage: ${e.grundlage}`);
   }
 }
 
@@ -499,7 +500,7 @@ const visibleTexts = new Map();   // Schlüssel → { text, von, bis, quelle }
       const stimmeSoll = t.rolle === 'Erzähler' ? ERZAEHLER.id : st && st[t.rolle] && st[t.rolle].id;
       const probs = [];
       if (j.text !== t.text) probs.push('Text veraltet');
-      if (JSON.stringify(j.kontext || null) !== JSON.stringify(t.kontext || null)) probs.push('Kontext (Text davor/danach) veraltet');
+      if (JSON.stringify(j.kontext || null) !== JSON.stringify(t.kontext || null)) INFO(B, `${t.id}: aufgenommen mit dem damaligen Text davor/danach; Aufnahme bleibt (nur der Kontext hat sich geändert)`);
       if (j.stimme.id !== stimmeSoll) probs.push('andere Stimme');
       if (j.modell !== MODELL || JSON.stringify(j.einstellungen) !== JSON.stringify(EINSTELLUNGEN)) probs.push('Modell/Einstellungen abweichend');
       if (probs.length) FEHLER(B, `${t.id}: ${probs.join(', ')}`); else aktuell++;

@@ -8,13 +8,16 @@
 //          node export/tts.mjs --scenes 1,9,12    → nur diese Szenen
 //          node export/tts.mjs --force            → vorhandene Teile neu erzeugen (kostet Zeichen)
 //          node export/tts.mjs --dry              → nur anzeigen, was erzeugt würde
+//          node export/tts.mjs --kontext          → auch Teile neu erzeugen, bei denen sich nur der Kontext geändert hat
+// Neu erzeugt wird ein Teil, wenn sich Text, Stimme, Modell, Einstellungen oder Startwert ändern. Ändert sich nur der
+// Kontext (Text davor/danach), bleibt die vorhandene – ggf. schon freigegebene – Aufnahme stehen.
 // Der API-Schlüssel steht in der Umgebungsvariable ELEVENLABS_API_KEY. Er wird nie ausgegeben, gespeichert oder geloggt.
 // Die Erzählerstimme ist festgelegt; die zwei Stimmen der Pressefragen stehen in audio/stimmen.json (nach Freigabe).
 import fs from 'fs';
 import path from 'path';
 import { spawnSync, execFileSync } from 'child_process';
 import { findDrehbuch, parseDrehbuch } from './drehbuch.mjs';
-import { MODELL, EINSTELLUNGEN, DIR, teile, seedFor, schluessel } from './tts-lib.mjs';
+import { MODELL, EINSTELLUNGEN, DIR, teile, seedFor, schluessel, inhaltGleich } from './tts-lib.mjs';
 
 // Node holt den Proxy der Umgebung nicht von selbst: einmal neu starten, damit HTTPS_PROXY gilt
 if (process.env.HTTPS_PROXY && !process.env.NODE_USE_ENV_PROXY) {
@@ -25,7 +28,7 @@ if (process.env.HTTPS_PROXY && !process.env.NODE_USE_ENV_PROXY) {
 const argv = process.argv.slice(2);
 const opt = (name, def) => { const i = argv.indexOf('--' + name); return i >= 0 ? (argv[i + 1] && !argv[i + 1].startsWith('--') ? argv[i + 1] : true) : def; };
 const SCOPE = opt('scenes', null) ? String(opt('scenes')).split(',').map(Number) : null;
-const FORCE = !!opt('force', false), DRY = !!opt('dry', false);
+const FORCE = !!opt('force', false), DRY = !!opt('dry', false), KONTEXT = !!opt('kontext', false);
 
 const KEY = process.env.ELEVENLABS_API_KEY;
 const redact = s => (KEY ? String(s).split(KEY).join('[Schlüssel]') : String(s));
@@ -60,7 +63,10 @@ for (const t of alle) {
   if (!t.stimme) { console.log(`– ${t.id}: übersprungen, Stimme ${t.rolle} ist noch nicht freigegeben (audio/stimmen.json fehlt)`); continue; }
   const jf = path.join(DIR, t.id + '.json'), mf = path.join(DIR, t.id + '.mp3');
   const alt = fs.existsSync(jf) && fs.existsSync(mf) ? JSON.parse(fs.readFileSync(jf, 'utf8')) : null;
-  if (alt && alt.schluessel === schluessel(t) && !FORCE) { console.log(`= ${t.id}: vorhanden (${alt.text.length} Zeichen, ${dauer(mf).toFixed(2)} s)`); continue; }
+  if (alt && inhaltGleich(alt, t) && !FORCE) {
+    const kontextNeu = JSON.stringify(alt.kontext || null) !== JSON.stringify(t.kontext || null);
+    if (!kontextNeu || !KONTEXT) { console.log(`= ${t.id}: vorhanden (${alt.text.length} Zeichen, ${dauer(mf).toFixed(2)} s)${kontextNeu ? ' – Kontext geändert, Aufnahme bleibt' : ''}`); continue; }
+  }
   offen.push(t);
 }
 const zeichen = offen.reduce((a, t) => a + t.text.length, 0);

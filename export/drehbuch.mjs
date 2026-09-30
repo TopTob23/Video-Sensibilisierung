@@ -51,13 +51,13 @@ export function einblendungen(db) {
   const e = {};
   e.schlagzeilen = zitate(s8.split('Schlagzeilen ohne reale Medienlogos:')[1].split('\n')[0]);
   e.tafeln = zitate(s9.split('nacheinander:')[1].split('\n')[0].split('Dann drei Symbole')[0]);
-  e.symbole = zitate(s9.split('Dann drei Symbole')[1].split('\n')[0])[0].split(', ');
+  e.symbole = zitate(s9.split(/Dann \S+ Symbole/)[1].split('\n')[0])[0].split(', ');
   e.investitionen = feld(s10, 'Text-Einblendung „Investitionen“').split(' · ');
   e.personal = feld(s10, 'Text-Einblendung „Personal“').split(' · ');
   e.warnmarken = [...s11.matchAll(/^\s+(\d+)\. (.*)$/gm)].map(m => m[2].trim());
   e.spalten = {
     erreicht: { titel: 'Erreicht', punkte: liste(s12, 'Spalte „Erreicht“') },
-    vorbereitet: { titel: 'Vorbereitet', punkte: liste(s12, 'Spalte „Vorbereitet“') },
+    vorbereitet: { titel: 'Vorbereitet', punkte: liste(s12, 'Spalte „Vorbereitet“').map(p => p.split(' → ')[0]), rollen: liste(s12, 'Spalte „Vorbereitet“').map(p => p.split(' → ')[1] || null) },
     offen: { titel: 'Offen – nächste Schritte', punkte: liste(s12, 'Spalte „Offen – nächste Schritte“') },
   };
   e.offeneAnforderungen = zitate(feld(s12, 'Einblendung darunter \\(klein\\)'))[0];

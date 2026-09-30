@@ -1,6 +1,6 @@
 {
- "drehbuch": "Drehbuch_Video_Angriffsszenario_Herne_V1_4.md",
- "gesamt": 384.56666666666666,
+ "drehbuch": "Drehbuch_Video_Angriffsszenario_Herne_V1_5.md",
+ "gesamt": 391.53333333333336,
  "szenen": [
   {
    "n": 0,
@@ -3181,7 +3181,7 @@
     313
    ],
    "start": 227.43333333333334,
-   "ende": 273.3,
+   "ende": 280.26666666666665,
    "entwurf": 45,
    "anker": [
     [
@@ -3198,19 +3198,27 @@
     ],
     [
      37.4,
-     35.226
+     35.296
     ],
     [
-     41.1,
-     39.15
+     42,
+     39.928
     ],
     [
-     43.3,
-     41.368
+     44.3,
+     42.18
     ],
     [
-     45.2,
-     43.306
+     46.2,
+     44.108
+    ],
+    [
+     47.6,
+     45.501
+    ],
+    [
+     50.5,
+     48.426
     ]
    ],
    "tail": 1,
@@ -3221,7 +3229,7 @@
      "stimme": "Alexander – Deep TV Narrator",
      "rolle": "Erzähler",
      "art": "erzaehler",
-     "dauer": 44.382
+     "dauer": 51.357
     }
    ],
    "saetze": [
@@ -3466,16 +3474,16 @@
       [
        "Informationssicherheitsgesetz",
        27.68,
-       29.375
+       29.363
       ],
       [
        "NRW",
-       29.502,
-       30.095
+       29.491,
+       30.083
       ],
       [
        "für",
-       30.304,
+       30.292,
        30.454
       ],
       [
@@ -3495,143 +3503,213 @@
      "teil": "szene_09",
      "art": "erzaehler",
      "ziel": null,
-     "beginn": 32.08,
-     "ende": 34.901,
+     "beginn": 32.138,
+     "ende": 34.971,
      "worte": [
       [
        "Für",
-       32.08,
-       32.324
+       32.138,
+       32.382
       ],
       [
        "Kommunen",
-       32.382,
-       32.962
+       32.44,
+       33.02
       ],
       [
        "gelten",
-       33.078,
-       33.427
+       33.136,
+       33.485
       ],
       [
        "beide",
-       33.496,
-       33.775
+       33.554,
+       33.833
       ],
       [
        "nicht",
-       33.821,
-       34.019
+       33.879,
+       34.077
       ],
       [
        "unmittelbar.",
-       34.088,
-       34.901
+       34.146,
+       34.971
       ]
      ]
     },
     {
-     "text": "Sie zeigen aber, was von einer Verwaltungsleitung erwartet wird: Maßnahmen billigen, ihre Umsetzung überwachen und sich regelmäßig schulen lassen.",
+     "text": "Sie zeigen aber, was von einer Verwaltungsleitung erwartet wird: Maßnahmen prüfen und billigen, ihre Umsetzung überwachen, sich regelmäßig schulen lassen und die Risiken kennen und verantworten – mit ihrer Unterschrift unter die ISMS-Dokumente.",
      "teil": "szene_09",
      "art": "erzaehler",
      "ziel": null,
-     "beginn": 35.226,
-     "ende": 44.85,
+     "beginn": 35.296,
+     "ende": 51.817,
      "worte": [
       [
        "Sie",
-       35.226,
-       35.389
+       35.296,
+       35.458
       ],
       [
        "zeigen",
-       35.458,
-       35.795
+       35.528,
+       35.865
       ],
       [
        "aber,",
-       35.865,
-       36.213
+       35.934,
+       36.283
       ],
       [
        "was",
-       36.271,
-       36.468
+       36.341,
+       36.538
       ],
       [
        "von",
-       36.538,
-       36.701
+       36.608,
+       36.77
       ],
       [
        "einer",
-       36.759,
-       36.968
+       36.828,
+       37.037
       ],
       [
        "Verwaltungsleitung",
-       37.026,
-       38.059
+       37.095,
+       38.117
       ],
       [
        "erwartet",
-       38.117,
-       38.523
+       38.175,
+       38.581
       ],
       [
        "wird:",
-       38.558,
-       38.941
+       38.616,
+       38.988
       ],
       [
        "Maßnahmen",
-       39.15,
-       39.777
+       39.232,
+       39.87
       ],
       [
-       "billigen,",
-       39.835,
-       40.416
-      ],
-      [
-       "ihre",
-       40.59,
-       40.764
-      ],
-      [
-       "Umsetzung",
-       40.811,
-       41.321
-      ],
-      [
-       "überwachen",
-       41.368,
-       41.948
+       "prüfen",
+       39.928,
+       40.323
       ],
       [
        "und",
-       42.064,
-       42.239
+       40.381,
+       40.497
+      ],
+      [
+       "billigen,",
+       40.567,
+       41.136
+      ],
+      [
+       "ihre",
+       41.379,
+       41.565
+      ],
+      [
+       "Umsetzung",
+       41.6,
+       42.122
+      ],
+      [
+       "überwachen,",
+       42.18,
+       42.865
       ],
       [
        "sich",
-       42.297,
-       42.505
+       43.039,
+       43.306
       ],
       [
        "regelmäßig",
-       42.598,
-       43.283
+       43.423,
+       44.084
       ],
       [
        "schulen",
-       43.306,
-       43.701
+       44.108,
+       44.502
       ],
       [
-       "lassen.",
-       43.771,
-       44.85
+       "lassen",
+       44.56,
+       44.885
+      ],
+      [
+       "und",
+       45.001,
+       45.187
+      ],
+      [
+       "die",
+       45.303,
+       45.443
+      ],
+      [
+       "Risiken",
+       45.501,
+       45.988
+      ],
+      [
+       "kennen",
+       46.058,
+       46.337
+      ],
+      [
+       "und",
+       46.418,
+       46.534
+      ],
+      [
+       "verantworten",
+       46.604,
+       47.3
+      ],
+      [
+       "–",
+       47.451,
+       47.498
+      ],
+      [
+       "mit",
+       47.823,
+       48.02
+      ],
+      [
+       "ihrer",
+       48.101,
+       48.357
+      ],
+      [
+       "Unterschrift",
+       48.426,
+       49.019
+      ],
+      [
+       "unter",
+       49.1,
+       49.344
+      ],
+      [
+       "die",
+       49.39,
+       49.506
+      ],
+      [
+       "ISMS-Dokumente.",
+       49.599,
+       51.817
       ]
      ]
     }
@@ -3641,19 +3719,19 @@
      "id": "szene_09",
      "datei": "audio/szene_09.mp3",
      "von": 0,
-     "bis": 44.382,
+     "bis": 51.357,
      "bei": 227.933,
      "stimme": "Alexander – Deep TV Narrator"
     }
    ],
    "fehlend": [],
    "bildende": {
-    "entwurf": 41.3,
+    "entwurf": 52,
     "halten": 0.6,
-    "ist": 39.952
+    "ist": 50.526
    },
-   "audioEnde": 44.85,
-   "aenderung": 0.867
+   "audioEnde": 51.817,
+   "aenderung": 7.833
   },
   {
    "n": 10,
@@ -3662,8 +3740,8 @@
     313,
     358
    ],
-   "start": 273.3,
-   "ende": 313.6666666666667,
+   "start": 280.26666666666665,
+   "ende": 320.6333333333333,
    "entwurf": 45,
    "anker": [
     [
@@ -4132,7 +4210,7 @@
      "datei": "audio/szene_10.mp3",
      "von": 0,
      "bis": 38.06,
-     "bei": 273.8,
+     "bei": 280.767,
      "stimme": "Alexander – Deep TV Narrator"
     }
    ],
@@ -4152,8 +4230,8 @@
     358,
     388
    ],
-   "start": 313.6666666666667,
-   "ende": 333.6,
+   "start": 320.6333333333333,
+   "ende": 340.56666666666666,
    "entwurf": 30,
    "anker": [
     [
@@ -4412,7 +4490,7 @@
      "datei": "audio/szene_11.mp3",
      "von": 0,
      "bis": 15.595,
-     "bei": 314.167,
+     "bei": 321.133,
      "stimme": "Alexander – Deep TV Narrator"
     }
    ],
@@ -4432,8 +4510,8 @@
     388,
     454
    ],
-   "start": 333.6,
-   "ende": 384.56666666666666,
+   "start": 340.56666666666666,
+   "ende": 391.53333333333336,
    "entwurf": 66,
    "anker": [
     [
@@ -4969,7 +5047,7 @@
      "datei": "audio/szene_12.mp3",
      "von": 0,
      "bis": 37.564,
-     "bei": 334.1,
+     "bei": 341.067,
      "stimme": "Alexander – Deep TV Narrator"
     },
     {
@@ -4977,7 +5055,7 @@
      "datei": "audio/szene_12_schluss.mp3",
      "von": 0,
      "bis": 2.09,
-     "bei": 379.367,
+     "bei": 386.333,
      "stimme": "Alexander – Deep TV Narrator"
     }
    ],
@@ -5461,7 +5539,7 @@
   {
    "szene": 9,
    "start": 252.145,
-   "end": 259.343,
+   "end": 259.401,
    "lines": [
     "seit Januar 2026 im Informationssicherheitsgesetz",
     "NRW für die Landesverwaltung."
@@ -5469,42 +5547,50 @@
   },
   {
    "szene": 9,
-   "start": 259.413,
-   "end": 262.489,
+   "start": 259.471,
+   "end": 262.559,
    "lines": [
     "Für Kommunen gelten beide nicht unmittelbar."
    ]
   },
   {
    "szene": 9,
-   "start": 262.559,
-   "end": 266.413,
+   "start": 262.629,
+   "end": 268.642,
    "lines": [
-    "Sie zeigen aber, was von einer",
-    "Verwaltungsleitung erwartet wird:"
+    "Sie zeigen aber, was von einer Verwaltungsleitung",
+    "erwartet wird: Maßnahmen prüfen und billigen,"
    ]
   },
   {
    "szene": 9,
-   "start": 266.483,
-   "end": 272.733,
+   "start": 268.712,
+   "end": 275.086,
    "lines": [
-    "Maßnahmen billigen, ihre Umsetzung überwachen",
-    "und sich regelmäßig schulen lassen."
+    "ihre Umsetzung überwachen, sich regelmäßig schulen",
+    "lassen und die Risiken kennen und verantworten –"
+   ]
+  },
+  {
+   "szene": 9,
+   "start": 275.156,
+   "end": 279.7,
+   "lines": [
+    "mit ihrer Unterschrift unter die ISMS-Dokumente."
    ]
   },
   {
    "szene": 10,
-   "start": 273.7,
-   "end": 275.681,
+   "start": 280.667,
+   "end": 282.648,
    "lines": [
     "Die Maßnahmen sind geplant,"
    ]
   },
   {
    "szene": 10,
-   "start": 275.751,
-   "end": 281.687,
+   "start": 282.718,
+   "end": 288.654,
    "lines": [
     "umsetzen lassen sie sich aber nur mit ausreichenden",
     "Mitteln und qualifiziertem Personal."
@@ -5512,8 +5598,8 @@
   },
   {
    "szene": 10,
-   "start": 281.757,
-   "end": 285.948,
+   "start": 288.724,
+   "end": 292.915,
    "lines": [
     "Investitionen sind nötig",
     "für den Ersatz veralteter Systeme,"
@@ -5521,8 +5607,8 @@
   },
   {
    "szene": 10,
-   "start": 286.018,
-   "end": 290.418,
+   "start": 292.985,
+   "end": 297.385,
    "lines": [
     "einen geschützten Zugang zur IT-Verwaltung",
     "mit zweiter Bestätigung,"
@@ -5530,8 +5616,8 @@
   },
   {
    "szene": 10,
-   "start": 290.488,
-   "end": 295.62,
+   "start": 297.455,
+   "end": 302.587,
    "lines": [
     "eine zentrale Erkennung von Angriffen",
     "und ein zweites Sicherungssystem."
@@ -5539,8 +5625,8 @@
   },
   {
    "szene": 10,
-   "start": 295.69,
-   "end": 299.696,
+   "start": 302.657,
+   "end": 306.663,
    "lines": [
     "Ebenso wichtig sind Fachkräfte:",
     "Server müssen laufend gewartet,"
@@ -5548,8 +5634,8 @@
   },
   {
    "szene": 10,
-   "start": 299.766,
-   "end": 305.093,
+   "start": 306.733,
+   "end": 312.06,
    "lines": [
     "Updates eingespielt und Sicherheitseinstellungen",
     "regelmäßig geprüft werden."
@@ -5557,8 +5643,8 @@
   },
   {
    "szene": 10,
-   "start": 305.163,
-   "end": 312.284,
+   "start": 312.13,
+   "end": 319.251,
    "lines": [
     "Eine Überwachung schützt nur, wenn jemand die",
     "Meldungen auswertet und im Ernstfall sofort reagiert."
@@ -5566,16 +5652,16 @@
   },
   {
    "szene": 11,
-   "start": 314.067,
-   "end": 316.156,
+   "start": 321.033,
+   "end": 323.122,
    "lines": [
     "So stellt sich die Lage heute dar."
    ]
   },
   {
    "szene": 11,
-   "start": 316.226,
-   "end": 320.975,
+   "start": 323.192,
+   "end": 327.941,
    "lines": [
     "Alle gezeigten Schwachstellen wurden in der",
     "aktuellen Sicherheitsprüfung festgestellt."
@@ -5583,8 +5669,8 @@
   },
   {
    "szene": 11,
-   "start": 321.045,
-   "end": 325.352,
+   "start": 328.011,
+   "end": 332.318,
    "lines": [
     "Ohne zusätzliche Mittel und Personal",
     "bleibt dieser Zustand bestehen"
@@ -5592,8 +5678,8 @@
   },
   {
    "szene": 11,
-   "start": 325.422,
-   "end": 330.175,
+   "start": 332.388,
+   "end": 337.141,
    "lines": [
     "und mit ihm das Risiko für die Stadt",
     "und ihre Bürgerinnen und Bürger."
@@ -5601,16 +5687,16 @@
   },
   {
    "szene": 12,
-   "start": 334,
-   "end": 337.378,
+   "start": 340.967,
+   "end": 344.345,
    "lines": [
     "Für die Zertifizierung ist bereits viel erreicht."
    ]
   },
   {
    "szene": 12,
-   "start": 337.448,
-   "end": 343.206,
+   "start": 344.415,
+   "end": 350.173,
    "lines": [
     "Die Referenzdokumente sind überarbeitet,",
     "die Grundschutz-Checks aller Zielobjekte ausgewertet,"
@@ -5618,8 +5704,8 @@
   },
   {
    "szene": 12,
-   "start": 343.276,
-   "end": 347.885,
+   "start": 350.243,
+   "end": 354.852,
    "lines": [
     "Risikoanalyse und Realisierungsplan",
     "liegen im Entwurf vor."
@@ -5627,16 +5713,16 @@
   },
   {
    "szene": 12,
-   "start": 347.955,
-   "end": 350.65,
+   "start": 354.922,
+   "end": 357.616,
    "lines": [
     "Für die Umsetzung sind fünfzehn Leitfäden,"
    ]
   },
   {
    "szene": 12,
-   "start": 350.72,
-   "end": 355.304,
+   "start": 357.686,
+   "end": 362.271,
    "lines": [
     "dreizehn Härtungslisten und eine",
     "Entscheidungsvorlage vorbereitet."
@@ -5644,16 +5730,16 @@
   },
   {
    "szene": 12,
-   "start": 355.374,
-   "end": 358.009,
+   "start": 362.341,
+   "end": 364.976,
    "lines": [
     "Was zu tun ist, ist damit beschrieben."
    ]
   },
   {
    "szene": 12,
-   "start": 358.079,
-   "end": 363.512,
+   "start": 365.046,
+   "end": 370.479,
    "lines": [
     "Offen sind die Entscheidungen der Verwaltungsleitung,",
     "Budget und Personal für die Umsetzung,"
@@ -5661,8 +5747,8 @@
   },
   {
    "szene": 12,
-   "start": 363.582,
-   "end": 368.899,
+   "start": 370.549,
+   "end": 375.866,
    "lines": [
     "die Übernahme der verbleibenden Risiken und die",
     "Behebung der Abweichungen aus dem letzten Audit,"
@@ -5670,16 +5756,16 @@
   },
   {
    "szene": 12,
-   "start": 368.969,
-   "end": 372.073,
+   "start": 375.936,
+   "end": 379.04,
    "lines": [
     "rechtzeitig vor dem Überwachungsaudit."
    ]
   },
   {
    "szene": 12,
-   "start": 379.267,
-   "end": 381.86,
+   "start": 386.234,
+   "end": 388.827,
    "lines": [
     "Vielen Dank für Ihre Aufmerksamkeit."
    ]

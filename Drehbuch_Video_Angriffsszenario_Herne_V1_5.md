@@ -1,7 +1,14 @@
 # Drehbuch: „Ein ganz normaler Montag“
 
 Erklärvideo für die Verwaltungsführung der Stadt Herne · Motion Graphics · ca. 7:34 Minuten · 16:9
-Stand 27.09.2026 · Fa. SITS (Berater) · Vertraulich – nur zur internen Verwendung
+Stand 30.09.2026 · Fa. SITS (Berater) · Vertraulich – nur zur internen Verwendung
+
+## Änderungen gegenüber V1_4
+
+- **Szene 9:** Von der Verwaltungsleitung wird erwartet, Maßnahmen zu prüfen und zu billigen, ihre Umsetzung zu überwachen, sich regelmäßig schulen zu lassen und die Risiken zu kennen und zu verantworten – mit ihrer Unterschrift unter die ISMS-Dokumente. Vier statt drei Symbole.
+- **Szene 12:** In der Spalte „Vorbereitet“ steht unter jedem Punkt, wer als Nächstes was tut.
+- **Sprecher:** Begrüßung unter der Titelkarte (Szene 0), Überleitung vor dem Sprechertext von Szene 1 und Schlusssatz auf der Schlusstafel (Szene 12).
+- **Zeiten:** Die Szenenzeiten bleiben Richtwerte. Das Video richtet sich nach der Sprachaufnahme; Standbilder ohne Sprache werden nicht verlängert, dadurch ist es kürzer als 7:34.
 
 ## Leitgedanke
 
@@ -45,10 +52,12 @@ Zeiten sind Richtwerte; Summe 7:34. Der Sprechertext wird als Untertitel eingebl
 - **Bild:** Innenstadtszene wie Stilreferenz. Langsamer Kamera-Drift nach rechts.
 - **Text:** „Ein ganz normaler Montag“ – darunter klein: „Was ein Cyberangriff für Herne bedeuten würde“. Unten links dezent: „Vertraulich – nur zur internen Verwendung“.
 - **Hinweis-Einblendung (0:06–0:12):** „Erfundener Ablauf auf Grundlage der aktuellen Sicherheitsprüfung. Ohne technische Einzelheiten.“
+- **Begrüßung (Sprecher):** „Guten Tag. Dieses Video zeigt an einem erfundenen, aber realistischen Ablauf, was ein Cyberangriff für die Stadt bedeuten würde und welche Entscheidungen jetzt anstehen.“
 
 ### Szene 1 – Eine Stadt, die funktioniert (0:12–0:32)
 
 - **Bild:** Aus dem Rathaus steigen feine Linien zu Symbolen auf: Ausweis, Geburtsurkunde, Wohngeld, Kita, Baugenehmigung, Gehälter, Autokennzeichen. Die Linien laufen im Keller in einen ruhig pulsierenden Serverraum.
+- **Überleitung (Sprecher, vor dem Sprechertext):** „Im Rathaus beginnt ein ganz normaler Montag.“
 - **Sprechertext:** „Ausweise, Urkunden, Sozialleistungen, Kitaplätze, Baugenehmigungen und die Gehälter der Beschäftigten: Fast jede Leistung der Stadtverwaltung hängt heute von funktionierender IT ab.“
 
 ### Szene 2 – Der Einstieg (0:32–0:56)
@@ -99,8 +108,8 @@ Vier Kacheln bauen sich nacheinander auf, jede mit eigener Mini-Animation; die B
 
 ### Szene 9 – Verantwortung der Leitung (4:28–5:13)
 
-- **Bild:** Besprechungsraum der Verwaltungsspitze. Drei Tafeln erscheinen nacheinander: „IT-Grundschutz: Gesamtverantwortung der Leitung“ – „NIS-2 / BSI-Gesetz: Informationssicherheit als Leitungsaufgabe“ – „InfoSiG NRW: NIS-2 für die Landesverwaltung“. Dann drei Symbole zu „billigen, überwachen, schulen“: ein Dokument mit Freigabevermerk, ein Übersichtsbildschirm, eine Schulungssituation.
-- **Sprechertext:** „Informationssicherheit ist eine Aufgabe der Verwaltungsleitung. Im IT-Grundschutz ist die Übernahme der Gesamtverantwortung durch die Leitung eine Basis-Anforderung, die im Überwachungsaudit vollständig geprüft wird. Die NIS-2-Richtlinie der EU schreibt dieselbe Verantwortung gesetzlich fest: seit Dezember 2025 im BSI-Gesetz, seit Januar 2026 im Informationssicherheitsgesetz NRW für die Landesverwaltung. Für Kommunen gelten beide nicht unmittelbar. Sie zeigen aber, was von einer Verwaltungsleitung erwartet wird: Maßnahmen billigen, ihre Umsetzung überwachen und sich regelmäßig schulen lassen.“
+- **Bild:** Besprechungsraum der Verwaltungsspitze. Drei Tafeln erscheinen nacheinander: „IT-Grundschutz: Gesamtverantwortung der Leitung“ – „NIS-2 / BSI-Gesetz: Informationssicherheit als Leitungsaufgabe“ – „InfoSiG NRW: NIS-2 für die Landesverwaltung“. Dann vier Symbole zu „prüfen und billigen, überwachen, schulen, Risiken verantworten“: ein Dokument mit Freigabevermerk, ein Übersichtsbildschirm, eine Schulungssituation, ein Dokument mit Unterschrift.
+- **Sprechertext:** „Informationssicherheit ist eine Aufgabe der Verwaltungsleitung. Im IT-Grundschutz ist die Übernahme der Gesamtverantwortung durch die Leitung eine Basis-Anforderung, die im Überwachungsaudit vollständig geprüft wird. Die NIS-2-Richtlinie der EU schreibt dieselbe Verantwortung gesetzlich fest: seit Dezember 2025 im BSI-Gesetz, seit Januar 2026 im Informationssicherheitsgesetz NRW für die Landesverwaltung. Für Kommunen gelten beide nicht unmittelbar. Sie zeigen aber, was von einer Verwaltungsleitung erwartet wird: Maßnahmen prüfen und billigen, ihre Umsetzung überwachen, sich regelmäßig schulen lassen und die Risiken kennen und verantworten – mit ihrer Unterschrift unter die ISMS-Dokumente.“
 
 ### Szene 10 – Was es braucht (5:13–5:58)
 
@@ -132,18 +141,18 @@ Vier Kacheln bauen sich nacheinander auf, jede mit eigener Mini-Animation; die B
 
 ### Szene 12 – Wo wir stehen (6:28–7:34)
 
-- **Bild:** Ruhige, helle Übersicht in drei Spalten, die nacheinander aufgebaut werden. Sachliche Symbole (Dokumente, Häkchen, Werkzeugkasten, Waage, Kalender), kein Rot außer bei den offenen Punkten. Zum Schluss hebt sich die dritte Spalte hervor.
+- **Bild:** Ruhige, helle Übersicht in drei Spalten, die nacheinander aufgebaut werden. Sachliche Symbole (Dokumente, Häkchen, Werkzeugkasten, Waage, Kalender), kein Rot außer bei den offenen Punkten. In der Spalte „Vorbereitet“ steht unter jedem Punkt klein, wer als Nächstes was tut. Zum Schluss hebt sich die dritte Spalte hervor.
 - **Spalte „Erreicht“:**
   - Strukturanalyse, Schutzbedarfsfeststellung und Modellierung überarbeitet
   - Grundschutz-Checks aller Zielobjekte ausgewertet
   - Risikoanalyse und Realisierungsplan mit 32 Arbeitspaketen im Entwurf
   - Richtlinien im Entwurf, internes Auditprogramm aufgestellt
 - **Spalte „Vorbereitet“:**
-  - 15 Umsetzungsleitfäden mit Schritt-für-Schritt-Anweisungen
-  - 13 Härtungslisten für die Server
-  - Entscheidungsvorlage mit 22 Entscheidungen
-  - Prüfschema für den technischen Review
-  - Bereinigungsliste für die Grundschutz-Checks
+  - 15 Umsetzungsleitfäden mit Schritt-für-Schritt-Anweisungen → IT-Betrieb: umsetzen
+  - 13 Härtungslisten für die Server → IT-Betrieb: Server härten
+  - Entscheidungsvorlage mit 22 Entscheidungen → Verwaltungsleitung: prüfen und billigen
+  - Prüfschema für den technischen Review → ISB: Umsetzung prüfen
+  - Bereinigungsliste für die Grundschutz-Checks → ISB: Checks bereinigen
 - **Spalte „Offen – nächste Schritte“:**
   - Entscheidungen der Verwaltungsleitung, zwölf davon vor dem Überwachungsaudit
   - Budget und Personal für die Umsetzung
@@ -155,6 +164,7 @@ Vier Kacheln bauen sich nacheinander auf, jede mit eigener Mini-Animation; die B
 - **Einblendung darunter (klein):** „Offene Anforderungen laut Realisierungsplan: 966 Standard-Teilanforderungen; 264 Basis-Teilanforderungen bisher nur durch Musterantworten belegt.“
 - **Sprechertext:** „Für die Zertifizierung ist bereits viel erreicht. Die Referenzdokumente sind überarbeitet, die Grundschutz-Checks aller Zielobjekte ausgewertet, Risikoanalyse und Realisierungsplan liegen im Entwurf vor. Für die Umsetzung sind fünfzehn Leitfäden, dreizehn Härtungslisten und eine Entscheidungsvorlage vorbereitet. Was zu tun ist, ist damit beschrieben. Offen sind die Entscheidungen der Verwaltungsleitung, Budget und Personal für die Umsetzung, die Übernahme der verbleibenden Risiken und die Behebung der Abweichungen aus dem letzten Audit, rechtzeitig vor dem Überwachungsaudit.“
 - **Schlusstafel (7:28–7:34):** „Gemeinsam für ein sicheres Herne“ · klein: „Stadt Herne · Informationssicherheit · Stand September 2026“ · darunter SITS-Logo mit „Unser zuverlässiger Partner für IT- und Informationssicherheit“
+- **Schlusssatz (Sprecher, auf der Schlusstafel):** „Vielen Dank für Ihre Aufmerksamkeit.“
 
 ## Quellen der Belege
 

@@ -1,6 +1,6 @@
 # Aussprache: Ersetzungen im Sprachtext
 
-Grundlage: Drehbuch_Video_Angriffsszenario_Herne_V1_4.md. Die Untertitel bleiben wortgleich mit dem Drehbuch, nur der Text für die Stimme wird angepasst.
+Grundlage: Drehbuch_Video_Angriffsszenario_Herne_V1_5.md. Die Untertitel bleiben wortgleich mit dem Drehbuch, nur der Text für die Stimme wird angepasst.
 
 ## Angewendete Ersetzungen
 
@@ -18,12 +18,13 @@ Grundlage: Drehbuch_Video_Angriffsszenario_Herne_V1_4.md. Die Untertitel bleiben
 | 2026 | zweitausendsechsundzwanzig | Zahl | 9 |
 | BSI-Gesetz | B-S-I-Gesetz | BSI | 9 |
 | EU | E-U | EU | 9 |
+| ISMS-Dokumente | I-S-M-S-Dokumente | ISMS | 9 |
 | IT-Grundschutz | I-T-Grundschutz | IT | 9 |
 | NIS-2-Richtlinie | Nis-zwei-Richtlinie | NIS-2 | 9 |
 | NRW | N-R-W | NRW | 9 |
 | IT-Verwaltung | I-T-Verwaltung | IT | 10 |
 
-Insgesamt 16 verschiedene Wörter, 18 Stellen.
+Insgesamt 17 verschiedene Wörter, 19 Stellen.
 
 ## Regeln
 
@@ -35,6 +36,7 @@ Insgesamt 16 verschiedene Wörter, 18 Stellen.
 | NRW | N-R-W |
 | EU | E-U |
 | KI | K-I |
+| ISMS | I-S-M-S |
 | IT | I-T |
 | Dezimalzahl | Ganzzahl als Wort, „Komma“, Ziffern einzeln (2,5 → zwei Komma fünf) |
 | Zahl | ausgeschrieben (2025 → zweitausendfünfundzwanzig) |
