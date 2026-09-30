@@ -236,7 +236,9 @@ export function planen(db, anker = {}, optionen = {}) {
     S.ende = Math.round((start + L) * 30) / 30;
     S.audioEnde = r3(audioEnde);
     S.verlaengert = L > nominal ? r3(L - nominal) : 0;
-    if (S.anker.length) { const [dl, al] = S.anker[S.anker.length - 1]; const rd = S.entwurf - dl, ra = L - al; S.tail = ra < rd ? r3(rd / ra) : 1; }
+    // Nach dem letzten Anker: Bilder laufen ruhig bis zum Szenenende nach (Entwurfsende = Szenenende, höchstens halbe Geschwindigkeit).
+    // Ist die Szene nach der Aufnahme entworfen (letzter Anker am Entwurfsende), läuft sie im Echtzeitmaß weiter.
+    if (S.anker.length) { const [dl, al] = S.anker[S.anker.length - 1]; const rd = S.entwurf - dl, ra = L - al; S.tail = rd <= 1 ? 1 : r3(Math.max(0.5, rd / ra)); }
 
     // Segmente für die Tonmischung (absolute Zeit)
     einheiten.forEach((u, i) => {
