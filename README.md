@@ -2,13 +2,12 @@
 
 Vertraulich – nur zur internen Verwendung.
 
-Erklärvideo für die Verwaltungsführung der Stadt Herne, 1920 × 1080, 30 fps.
+Erklärvideo für die Verwaltungsführung der Stadt Herne, 1920 × 1080, 30 fps, mit Sprachausgabe und eingebrannten Untertiteln.
 Grundlage ist das Drehbuch `Drehbuch_Video_Angriffsszenario_Herne_V1_4.md` (13 Szenen, ca. 7:34, mit Sprachausgabe). Die Stilreferenz
 `referenz/Stilreferenz_Herne_Flat_Vector.png` dient nur als Vorlage und ist nicht Teil des Videos.
 
-> **Stand:** Umbau auf Drehbuch V1_4 mit Sprachausgabe. Fertig: Tonpipeline, Zeitplan aus den Aufnahmen, SITS-Logo, Szene 1 (korrigiert),
-> Szenen 8, 9 und 12 als Muster. Offen: Pressefragen (Stimmen in Freigabe), Szenen 10 und 11, Abstimmung der Szenen 0–7 auf die Sprachzeiten.
-> Die Dateien `output/Ein_ganz_normaler_Montag_V1_0.*` zeigen noch den Stand nach Drehbuch V1.2 (ohne Ton).
+> **Stand:** Fertig nach Drehbuch V1_4 mit Sprachausgabe: 13 Szenen, 7:36 (Richtwert 7:34; Szene 9 ist wegen der Sprachaufnahme
+> 2 s länger), Ton AAC 192 kbit/s, −16 LUFS, True Peak ≤ −1 dBTP. Erzähler „Alexander“, Pressefragen „Carla Blum“ und „Dan“ im Wechsel.
 
 ## Dateien
 
@@ -26,7 +25,7 @@ Grundlage ist das Drehbuch `Drehbuch_Video_Angriffsszenario_Herne_V1_4.md` (13 S
 | `audio/tts/` | Sprachtexte je Szene (`szene_XX.txt`) und `ERSETZUNGEN.md` |
 | `SITS_Logo.png` | Logo (152 × 88 px), wird als Data-URI in die HTML-Datei eingebettet |
 | `export/stills.mjs` | Standbilder zu beliebigen Zeitpunkten |
-| `output/` | `Ein_ganz_normaler_Montag_V1_0.mp4`, `Ein_ganz_normaler_Montag_V1_0.srt`, Prüfergebnisse, Musterbilder |
+| `output/` | `Ein_ganz_normaler_Montag_V1_0.mp4` (mit Ton), `Ein_ganz_normaler_Montag_V1_0.srt` (Untertitel synchron zur Stimme), Prüfergebnisse, Muster |
 
 ## Vorschau
 
@@ -60,4 +59,9 @@ node export/sync.mjs          # Zeitplan aus den Aufnahmen in die HTML-Datei üb
   - Ausnahmen laut Auftrag: der Spruch an der Fassade, „Stadt Herne“ und das Haltestellenzeichen.
 - **Untertitel und SRT:** Beide stammen aus denselben Cue-Daten (`CUES`).
 - **Synchronpunkt Szene 3:** Die Schlüsseldrehung am Serverraum fällt auf „erreicht damit zentrale Systeme“.
+- **Zeitplan aus der Sprachaufnahme:** Jede Szene beginnt ihren Sprechtext nach 0,5 s; nach dem letzten Wort bleiben mindestens 0,8 s.
+  Reicht das Drehbuchfenster nicht, wird die Szene länger – die Stimme wird nie beschleunigt. Die Bilder folgen der Stimme über
+  Bild-Ton-Anker (`ANKER` in der HTML-Datei) und laufen nach dem letzten Satz ruhig bis zum Szenenende nach.
+- **Ortsname:** Die Stimme sagt „die Stadt“ statt „Herne“; im Bild und in den Untertiteln steht der Name.
+- **Marke:** SITS-Logo (Data-URI, Originalgröße) oben rechts in allen Szenen außer der Schlusstafel; dort mittig unter dem Stadt-Herne-Text.
 - **Schrift:** Arial. Wo Arial fehlt, wird die maßgleiche Ersatzschrift verwendet, die Zeilenumbrüche bleiben gleich.
