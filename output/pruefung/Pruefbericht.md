@@ -1,8 +1,8 @@
 # Prüfbericht „Ein ganz normaler Montag“
 
-Drehbuch: Drehbuch_Video_Angriffsszenario_Herne_V1_6.md · Video: Ein_ganz_normaler_Montag_V1_0.html · Umfang: alle Szenen
+Drehbuch: Drehbuch_Video_Angriffsszenario_Herne_V1_7.md · Video: Ein_ganz_normaler_Montag_V1_0.html · Umfang: alle Szenen
 
-**Ergebnis:** 0 Fehler · 11 Warnungen · 65 bestandene Prüfungen · 30 Hinweise
+**Ergebnis:** 0 Fehler · 11 Warnungen · 67 bestandene Prüfungen · 30 Hinweise
 
 ## Szenen und Zeiten
 
@@ -92,10 +92,12 @@ Drehbuch: Drehbuch_Video_Angriffsszenario_Herne_V1_6.md · Video: Ein_ganz_norma
 
 ## Marke
 
-- ✅ Marke oben rechts überdeckt an keinem der 1969 Zeitpunkte eine Titelkarte, Einblendung oder einen Untertitel
+- ✅ Marke oben rechts überdeckt an keinem der 1969 Zeitpunkte eine Titelkarte, Einblendung (samt Karte oder Symbol) oder einen Untertitel
 - ✅ Logo als Data-URI eingebettet, einzige Bilddatei, Originalgröße 152 × 88 px (nicht hochskaliert)
-- ✅ Logo oben rechts in Originalgröße mit der Zeile „Unser zuverlässiger Partner für IT- und Informationssicherheit“ sichtbar in allen Szenen
-- ✅ Schlusstafel: Logo oben rechts ausgeblendet; Logo mittig unter dem Stadt-Herne-Text mit der Zeile „Unser zuverlässiger Partner für IT- und Informationssicherheit“
+- ✅ Logo oben rechts in Originalgröße mit der Zeile „Ihr zuverlässiger Partner für IT- und Informationssicherheit“ sichtbar in allen Szenen
+- ✅ Zeile unter dem Logo oben rechts einzeilig, wortgleich und ganz im Bild in allen Szenen
+- ✅ Logo und Zeile oben rechts mittig im Kasten in allen Szenen
+- ✅ Schlusstafel: Logo oben rechts ausgeblendet; Logo mittig unter dem Stadt-Herne-Text mit der Zeile „Ihr zuverlässiger Partner für IT- und Informationssicherheit“
 
 ## Verbotsliste
 
@@ -118,7 +120,7 @@ Drehbuch: Drehbuch_Video_Angriffsszenario_Herne_V1_6.md · Video: Ein_ganz_norma
 
 - ℹ️ Szene 0 0:00.0–0:13.6 (13.57 s) · Szene 1 0:13.6–0:31.6 (18.00 s) · Szene 2 0:31.6–0:50.1 (18.57 s) · Szene 3 0:50.1–1:16.5 (26.33 s) · Szene 4 1:16.5–1:36.9 (20.40 s) · Szene 5 1:36.9–1:56.9 (20.03 s) · Szene 6 1:56.9–2:22.4 (25.50 s) · Szene 7 2:22.4–3:06.7 (44.33 s) · Szene 8 3:06.7–3:47.4 (40.70 s) · Szene 9 3:47.4–4:40.3 (52.83 s) · Szene 10 4:40.3–5:20.6 (40.37 s) · Szene 11 5:20.6–5:40.6 (19.93 s) · Szene 12 5:40.6–6:32.8 (52.23 s)
 - ✅ SRT: 81 Einträge, Text und Zeiten identisch mit den eingebrannten Untertiteln
-- ✅ MP4 Bild: h264 High, 1920×1080, yuv420p, 30/1 fps, 11784 Bilder (Soll 11784), 392.800 s, 72.9 MB
+- ✅ MP4 Bild: h264 High, 1920×1080, yuv420p, 30/1 fps, 11784 Bilder (Soll 11784), 392.800 s, 72.8 MB
 - ✅ MP4 Ton: aac, 48000 Hz, 2 Kanäle, 198 kbit/s während der Sprache (Soll 192), 198 kbit/s im Mittel über das ganze Video
 - ✅ Länge Ton 392.800 s, Länge Bild 392.800 s (Abweichung 0.000 s)
 - ✅ Lautheit -16.2 LUFS integriert (Soll −16), True Peak -1.1 dBTP (Soll ≤ −1)
@@ -239,7 +241,7 @@ Drehbuch: Drehbuch_Video_Angriffsszenario_Herne_V1_6.md · Video: Ein_ganz_norma
 | fassade | GEMEINSAM FÜR EIN LEBENSWERTES HERNE | Bildbestandteil (Szene 0, 1, 8) |
 | stele | Stadt Herne | Bildbestandteil (Szene 0, 1, 8) |
 | haltestelle | H | Bildbestandteil (Szene 0, 1, 8) |
-| marke_zeile | Unser zuverlässiger Partner für IT- und Informationssicherheit | 0:00.0–6:32.8 |
+| marke_zeile | Ihr zuverlässiger Partner für IT- und Informationssicherheit | 0:00.0–6:32.8 |
 | vertraulich | Vertraulich – nur zur internen Verwendung | 0:00.6–0:14.0, 6:27.0–6:32.8 |
 | titel | Ein ganz normaler Montag | 0:00.8–0:05.6 |
 | unterzeile | Was ein Cyberangriff für Herne bedeuten würde | 0:01.4–0:05.6 |
