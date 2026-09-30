@@ -1,4 +1,4 @@
-// Prüfung des Videos gegen das Drehbuch (Standard: die neueste Drehbuch-Datei im Projektordner, derzeit V1_6).
+// Prüfung des Videos gegen das Drehbuch (Standard: die neueste Drehbuch-Datei im Projektordner, derzeit V1_7).
 //
 // Aufruf:
 //   node export/check.mjs                      → Gesamtprüfung aller Szenen
@@ -599,16 +599,26 @@ const visibleTexts = new Map();   // Schlüssel → { text, von, bis, quelle }
   const logoOK = bilder.every(b => b.href.startsWith('data:image/png;base64') && b.w === V.LOGO.w && b.h === V.LOGO.h);
   (logoOK && !extern.length ? OK : FEHLER)(B, `Logo als Data-URI eingebettet, einzige Bilddatei, Originalgröße ${V.LOGO.w} × ${V.LOGO.h} px (nicht hochskaliert)${extern.length ? '; externe Bilder: ' + extern.join(', ') : ''}`);
   // sichtbar in allen Szenen außer der Schlusstafel; auf der Schlusstafel mittig unter dem Stadt-Herne-Text
-  const fehlt = [];
+  const fehlt = [], mehrzeilig = [];
   for (const sc of V.SCENES) {
     if (!inScope(sc.n)) continue;
     const t = Math.round((sc.start + Math.min(3, (sc.end - sc.start) / 2)) * V.FPS) / V.FPS;
     await renderAt(page, t);
-    const r = await page.evaluate(() => { const i = document.querySelector('#stage svg.brand image'); if (!i) return null; const b = i.getBoundingClientRect(); let op = 1, n = i; while (n && n.id !== 'stage') { op *= parseFloat(getComputedStyle(n).opacity || '1'); n = n.parentElement; } return { op, w: b.width, h: b.height, x: b.x, y: b.y }; });
+    const r = await page.evaluate(() => {
+      const i = document.querySelector('#stage svg.brand image'); if (!i) return null;
+      const b = i.getBoundingClientRect(); let op = 1, n = i; while (n && n.id !== 'stage') { op *= parseFloat(getComputedStyle(n).opacity || '1'); n = n.parentElement; }
+      // Zeile unter dem Logo: Anzahl der Textzeilen und ihre Ausdehnung (muss ganz im Bild liegen)
+      const z = [...document.querySelectorAll('#stage svg.brand text[data-k="marke_zeile"]')];
+      const zb = z.map(t => t.getBoundingClientRect());
+      return { op, w: b.width, h: b.height, x: b.x, y: b.y, zeilen: z.map(t => t.textContent), links: Math.min(...zb.map(q => q.x)), rechts: Math.max(...zb.map(q => q.x + q.width)) };
+    });
     if (!r || r.op < 0.9 || Math.abs(r.w - V.LOGO.w) > 0.5 || r.x + r.w < 1700 || r.y > 60) fehlt.push(sc.n);
+    else if (r.zeilen.length !== 1 || r.zeilen[0] !== V.TEXTE.marke_zeile || r.links < 0 || r.rechts > V.W) mehrzeilig.push(`${sc.n} (${r.zeilen.length} Zeilen: „${r.zeilen.join(' / ')}“)`);
   }
   if (fehlt.length) FEHLER(B, `Logo oben rechts fehlt oder ist verändert in Szene ${fehlt.join(', ')}`);
   else OK(B, `Logo oben rechts in Originalgröße mit der Zeile „${V.TEXTE.marke_zeile}“ sichtbar${SCOPE ? ' (geprüfte Szenen)' : ' in allen Szenen'}`);
+  if (mehrzeilig.length) FEHLER(B, `Zeile unter dem Logo oben rechts nicht einzeilig oder nicht wortgleich in Szene ${mehrzeilig.join('; ')}`);
+  else if (!fehlt.length) OK(B, `Zeile unter dem Logo oben rechts einzeilig, wortgleich und ganz im Bild${SCOPE ? ' (geprüfte Szenen)' : ' in allen Szenen'}`);
   if (inScope(V.SCENES[V.SCENES.length - 1].n)) {
     await renderAt(page, V.TOTAL - 1);
     const e = await page.evaluate(() => {

@@ -66,7 +66,7 @@
    ===================================================================== */
 const W = 1920, H = 1080, FPS = 30;
 
-// Szenen laut Drehbuch V1_6: Titel und Richtzeiten [s]. Die tatsächlichen Zeiten stehen in TIMELINE
+// Szenen laut Drehbuch V1_7: Titel und Richtzeiten [s]. Die tatsächlichen Zeiten stehen in TIMELINE
 // (erzeugt von export/sync.mjs aus den Längen der Sprachaufnahmen); Szenen werden nur länger, nie kürzer.
 const SZENEN = [
   { n: 0, title: "Titel", nominal: [0, 12] },
@@ -253,7 +253,7 @@ function toActual(n, d) {
   return sc.start + x;
 }
 
-// Sprechertext wörtlich aus dem Drehbuch V1_6 (Quelle für Untertitel, SRT und Prüfung)
+// Sprechertext wörtlich aus dem Drehbuch V1_7 (Quelle für Untertitel, SRT und Prüfung)
 const SPRECHERTEXT = {
   1: "Ausweise, Urkunden, Sozialleistungen, Kitaplätze, Baugenehmigungen und die Gehälter der Beschäftigten: Fast jede Leistung der Stadtverwaltung hängt heute von funktionierender IT ab.",
   2: "Ein typischer Angriff beginnt mit einer gefälschten E-Mail, die wie eine gewöhnliche Rechnung aussieht. Solche Nachrichten erreichen jede Verwaltung täglich, und einzelne Klicks lassen sich nie ganz verhindern. Entscheidend ist, wie weit ein Angreifer danach kommt.",
@@ -268,10 +268,10 @@ const SPRECHERTEXT = {
   11: "So stellt sich die Lage heute dar. Alle gezeigten Schwachstellen wurden in der aktuellen Sicherheitsprüfung festgestellt. Ohne zusätzliche Mittel und Personal bleibt dieser Zustand bestehen und mit ihm das Risiko für die Stadt und ihre Bürgerinnen und Bürger.",
   12: "Für die Zertifizierung ist bereits viel erreicht. Die Referenzdokumente sind überarbeitet, die Grundschutz-Checks aller Zielobjekte ausgewertet, Risikoanalyse und Realisierungsplan liegen im Entwurf vor. Für die Umsetzung sind fünfzehn Leitfäden, dreizehn Härtungslisten und eine Entscheidungsvorlage vorbereitet. Was zu tun ist, ist damit beschrieben. Offen sind die Entscheidungen der Verwaltungsleitung, die Budget- und Ressourcenplanung für die Umsetzung, die Übernahme der verbleibenden Risiken und die Behebung der Abweichungen aus dem letzten Audit, rechtzeitig vor dem Überwachungsaudit.",
 };
-// Fragen der Presse (Szene 8), wörtlich aus dem Drehbuch V1_6; erscheinen als Sprechblasen und als Untertitel
+// Fragen der Presse (Szene 8), wörtlich aus dem Drehbuch V1_7; erscheinen als Sprechblasen und als Untertitel
 const PRESSEFRAGEN = ["Wie konnte es dazu kommen?", "Waren die Schwachstellen bekannt?", "Warum wurde nicht gehandelt, obwohl die Bedrohung – auch durch KI – seit Jahren bekannt ist?", "Was passiert mit den Daten der Bürgerinnen und Bürger?"];
 
-// Alle sichtbaren Texte wörtlich aus dem Drehbuch V1_6 (Einblendungen, Beschriftungen, Kacheln, Marke)
+// Alle sichtbaren Texte wörtlich aus dem Drehbuch V1_7 (Einblendungen, Beschriftungen, Kacheln, Marke)
 const TEXTE = {
   titel: "Ein ganz normaler Montag",
   unterzeile: "Was ein Cyberangriff für Herne bedeuten würde",
@@ -380,7 +380,7 @@ const TEXTE = {
   offen_6: "77 Abweichungen aus dem Audit 2025 beheben",
   offen_7: "Überwachungsaudit",
   offene_anforderungen: "Offene Anforderungen laut Realisierungsplan: 966 Standard-Teilanforderungen; 264 Basis-Teilanforderungen bisher nur durch Musterantworten belegt.",
-  marke_zeile: "Unser zuverlässiger Partner für IT- und Informationssicherheit",
+  marke_zeile: "Ihr zuverlässiger Partner für IT- und Informationssicherheit",
 };
 
 // Bildbestandteile außerhalb des Drehbuchs: laut Auftrag erlaubt (Regel 3) bzw. Verkehrszeichen
@@ -923,7 +923,7 @@ function SubtitleSVG(t) {
 
 // SITS-Marke oben rechts: Logo in Originalgröße (nicht skaliert), darunter die Zeile; verschwindet mit der Schlusstafel
 // (dort steht das Logo mit derselben Zeile mittig unter dem Stadt-Herne-Text).
-const MARKE = { rechts: 1896, oben: 24, pad: 10, schrift: 14, lh: 17, maxB: 232 };
+const MARKE = { rechts: 1896, oben: 24, pad: 12, schrift: 15, lh: 18, maxB: 1000 };   // Zeile unter dem Logo einzeilig
 function markeBlock(x, y, o = {}) {           // Logo mit der Zeile darunter; x = rechte Kante (anchor end) bzw. Mitte (anchor middle)
   const mitte = o.anchor === 'middle';
   const lines = wrapLines(TEXTE.marke_zeile, MARKE.schrift, 400, MARKE.maxB);
@@ -2389,19 +2389,21 @@ const S7L = {
   tiles: [
     { key: 'technik', t: 2.0 }, { key: 'geld', t: 11.8 }, { key: 'ansehen', t: 15.8 }, { key: 'buerger', t: 18.0 },
   ],
-  box: (i) => [60 + (i % 2) * 811, 40 + Math.floor(i / 2) * 434, 781, 418],   // rechts frei für die Marke
+  // oben rechts endet die Kachel bei 1480 (frei für die Marke), unten rechts ist Platz für den langen Beleg
+  box: (i) => [40 + (i % 2) * 732, 40 + Math.floor(i / 2) * 434, i === 3 ? 878 : 708, 418],
 };
 function Tile(i, lt) {
   const { key, t } = S7L.tiles[i];
   const [x, y, w, h] = S7L.box(i);
   const a = ez(lt, t, t + 0.6, EASE.out);
   if (a <= 0.001) return '';
-  const tx = x + 210, tw = w - 210 - 28;
+  const tx = x + 200, tw = w - 200 - 24;
   let inner = Rect(x, y, w, h, '#FFFFFF', { rx: 18 }) + Rect(x, y + 26, 9, h - 52, C.gruen, { rx: 4.5 });
   inner += G({ transform: `translate(${N(x + 112)} ${N(y + h / 2)}) scale(0.8)` }, TileAnim(key, lt - t));
   const titleOp = ez(lt, t + 0.2, t + 0.6), bodyOp = ez(lt, t + 0.4, t + 0.9), belegOp = ez(lt, t + 0.7, t + 1.3);
   // Kacheltext und Beleg (kleiner, kursiv): größtmögliche Schrift, die in die Kachel passt
-  const ts = 44;
+  let ts = 44;
+  while (ts > 34 && measure(TEXTE[`kachel_${key}_titel`], ts, 700) > tw) ts -= 1;   // Überschrift passt in die Kachel
   let bs = 32, gs = 26, bl, gl, need;
   for (;;) {
     bl = blockLines(`kachel_${key}_text`, bs, 400, tw); gl = blockLines(`kachel_${key}_beleg`, gs, 400, tw);
@@ -2742,7 +2744,7 @@ const S9 = {
     let ui = '';
     // Tafeln: nacheinander einblenden, später gemeinsam nach oben, dann Symbole darunter
     const up = ez(lt, S9L.symStart, S9L.symStart + 1.4);
-    const x0 = 310, w = 1300;                 // frei von der Marke oben rechts
+    const x0 = 440, w = 1040;                 // mittig, rechte Kante 1480: frei von der Marke oben rechts
     let y = 120 - up * 30;
     const scale = lerp(1, 0.78, up);
     let tafeln = '';

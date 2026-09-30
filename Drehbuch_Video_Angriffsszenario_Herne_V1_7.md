@@ -3,6 +3,10 @@
 Erklärvideo für die Verwaltungsführung der Stadt Herne · Motion Graphics · ca. 7:34 Minuten · 16:9
 Stand 30.09.2026 · Fa. SITS (Berater) · Vertraulich – nur zur internen Verwendung
 
+## Änderungen gegenüber V1_6
+
+- **Branding:** Die Zeile unter dem SITS-Logo lautet „Ihr zuverlässiger Partner für IT- und Informationssicherheit“. Oben rechts steht sie in einer Zeile unter dem Logo; die Marke ist dafür breiter. Karten, die oben rechts an die Marke reichten, sind schmaler: In Szene 7 sind die Kacheln neu aufgeteilt (oben schmaler, unten rechts breiter), in Szene 9 stehen die Tafeln schmaler in der Mitte.
+
 ## Änderungen gegenüber V1_5
 
 - **Szene 12, Spalte „Vorbereitet“:** Bei Umsetzungsleitfäden und Härtungslisten steht zusätzlich klein, welchem Zweck sie dienen (nur im Bild, nicht gesprochen); als nächster Schritt steht dort „IT-Betrieb: prüfen, beschließen, umsetzen“. Die Entscheidungsvorlage prüft zuerst der Fachbereich, bevor sie der Verwaltungsleitung vorgelegt wird; die Verwaltungsleitung prüft und billigt, um Risiken bewusst zu akzeptieren.
@@ -32,7 +36,7 @@ Gelten für Sprechertext, Untertitel und alle Einblendungen.
 
 ## Branding
 
-- **SITS oben rechts in allen Szenen** außer der Schlusstafel: Logo (`SITS_Logo.png`, freigestellt, höchstens in Originalgröße – etwa 150 px breit – nicht hochskalieren) und darunter in kleiner Schrift „Unser zuverlässiger Partner für IT- und Informationssicherheit“. Dezent, darf Titelkarte, Einblendungen und Untertitel nicht überdecken.
+- **SITS oben rechts in allen Szenen** außer der Schlusstafel: Logo (`SITS_Logo.png`, freigestellt, höchstens in Originalgröße – etwa 150 px breit – nicht hochskalieren) und darunter in kleiner Schrift in einer Zeile „Ihr zuverlässiger Partner für IT- und Informationssicherheit“. Dezent, darf Titelkarte, Einblendungen und Untertitel nicht überdecken.
 - **Schlusstafel:** zusätzlich zentriert unter dem Stadt-Herne-Text das SITS-Logo mit derselben Zeile.
 - Keine weiteren Logos; kein Wappen der Stadt.
 
@@ -170,7 +174,7 @@ Vier Kacheln bauen sich nacheinander auf, jede mit eigener Mini-Animation; die B
   - Überwachungsaudit
 - **Einblendung darunter (klein):** „Offene Anforderungen laut Realisierungsplan: 966 Standard-Teilanforderungen; 264 Basis-Teilanforderungen bisher nur durch Musterantworten belegt.“
 - **Sprechertext:** „Für die Zertifizierung ist bereits viel erreicht. Die Referenzdokumente sind überarbeitet, die Grundschutz-Checks aller Zielobjekte ausgewertet, Risikoanalyse und Realisierungsplan liegen im Entwurf vor. Für die Umsetzung sind fünfzehn Leitfäden, dreizehn Härtungslisten und eine Entscheidungsvorlage vorbereitet. Was zu tun ist, ist damit beschrieben. Offen sind die Entscheidungen der Verwaltungsleitung, die Budget- und Ressourcenplanung für die Umsetzung, die Übernahme der verbleibenden Risiken und die Behebung der Abweichungen aus dem letzten Audit, rechtzeitig vor dem Überwachungsaudit.“
-- **Schlusstafel (7:28–7:34):** „Gemeinsam für ein sicheres Herne“ · klein: „Stadt Herne · Informationssicherheit · Stand September 2026“ · darunter SITS-Logo mit „Unser zuverlässiger Partner für IT- und Informationssicherheit“
+- **Schlusstafel (7:28–7:34):** „Gemeinsam für ein sicheres Herne“ · klein: „Stadt Herne · Informationssicherheit · Stand September 2026“ · darunter SITS-Logo mit „Ihr zuverlässiger Partner für IT- und Informationssicherheit“
 - **Schlusssatz (Sprecher, auf der Schlusstafel):** „Vielen Dank für Ihre Aufmerksamkeit.“
 
 ## Quellen der Belege
