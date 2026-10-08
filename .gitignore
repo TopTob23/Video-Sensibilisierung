@@ -10,4 +10,4 @@ output/pruefung/standbilder/
 output/pruefung/*.png
 __pycache__/
 # Anonyme Fassung: wird von export/anonym.mjs erzeugt (Bericht und Untertitel liegen in output/anonym/)
-anonym/
+/anonym/
