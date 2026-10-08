@@ -674,7 +674,7 @@ const visibleTexts = new Map();   // Schlüssel → { text, von, bis, quelle }
       return { oben: !!oben, imgs, kleinUnten: klein ? klein.y + klein.height : null, zeile };
     });
     const mittig = e.imgs.length === 1 && Math.abs(e.imgs[0].x - 960) < 1.5 && e.kleinUnten !== null && e.imgs[0].y > e.kleinUnten && Math.abs(e.imgs[0].w - V.LOGO.w) < 0.5;
-    (mittig && !e.oben && e.zeile.join(' ') === V.TEXTE.marke_zeile ? OK : FEHLER)(B, `Schlusstafel: Logo oben rechts ${e.oben ? 'noch sichtbar' : 'ausgeblendet'}; Logo ${mittig ? 'mittig unter dem Stadt-Herne-Text' : 'nicht mittig unter dem Stadt-Herne-Text'} mit der Zeile „${e.zeile.join(' ')}“`);
+    (mittig && !e.oben && e.zeile.join(' ') === V.TEXTE.marke_zeile ? OK : FEHLER)(B, `Schlusstafel: Logo oben rechts ${e.oben ? 'noch sichtbar' : 'ausgeblendet'}; Logo ${mittig ? 'mittig unter dem Text der Schlusstafel' : 'nicht mittig unter dem Text der Schlusstafel'} mit der Zeile „${e.zeile.join(' ')}“`);
   }
 }
 
