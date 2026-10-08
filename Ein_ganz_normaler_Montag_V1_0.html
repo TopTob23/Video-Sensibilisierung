@@ -392,6 +392,9 @@ const TEXTE_AUSNAHMEN = {
   stele: 'Stadt Herne',                             // Text „Stadt Herne“ (Auftrag, Regel 3)
   haltestelle: 'H',                                 // Haltestellenzeichen
 };
+// Zeilen dieser Bildtexte (Fassade: letzte Zeile größer); die anonyme Fassung ersetzt sie (export/anonym.mjs)
+const FASSADE_ZEILEN = ['GEMEINSAM', 'FÜR EIN LEBENSWERTES', 'HERNE'];
+const STELE_ZEILEN = ['Stadt', 'Herne'];
 
 // Untertitel: Zeiten und Zeilen aus den Zeitmarken der Sprachaufnahme (TIMELINE), Zeilen wortgleich aus SPRECHERTEXT bzw. PRESSEFRAGEN
 const CUES = TIMELINE ? TIMELINE.cues : [];
@@ -1100,10 +1103,11 @@ function Rathaus() {
   for (let k = 1; k < 3; k++) s += Line(gx0, gy0 + k * gh / 3, gx0 + gw, gy0 + k * gh / 3, C.mullion, 2);
   // Spruch an der Fassade (laut Auftrag erlaubt); Schriftgröße so, dass er in die Wandfläche passt
   const px = gx0 + gw + 34, room = Mx + Mw - 70 - px;
-  let fs = 30; while (measure('FÜR EIN LEBENSWERTES', fs) + 19 > room) fs -= 1;
-  s += Txt(px, My + 100, 'GEMEINSAM', { size: fs, fill: C.slogan, ls: 1, k: 'fassade', i: 0 });
-  s += Txt(px, My + 100 + fs * 1.4, 'FÜR EIN LEBENSWERTES', { size: fs, fill: C.slogan, ls: 1, k: 'fassade', i: 1 });
-  s += Txt(px, My + 100 + fs * 1.4 + fs * 1.75, 'HERNE', { size: Math.round(fs * 1.3), fill: C.slogan, ls: 2, k: 'fassade', i: 2 });
+  const fz = FASSADE_ZEILEN, n = fz.length, letzte = fz[n - 1];
+  const breit = f => Math.max(...fz.slice(0, -1).map(l => measure(l, f) + l.length - 1), measure(letzte, Math.round(f * 1.3)) + 2 * (letzte.length - 1));
+  let fs = 30; while (breit(fs) > room) fs -= 1;
+  fz.slice(0, -1).forEach((l, i) => { s += Txt(px, My + 100 + i * fs * 1.4, l, { size: fs, fill: C.slogan, ls: 1, k: 'fassade', i }); });
+  s += Txt(px, My + 100 + (n > 1 ? (n - 2) * fs * 1.4 + fs * 1.75 : 0), letzte, { size: Math.round(fs * 1.3), fill: C.slogan, ls: 2, k: 'fassade', i: n - 1 });
   // Erdgeschoss mit Eingang
   s += Rect(Mx + 10, b - 132, Mw - 20, 132, C.facadeDark, OL(2.5));
   for (let i = 0; i < 8; i++) s += Rect(Mx + 26 + i * 82, b - 118, 62, 118, C.glassDark, OL(2)) + Line(Mx + 57 + i * 82, b - 118, Mx + 57 + i * 82, b, C.mullion, 2);
@@ -1122,8 +1126,8 @@ function Bench(x, y, w, s = 1) {
 function Stele(x, base) {
   const w = 190, h = 360, top = base - h;
   return Rect(x + 10, top + 10, w, h, '#CFC5B8', OL(3)) + Rect(x, top, w, h, '#F1EAE0', OL(3))
-    + TextBlock('stele', x + 30, top + 92, { size: 34, fill: C.text2, lines: ['Stadt', 'Herne'], lh: 44 })
-    + Rect(x + 30, top + 162, 34, 5, C.text2);
+    + TextBlock('stele', x + 30, top + 92, { size: 34, fill: C.text2, lines: STELE_ZEILEN, lh: 44 })
+    + Rect(x + 30, top + 118 + (STELE_ZEILEN.length - 1) * 44, 34, 5, C.text2);
 }
 function BusStopBack() {
   // Rückwand, hintere Pfosten, Dach
@@ -2773,7 +2777,7 @@ const S9 = {
       const inner = [SymbolBilligen, SymbolUeberwachen, SymbolSchulen, SymbolVerantworten][i](seg(lt, a0, a0 + 1.2), lt);
       const label = TEXTE[sy.key], lw = measure(label, 31, 700) + 40;
       // Einschub nach „schulen“: diese Karte leicht größer und grün umrandet, danach wieder wie die anderen
-      const [e0, e1] = S9L.einschub, hv = sy.key === 'symbol_schulen' ? ez(lt, e0, e0 + 0.6) * (1 - ez(lt, e1, e1 + 0.6)) : 0;
+      const [e0, e1] = S9L.einschub || [], hv = S9L.einschub && sy.key === 'symbol_schulen' ? ez(lt, e0, e0 + 0.6) * (1 - ez(lt, e1, e1 + 0.6)) : 0;
       ui += G({ opacity: N(op), transform: `translate(${N(cx)} ${N(symY)}) scale(${N(1 + 0.04 * bump(lt, sy.t + 0.3, 0.5) + 0.03 * hv)}) translate(${N(-cx)} ${N(-symY + (1 - EASE.out(op)) * 30)})` },
         G({ filter: 'url(#fCardShadow)' }, Rect(cx - kw / 2, symY - 150, kw, 272, '#FFFFFF', { rx: 20, opacity: 0.97 }))
         + (hv > 0.001 ? Rect(cx - kw / 2 - 4, symY - 154, kw + 8, 280, 'none', { rx: 23, stroke: C.gruen, 'stroke-width': 4, opacity: N(hv) }) : '')

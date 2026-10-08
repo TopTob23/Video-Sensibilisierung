@@ -15,7 +15,7 @@ export const ERGAENZUNGEN = [
     szene: 0, stelle: 'vor',
     text: 'Guten Tag. Dieses Video zeigt an einem erfundenen, aber realistischen Ablauf, was ein Cyberangriff für die Stadt bedeuten würde und welche Entscheidungen jetzt anstehen.',
     grund: 'Begrüßung statt zwölf Sekunden Stille unter der Titelkarte',
-    grundlage: 'Unterzeile der Titelkarte („Was ein Cyberangriff für Herne bedeuten würde“), Leitgedanke („Ein erfundener, aber realistischer Angriffsverlauf“, „welche Entscheidungen jetzt anstehen“)',
+    grundlage: 'Unterzeile der Titelkarte („Was ein Cyberangriff für … bedeuten würde“), Leitgedanke („Ein erfundener, aber realistischer Angriffsverlauf“, „welche Entscheidungen jetzt anstehen“)',
   },
   {
     szene: 1, stelle: 'vor',

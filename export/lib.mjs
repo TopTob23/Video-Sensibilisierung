@@ -5,7 +5,9 @@ import { execSync } from 'child_process';
 import path from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
 
-export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+export const EXPORT_DIR = path.dirname(fileURLToPath(import.meta.url));
+// Projektordner: standardmäßig das Repository; VIDEO_ROOT wählt eine abgeleitete Fassung (z. B. anonym/, erzeugt von export/anonym.mjs)
+export const ROOT = process.env.VIDEO_ROOT ? path.resolve(process.env.VIDEO_ROOT) : path.resolve(EXPORT_DIR, '..');
 export const HTML = path.join(ROOT, 'Ein_ganz_normaler_Montag_V1_0.html');
 export const BASENAME = 'Ein_ganz_normaler_Montag_V1_0';
 

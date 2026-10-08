@@ -11,7 +11,7 @@ import fs from 'fs';
 import path from 'path';
 import { execFileSync, spawnSync } from 'child_process';
 import { pathToFileURL } from 'url';
-import { loadPlaywright, openVideo, renderAt, ROOT, BASENAME, HTML } from './lib.mjs';
+import { loadPlaywright, openVideo, renderAt, ROOT, EXPORT_DIR, BASENAME, HTML } from './lib.mjs';
 import { findDrehbuch, parseDrehbuch } from './drehbuch.mjs';
 import { ERZAEHLER, EINSTELLUNGEN, MODELL, fragenStimmen, teile } from './tts-lib.mjs';
 import { ERGAENZUNGEN, ergaenzungenFuer } from './ergaenzungen.mjs';
@@ -21,6 +21,9 @@ const argv = process.argv.slice(2);
 const opt = (name, def) => { const i = argv.indexOf('--' + name); return i >= 0 ? (argv[i + 1] && !argv[i + 1].startsWith('--') ? argv[i + 1] : true) : def; };
 const DREHBUCH = opt('drehbuch', null) ? path.resolve(ROOT, opt('drehbuch')) : findDrehbuch();
 const SCOPE = opt('scenes', null) ? String(opt('scenes')).split(',').map(Number) : null;
+// Anonyme Fassung (erzeugt von export/anonym.mjs): kein Ortsname in Bild, Untertiteln und Stimme; Fassade und Stele neutral
+const ANONYM = /_Anonym_/i.test(path.basename(DREHBUCH));
+const ORTSNAME = /hern(e|er|es)\b/i;
 const STEP = Number(opt('step', 0.2));
 const MP4 = path.resolve(ROOT, opt('mp4', `output/${BASENAME}.mp4`));
 const SRT = path.resolve(ROOT, opt('srt', `output/${BASENAME}.srt`));
@@ -54,7 +57,11 @@ const timed = [];
 { const m = md.match(/\*\*Hinweis-Einblendung \((\d+):(\d\d)–(\d+):(\d\d)\):\*\*/); if (m) timed.push({ key: 'hinweis', from: +m[1] * 60 + +m[2], to: +m[3] * 60 + +m[4] }); }
 { const m = md.match(/\*\*Schlusstafel \((\d+):(\d\d)–(\d+):(\d\d)\):\*\*/); if (m) timed.push({ key: 'schluss_titel', from: +m[1] * 60 + +m[2], to: +m[3] * 60 + +m[4] }); }
 // Auftrag, Regel 3 (Bildbestandteile außerhalb des Drehbuchs)
-const AUFTRAG_AUSNAHMEN = {
+const AUFTRAG_AUSNAHMEN = ANONYM ? {
+  fassade: { soll: 'Rathaus', grund: 'anonyme Fassung: neutrale Beschriftung an der Fassade statt Spruch mit Ortsnamen', gross: true },
+  stele: { soll: 'Rathaus', grund: 'anonyme Fassung: neutrale Beschriftung der Stele statt Ortsnamen' },
+  haltestelle: { soll: 'H', grund: 'Haltestellenzeichen (Verkehrszeichen, kein Text)' },
+} : {
   fassade: { soll: 'Gemeinsam für ein lebenswertes Herne', grund: 'Auftrag Regel 3: Spruch an der Fassade wie in der Stilreferenz', gross: true },
   stele: { soll: 'Stadt Herne', grund: 'Auftrag Regel 3: Text „Stadt Herne“' },
   haltestelle: { soll: 'H', grund: 'Haltestellenzeichen (Verkehrszeichen, kein Text)' },
@@ -280,6 +287,7 @@ const visibleTexts = new Map();   // Schlüssel → { text, von, bis, quelle }
   let samples = 0;
   const timedSeen = {};
   const ueberdeckt = new Map();
+  const ortImBild = new Map();   // anonyme Fassung: sichtbare Texte mit Ortsnamen → Zeitpunkt
   const vermerkUeberdeckt = new Map();
   for (const [a, b] of ranges) {
     for (let t = a; t < b - 1e-6; t += STEP) {
@@ -313,6 +321,7 @@ const visibleTexts = new Map();   // Schlüssel → { text, von, bis, quelle }
         return { els, marke, rahmen };
       });
       checkGroup(els, tt);
+      if (ANONYM) for (const e of els) if (e.op > 0.001 && ORTSNAME.test(e.text)) ortImBild.set(e.text, tt);
       // Marke oben rechts darf Titelkarte, Einblendungen und Untertitel nicht überdecken
       if (marke && marke.op > 0.05) {
         const m = marke.rahmen;
@@ -358,6 +367,18 @@ const visibleTexts = new Map();   // Schlüssel → { text, von, bis, quelle }
   // Marke: Überdeckung
   for (const u of ueberdeckt.values()) (u.bild ? WARN : FEHLER)('Marke', `Marke oben rechts überdeckt ${u.bild ? 'den Bildtext' : u.einheit ? 'Karte oder Symbol der Einblendung' : 'die Einblendung'} „${u.text}“ (${u.k}) bei ${fmt(u.t)}`);
   if (!ueberdeckt.size) OK('Marke', `Marke oben rechts überdeckt an keinem der ${samples} Zeitpunkte eine Titelkarte, Einblendung (samt Karte oder Symbol) oder einen Untertitel`);
+  // Anonyme Fassung: kein Ortsname im Bild (alle abgetasteten Zeitpunkte), in Texten, Untertiteln, SRT und Stimme
+  if (ANONYM) {
+    const A = 'Anonymisierung';
+    for (const [text, t] of ortImBild) FEHLER(A, `Ortsname im Bild bei ${fmt(t)}: „${text}“`);
+    if (!ortImBild.size) OK(A, `kein Ortsname im Bild an den ${samples} abgetasteten Zeitpunkten (Einblendungen, Bildtexte, Untertitel, Marke)`);
+    const quellen = { Textverzeichnis: JSON.stringify(V.TEXTE), Bildtexte: JSON.stringify(V.TEXTE_AUSNAHMEN), Sprechertext: JSON.stringify(V.SPRECHERTEXT), Pressefragen: JSON.stringify(V.PRESSEFRAGEN), Untertitel: JSON.stringify(V.CUES), 'SRT-Datei': fs.existsSync(SRT) ? fs.readFileSync(SRT, 'utf8') : '', Drehbuch: fs.readFileSync(DREHBUCH, 'utf8'), Videodatei: fs.readFileSync(HTML, 'utf8') };
+    const adir = path.join(ROOT, 'audio');
+    for (const f of fs.readdirSync(adir).filter(f => /^szene_.*\.json$/.test(f))) { const j = JSON.parse(fs.readFileSync(path.join(adir, f), 'utf8')); quellen[`Stimme ${f.replace('.json', '')}`] = j.text + ' ' + JSON.stringify(j.kontext || {}); }
+    const mit = Object.entries(quellen).filter(([, v]) => ORTSNAME.test(v)).map(([k]) => k);
+    if (mit.length) FEHLER(A, `Ortsname enthalten in: ${mit.join(', ')}`);
+    else OK(A, `kein Ortsname in ${Object.keys(quellen).length} Quellen: Textverzeichnis, Bildtexte, Sprechertext, Pressefragen, Untertitel, SRT-Datei, Drehbuch, Videodatei und gesprochener Text aller Aufnahmen (samt Kontext)`);
+  }
   for (const [text, t] of vermerkUeberdeckt) FEHLER('Untertitel', `Untertitel „${text.slice(0, 40)}…“ berührt bei ${fmt(t)} den Vertraulich-Vermerk`);
   if (!vermerkUeberdeckt.size) OK('Untertitel', `Untertitel und Vertraulich-Vermerk (Titelkarte, Schlusstafel) berühren sich an keinem der ${samples} Zeitpunkte`);
   // „Woche 5“ darf nicht mehr vorkommen (V1.2: Kalenderblätter nur bis Woche 4)
@@ -418,7 +439,7 @@ const visibleTexts = new Map();   // Schlüssel → { text, von, bis, quelle }
     else OK(B, `Ortsname kommt in keinem Text für die Sprachausgabe vor (Vorgabe des Auftraggebers)`);
   }
   // Code: Treffer mit Einordnung
-  const files = [HTML, ...fs.readdirSync(path.join(ROOT, 'export')).filter(f => /\.(mjs|py)$/.test(f)).map(f => path.join(ROOT, 'export', f)), path.join(ROOT, 'package.json')];
+  const files = [HTML, ...fs.readdirSync(EXPORT_DIR).filter(f => /\.(mjs|py)$/.test(f)).map(f => path.join(EXPORT_DIR, f)), path.join(EXPORT_DIR, '..', 'package.json')];
   const known = [
     [/^URL$/, /w3\.org\/2000\/svg/, 'SVG-Namensraum (technisch notwendig, nicht im Bild)'],
     [/^URL$/, /api\.elevenlabs\.io/, 'Schnittstelle der Sprachausgabe (nur im Skript, nicht im Bild)'],
@@ -573,7 +594,7 @@ const visibleTexts = new Map();   // Schlüssel → { text, von, bis, quelle }
   else {
     const m = JSON.parse(fs.readFileSync(mj, 'utf8'));
     const crypto = await import('crypto');
-    const soll = crypto.createHash('sha1').update(fs.readFileSync(TLFILE)).update(fs.readFileSync(path.join(ROOT, 'export', 'musik.py'))).digest('hex');
+    const soll = crypto.createHash('sha1').update(fs.readFileSync(TLFILE)).update(fs.readFileSync(path.join(EXPORT_DIR, 'musik.py'))).digest('hex');
     const aktuell = fs.existsSync(stempel) && fs.readFileSync(stempel, 'utf8') === soll;
     (aktuell ? OK : FEHLER)(B, aktuell ? 'Musik passt zur aktuellen Zeitachse und Komposition (export/musik.py, eigene Komposition, synthetisch erzeugt – keine Rechte Dritter)' : 'Musik ist veraltet (Zeitachse oder Komposition geändert) – Export neu starten');
     // Abschnitte: je Szene einer, dazu die Schlusstafel; jeder beginnt auf einer Szenengrenze

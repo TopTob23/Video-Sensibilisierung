@@ -10,7 +10,7 @@ import path from 'path';
 import { spawnSync } from 'child_process';
 import { pathToFileURL } from 'url';
 import crypto from 'crypto';
-import { ROOT } from './lib.mjs';
+import { ROOT, EXPORT_DIR } from './lib.mjs';
 
 export const ZIEL_LUFS = -16, ZIEL_TP = -1;
 
@@ -73,10 +73,10 @@ export function mischen({ ranges = null, out = path.join(ROOT, 'output', '.ton',
   if (musik) {
     const voll = path.join(ROOT, 'output', '.ton', 'Musik.wav'), statsDatei = path.join(ROOT, 'output', '.ton', 'Musik.json');
     const stempel = path.join(ROOT, 'output', '.ton', 'Musik.stempel');
-    const soll = crypto.createHash('sha1').update(fs.readFileSync(tlDatei)).update(fs.readFileSync(path.join(ROOT, 'export', 'musik.py'))).digest('hex');
+    const soll = crypto.createHash('sha1').update(fs.readFileSync(tlDatei)).update(fs.readFileSync(path.join(EXPORT_DIR, 'musik.py'))).digest('hex');
     if (!fs.existsSync(voll) || !fs.existsSync(stempel) || fs.readFileSync(stempel, 'utf8') !== soll) {
       log('Musik: wird komponiert (export/musik.py) …');
-      const r = spawnSync('python3', [path.join(ROOT, 'export', 'musik.py'), '--timeline', tlDatei, '--out', voll, '--stats', statsDatei], { encoding: 'utf8' });
+      const r = spawnSync('python3', [path.join(EXPORT_DIR, 'musik.py'), '--timeline', tlDatei, '--out', voll, '--stats', statsDatei], { encoding: 'utf8' });
       if (r.status !== 0) throw new Error('musik.py: ' + (r.stderr || '').split('\n').slice(-6).join('\n'));
       fs.writeFileSync(stempel, soll);
     }

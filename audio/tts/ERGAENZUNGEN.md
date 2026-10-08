@@ -4,7 +4,7 @@ Auf Wunsch des Auftraggebers (Rückmeldung zum fertigen Video) spricht die Stimm
 
 | Szene | Stelle | Text | Grund | Grundlage im Drehbuch |
 |---|---|---|---|---|
-| 0 | vor dem Sprechertext | Guten Tag. Dieses Video zeigt an einem erfundenen, aber realistischen Ablauf, was ein Cyberangriff für die Stadt bedeuten würde und welche Entscheidungen jetzt anstehen. | Begrüßung statt zwölf Sekunden Stille unter der Titelkarte | Unterzeile der Titelkarte („Was ein Cyberangriff für Herne bedeuten würde“), Leitgedanke („Ein erfundener, aber realistischer Angriffsverlauf“, „welche Entscheidungen jetzt anstehen“) |
+| 0 | vor dem Sprechertext | Guten Tag. Dieses Video zeigt an einem erfundenen, aber realistischen Ablauf, was ein Cyberangriff für die Stadt bedeuten würde und welche Entscheidungen jetzt anstehen. | Begrüßung statt zwölf Sekunden Stille unter der Titelkarte | Unterzeile der Titelkarte („Was ein Cyberangriff für … bedeuten würde“), Leitgedanke („Ein erfundener, aber realistischer Angriffsverlauf“, „welche Entscheidungen jetzt anstehen“) |
 | 1 | vor dem Sprechertext | Im Rathaus beginnt ein ganz normaler Montag. | Übergang: Der Sprechertext setzt sonst unvermittelt mit der Aufzählung „Ausweise, …“ ein | Titel („Ein ganz normaler Montag“), Bild der Szene 1 (Rathaus) |
 | 12 | auf der Schlusstafel (eigener Sprechteil) | Vielen Dank für Ihre Aufmerksamkeit. | Abschluss auf der Schlusstafel als Gegenstück zur Begrüßung | Grußformel, kein inhaltlicher Zusatz |
 

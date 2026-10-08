@@ -61,6 +61,25 @@ node export/audio.mjs         # nur die Tonmischung (Sprache + Musik) nach outpu
 
 Die Musik entsteht beim Export automatisch neu, sobald sich Zeitplan oder Komposition ändern (`output/.ton/`, nicht im Repository).
 
+## Anonyme Fassung
+
+Zusätzlich gibt es eine Fassung ohne Ortsnamen – in Bild, Untertiteln und Stimme. `export/anonym.mjs` erzeugt sie aus dem aktuellen
+Stand im Ordner `anonym/` (nicht versioniert; Untertitel und Prüfbericht liegen in `output/anonym/`):
+
+- „in der Stadt“ statt des Ortsnamens in den Untertiteln (die Stimme sagt das schon im Original), Titelkarte „Was ein Cyberangriff für
+  eine Stadtverwaltung bedeuten würde“, Schlusstafel „Gemeinsam für eine sichere Stadt“ / „Stadtverwaltung · Informationssicherheit ·
+  Stand September 2026“, an Fassade und Stele „Rathaus“
+- Szene 9 ohne den Einschub zur Schulung (freigegebene Aufnahme aus `audio/varianten/`); Projektzahlen und Belege unverändert
+- dieselben Sprachaufnahmen wie im Original – es entstehen keine neuen Kosten für die Sprachausgabe
+
+```bash
+node export/anonym.mjs                       # anonym/ erzeugen (bricht ab, wenn eine Ersetzung nicht mehr passt)
+VIDEO_ROOT=anonym node export/tts-text.mjs   # Sprachtexte; node export/tts.mjs --dry muss „0 Teile“ melden
+VIDEO_ROOT=anonym node export/sync.mjs       # Zeitachse und Untertitel
+VIDEO_ROOT=anonym node export/render.mjs     # anonym/output/…mp4 und …srt
+VIDEO_ROOT=anonym node export/check.mjs      # Prüfung, zusätzlich „kein Ortsname“ in Bild, Untertiteln, SRT und Stimme
+```
+
 ## Hinweise zur Umsetzung
 
 - **Deterministisch:** `render(t)` hängt nur von der Zeit t ab. Es gibt keinen Zufall ohne festen Startwert und keine Echtzeit, gleiches t ergibt also das gleiche Bild.
